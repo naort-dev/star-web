@@ -30,10 +30,24 @@ const MultiSelectStyled = styled.div`
   .select__value-container {
     justify-content: center;
     font-size: 22px;
+    .fans-want &,
+    .select-category & {
+      padding: 7px 0px 0 !important;
+      margin-bottom: 5px;
+      
+      @media (max-width: 831px) {
+        padding: 10px 0 0 !important;
+      }
+    }
     .select__input {
       color: #615195;
       input {
         font-size: 24px;
+        .fans-want &,
+        .select-category & {
+          font-size: 18px !important;
+          line-height: 18px !important;
+        }
       }
     }
     .select__multi-value {
@@ -46,6 +60,13 @@ const MultiSelectStyled = styled.div`
       margin: 0 5px 5px 0px;
       padding: 0px 3px 0 12px;
       border-radius: 16px;
+
+      .fans-want &,
+      .select-category & {
+        margin: 0 5px 5px 0px;
+        padding: 0px 3px 0 15px;
+        border-radius: 15px;
+      }
     }
     .select__multi-value__label {
       padding-left: 0px;
@@ -53,6 +74,13 @@ const MultiSelectStyled = styled.div`
       font-family: Gilroy-Regular;
       font-size: 14px;
       color: ${props => props.theme.greyishBrown};
+      .fans-want &,
+      .select-category & {
+        font-family: Gilroy-Medium;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 5px 5px 5px 0;
+      }
     }
     .select__multi-value__remove {
       font-size: 16.9px;
@@ -61,6 +89,13 @@ const MultiSelectStyled = styled.div`
       padding-left: 8px;
       &:hover {
         background: none;
+      }
+      .fans-want &,
+      .select-category & {
+        font-size: 16px;
+        line-height: 16px;
+        align-items: center;
+        padding-left: 4px;
       }
     }
   }

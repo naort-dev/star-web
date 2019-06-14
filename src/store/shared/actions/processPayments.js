@@ -274,20 +274,21 @@ export const starsonaRequest = (
   callback,
 ) => dispatch => {
   const requestDetails = {
-    stargramto: bookingData.hostName,
-    stargramfrom: bookingData.userName,
+    stargramto: bookingData.stargramto,
+    stargramfrom: bookingData.stargramfrom,
     relationship: bookingData.requestRelationshipData,
     show_relationship: true,
     question: bookingData.question,
     specifically_for: bookingData.specification,
-    from_where: bookingData.specification,
+    from_where: bookingData.from_where,
     important_info: bookingData.importantinfo,
     date: bookingData.date
       ? `${moment.utc(bookingData.date).format('YYYY-MM-DDTHH:mm:ss.SSSS')}Z`
       : '',
-    event_title: bookingData.eventdetailName,
-    event_guest_honor: bookingData.hostName,
+    event_title: bookingData.event_title,
+    event_guest_honor: bookingData.event_guest_honor,
     booking_statement: bookingData.booking_statement,
+    someone_else: bookingData.someone_else,
   };
   const formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);

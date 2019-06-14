@@ -161,19 +161,28 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
 ListingStyled.ContentItem = styled.li`
   display: flex;
   padding-right: 10px;
-  margin-bottom: 35px;
+  margin-bottom: 10px;
   &.show-more {
     padding: 0;
     margin: 0;
     width: 100%;
     justify-content: flex-end;
-    font-size: 16px;
+    font-size: 14px;
     font-family: Gilroy-Medium;
     color: ${props => props.theme.flatBlue};
-    margin-top: -16px;
     span {
       cursor: pointer;
+
+      @media(min-width: 832px) {
+        font-size: 16px;
+      }
     }
+    @media(min-width: 832px) {
+      margin-top: -16px;
+    }
+  }
+  @media(min-width: 832px) {
+    margin-bottom: 35px;
   }
   @media(min-width: 1280px) {
     padding-right: 32px;

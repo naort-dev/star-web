@@ -108,6 +108,7 @@ function FormContainer(props) {
       ...tempObj,
     });
     props.pageCountHandler(0);
+    props.clearAudio();
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
@@ -199,7 +200,7 @@ function FormContainer(props) {
   };
 
   return (
-    <Layout>
+    <Layout className="content-wrapper">
       <FlexCenter>
         <Dropdown
           options={optionsList}
@@ -226,7 +227,7 @@ function FormContainer(props) {
           </TextArea>
         )}
       </Layout.EventStep2>
-      <FlexCenter>
+      <FlexCenter className="button-wrapper">
         <Button
           className="continue-button"
           onClick={() => nextButtonClick()}
@@ -250,6 +251,7 @@ FormContainer.propTypes = {
   detailList: PropTypes.array.isRequired,
   submitClick: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
+  clearAudio: PropTypes.func.isRequired,
 };
 FormContainer.defaultProps = {};
 

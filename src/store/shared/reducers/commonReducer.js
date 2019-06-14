@@ -14,6 +14,10 @@ const initalState = {
     message: '',
     variant: '',
   },
+  audioFlags: {
+    recording: false,
+    playing: false,
+  },
   recorded: false,
 };
 
@@ -60,6 +64,12 @@ const commonReducer = (state = { ...initalState }, action) => {
       return {
         ...state,
         toastObj: action.toastObj,
+      };
+
+    case Actions.AUDIO_RECORD_HANDLER:
+      return {
+        ...state,
+        audioFlags: action.audioFlags,
       };
 
     default:

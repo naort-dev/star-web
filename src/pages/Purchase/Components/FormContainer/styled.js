@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 100%;
+  height: 97%;
   max-width: 318px;
   margin: 0 auto;
   ${media.webView} {
@@ -20,17 +20,49 @@ export const Layout = styled.section`
   }
   .continue-button {
     height: 60px;
+    margin-bottom: 75px;
   }
   .cus-drop {
     width: 100%;
   }
   .scroll-wrap {
-    height: 220px !important;
+    height: 260px !important;
+  }
+
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .react-datepicker__day--keyboard-selected,
+    .react-datepicker__day--keyboard-selected:hover {
+      background-color: #FF6C58;
+    }
+  }
+
+  &.content-wrapper > *:not(.button-wrapper) {
+    flex: 0 0 auto;
+  }
+
+  &.content-wrapper > .button-wrapper {
+    flex: 1 0 auto;
+  }
+
+
+  &.content-wrapper > .button-wrapper .continue-button {
+    align-self: flex-end
+  }
+  
+  .drop-custom-scroll {
+    max-height: 250px !important;
+    overflow: auto !important;
   }
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
-  min-height: 240px;
+  min-height: 165px;
+  .label {
+    font-size: 18px;
+  }
 `;
 
 export const TextArea = styled.div`

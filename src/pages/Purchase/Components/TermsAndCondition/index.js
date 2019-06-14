@@ -14,7 +14,7 @@ const TermsAndCondition = props => {
   }, []);
 
   return (
-    <Layout>
+    <Layout className="content-wrapper">
       <div className="termsWrapper">
         <Checkbox onChange={handleCheck} checked={props.checked} />
         <p>
@@ -29,7 +29,7 @@ const TermsAndCondition = props => {
           in this event.
         </p>
       </div>
-      <FlexBox>
+      <FlexBox className="button-wrapper">
         <Button
           className="continue-btn"
           onClick={() => props.submitClick(props.category)}

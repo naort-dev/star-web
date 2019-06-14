@@ -67,15 +67,18 @@ DropdownStyled.Options = styled.li`
   display: flex;
   align-items: center;
   height: 36px;
+  ${props => props.secondary && `
+    font-size: 20px;
+  `}
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {
     outline: none;
     font-family: Gilroy;
     padding: 8px 18px;
-    ${props => props.secondary ? `
-      color: ${props.theme.flatBlue};
-    ` : `
-      background: ${props.theme.veryLightPinkTwo};
+    background: ${props => props.theme.veryLightPinkTwo};
+    ${props => props.secondary && `
+      font-family: Gilroy-Medium;
+      font-size: 18px;
     `}
   }
 `;

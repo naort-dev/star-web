@@ -12,7 +12,7 @@ import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
-import { GroupRegistration } from '../UserRegistration';
+// import { GroupRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import {
   setSocialMediaData,
@@ -542,17 +542,17 @@ class SignupFlow extends React.Component {
               data={this.state.socialData}
             />
           );
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-          return (
-            <GroupRegistration
-              currentStep={this.state.currentStep}
-              closeSignupFlow={() => this.closeSignUp()}
-              changeStep={this.changeStep}
-            />
-          );
+        // case 2:
+        // case 3:
+        // case 4:
+        // case 5:
+        //   return (
+        //     <GroupRegistration
+        //       currentStep={this.state.currentStep}
+        //       closeSignupFlow={() => this.closeSignUp()}
+        //       changeStep={this.changeStep}
+        //     />
+        //   );
         default:
           return null;
       }

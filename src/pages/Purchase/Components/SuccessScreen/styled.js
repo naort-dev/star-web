@@ -35,6 +35,11 @@ export const Layout = styled.section`
       height: calc(100% - 39px) !important;
     }
   }
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
 `;
 export const Content = styled.section`
   max-width: 319px;
@@ -42,16 +47,17 @@ export const Content = styled.section`
   margin: 0 auto;
   text-align: center;
   font-family: Gilroy;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   ${media.webView} {
-    max-width: 400px;
+    max-width: 100%;
+    padding: 0 75px;;
   }
   .highFive {
     color: #ff6c58;
     padding-bottom: 8px;
     padding-top: 15px;
     ${media.webView} {
-      padding-top: 33px;
+      padding-top: 24px;
     }
   }
   .orderSuccess {
@@ -60,7 +66,7 @@ export const Content = styled.section`
     line-height: 39px;
     width: 220px;
     margin: 0 auto;
-    padding-bottom: 29px;
+    padding-bottom: 24px;
     ${media.webView} {
       width: 100%;
       font-size: 34px;
@@ -70,7 +76,7 @@ export const Content = styled.section`
     color: #4b4b4b;
     font-size: 16px;
     line-height: 24px;
-    padding-bottom: 24px;
+    padding-bottom: 48px;
   }
   .browseBtn {
     width: 300px;

@@ -1,10 +1,12 @@
 import React from 'react';
-// import { ReactMic } from 'react-mic';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
-import { AudioRecorderDiv, Ripple } from './styled';
+import { AudioRecorderDiv } from './styled';
 import { checkMediaRecorderSupport } from '../../utils/checkOS';
+import { audioRecordHandler } from '../../store/shared/actions/commonActions';
 
-export default class AudioRecorder extends React.Component {
+class AudioRecorder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,14 +38,19 @@ export default class AudioRecorder extends React.Component {
 
   onAudioEnded() {
     this.setState({ play: false });
+    this.props.audioRecordHandler({ recording: false, playing: false });
   }
 
   stopRecording = () => {
     this.setState({ stop: true, start: false, status: 'completed' });
+    this.props.audioRecordHandler({ recording: false, playing: false });
   };
 
   startRecording = () => {
-    this.setState({ start: true, stop: false, active: true });
+    if (!this.props.audioFlags.recording && !this.props.audioFlags.playing) {
+      this.setState({ start: true, stop: false, active: true });
+      this.props.audioRecordHandler({ recording: true, playing: false });
+    }
   };
 
   deleteRecording(target) {
@@ -51,15 +58,19 @@ export default class AudioRecorder extends React.Component {
   }
 
   playRecording(target) {
-    this.url = this.props.audioRecorder.recorded[target].recordedUrl;
-    this.audio.src = this.url;
-    this.audio.play();
-    this.setState({ play: true });
+    if (!this.props.audioFlags.recording && !this.props.audioFlags.playing) {
+      this.url = this.props.audioRecorder.recorded[target].recordedUrl;
+      this.audio.src = this.url;
+      this.audio.play();
+      this.setState({ play: true });
+      this.props.audioRecordHandler({ recording: false, playing: true });
+    }
   }
 
   pauseRecording() {
     this.audio.pause();
     this.setState({ play: false });
+    this.props.audioRecordHandler({ recording: false, playing: false });
   }
 
   saveRecording(recordedBlob) {
@@ -96,6 +107,9 @@ export default class AudioRecorder extends React.Component {
           )}
           <AudioRecorderDiv.ControlWrapper
             className={this.state.start && 'recording'}
+            recording={
+              this.props.audioFlags.playing || this.props.audioFlags.recording
+            }
           >
             {(audio[target] && audio[target].recordedBlob) ||
             (audio[target] && audio[target].recordedUrl) ? (
@@ -104,6 +118,10 @@ export default class AudioRecorder extends React.Component {
                   <React.Fragment>
                     <AudioRecorderDiv.PlayButton
                       onClick={() => this.playRecording(target)}
+                      playing={
+                        this.props.audioFlags.playing ||
+                        this.props.audioFlags.recording
+                      }
                     >
                       Play Back
                     </AudioRecorderDiv.PlayButton>
@@ -121,6 +139,10 @@ export default class AudioRecorder extends React.Component {
                 )}
                 <AudioRecorderDiv.Rerecord
                   onClick={() => this.reRecording(target)}
+                  recording={
+                    this.props.audioFlags.playing ||
+                    this.props.audioFlags.recording
+                  }
                 >
                   Record
                 </AudioRecorderDiv.Rerecord>{' '}
@@ -145,7 +167,13 @@ export default class AudioRecorder extends React.Component {
                     type="button"
                     role="presentation"
                   >
-                    <AudioRecorderDiv.Icon icon={faMicrophone} />
+                    <AudioRecorderDiv.Icon
+                      icon={faMicrophone}
+                      recording={
+                        this.props.audioFlags.playing ||
+                        this.props.audioFlags.recording
+                      }
+                    />
                   </div>
                 )}
               </React.Fragment>
@@ -191,3 +219,34 @@ export default class AudioRecorder extends React.Component {
     );
   }
 }
+
+AudioRecorder.propTypes = {
+  audioFlags: PropTypes.object,
+  audioRecordHandler: PropTypes.func.isRequired,
+  audioRecorder: PropTypes.object,
+  saveAudioRecording: PropTypes.func,
+  resetRecording: PropTypes.func,
+};
+
+AudioRecorder.defaultProps = {
+  audioFlags: {},
+  audioRecorder: {},
+  saveAudioRecording: () => {},
+  resetRecording: () => {},
+};
+
+const mapStateToProps = state => ({
+  audioFlags: state.commonReducer.audioFlags,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    audioRecordHandler: audioFlags => {
+      dispatch(audioRecordHandler(audioFlags));
+    },
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AudioRecorder);

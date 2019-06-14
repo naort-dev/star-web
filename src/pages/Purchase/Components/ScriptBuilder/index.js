@@ -129,6 +129,16 @@ class ScriptBuilder extends Component {
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
         booking_statement: this.state.script,
+        event_guest_honor:
+          this.props.bookingData.templateType === 7
+            ? this.props.bookingData.specification
+            : '',
+        from_where: this.props.bookingData.specification,
+        event_title:
+          this.props.bookingData.templateType === 6
+            ? this.props.bookingData.specification
+            : '',
+        someone_else: this.props.bookingData.user !== 'Myself',
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(
@@ -140,7 +150,7 @@ class ScriptBuilder extends Component {
   };
   render() {
     return (
-      <Layout>
+      <Layout className="content-wrapper">
         <Script
           scriptText={this.props.bookingData.scriptText}
           script={this.state.script}
@@ -167,15 +177,17 @@ class ScriptBuilder extends Component {
             placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…."
           />
         </TextAreaWrapper>
-        <FlexBoxCenter>
+        <FlexBoxCenter className="private-checkbox">
           <Checkbox
             placeholder=" Make my video private"
             onChange={this.handleCheck}
             checked={this.props.checked}
           />
         </FlexBoxCenter>
-        <FlexCenter>
-          <Button onClick={this.submitClick}>Continue</Button>
+        <FlexCenter className="button-wrapper">
+          <Button onClick={this.submitClick} className="continue-button">
+            Continue
+          </Button>
         </FlexCenter>
       </Layout>
     );

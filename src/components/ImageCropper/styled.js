@@ -17,7 +17,7 @@ CropperStyled.CropperWrapper = styled.div`
   width: calc(100% - 20px);
   height: 261.6px;
   @media(min-width: 832px) {
-    height: 477px;
+    height: 486px;
   }
   img {
     max-width: 100%;
@@ -86,7 +86,7 @@ CropperStyled.ButtonWrapper = styled.div`
     }
   }
   @media (max-width: 831px) {
-    margin-top: 96px;
+    margin-top: 30px;
     flex-direction: column;
   }
   @media (min-width: 832px) {
