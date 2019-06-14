@@ -60,6 +60,7 @@ export default class RequestFlowPopup extends React.Component {
         fullScreen={this.state.fullScreen}
         open
         disableBackdropClick={this.props.modalView}
+        PaperProps={this.props.paperProps}
         classes={{ paper: 'paper-root' }}
         onRendered={this.onModalMount}
         onClose={this.props.closePopUp}

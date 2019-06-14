@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { CloseButton } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
+import { requestTypes } from '../../constants/requestTypes';
 import StarView from './components/StarView';
 import Loader from '../Loader';
 import { getRequestDetails } from '../../services/request';
@@ -19,9 +21,6 @@ const BookingCard = (props) => {
   }
 
   const setDetails = (state) => () => {
-    // if (state) {
-    //   document.getElementsByClassName('paper-root')[0].setAttribute('style', 'transition: 1s ease; transform: rotateY(180deg);');
-    // }
     toggleDetails(state);
   }
 
@@ -36,6 +35,39 @@ const BookingCard = (props) => {
     }
   }, [props.bookingModal.requestId]);
 
+
+  const renderHeading = () => {
+    if (requestTypes[requestData.request_type] === 'Q&A') {
+      return (
+        <React.Fragment>
+            <strong>Question</strong>&nbsp;
+            from&nbsp;
+            <strong>
+              {
+                requestData.fan
+              }
+            </strong>
+        </React.Fragment>
+      )
+    }
+    return (
+      <React.Fragment>
+        <strong>{requestData.occasion}</strong>&nbsp;
+          {requestTypes[requestData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
+          <strong>
+            { requestData.request_details && requestData.request_details.stargramto !== 'Myself' ? requestData.request_details.stargramto : requestData.fan }
+          </strong>
+          {
+            requestData.request_details && requestData.request_details.stargramto !== 'Myself' ?
+              <React.Fragment>
+                &nbsp;from <strong>{requestData.request_details.stargramto}</strong>
+              </React.Fragment>
+            : null
+          }
+      </React.Fragment>
+    )
+  }
+
   const { starMode } = props.bookingModal;
 
   return (
@@ -47,23 +79,35 @@ const BookingCard = (props) => {
         !requestData ?
           <Loader />
         :
-          <BookingStyled>
-            {
-              !showDetails && starMode &&
-                <StarView
-                  bookingData={requestData}
-                  toggleDetails={setDetails}
-                  closeModal={closeModal}
-                />
-            }
-            {
-              showDetails &&
+          <BookingStyled.Wrapper>
+            <CloseButton className="close-btn" onClick={closeModal} />
+            <BookingStyled.HeaderText>
+              {renderHeading()}
+            </BookingStyled.HeaderText>
+            <BookingStyled showDetails={showDetails}>
+              <BookingStyled.Booking>
+                {
+                  starMode &&
+                    <StarView
+                      bookingData={requestData}
+                      toggleDetails={setDetails}
+                      closeModal={closeModal}
+                    />
+                }              
+              </BookingStyled.Booking>
+              <BookingStyled.OrderWrapper>
+                <BookingStyled.Heading>
+                  Order Details
+                </BookingStyled.Heading>
                 <OrderDetails
                   closeModal={closeModal}
+                  disableHeader
+                  onPrimaryClick={setDetails(false)}
                   bookingData={requestData}
                 />
-            }
-          </BookingStyled>
+              </BookingStyled.OrderWrapper>
+            </BookingStyled>
+          </BookingStyled.Wrapper>
       }
     </RequestFlowPopup>
   )
