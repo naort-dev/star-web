@@ -2,22 +2,27 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  width: 336px;
-  max-width: 336px;
-  margin: 0 auto;
-  ${media.webView} {
-    max-width: 567px;
-    width: 567px;
-    margin: 0;
-  }
-  ${media.smallScreen} {
-    max-width: 300px;
-  }
+  width: 100%;
   .activityCard {
     padding: 22px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+
+    &.last-child {
+      margin-bottom: 0;
+    }
+    .activityCard-inner {
+      width: 100%;
+    }
     ${media.smallScreen} {
       padding: 10px;
+    }
+    @media(max-width: 831px) {
+      padding: 17px 22px;
+      margin-bottom: 13px;
+      min-height: 74px;
     }
     .web-padding {
       ${media.webView} {
@@ -76,8 +81,11 @@ export const Layout = styled.section`
     font-family: Gilroy-Bold;
     font-size: 18px;
     color: #5d5d5d;
-    padding-top: 30px;
-    padding-bottom: 21px;
+    padding-top: 32px;
+    padding-bottom: 18px;
+    @media(max-width: 831px) {
+      padding-top: 17px;
+    }
   }
   .web-icons {
     display: inherit;
@@ -109,6 +117,7 @@ export const Layout = styled.section`
   }
   .tick-text {
     display: none;
+    white-space: nowrap;
     ${media.webView} {
       display: flex;
     }

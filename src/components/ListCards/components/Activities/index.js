@@ -86,7 +86,7 @@ const ActivityCard = props => {
         onClick={() => props.cardClick({ data: card, ...props.callBackProps })}
         key={index}
       >
-        <FlexBox>
+        <FlexBox className="activityCard-inner">
           <span className="web-icons">
             {icon}
             <FlexColumn className={elmProps.flexClass}>
@@ -136,7 +136,7 @@ const ActivityCard = props => {
       })}
 
       <Card className="activityCard">
-        <FlexBox>
+        <FlexBox className="activityCard-inner">
           <span className="web-icons">
             {Heart}
             <FlexColumn className="web-padding">
@@ -155,8 +155,8 @@ const ActivityCard = props => {
         </FlexBox>
       </Card>
 
-      <Card className="activityCard">
-        <FlexBox>
+      <Card className="activityCard last-child">
+        <FlexBox className="activityCard-inner">
           <span className="web-icons">
             {Dollar}
             <FlexColumn className="web-padding">

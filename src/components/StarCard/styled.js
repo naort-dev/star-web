@@ -2,19 +2,12 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  width: 336px;
-  max-width: 336px;
-  margin: 0 auto;
-  ${media.webView} {
-    max-width: 567px;
-    width: 567px;
-    margin: 0;
-  }
-  ${media.smallScreen} {
-    max-width: 300px;
+  width: 100%
+  &.customStar-layout {
+    margin-bottom: 10px;
   }
   .headLbl {
-    font-size: 26px;
+    font-size: 40px;
     ${media.smallScreen} {
       font-size: 24px;
     }
@@ -25,6 +18,12 @@ export const Layout = styled.section`
       display: flex;
       padding-bottom: 5px;
       font-family: Gilroy-Medium;
+      @media(max-width: 831px) {
+        padding-bottom: 3px;
+      }
+    }
+    @media(max-width: 831px) {
+      font-size: 26px;
     }
   }
   .earnings {
@@ -48,7 +47,10 @@ export const Layout = styled.section`
       padding: 10px;
     }
     ${media.webView} {
-      padding: 37px 30px;
+      padding: 29px 38px 23px;
+    }
+    @media(max-width: 831px) {
+      padding: 21px 23px 13px;
     }
   }
   .earningPercentage {
@@ -60,6 +62,24 @@ export const Layout = styled.section`
     padding-bottom: 22px;
     ${media.webView} {
       display: none;
+    }
+    @media(max-width: 831px) {
+      padding-top: 7px;
+      padding-bottom: 16px;
+    }
+  }
+  .rating-wrap {
+    align-items: flex-start;
+    .rating-label {
+
+    }
+    .rating {
+      margin-top: 1px;
+      .start-rate {
+        @media(max-width: 831px) {
+          font-size: 17px !important;
+        }
+      }
     }
   }
   .flex-start {
@@ -121,6 +141,12 @@ export const Value = styled.span`
 `;
 export const Summary = styled.ul`
   ${media.webView} {
-    padding-top: 25px;
+    padding-top: 19px;
+  }
+  li {
+    padding-bottom: 9px;
+    @media(max-width: 831px) {
+      padding-bottom: 6px;
+    }
   }
 `;
