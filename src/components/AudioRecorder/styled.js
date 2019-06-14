@@ -6,11 +6,11 @@ const AudioRecorderDiv = styled.div`
   position: relative;
   width: ${props => props.recorded && '100%'};
   .voice-progress {
-    // background: url('assets/images/voice.svg') no-repeat center/100% auto;
-    // width: 101px;
-    // height: 20px;
-    // margin-top: -4px;
-    // margin-right: 10px;
+    /* background: url('assets/images/voice.svg') no-repeat center/100% auto;
+    width: 101px;
+    height: 20px;
+    margin-top: -4px;
+    margin-right: 10px; */
   }
   .recording {
     justify-content: flex-end;

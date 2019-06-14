@@ -193,7 +193,7 @@ class AudioRecorder extends React.Component {
               <AudioRecorderDiv.PauseButton
                 onClick={() => this.handleRecorder()}
               >
-                Stop
+                Stop Recording
               </AudioRecorderDiv.PauseButton>
             )}
           </AudioRecorderDiv.ControlWrapper>

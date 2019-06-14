@@ -138,7 +138,7 @@ class ScriptBuilder extends Component {
           this.props.bookingData.templateType === 6
             ? this.props.bookingData.specification
             : '',
-        someone_else: this.props.bookingData.user !== 'Myself',
+        is_myself: this.props.bookingData.user === 'Myself',
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(

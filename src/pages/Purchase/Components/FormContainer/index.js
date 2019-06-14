@@ -109,6 +109,7 @@ function FormContainer(props) {
     });
     props.pageCountHandler(0);
     props.clearAudio();
+    props.audioRecordHandler({ recording: false, playing: false });
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
@@ -252,6 +253,7 @@ FormContainer.propTypes = {
   submitClick: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
   clearAudio: PropTypes.func.isRequired,
+  audioRecordHandler: PropTypes.func.isRequired,
 };
 FormContainer.defaultProps = {};
 
