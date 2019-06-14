@@ -58,12 +58,13 @@ export const registerUser = (
   referral,
 ) => (dispatch, getState) => {
   let tempDetails;
+  const signupDetails = getState().signupDetails;
   if(localStorage) {
     tempDetails = localStorage.getItem('tempAuthToken');
   }
   dispatch(registerFetchStart());
   let method = 'post';
-  if (!isEmpty(tempDetails)) {
+  if (!isEmpty(tempDetails)|| !isEmpty(signupDetails.email)) {
     method = 'put';
   }
   let header = {

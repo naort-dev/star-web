@@ -53,6 +53,14 @@ export const COMPLETE_SIGNUP = {
   SECONDARY_BUTTON: 'Skip for now ',
 }
 
+export const CONFIRM_PASSWORD = {
+  TITLE1:`Let's start by creating your password`,
+  SUB_TITLE: `Passwords must be a minimum of 8 characters and include at least one special character like !?@#`,
+  FIRST_INPUT_TEXT: 'Password',
+  SECOND_INPUT_TEXT: 'Confirm Password',
+  BUTTON_TEXT: 'Continue',
+}
+
 export const convertedApplePrice = (actualPrice, inAppPriceList) => {
     const priceText = actualPrice < 1000 || !actualPrice ? `In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`
     : 'Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99. They will still be able to book you using their browser (mobile or desktop) or the Android app.';

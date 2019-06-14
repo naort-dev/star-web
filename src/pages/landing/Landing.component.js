@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import MobileHome from './components/MobileHome';
+import { parseQueryString } from '../../utils/dataformatter';
 import LandingStyled from './styled';
 
 export default class Landing extends React.Component {
@@ -21,6 +22,11 @@ export default class Landing extends React.Component {
       this.props.fetchFeaturedStars();
     }
     window.addEventListener('resize', this.handleResize);
+    const queryString = this.props.location ? parseQueryString(this.props.location.search): ''; 
+    if (queryString.demo_user === 'true' && !this.props.isLoggedIn) {
+      this.props.setDemoUser(true);
+      this.props.toggleSignup(true);
+    }
   }
 
   componentDidMount() {
