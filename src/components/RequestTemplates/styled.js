@@ -22,6 +22,7 @@ Templates.InputWrapper = styled.div`
   .content-wrapper & {
     @media (max-width: 832px) {
       width: 100%;
+      margin-bottom: 25px;
     }
   }
   .select-material {

@@ -39,7 +39,7 @@ class ScriptBuilder extends Component {
     this.starDataSet2 = [
       {
         size: '34px',
-        horizontal: '94%',
+        horizontal: '92%',
         vertical: '35px',
         rotation: '0deg',
         color: '#46829a',
