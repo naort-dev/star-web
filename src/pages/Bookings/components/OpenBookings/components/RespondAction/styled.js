@@ -7,6 +7,7 @@ export const Layout = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
+  height: 493px;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -196,7 +197,7 @@ export const QuestionContainer = styled.section`
     padding-left: 24px;
     padding-top: 30px;
     padding-bottom: 25px;
-    bottom: 58px;
+    bottom: 0;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;

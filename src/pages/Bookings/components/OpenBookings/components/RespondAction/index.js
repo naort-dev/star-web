@@ -366,6 +366,7 @@ const Question = props => {
         ? props.buttonLabel.primary.continue
         : props.buttonLabel.primary.record,
       qusList: [...[questions[0]], ...qusList],
+      continueFlg: false,
     });
   }, [props.bookedItem, props.buttonLabel]);
 
