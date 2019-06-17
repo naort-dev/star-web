@@ -95,12 +95,12 @@ SignUpMethod.Button = styled.button`
 
 SignUpMethod.Icon = styled.div`
   color: #2f839d;
-  font-size: 59px;
+  font-size: 51px;
   &.insta {
-    font-size: 58px;
+    font-size: 51px;
   }
   &.google {
-    font-size: 57px;
+    font-size: 51px;
   }
 `;
 
@@ -109,9 +109,9 @@ SignUpMethod.SocialMediaIcon = styled.div`
 `;
 
 SignUpMethod.SocialMediaLabel = styled.div`
-  font-family: Gilroy-Light;
+  font-family: Gilroy;
   font-size: 14px;
-  line-height: 1.43;
+  line-height: 20px;
   text-align: center;
   color: #2f839d;
 `;

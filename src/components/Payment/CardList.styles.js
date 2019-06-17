@@ -17,6 +17,7 @@ export const Li = styled.li`
   border-radius: 30px;
   font-family: Gilroy-Bold;
   font-size: 18px;
+  line-height: 20px;
   color: #2f839d;
   margin: 0 auto;
   position: relative;
@@ -37,6 +38,15 @@ export const Li = styled.li`
     margin-left: 10px;
     background: url('../../assets/images/card-icons/default-icon.svg') no-repeat;
   }
+
+  &.selected .brand:after {
+    background: url('../../assets/images/card-icons/default-icon-white.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 100% 100%;
+    top: 19px;
+  }
+
   .closeBtn {
     position: absolute;
     right: 17px;
