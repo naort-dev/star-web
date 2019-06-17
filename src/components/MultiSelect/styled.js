@@ -62,8 +62,8 @@ const MultiSelectStyled = styled.div`
       background: rgb(255, 255, 255);
       //height: 26.7px;
       margin: 0 5px 5px 0px;
-      padding: 0px 3px 0 12px;
-      border-radius: 16px;
+      padding: 0px 8px 0 12px;
+      border-radius: 15px;
 
       .fans-want &,
       .select-category & {
@@ -73,16 +73,15 @@ const MultiSelectStyled = styled.div`
       }
     }
     .select__multi-value__label {
-      padding-left: 0px;
-      padding-right: 4px;
+      padding: 0 4px 0 0;
       font-family: Gilroy-Regular;
       font-size: 14px;
+      line-height: 18px
       color: ${props => props.theme.greyishBrown};
       .fans-want &,
       .select-category & {
         font-family: Gilroy-Medium;
         font-size: 16px;
-        line-height: 18px;
         padding: 5px 5px 3px 0;
       }
     }

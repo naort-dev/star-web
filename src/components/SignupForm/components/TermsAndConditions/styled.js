@@ -16,6 +16,10 @@ const TermsConditionsWrapper = styled.div`
       margin-bottom: 22px;
       margin-top: 4px;
     }
+
+    p p:not(:last-child) {
+      margin-bottom: 15px
+    }
   }
 `;
 

@@ -96,10 +96,16 @@ UploadContainer.Heading = styled.div`
     margin: 0 auto 9px;
     &.fans-want {
       max-width: 190px;
+      & ~.upload-wrap {
+        margin-bottom: 30px
+      }
     }
     &.select-category {
       max-width: 260px;
       white-space: pre-line;
+      & ~.upload-wrap {
+        margin-bottom: 30px
+      }
     }
   }
 `;
@@ -147,7 +153,7 @@ UploadContainer.CategoriesWrapper = styled.div`
       margin-bottom: 10px;
     }
     + div {
-      margin-top: 43px;
+      margin-top: 24px;
       @media (min-width: 832px) {
         margin-top: 28px;
       }
@@ -332,7 +338,7 @@ UploadContainer.MobileView = styled.div`
     margin: 0 auto 11px;
   }
   .select-input {
-    margin-top: 33px;
+    margin-top: 23px;
   }
 
   @media (min-width: 832px) {
