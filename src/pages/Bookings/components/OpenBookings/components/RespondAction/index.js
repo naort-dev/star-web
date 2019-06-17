@@ -10,7 +10,7 @@ import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
-import { BackArrow, CloseButton } from 'styles/CommonStyled';
+import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
@@ -442,7 +442,7 @@ const Question = props => {
                   {!stateObject.error && (
                     <React.Fragment>
                       <div>
-                        <h1 className="quesHead">What you should say...</h1> <span>...</span>
+                        <h1 className="quesHead">What you should say...</h1>
                         <QuestionBuilder questionsList={getQuestionList()} />
                         {props.bookedItem.request_type === 3 && (
                           <p className="agreement-note">

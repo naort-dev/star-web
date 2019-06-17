@@ -240,17 +240,17 @@ const Question = props => {
 
           {!stateObject.error && (
             <MobButtons>
-              {!stateObject.continueFlg && getFileUpload(['uploadBtn'])}
               {getButton(
                 false,
                 '',
                 buttonClickHandler,
                 stateObject.buttonLabel,
               )}
-              {stateObject.continueFlg &&
-                (props.recorded || isIOSDevice()
-                  ? getFileUpload(['uploadLink'])
-                  : getRecordLink())}
+              {props.recorded ||
+              isIOSDevice() ||
+              stateObject.buttonLabel === 'Record'
+                ? getFileUpload(['uploadLink'])
+                : getRecordLink()}
             </MobButtons>
           )}
 
