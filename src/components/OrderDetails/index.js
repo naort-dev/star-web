@@ -12,6 +12,7 @@ const OrderDetails = (props) => {
   const { bookingData } = props;
 
   const renderHeading = () => {
+    const requestDetails = bookingData.request_details;
     if (requestTypes[bookingData.request_type] === 'Q&A') {
       return (
         <React.Fragment>
@@ -30,12 +31,12 @@ const OrderDetails = (props) => {
         <strong>{bookingData.occasion}</strong>&nbsp;
           {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ? bookingData.request_details.stargramto : bookingData.fan }
+            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : bookingData.fan }
           </strong>
           {
-            bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ?
+            requestDetails && !requestDetails.is_myself ?
               <React.Fragment>
-                &nbsp;from <strong>{bookingData.request_details.stargramto}</strong>
+                &nbsp;from <strong>{requestDetails.stargramto}</strong>
               </React.Fragment>
             : null
           }

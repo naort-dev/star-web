@@ -19,6 +19,7 @@ const CompletedCard = (props) => {
   const [requestVideo, setRequestVideo] = useState({});
 
   const renderDescription = () => {
+    const requestDetails = props.data.request_details;
     if (requestTypes[props.data.request_type] === 'Q&A') {
       return (
         <React.Fragment>
@@ -37,12 +38,12 @@ const CompletedCard = (props) => {
         <HeadingBold>Birthday</HeadingBold>&nbsp;
           {requestTypes[props.data.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <HeadingBold>
-            { props.data.request_details && props.data.request_details.stargramto !== 'Myself' ? props.data.request_details.stargramto : props.data.fan }
+            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : props.data.fan }
           </HeadingBold>
           {
-            props.data.request_details && props.data.request_details.stargramto !== 'Myself' ?
+            requestDetails && !requestDetails.is_myself ?
               <React.Fragment>
-                &nbsp;from <HeadingBold>{props.data.request_details.stargramto}</HeadingBold>
+                &nbsp;from <HeadingBold>{requestDetails.stargramto}</HeadingBold>
               </React.Fragment>
             : null
           }
