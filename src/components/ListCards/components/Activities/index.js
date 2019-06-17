@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, FlexCenter, TickText } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -79,7 +79,70 @@ const Dollar = (
 );
 
 const ActivityCard = props => {
+  const [recentList, updateRecent] = useState([]);
+  useEffect(() => {
+    const activityList = [];
+    if (props.data.open_booking_count > 0) {
+      activityList.push({
+        style: elmStyles[0],
+        primary: true,
+        icon: Tick,
+        card: {
+          heading: `${props.data.open_booking_count} Open bookings`,
+          value_main: '1 expiring soon',
+          value_sub: '',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        },
+      });
+    }
+    if (props.data.activity_count > 0) {
+      activityList.push({
+        style: elmStyles[0],
+        primary: false,
+        icon: Heart,
+        card: {
+          heading: `${props.data.recent_tip_count} Tips`,
+          value_main: `1 comment | 2 responses`,
+          value_sub: '2 ratings',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        },
+      });
+    }
+    if (props.data.recent_tip_count > 0) {
+      activityList.push({
+        style: elmStyles[0],
+        primary: false,
+        icon: Dollar,
+        card: {
+          heading: `${props.data.recent_tip_count} Tips`,
+          value_main: `Total: $${props.data.recent_tip_amount}`,
+          value_sub: '',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        },
+      });
+    }
+    if (props.data.payment > 0) {
+      activityList.push({
+        style: elmStyles[0],
+        primary: false,
+        icon: Dollar,
+        card: {
+          heading: `You’ve got money!`,
+          value_main: `$312.50 was deposited 3/15!`,
+          value_sub: '',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        },
+      });
+    }
+    updateRecent(activityList);
+  }, []);
+
   const getCard = (elmProps, btnType, icon, card, index) => {
+    debugger;
     return (
       <Card
         className="activityCard"
@@ -119,23 +182,27 @@ const ActivityCard = props => {
   return (
     <Layout>
       <h2 className="head2">Recent Activity</h2>
-      {[1, 2, 3].map((val, index) => {
+      {recentList.map((activity, index) => {
         return getCard(
-          elmStyles[0],
-          true,
-          Tick,
-          {
-            heading: '2 Open bookings',
-            value_main: '1 expiring soon',
-            value_sub: '',
-            btnTextPrimary: 'Respond',
-            btnTextSecondary: 'Now',
-          },
+          activity.style,
+          activity.primary,
+          activity.icon,
+          activity.card,
           index,
         );
       })}
 
-      <Card className="activityCard">
+      {recentList.length < 3 &&
+        earningList.map((activity, index) => {
+          return getCard(
+            activity.style,
+            activity.primary,
+            activity.icon,
+            activity.card,
+            index,
+          );
+        })}
+      {/* <Card className="activityCard">
         <FlexBox className="activityCard-inner">
           <span className="web-icons">
             {Heart}
@@ -168,7 +235,7 @@ const ActivityCard = props => {
             View <span className="btn-extra">&nbsp;Now</span>
           </Button>
         </FlexBox>
-      </Card>
+      </Card> */}
       <FlexCenter className="button-margin">
         <Button secondary className="button-promote">
           Increase Earnings! Promote Now
@@ -182,6 +249,7 @@ ActivityCard.propTypes = {
   buttonClick: PropTypes.func,
   cardClick: PropTypes.func,
   callBackProps: PropTypes.object,
+  data: PropTypes.object.isRequired,
 };
 
 ActivityCard.defaultProps = {
