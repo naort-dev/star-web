@@ -30,10 +30,10 @@ const OrderDetails = (props) => {
         <strong>{bookingData.occasion}</strong>&nbsp;
           {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ? bookingData.request_details.stargramto : bookingData.fan }
+            { bookingData.request_details && !bookingData.request_details.is_myself ? bookingData.request_details.stargramto : bookingData.fan }
           </strong>
           {
-            bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ?
+            bookingData.request_details && !bookingData.request_details.is_myself ?
               <React.Fragment>
                 &nbsp;from <strong>{bookingData.request_details.stargramto}</strong>
               </React.Fragment>
