@@ -18,15 +18,9 @@ const TermsAndCondition = props => {
       <div className="termsWrapper">
         <Checkbox onChange={handleCheck} checked={props.checked} />
         <p>
-          I understand and accept that neither Star Name, nor Starsona nor any
-          of its affiliates or representatives endorses or recommends this event
-          in any way. Furthermore, I acknowledge and agree that neither Star
-          Name, nor Starsona nor any of its affiliates controls or guarantees
-          the relevance or completeness of information produced during this
-          event, and I agree to hold harmless Star Name, Starsona and its
-          affiliates and representatives from any liability for any and all
-          damage caused by or related to the use of the information as published
-          in this event.
+          {props.termText}
+          <br /> <br />
+          {props.qAndASub}
         </p>
       </div>
       <FlexBox className="button-wrapper">
@@ -49,9 +43,13 @@ TermsAndCondition.propTypes = {
   checked: PropTypes.bool.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   category: PropTypes.number,
+  termText: PropTypes.string,
+  qAndASub: PropTypes.string,
 };
 TermsAndCondition.defaultProps = {
   category: 0,
+  termText: '',
+  qAndASub: '',
 };
 
 export default TermsAndCondition;
