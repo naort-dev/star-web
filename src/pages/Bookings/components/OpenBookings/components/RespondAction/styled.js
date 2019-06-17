@@ -36,7 +36,6 @@ export const Layout = styled.section`
     font-family: Gilroy-Semibold;
     font-size: 14px;
     color: #7c7c7c;
-    display: inline-block;
   }
   .uploadLink {
     font-family: Gilroy;
@@ -198,7 +197,7 @@ export const QuestionContainer = styled.section`
     padding-left: 24px;
     padding-top: 30px;
     padding-bottom: 25px;
-    bottom: 0;
+    bottom: ${props => (props.isQA ? '-33px' : '0')};
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -246,16 +245,19 @@ export const QuestionContainer = styled.section`
   .agreement-note {
     font-family: Gilroy-Light;
     font-size: 12px;
-    color: #3b3b3b;
+    color: #fff;
     max-width: 215px;
     padding-left: 29px;
+    ${media.webView} {
+      color: #3b3b3b;
+    }
   }
 `;
 
 export const ShowHide = styled.span`
   display: block;
   position: absolute;
-  top: 440px;
+  bottom: ${props => (props.isQA ? '0' : '20px')};
   width: 224px;
   text-align: center;
   height: 30px;
@@ -265,6 +267,7 @@ export const ShowHide = styled.span`
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
+  z-index: 1001;
   ${media.webView} {
     display: none;
   }
@@ -302,7 +305,7 @@ export const WebButtons = styled.section`
 `;
 export const MobButtons = styled.section`
   position: absolute;
-  top: 490px;
+  bottom: ${props => (props.isQA ? ' -220px' : '-180px')};
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;
@@ -315,7 +318,10 @@ export const Header = styled.h4`
   font-family: Gilroy-Regular;
   color: ${props => props.theme.orangePink};
   font-size: 24px;
-  width: 310px;
+  width: 232px;
+  ${media.webView} {
+    width: 310px;
+  }
   margin: 0 auto;
   text-align: center;
   margin-bottom: 44.7px;
