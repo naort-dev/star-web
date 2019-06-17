@@ -16,13 +16,17 @@ import {
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
-import { setSignupFlow, completedSignup, clearSignupFlow } from './store/shared/actions/setSignupFlow';
+import {
+  setSignupFlow,
+  completedSignup,
+  clearSignupFlow,
+} from './store/shared/actions/setSignupFlow';
 import { toggleSignup } from './store/shared/actions/toggleModals';
 import { ComponentLoading } from './components/ComponentLoading';
 import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { Progress, Loading } from './styles/CommonStyled';
+import LoaderProgress from './components/Progress';
 import { StarProfile } from './pages/starProfile';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
@@ -95,7 +99,10 @@ class App extends React.Component {
       }
       if (this.props.cookies !== undefined) {
         const { cookies } = this.props;
-        cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
+        cookies.set('signupDetails', '', {
+          path: '/',
+          expires: new Date(Date.now() + 1000),
+        });
       }
     }
     if (
@@ -104,15 +111,18 @@ class App extends React.Component {
       (!nextProps.isLoggedIn || nextProps.userDataLoaded)
     ) {
       this.setState({ showLoading: false });
-      const {cookies} = this.props;  
+      const { cookies } = this.props;
       const signupData = cookies.get('signupDetails');
-      if(signupData !== undefined && this.props.signupDetails.completedSignup === undefined) {
-        if(new Date(signupData.expiryDate) > new Date()) {
-        this.props.setSignupFlow(signupData);
-        this.props.completedSignup(false);
-        this.props.toggleSignup(true);
+      if (
+        signupData !== undefined &&
+        this.props.signupDetails.completedSignup === undefined
+      ) {
+        if (new Date(signupData.expiryDate) > new Date()) {
+          this.props.setSignupFlow(signupData);
+          this.props.completedSignup(false);
+          this.props.toggleSignup(true);
         } else if (localStorage) {
-            localStorage.removeItem('tempAuthToken');
+          localStorage.removeItem('tempAuthToken');
         }
       }
     }
@@ -134,12 +144,7 @@ class App extends React.Component {
     const showRoutes = !showLoading;
     return (
       <div>
-        {this.props.loader && (
-          <Loading>
-            <Progress />
-          </Loading>
-        )}
-
+        <LoaderProgress />
         <Toast />
         <div id="content-wrapper">
           <Modals />
@@ -266,7 +271,6 @@ App.propTypes = {
   configLoading: PropTypes.bool.isRequired,
   userDataLoaded: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
-  loader: PropTypes.bool.isRequired,
 };
 
 const mapState = state => ({
@@ -274,7 +278,6 @@ const mapState = state => ({
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
-  loader: state.commonReducer.loader,
   signupDetails: state.signupDetails,
 });
 
@@ -296,9 +299,11 @@ const mapProps = dispatch => ({
   completedSignup: value => dispatch(completedSignup(value)),
 });
 
-export default withCookies(withRouter(
-  connect(
-    mapState,
-    mapProps,
-  )(App),
-));
+export default withCookies(
+  withRouter(
+    connect(
+      mapState,
+      mapProps,
+    )(App),
+  ),
+);

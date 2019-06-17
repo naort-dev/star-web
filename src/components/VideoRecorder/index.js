@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { checkMediaRecorderSupport, isIOSDevice } from '../../utils/checkOS';
 import { Progress } from './styled';
 import { PlayButton } from '../../styles/CommonStyled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
 import Button from '../PrimaryButton';
 
 class VideoRecorder extends Component {
@@ -17,7 +19,7 @@ class VideoRecorder extends Component {
     this.recordedBlobs = [];
     this.superBuffer = null;
     this.videoSrc = null;
-    this.isStoped = false;
+    this.alreadyStopped = false;
     this.recordingDate = null;
     this.state = {
       progress: false,
@@ -35,9 +37,12 @@ class VideoRecorder extends Component {
   }
 
   componentDidMount() {
-    this.fetchStream();
     if (this.props.videoSrc) {
       this.initialLoad();
+    }
+    if (this.props.shouldRecord) {
+      this.recordMedia();
+      this.setState({ progress: true, mediaControls: false });
     }
   }
 
@@ -52,14 +57,23 @@ class VideoRecorder extends Component {
       } else if (
         this.props.shouldRecord !== prevProps.shouldRecord &&
         !this.props.shouldRecord &&
-        !this.isStoped &&
+        !this.alreadyStopped &&
         this.props.forceStop
       ) {
         this.stopRecording();
+      } else if (
+        !this.props.shouldRecord &&
+        this.props.shouldRecord !== prevProps.shouldRecord
+      ) {
+        if (this.mediaRecorder) {
+          this.mediaRecorder.stop();
+        }
+        this.closeStream();
+        this.recordedBlobs = [];
       }
     }
 
-    if (this.props.videoSrc && this.props.videoSrc !== prevProps.videoSrc) {
+    if (this.props.videoSrc !== prevProps.videoSrc) {
       this.initialLoad();
     }
   }
@@ -70,22 +84,43 @@ class VideoRecorder extends Component {
     this.closeStream();
   }
 
+  getRetryBtn = () => {
+    if (this.props.uploader && !this.props.recorded) {
+      return (
+        <label
+          id="upload"
+          htmlFor="fileUpload"
+          className="retry uploadBtn uploadCustom"
+        >
+          <input
+            type="file"
+            id="fileUpload"
+            className="hidden"
+            accept="video/*"
+            onChange={this.props.uploadHandler}
+          />
+          Upload different video
+        </label>
+      );
+    }
+    return (
+      <Button className="retry" onClick={this.retryRecordHandler}>
+        Try Again
+      </Button>
+    );
+  };
+
   initialLoad = () => {
     this.videoSrc = this.props.videoSrc;
-    this.setState({ mediaControls: true });
+    if (this.props.videoSrc) this.setState({ mediaControls: true });
+    else this.setState({ mediaControls: false });
     const videoElem = this.video;
     videoElem.src = this.videoSrc;
     videoElem.load();
   };
 
-  fetchStream = () => {
-    if (checkMediaRecorderSupport()) {
-      //check
-    }
-  };
-
   recordMedia = () => {
-    this.isStoped = false;
+    this.alreadyStopped = false;
     this.superBuffer = null;
     this.videoSrc = null;
     this.recordedBlobs = [];
@@ -169,7 +204,6 @@ class VideoRecorder extends Component {
           ? remainingTime.seconds
           : `0${remainingTime.seconds}`
       }`;
-      // const recordedTimeString = `${recordedTime.minutes > 9 ? recordedTime.minutes : `0${recordedTime.minutes}`} : ${recordedTime.seconds > 9 ? recordedTime.seconds : `0${recordedTime.seconds}`}`;
       if (this.props.getRecordTime) {
         this.props.getRecordTime(remainingTimeString);
       }
@@ -178,36 +212,38 @@ class VideoRecorder extends Component {
   };
 
   stopRecording = () => {
-    let { recordedTime } = this.state;
+    const { recordedTime } = this.state;
     if (this.timerID != null) {
       clearTimeout(this.timerID);
     }
-    if (this.mediaRecorder) {
-      this.mediaRecorder.stop();
+    if (!isEmpty(this.recordedBlobs)) {
+      if (this.mediaRecorder) {
+        this.mediaRecorder.stop();
+      }
+      this.closeStream();
+      this.superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
+      this.videoSrc = window.URL.createObjectURL(this.superBuffer);
+      const recordedTimeString = `${
+        recordedTime.minutes > 9
+          ? recordedTime.minutes
+          : `0${recordedTime.minutes}`
+      } : ${
+        recordedTime.seconds > 9
+          ? recordedTime.seconds
+          : `0${recordedTime.seconds}`
+      }`;
+      this.props.updateMediaStore({
+        videoSrc: this.videoSrc,
+        superBuffer: this.superBuffer,
+        recordedTime: recordedTimeString,
+        recorded: true,
+      });
+      const videoElem = this.video;
+      videoElem.src = this.videoSrc;
+      videoElem.load();
+      this.alreadyStopped = true;
+      this.setState({ mediaControls: true });
     }
-    this.closeStream();
-    this.superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
-    this.videoSrc = window.URL.createObjectURL(this.superBuffer);
-    const recordedTimeString = `${
-      recordedTime.minutes > 9
-        ? recordedTime.minutes
-        : `0${recordedTime.minutes}`
-    } : ${
-      recordedTime.seconds > 9
-        ? recordedTime.seconds
-        : `0${recordedTime.seconds}`
-    }`;
-    this.props.updateMediaStore({
-      videoSrc: this.videoSrc,
-      superBuffer: this.superBuffer,
-      recordedTime: recordedTimeString,
-      recorded: true,
-    });
-    const videoElem = this.video;
-    videoElem.src = this.videoSrc;
-    videoElem.load();
-    this.isStoped = true;
-    this.setState({ mediaControls: true });
   };
 
   storeUpdate = () => {
@@ -259,32 +295,6 @@ class VideoRecorder extends Component {
       this.props.playPauseMediaAction();
     }
     this.setState({ mediaControls: false });
-  };
-
-  getRetryBtn = () => {
-    if (this.props.uploader && !this.props.recorded) {
-      return (
-        <label
-          id="upload"
-          htmlFor="fileUpload"
-          className="retry uploadBtn uploadCustom"
-        >
-          <input
-            type="file"
-            id="fileUpload"
-            className="hidden"
-            accept="video/*"
-            onChange={this.props.uploadHandler}
-          />
-          Upload different video
-        </label>
-      );
-    }
-    return (
-      <Button className="retry" onClick={this.retryRecordHandler}>
-        Try Again
-      </Button>
-    );
   };
 
   render() {

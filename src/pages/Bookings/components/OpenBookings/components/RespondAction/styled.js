@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Layout = styled.section`
   height: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
+  height: 493px;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -33,6 +36,7 @@ export const Layout = styled.section`
     font-family: Gilroy-Semibold;
     font-size: 14px;
     color: #7c7c7c;
+    display: inline-block;
   }
   .uploadLink {
     font-family: Gilroy;
@@ -42,6 +46,17 @@ export const Layout = styled.section`
     display: inline-block;
     text-align: center;
     padding-top: 20px;
+    display: block;
+    ${media.webView} {
+      display: none;
+    }
+  }
+  .web-link {
+    display: none;
+    padding-top: 0;
+    ${media.webView} {
+      display: block;
+    }
   }
   .hidden {
     display: none;
@@ -50,7 +65,9 @@ export const Layout = styled.section`
     width: 100%;
     display: inline-block;
     text-align: center;
-    border: 1px solid #2f839d;
+    ${media.webView} {
+      border: 1px solid #2f839d;
+    }
     color: #2f839d;
     height: 40px;
     line-height: 40px;
@@ -81,6 +98,7 @@ export const Layout = styled.section`
       font-family: Gilroy-Light;
       font-size: 16px;
       color: #cccccc;
+      cursor: pointer;
     }
     li + li:before {
       content: '|';
@@ -91,6 +109,53 @@ export const Layout = styled.section`
   }
   .questionWrapper {
     padding-bottom: 30px;
+    :last-of-type {
+      padding-bottom: 9px;
+    }
+  }
+  .next-btn {
+    display: none;
+    ${media.largeScreen} {
+      display: block;
+    }
+  }
+  .ques-item {
+    color: #2f2f2f !important;
+    font-family: Gilroy-Semibold !important;
+  }
+  .ans-item {
+    color: #2f2f2f !important;
+    font-family: Gilroy-Semibold !important;
+  }
+  .player-container {
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    .player-icon-wrap {
+      top: 50%;
+      transform: translateY(-50%);
+      bottom: unset;
+    }
+    .play-button {
+      width: 108px;
+      height: 108px;
+      svg {
+        font-size: 44px;
+      }
+    }
+  }
+  .disabled-btn {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .noSupportBtn {
+    position: absolute;
+    left: 0;
+    top: 285px;
+    ${media.webView} {
+      position: static;
+      margin-top: 40px;
+    }
   }
 `;
 
@@ -126,17 +191,18 @@ export const QuestionContainer = styled.section`
   ${props => props.isQA && `padding-top: 28px;`}
   display: flex;
   align-items: center;
-  flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
+  flex-direction: column;
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
-    height: 250px;
-    top: 235px;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    bottom: 0;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
-    width: 269px;
+    width: 319px;
     transform: translateX(-50%);
   }
   h1 {
@@ -169,7 +235,10 @@ export const QuestionContainer = styled.section`
   .boldTxt {
     font-family: Gilroy-Semibold;
     font-size: 16px;
-    color: #2f2f2f;
+    color: #fff;
+    ${media.webView} {
+      color: #2f2f2f;
+    }
   }
   .question {
     font-size: 16px;
@@ -179,13 +248,14 @@ export const QuestionContainer = styled.section`
     font-size: 12px;
     color: #3b3b3b;
     max-width: 215px;
+    padding-left: 29px;
   }
 `;
 
 export const ShowHide = styled.span`
   display: block;
   position: absolute;
-  top: 425px;
+  top: 440px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -232,7 +302,7 @@ export const WebButtons = styled.section`
 `;
 export const MobButtons = styled.section`
   position: absolute;
-  top: 485px;
+  top: 490px;
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;
@@ -240,4 +310,23 @@ export const MobButtons = styled.section`
   ${media.webView} {
     display: none;
   }
+`;
+export const Header = styled.h4`
+  font-family: Gilroy-Regular;
+  color: ${props => props.theme.orangePink};
+  font-size: 24px;
+  width: 310px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 44.7px;
+  .bold-head-name {
+    font-family: Gilroy-Bold;
+  }
+`;
+export const Speaker = styled(FontAwesomeIcon)`
+  font-size: 18px;
+  color: #2f839d;
+  margin-left: 9px;
+  margin-right: 9px;
+  ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
 `;

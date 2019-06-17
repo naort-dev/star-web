@@ -29,12 +29,13 @@ DetailStyled.StarName = styled.span`
     padding-top: 0;
     font-family: Gilroy-Regular;
     font-size: 74px;
-    height: 65px;
+    line-height: 78px;
     text-indent: -5px;
   }
   @media(max-width: 831px) {
-    padding-top: 16px;
+    padding-bottom: 16px;
     margin-bottom: -3px !important;
+    text-align: center;
     &.mob-big-name {
       padding-top: 24px;
       margin-bottom: 23px !important;
@@ -53,6 +54,9 @@ DetailStyled.Categories = styled.span`
     text-align: left;
     margin-bottom: 2px;
   }
+  @media(max-width: 831px) {
+    padding-bottom: 16px;
+  }
 `;
 
 DetailStyled.DescriptionWrapper = styled.span`
@@ -64,7 +68,6 @@ DetailStyled.DescriptionWrapper = styled.span`
 DetailStyled.Description = styled.span`
   font-family: Gilroy-Light;
   font-size: 14px;
-  padding-top: 20px;
   line-height: 19px;
   height: ${props => (props.showMore ? 'auto' : '97px')};
   overflow: hidden;
@@ -81,6 +84,7 @@ DetailStyled.Description = styled.span`
     color: ${props => props.theme.flatBlue}
   }
   @media(min-width: 832px) {
+    padding-top: 20px;
     font-size: 16px;
     line-height: 26px;
     height: ${props => (props.showMore ? 'auto' : '122px')};
@@ -96,6 +100,7 @@ DetailStyled.ProfileVideo = styled.div`
   @media(min-width: 832px) {
     width: 274px;
     height: 417px;
+    margin: 0 auto;
   }
 `;
 
@@ -213,6 +218,15 @@ DetailStyled.StarDetails = styled.div`
   display: flex;
   padding-top: 16px;
   align-items: flex-start;
+
+  &:empty {
+    display: none;
+  }
+
+  @media(max-width: 831px) {
+    padding-top: 0;
+    padding-bottom: 20px;
+  }
   .details-header {
     font-family: Gilroy;
     vertical-align: top;

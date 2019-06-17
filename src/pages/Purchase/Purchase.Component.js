@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { getStarName } from 'utils/dataToStringFormatter';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
+import { termsAnnouncement } from 'constants';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -20,6 +21,56 @@ import Header from './Components/Header';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
+const qAndATerms = (
+  <React.Fragment>
+    <p>
+      The information provided by the Star via a Starsona video, and any
+      information on the Starsona site/app, is for general informational and
+      entertainment purposes only. All information and entertainment provided by
+      the Star and/or Starsona is provided in good faith, however neither the
+      Star nor Starsona make a representation or warranty of any kind, express
+      or implied, regarding the accuracy, adequacy, validity, reliability,
+      availability, or completeness of any information provided.
+    </p>
+    <p>
+      Under no circumstance shall the Star or Starsona have any liability to you
+      for any loss or damage of any kind incurred as a result of the use of
+      Starsona or reliance on any information provided by the Star and/or
+      Starsona. Your use of Starsona and your reliance on any information
+      provided by the Star and/or Starsona is solely at your own risk.
+    </p>
+    <p>
+      Starsona videos and the site/app cannot and do not contain health,
+      medical, fitness, legal, or any type of professional advice. Any
+      information provided is for general informational and entertainment
+      purposes only, and is not, and should not be treated as, a substitute for
+      professional advice.
+    </p>
+    <p>
+      Accordingly, before taking any actions based upon such information, we
+      encourage you to consult with the appropriate, qualified professionals. We
+      do not provide any kind of health, medical, fitness, legal, or any type of
+      professional advice. The use or reliance on any information from a
+      Starsona video or the Starsona site/app is solely at your own risk.
+    </p>
+    <p>
+      Starsona videos do not create an attorney-client relationship, nor is it a
+      solicitation to offer legal advice. If you ignore this warning and convey
+      confidential information in a request, private message, or comment, there
+      is no duty to keep that information confidential or forego representation
+      adverse to your interests. Seek the advice of a licensed attorney in the
+      appropriate jurisdiction before taking any action that may affect your
+      rights. If you believe you have a claim against someone, consult an
+      attorney immediately, otherwise there is a risk that the time allotted to
+      bring your claim may expire.
+    </p>
+    <p>
+      ***If you think you may have a medical emergency, call your doctor or (in
+      the United States) 911 immediately. Always seek the advice of your doctor
+      before starting or changing treatment.***
+    </p>
+  </React.Fragment>
+);
 class Purchase extends Component {
   constructor(props) {
     super(props);
@@ -118,6 +169,7 @@ class Purchase extends Component {
           pageCount={this.props.pageCount}
           updateBookingData={this.props.updateBookingData}
           clearAudio={this.props.clearAll}
+          audioRecordHandler={this.props.audioRecordHandler}
         />
       );
     } else if (this.state.stepCount === 3) {
@@ -129,6 +181,9 @@ class Purchase extends Component {
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
+            termText={
+              this.state.category === 2 ? termsAnnouncement : qAndATerms
+            }
           />
         );
       } else if (this.state.category === 1) {
@@ -183,18 +238,10 @@ class Purchase extends Component {
   );
 
   getCustomStep = () => {
-    // if (this.state.stepCount === 3) {
-    //   if (this.state.category === 3) {
-    //     return this.getPaymentScreen();
-    //   }
-    // } else
     if (this.state.stepCount === 4) {
       if (this.state.category === 1 || this.state.category === 3) {
         return this.getPaymentScreen();
       }
-      // else if (this.state.category === 3) {
-      //   return <SuccessScreen closeHandler={this.clearStore} />;
-      // }
     } else if (this.state.stepCount === 5) {
       if (this.state.category === 1 || this.state.category === 3) {
         return <SuccessScreen closeHandler={this.clearStore} />;
@@ -410,6 +457,7 @@ class Purchase extends Component {
     this.props.clearAll();
     this.clearFormBuilderProps();
     this.props.headerUpdate('');
+    this.props.audioRecordHandler({ recording: false, playing: false });
   };
 
   clearMediaStore = () => {
@@ -418,6 +466,7 @@ class Purchase extends Component {
       superBuffer: null,
       recorded: false,
     });
+    this.props.audioRecordHandler({ recording: false, playing: false });
   };
 
   modalClose = () => {
@@ -478,6 +527,7 @@ Purchase.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
+  audioRecordHandler: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

@@ -39,7 +39,7 @@ class ScriptBuilder extends Component {
     this.starDataSet2 = [
       {
         size: '34px',
-        horizontal: '94%',
+        horizontal: '92%',
         vertical: '35px',
         rotation: '0deg',
         color: '#46829a',
@@ -138,7 +138,7 @@ class ScriptBuilder extends Component {
           this.props.bookingData.templateType === 6
             ? this.props.bookingData.specification
             : '',
-        someone_else: this.props.bookingData.user !== 'Myself',
+        is_myself: this.props.bookingData.user === 'Myself',
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(

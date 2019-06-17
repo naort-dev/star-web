@@ -13,13 +13,17 @@ export const Layout = styled.section`
     font-family: Gilroy;
     font-size: 16px;
     color: #797979;
+    padding-bottom: 20px;
+    ${media.mobileScreen} {
+      padding: 0 20px 20px;
+    }
   }
   .continue-btn {
+    height: 60px;
+    margin-bottom: 75px;
+    align-self: flex-end;
     ${media.webView} {
       margin-left: 37px;
-      height: 60px;
-      margin-bottom: 75px;
-      align-self: flex-end;
     }
   }
   &.content-wrapper {

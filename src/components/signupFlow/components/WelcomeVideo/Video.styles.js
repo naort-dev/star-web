@@ -75,7 +75,7 @@ export const VideoContainer = styled.section`
   }
   .playButton {
     position: absolute;
-    top: 54.8%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -190,7 +190,9 @@ export const PlayButton = styled.section`
   align-items: center;
   svg {
     font-size: 44px;
-    color: red;
+    color: #ff6c58;
+    width: 49.9px;
+    height: 49.9px;
   }
 `;
 

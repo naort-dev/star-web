@@ -75,6 +75,7 @@ const Question = props => {
 
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === 'Record') {
+      if (props.playPauseMediaFlg) props.playPauseMedia();
       if (isIOSDevice()) {
         videoRecordInput.current.click();
       } else {
@@ -122,9 +123,10 @@ const Question = props => {
       </Button>
     );
   };
-  const uploadHandler = (input, isIOS) => {
+  const uploadHandler = isIOS => input => {
     const file = input.target.files[0];
     if (file.type.startsWith('video/')) {
+      if (props.playPauseMediaFlg) props.playPauseMedia();
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
@@ -165,7 +167,7 @@ const Question = props => {
           id="fileUpload"
           className="hidden"
           accept="video/*"
-          onChange={uploadHandler}
+          onChange={uploadHandler()}
         />
         Upload video
       </label>
@@ -238,17 +240,17 @@ const Question = props => {
 
           {!stateObject.error && (
             <MobButtons>
-              {!stateObject.continueFlg && getFileUpload(['uploadBtn'])}
               {getButton(
                 false,
                 '',
                 buttonClickHandler,
                 stateObject.buttonLabel,
               )}
-              {stateObject.continueFlg &&
-                (props.recorded || isIOSDevice()
-                  ? getFileUpload(['uploadLink'])
-                  : getRecordLink())}
+              {props.recorded ||
+              isIOSDevice() ||
+              stateObject.buttonLabel === 'Record'
+                ? getFileUpload(['uploadLink'])
+                : getRecordLink()}
             </MobButtons>
           )}
 
@@ -288,7 +290,7 @@ const Question = props => {
         type="file"
         accept="video/*;capture=camcorder"
         className="videoInputCapture"
-        onChange={event => uploadHandler(event, true)}
+        onChange={uploadHandler(true)}
       />
     </Layout>
   );
@@ -302,7 +304,7 @@ Question.propTypes = {
   videoSrc: PropTypes.string,
   videoUploaded: PropTypes.bool,
   setVideoUploadedFlag: PropTypes.func.isRequired,
-  starNM: PropTypes.string.isRequired,
+  starNM: PropTypes.string,
   updateToast: PropTypes.func.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   recorded: PropTypes.bool,
@@ -315,6 +317,7 @@ Question.defaultProps = {
   videoUploaded: false,
   recorded: false,
   playPauseMediaFlg: false,
+  starNM: '',
 };
 
 function mapStateToProps(state) {

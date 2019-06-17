@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
 const CategoryPageStyled = styled.div`
-  margin-top: 185px;
-  height: calc(100vh - 185px);
-  @media(min-width: 832px) {
+  margin-top: 160px;
+  height: calc(100vh - 160px);
+  
+  @media(min-width: 832px) and (max-width: 1280px) {
+    margin-top: 235px;
+    height: calc(100vh - 235px);
+  }
+  @media(min-width: 1281px) {
     margin-top: 260px;
     height: auto;
   }
@@ -68,7 +73,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       left: 33px;
       top: calc(100% - 345px);
       padding: 0 6px;
-      background: ${props => props.theme.white};
+      //background: ${props => props.theme.white};
 
       .name {
         line-height: 42px;
@@ -171,6 +176,21 @@ CategoryPageStyled.FeaturedSection = styled.div`
   margin: 0 auto;
   margin-top: 24px;
   z-index: 1;
+
+
+
+  &:before {
+    @media(min-width: 832px) {
+      content: '';
+      position: absolute;
+      height:10px;
+      bottom:-5px;
+      left: 63px;
+      background:${props => props.theme.white};
+      width: 225px;
+    }
+  }
+
   &:after {
     content: ${props => `'${props.heading}'`};
     position: absolute;
@@ -208,6 +228,11 @@ CategoryPageStyled.FeaturedSection = styled.div`
     padding-bottom: 57px;
     padding-right: 0;
     margin-top: 20px;
+  }
+
+  @media (min-width: 832px) and (max-width: 1280px) {
+    margin-bottom: 30px;
+    padding-bottom: 57px;
   }
 `;
 

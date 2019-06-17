@@ -95,7 +95,7 @@ export const NotificationCount = styled.span`
   font-family: Gilroy-Medium;
   font-size: 16px;
   background-color: ${props => props.theme.orangePink};
-`
+`;
 
 export const Card = styled.section`
   border-radius: 10px;

@@ -47,6 +47,12 @@ export default (state = { ...initalState }, action) => {
         data: action.data,
       };
 
+    case BOOKINGS_LIST.update:
+      return {
+        ...state,
+        data: action.data,
+      };
+
     case BOOKINGS_LIST.reset:
       return initalState;
 

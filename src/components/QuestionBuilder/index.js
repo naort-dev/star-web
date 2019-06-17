@@ -9,7 +9,7 @@ const QuestionBuilder = ({ questionsList }) => {
   return (
     <React.Fragment>
       {questionsList.map(question => (
-        <React.Fragment>
+        <React.Fragment key={question.key}>
           {!isEmpty(question.question) && (
             <QuestionWrapper key={question.key} className="questionWrapper">
               <FontAwesomeIcon className="tick" icon={faCheck} />{' '}
