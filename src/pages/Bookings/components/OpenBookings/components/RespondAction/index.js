@@ -475,7 +475,7 @@ const Question = props => {
                 </QuestionContainer>
 
                 {!stateObject.error && (
-                  <MobButtons>
+                  <MobButtons isQA={props.bookedItem.request_type === 3}>
                     {getButton(
                       false,
                       '',
@@ -505,6 +505,7 @@ const Question = props => {
                         })
                       }
                       isShow={stateObject.showHideFlg}
+                      isQA={props.bookedItem.request_type === 3}
                     >
                       {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
                     </ShowHide>
