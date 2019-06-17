@@ -40,6 +40,10 @@ class VideoRecorder extends Component {
     if (this.props.videoSrc) {
       this.initialLoad();
     }
+    if (this.props.shouldRecord) {
+      this.recordMedia();
+      this.setState({ progress: true, mediaControls: false });
+    }
   }
 
   componentDidUpdate(prevProps) {

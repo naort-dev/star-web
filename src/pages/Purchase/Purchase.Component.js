@@ -184,7 +184,6 @@ class Purchase extends Component {
             termText={
               this.state.category === 2 ? termsAnnouncement : qAndATerms
             }
-            qAndASub={qAndASub}
           />
         );
       } else if (this.state.category === 1) {
