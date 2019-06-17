@@ -40,7 +40,7 @@ const NestedSelectStyled = styled.div`
       border-color: rgb(47, 131, 157);
       border-image: initial;
       background: rgb(255, 255, 255);
-      height: 26.7px;
+      //height: 26.7px;
       margin: 5px 5px 0 0px;
       padding: 0px 3px 0 12px;
       border-radius: 16px;

@@ -17,6 +17,14 @@ export const Layout = styled.section`
     ${media.mobileScreen} {
       padding: 0 20px 20px;
     }
+    p {
+      font-size: 16px;
+      line-height: 26px;
+
+      p:not(":last-child") {
+        margin-bottom:15px;
+      }
+    }
   }
   .continue-btn {
     height: 60px;
