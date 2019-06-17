@@ -21,7 +21,7 @@ export const Layout = styled.section`
       font-size: 16px;
       line-height: 26px;
 
-      p:not(":last-child") {
+      p:not(:last-child) {
         margin-bottom:15px;
       }
     }
