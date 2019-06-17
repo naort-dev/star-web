@@ -1,15 +1,24 @@
 import React from 'react';
+import {connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
 import PrimaryButton from '../PrimaryButton';
+import MoreActions from '../MoreActions';
+import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
 const OrderDetails = (props) => {
 
   const { bookingData } = props;
+
+  const onSelectAction = (option) => {
+    if (option.value === 'decline') {
+      props.toggleUpdateBooking(true, bookingData.booking_id, props.starMode);
+    }
+  }
 
   const renderHeading = () => {
     const requestDetails = bookingData.request_details;
@@ -63,6 +72,16 @@ const OrderDetails = (props) => {
           bookingData.request_details.booking_statement &&
             <Script script={bookingData.request_details.booking_statement} />
         }
+        <MoreActions
+          options={[{
+            label: 'Contact support',
+            value: 'contact',
+          }, {
+            label: 'Decline booking',
+            value: 'decline',
+          }]}
+          onSelectOption={onSelectAction}
+        />
         <span className='additional-info'>
           <span className='info-item title'>Additional information:</span>
           <span className='info-item value'>
@@ -106,6 +125,12 @@ OrderDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
   disableHeader: PropTypes.bool,
+  toggleUpdateBooking: PropTypes.func.isRequired,
+  starMode: PropTypes.bool.isRequired,
 }
 
-export default OrderDetails;
+const mapDispatchToProps = dispatch => ({
+  toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode))
+})
+
+export default connect(null, mapDispatchToProps)(OrderDetails);

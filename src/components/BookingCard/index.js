@@ -103,6 +103,7 @@ const BookingCard = (props) => {
                 <OrderDetails
                   closeModal={closeModal}
                   disableHeader
+                  starMode={starMode}
                   onPrimaryClick={setDetails(false)}
                   bookingData={requestData}
                 />

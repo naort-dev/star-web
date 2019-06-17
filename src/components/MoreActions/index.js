@@ -50,7 +50,7 @@ const MoreActions = (props) => {
   )
 }
 
-MoreActions.propTypes = {
+MoreActions.defaultProps = {
   onSelectOption: () => {},
 }
 

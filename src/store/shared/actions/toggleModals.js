@@ -6,7 +6,7 @@ export const TOGGLE_MODALS = {
   toggleRequestFlow: 'toggleRequestFlow/TOGGLE_MODAL',
   resetRequestFlow: 'resetRequestFlow/TOGGLE_MODAL',
   toggleBookingModal: 'toggleBookingModal/TOGGLE_MODAL',
-  togglePopup: 'togglePopup/TOGGLE_MODAL',
+  toggleUpdateBooking: 'toggleUpdateBooking/TOGGLE_MODAL',
 };
 
 export const toggleLogin = state => ({
@@ -44,9 +44,11 @@ export const resetRequestFlow = () => ({
   type: TOGGLE_MODALS.resetRequestFlow,
 });
 
-export const togglePopup = state => ({
-  type: TOGGLE_MODALS.togglePopup,
+export const toggleUpdateBooking = (state,requestId, starMode) => ({
+  type: TOGGLE_MODALS.toggleUpdateBooking,
   state,
+  requestId,
+  starMode,
 });
 
 export const toggleBookingModal = (state, bookingData, starMode) => ({
