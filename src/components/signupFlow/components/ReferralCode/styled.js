@@ -39,11 +39,11 @@ ReferralCodeWrapper.HeaderText = styled.div`
 
 ReferralCodeWrapper.Description = styled.div`
   font-family: Gilroy;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.57;
   letter-spacing: normal;
   text-align: center;
-  color: #f44336; 
+  color: #990000; 
 `;
 
 ReferralCodeWrapper.WrapsInput = styled.div`

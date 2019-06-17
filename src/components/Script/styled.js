@@ -15,7 +15,6 @@ export const ScriptContainer = styled(FlexCenter)`
 
     .content-wrapper &{
       top: -7px;
-      right: 9px;
     }
   }
 `;
