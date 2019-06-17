@@ -17,6 +17,22 @@ const ListingStyled = styled.div`
         }
       }
     }
+    // .latest-video {
+    //   li {
+    //     &:nth-child(3n) {
+    //       padding-right: 0;
+    //     }
+    //   }
+    // }
+    // .latest-response {
+    //   li {
+    //     &:nth-child(3n) {
+    //       padding-right: 0;
+    //     }
+    //   }
+    // }
+  }
+  @media (min-width: 362px) and (max-width: 831px) {
     .latest-video {
       li {
         &:nth-child(3n) {

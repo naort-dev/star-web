@@ -246,7 +246,7 @@ LoginContainer.InputWrapper = styled.div`
 LoginContainer.PrivacyContent = styled.div`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 1.57;
+  line-height: 22px;
   text-align: left;
   color: #555555;
   display: flex;

@@ -16,7 +16,7 @@ export const ListWrapper = styled.div`
 `;
 
 export const ListTag = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-Semibold;
   font-size: 14px;
   line-height: 20px;
   color: #7c7c7c;
