@@ -25,7 +25,7 @@ export const requestFetchFailed = error => ({
 export const changeBookingList = (requestId, requestStatus) => (dispatch, getState) => {
   let { data: bookingsList, count, offset, videoStatus } = getState().bookingsList;
   if (requestStatus === 5) { // decline bookings
-    bookingsList = bookingsList.filter(booking => booking.booking_id === requestId);
+    bookingsList = bookingsList.filter(booking => booking.booking_id !== requestId);
     offset -= 1;
     count -= 1;
   }
@@ -51,10 +51,11 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
       dispatch(loaderAction(false));
       if (resp.data && resp.data.success) {
         dispatch(requestFetchEnd());
-        dispatch(changeBookingList())
+        dispatch(changeBookingList(requestId, requestStatus))
       } else {
         dispatch(requestFetchEnd(requestId, requestStatus));
       }
+      return resp.data.success;
     })
     .catch(exception => {
       dispatch(requestFetchEnd());
@@ -64,7 +65,7 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
         message: exception.response.data.error.message,
         variant: 'error',
       }))
-    });
+    })
 };
 
 export const responseVideo = (requestId, fileName, callBack) => (

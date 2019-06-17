@@ -21,8 +21,8 @@ const MoreActions = (props) => {
   }
 
   return (
-    <MoreStyled>
-      <MoreStyled.EllipsIcon showList={showList} innerRef={anchorEl} onClick={openList}>
+    <MoreStyled className={props.classes.root}>
+      <MoreStyled.EllipsIcon className={props.classes.icon} showList={showList} innerRef={anchorEl} onClick={openList}>
         <FontAwesomeIcon icon={faEllipsisH} />
         <span className='quick-arrow' />
       </MoreStyled.EllipsIcon>
@@ -52,11 +52,13 @@ const MoreActions = (props) => {
 
 MoreActions.defaultProps = {
   onSelectOption: () => {},
+  classes: {},
 }
 
 MoreActions.propTypes = {
   onSelectOption: PropTypes.func,
   options: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default MoreActions;

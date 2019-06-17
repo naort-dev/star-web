@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
+import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
 import ToolTip from 'components/ToolTip';
@@ -263,6 +264,12 @@ const Question = props => {
     return stateObject.qusList;
   };
 
+  const onSelectAction = (option) => {
+    if (option.value === 'decline') {
+      props.toggleUpdateBooking(true, props.bookedItem.booking_id, true);
+    }
+  }
+
   const playAudio = audioFile => () => {
     if (playing) {
       setPlaying(false);
@@ -347,7 +354,6 @@ const Question = props => {
   };
 
   useEffect(() => {
-    console.log(props.bookedItem);
     const qusList = [
       {
         key: 'que2',
@@ -441,8 +447,19 @@ const Question = props => {
                 >
                   {!stateObject.error && (
                     <React.Fragment>
-                      <div>
-                        <h1 className="quesHead">What you should say...</h1> <span>...</span>
+                      <div className='question-wrapper'>
+                        <h1 className="quesHead">What you should say...</h1>
+                        <MoreActions
+                          classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                          options={[{
+                            label: 'Contact support',
+                            value: 'contact',
+                          }, {
+                            label: 'Decline booking',
+                            value: 'decline',
+                          }]}
+                          onSelectOption={onSelectAction}
+                        />
                         <QuestionBuilder questionsList={getQuestionList()} />
                         {props.bookedItem.request_type === 3 && (
                           <p className="agreement-note">
@@ -593,6 +610,7 @@ function mapStateToProps(state) {
     videoFile: state.commonReducer.file,
   };
 }
+
 export default connect(
   mapStateToProps,
   null,
