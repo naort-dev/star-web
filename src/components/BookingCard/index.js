@@ -37,6 +37,7 @@ const BookingCard = (props) => {
 
 
   const renderHeading = () => {
+    const requestDetails = requestData.request_details;
     if (requestTypes[requestData.request_type] === 'Q&A') {
       return (
         <React.Fragment>
@@ -55,12 +56,12 @@ const BookingCard = (props) => {
         <strong>{requestData.occasion}</strong>&nbsp;
           {requestTypes[requestData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { requestData.request_details && !requestData.request_details.is_myself ? requestData.request_details.stargramto : requestData.fan }
+            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
           </strong>
           {
-            requestData.request_details && !requestData.request_details.is_myself ?
+            requestDetails && !requestDetails.is_myself ?
               <React.Fragment>
-                &nbsp;from <strong>{requestData.request_details.stargramto}</strong>
+                &nbsp;from <strong>{requestDetails.stargramto}</strong>
               </React.Fragment>
             : null
           }
