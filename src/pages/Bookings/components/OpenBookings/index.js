@@ -33,6 +33,7 @@ const buttonLabel = {
 };
 
 const OpenBookings = props => {
+  
   const clearVideo = () => {
     props.updateMediaStore({
       videoSrc: null,
@@ -40,11 +41,14 @@ const OpenBookings = props => {
       recordedTime: null,
       recorded: false,
     });
+    if (props.shouldRecord) props.recordTrigger();
+    if (props.playPauseMediaFlg) props.playPauseMedia();
   };
   const [selectedBooking, updateSelectedBooking] = useState({});
   const [cardClicked, updateCardClicked] = useState(false);
   const [initialSelected, setInitialSelected] = useState(false);
   const [uploadSuccessFlg, setUploadSuccess] = useState(false);
+
   const updateSelected = booking => () => {
     props.updateSelected(booking.booking_id);
     updateCardClicked(true);
@@ -101,7 +105,7 @@ const OpenBookings = props => {
     props.updateBookingList(temp);
     clearVideo();
     setUploadSuccess(false);
-    updateCardClicked(false);
+    updateCardClicked(true);
   };
 
   useEffect(() => {
@@ -244,6 +248,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export default connect(
-  null,
+  state => {
+    return {
+      shouldRecord: state.commonReducer.shouldRecord,
+      playPauseMediaFlg: state.commonReducer.playPauseMedia,
+    };
+  },
   mapDispatchToProps,
 )(OpenBookings);
