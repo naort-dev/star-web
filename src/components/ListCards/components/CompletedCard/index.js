@@ -37,10 +37,10 @@ const CompletedCard = (props) => {
         <HeadingBold>Birthday</HeadingBold>&nbsp;
           {requestTypes[props.data.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <HeadingBold>
-            { props.data.request_details && props.data.request_details.stargramto !== 'Myself' ? props.data.request_details.stargramto : props.data.fan }
+            { props.data.request_details && !props.data.request_details.isMyself ? props.data.request_details.stargramto : props.data.fan }
           </HeadingBold>
           {
-            props.data.request_details && props.data.request_details.stargramto !== 'Myself' ?
+            props.data.request_details && !props.data.request_details.isMyself ?
               <React.Fragment>
                 &nbsp;from <HeadingBold>{props.data.request_details.stargramto}</HeadingBold>
               </React.Fragment>
