@@ -36,6 +36,7 @@ export const Layout = styled.section`
     font-family: Gilroy-Semibold;
     font-size: 14px;
     color: #7c7c7c;
+    display: inline-block;
   }
   .uploadLink {
     font-family: Gilroy;
@@ -325,7 +326,7 @@ export const Header = styled.h4`
 export const Speaker = styled(FontAwesomeIcon)`
   font-size: 18px;
   color: #2f839d;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 9px;
+  margin-right: 9px;
   ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
 `;
