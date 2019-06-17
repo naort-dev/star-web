@@ -17,6 +17,9 @@ const Payment = props => {
   useEffect(() => {
     if (props.sourceList && Object.keys(props.sourceList).length === 0)
       props.fetchSourceList();
+    else {
+      props.loaderAction(false);
+    }
   }, []);
 
   const contentSwitchCallback = value => {

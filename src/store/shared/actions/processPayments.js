@@ -115,14 +115,9 @@ export const fetchSourceList = callBack => dispatch => {
     .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(sourceListFetchSuccess(resp.data.data.cards));
-        if (callBack) {
-          callBack();
-        } else {
-          dispatch(loaderAction(false));
-        }
-      } else {
-        dispatch(loaderAction(false));
+        if (callBack) callBack();
       }
+      dispatch(loaderAction(false));
     })
     .catch(exception => {
       dispatch(loaderAction(false));

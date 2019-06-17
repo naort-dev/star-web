@@ -442,7 +442,7 @@ const Question = props => {
                   {!stateObject.error && (
                     <React.Fragment>
                       <div>
-                        <h1 className="quesHead">What you should say...</h1>
+                        <h1 className="quesHead">What you should say...</h1> <span>...</span>
                         <QuestionBuilder questionsList={getQuestionList()} />
                         {props.bookedItem.request_type === 3 && (
                           <p className="agreement-note">
