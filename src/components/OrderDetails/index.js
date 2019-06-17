@@ -1,9 +1,11 @@
 import React from 'react';
+import {connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
 import PrimaryButton from '../PrimaryButton';
+import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
@@ -106,6 +108,12 @@ OrderDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
   disableHeader: PropTypes.bool,
+  toggleUpdateBooking: PropTypes.func.isRequired,
+  starMode: PropTypes.bool.isRequired,
 }
 
-export default OrderDetails;
+const mapDispatchToProps = dispatch => ({
+  toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode))
+})
+
+export default connect(null, mapDispatchToProps)(OrderDetails);

@@ -260,6 +260,8 @@ injectGlobal`
     margin: 0 auto;
   }
 }
-
+.alternate-modal-root {
+  background: #f6f6f6;
+}
 `
 ;

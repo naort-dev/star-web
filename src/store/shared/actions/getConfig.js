@@ -35,8 +35,10 @@ const processConfig = (config) => {
   const newConfig = { ...config };
   const tips = config.tip_amounts ? config.tip_amounts.split(',') : [];
   const requestFeedback = config.request_feedback ? config.request_feedback.split(',') : [];
+  const declineComments = config.decline_comments ? config.decline_comments.split(',') : [];
   newConfig.tipAmounts = tips;
   newConfig.requestFeedback = requestFeedback;
+  newConfig.declineComments = declineComments;
   return newConfig;
 };
 

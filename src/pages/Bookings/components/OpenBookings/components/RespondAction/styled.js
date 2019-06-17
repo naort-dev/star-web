@@ -204,6 +204,14 @@ export const QuestionContainer = styled.section`
     width: 319px;
     transform: translateX(-50%);
   }
+  .question-wrapper {
+    position: relative;
+    .more-action-root {
+      position: absolute;
+      top: -10px;
+      right: -11px;
+    }
+  }
   h1 {
     font-family: Gilroy;
     font-size: 18px;

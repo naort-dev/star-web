@@ -34,6 +34,8 @@ DropdownStyled.CurrentSelected = styled.span`
   text-align: left;
   width: calc(100% - 20px);
   color: ${props => props.theme.greyishBrown};
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 DropdownStyled.DropIcon = styled.span`
@@ -69,6 +71,7 @@ DropdownStyled.Options = styled.li`
   height: 36px;
   ${props => props.secondary && `
     font-size: 20px;
+    height: auto;
   `}
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {

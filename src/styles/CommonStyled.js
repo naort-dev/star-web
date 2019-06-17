@@ -138,3 +138,9 @@ export const EmptyText = styled.span`
   align-items: center;
   justify-content: center;
 `;
+
+export const PopupHeading = styled.span`
+  font-family: Gilroy-Regular;
+  color: ${props => props.theme.orangePink};
+  font-size: 24px;
+`;

@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { times, random } from 'lodash';
-import { Scrollbars } from 'react-custom-scrollbars';
 import PopupStyled from './styled';
 import { CloseButton } from '../../styles/CommonStyled';
 
-export default class RequestFlowPopup extends React.Component {
+class RequestFlowPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,23 +67,11 @@ export default class RequestFlowPopup extends React.Component {
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
+          className={`${this.props.classes.root} modal-root`}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}
           innerRef={this.popupContent}
         >
-          {/* {!this.props.modalView && (
-            <PopupStyled.SliderDotsWrapper>
-              {this.renderSliderDots()}
-            </PopupStyled.SliderDotsWrapper>
-          )} */}
-          {/* {
-            !this.props.modalView &&
-              <PopupStyled.CloseButton
-                smallPopup={this.props.smallPopup || this.props.largePopup}
-                onClick={this.props.closePopUp}
-                closeIconColor={this.props.closeIconColor}
-              />
-          } */}
           <PopupStyled.SmallContent>
             {this.props.children}
           </PopupStyled.SmallContent>
@@ -99,3 +87,15 @@ export default class RequestFlowPopup extends React.Component {
     return this.renderPopup();
   }
 }
+
+RequestFlowPopup.defaultProps = {
+  classes: {},
+  modalView: false,
+}
+
+RequestFlowPopup.propTypes = {
+  classes: PropTypes.object,
+  modalView: PropTypes.bool,
+}
+
+export default RequestFlowPopup
