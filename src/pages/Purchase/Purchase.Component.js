@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { getStarName } from 'utils/dataToStringFormatter';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
+import { termsAnnouncement, qAndATerms, qAndASub } from 'constants';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -130,6 +131,10 @@ class Purchase extends Component {
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
+            termText={
+              this.state.category === 2 ? termsAnnouncement : qAndATerms
+            }
+            qAndASub={qAndASub}
           />
         );
       } else if (this.state.category === 1) {
@@ -184,18 +189,10 @@ class Purchase extends Component {
   );
 
   getCustomStep = () => {
-    // if (this.state.stepCount === 3) {
-    //   if (this.state.category === 3) {
-    //     return this.getPaymentScreen();
-    //   }
-    // } else
     if (this.state.stepCount === 4) {
       if (this.state.category === 1 || this.state.category === 3) {
         return this.getPaymentScreen();
       }
-      // else if (this.state.category === 3) {
-      //   return <SuccessScreen closeHandler={this.clearStore} />;
-      // }
     } else if (this.state.stepCount === 5) {
       if (this.state.category === 1 || this.state.category === 3) {
         return <SuccessScreen closeHandler={this.clearStore} />;
