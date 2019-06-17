@@ -182,9 +182,9 @@ function RequestTemplates(
       ),
     );
   };
-  const getSpecification = (placeholder, state, fullWidth) => {
+  const getSpecification = (placeholder, state, fullWidth, isAudio) => {
     return getTextInput(
-      getFiledProps(placeholder, false, false, state, false, fullWidth),
+      getFiledProps(placeholder, isAudio, false, state, false, fullWidth),
     );
   };
   const getRelationship = fullWidth => {
@@ -261,6 +261,8 @@ function RequestTemplates(
                   {getSpecification(
                     "Who's the guest of honor?",
                     'specification',
+                    false,
+                    false,
                   )}
                 </React.Fragment>
               ) : (
@@ -270,6 +272,7 @@ function RequestTemplates(
                     "Who's the guest of honor?",
                     'specification',
                     true,
+                    false,
                   )}
                 </React.Fragment>
               )}
@@ -285,7 +288,12 @@ function RequestTemplates(
           const page2 = (
             <FlexBox>
               {getRelationship()}
-              {getSpecification("Who's the guest of honor?", 'specification')}
+              {getSpecification(
+                "Who's the guest of honor?",
+                'specification',
+                false,
+                false,
+              )}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -294,7 +302,12 @@ function RequestTemplates(
           const page1 = (
             <FlexBox>
               {getVideoFor('hostName')}
-              {getSpecification("Who's the guest of honor?", 'specification')}
+              {getSpecification(
+                "Who's the guest of honor?",
+                'specification',
+                false,
+                false,
+              )}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -312,6 +325,7 @@ function RequestTemplates(
                   {getSpecification(
                     `What is this ${bookingData.eventName} for`,
                     'specification',
+                    false,
                   )}
                 </React.Fragment>
               ) : (
@@ -339,6 +353,7 @@ function RequestTemplates(
               {getSpecification(
                 `What is this ${bookingData.eventName} for`,
                 'specification',
+                false,
               )}
             </FlexBox>
           );
@@ -351,6 +366,7 @@ function RequestTemplates(
               {getSpecification(
                 `What is this ${bookingData.eventName} for`,
                 'specification',
+                false,
               )}
             </FlexBox>
           );

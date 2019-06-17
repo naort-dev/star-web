@@ -17,11 +17,7 @@ const TermsAndCondition = props => {
     <Layout className="content-wrapper">
       <div className="termsWrapper">
         <Checkbox onChange={handleCheck} checked={props.checked} />
-        <p>
-          {props.termText}
-          <br /> <br />
-          {props.qAndASub}
-        </p>
+        <p>{props.termText}</p>
       </div>
       <FlexBox className="button-wrapper">
         <Button
@@ -44,12 +40,10 @@ TermsAndCondition.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   category: PropTypes.number,
   termText: PropTypes.string,
-  qAndASub: PropTypes.string,
 };
 TermsAndCondition.defaultProps = {
   category: 0,
   termText: '',
-  qAndASub: '',
 };
 
 export default TermsAndCondition;

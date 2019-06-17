@@ -9,7 +9,7 @@ export const Layout = styled.section`
     max-width: 480px;
   }
   .head1 {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-SemiBold;
     font-size: 24px;
     text-align: center;
     color: #7c7c7c;

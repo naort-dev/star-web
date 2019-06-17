@@ -11,7 +11,7 @@ import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
-import { BackArrow, CloseButton } from 'styles/CommonStyled';
+import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
@@ -492,7 +492,7 @@ const Question = props => {
                 </QuestionContainer>
 
                 {!stateObject.error && (
-                  <MobButtons>
+                  <MobButtons isQA={props.bookedItem.request_type === 3}>
                     {getButton(
                       false,
                       '',
@@ -522,6 +522,7 @@ const Question = props => {
                         })
                       }
                       isShow={stateObject.showHideFlg}
+                      isQA={props.bookedItem.request_type === 3}
                     >
                       {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
                     </ShowHide>

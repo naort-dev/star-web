@@ -207,7 +207,7 @@ export const MobButtons = styled.section`
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;
-  padding-top: 37px;
+  padding-top: 30px;
   ${media.webView} {
     display: none;
   }
