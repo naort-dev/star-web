@@ -57,6 +57,11 @@ TermsConditionsWrapper.Description = styled.p`
   text-align: left;
   color: #555555;
   padding: 0 0 10px;
+
+  .terms-wrapper & {
+    font-size: 16px;
+    line-height: 26px;
+  }
 `;
 TermsConditionsWrapper.Content = `
 

@@ -38,6 +38,10 @@ const MultiSelectStyled = styled.div`
       @media (max-width: 831px) {
         padding: 10px 0 0 !important;
       }
+
+      &.select__value-container--has-value .select__input {
+        margin-top: 6px;
+      }
     }
     .select__input {
       color: #615195;
@@ -56,14 +60,14 @@ const MultiSelectStyled = styled.div`
       border-color: rgb(47, 131, 157);
       border-image: initial;
       background: rgb(255, 255, 255);
-      height: 26.7px;
+      //height: 26.7px;
       margin: 0 5px 5px 0px;
       padding: 0px 3px 0 12px;
       border-radius: 16px;
 
       .fans-want &,
       .select-category & {
-        margin: 0 5px 5px 0px;
+        margin: 12px 5px 5px 0px;
         padding: 0px 3px 0 15px;
         border-radius: 15px;
       }
@@ -79,7 +83,7 @@ const MultiSelectStyled = styled.div`
         font-family: Gilroy-Medium;
         font-size: 16px;
         line-height: 18px;
-        padding: 5px 5px 5px 0;
+        padding: 5px 5px 3px 0;
       }
     }
     .select__multi-value__remove {
@@ -103,9 +107,11 @@ const MultiSelectStyled = styled.div`
     display: none;
   }
   .category-pill {
-    height: 26.7px;
-    margin: 1px 5px 10px 0;
-    padding: 0 12px;
+    // height: 26.7px;
+    // margin: 1px 5px 10px 0;
+    // padding: 0 12px;
+    margin: 0 5px 5px 0px;
+    padding: 0px 3px 0 12px;
     span {
       padding-left: 0;
       padding-right: 19px;
@@ -118,6 +124,10 @@ const MultiSelectStyled = styled.div`
     .select__menu-list {
       border-radius: 25px;
       padding: 8px 8.9px;
+       & > div {
+         height: auto;
+         line-height: 16px !important;
+       }
     }
     &:after {
       position: absolute;

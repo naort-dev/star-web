@@ -58,7 +58,9 @@ const Payment = props => {
           <CloseButton onClick={props.closeHandler} />
         </FlexCenter>
       </SubHeader>
-      <Scrollbars className="customScroll">
+      <Scrollbars className="customScroll" renderView={prop => (
+        <div {...prop} className="scrollRenderView" />
+      )}>
         {Object.keys(props.celebDetails).length > 0 && (
           <Layout>
             {Object.keys(props.celebDetails).length > 0 &&

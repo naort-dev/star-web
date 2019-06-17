@@ -21,9 +21,9 @@ UploadContainer.Wrapper = styled.div`
   }
 
   .error-msg {
-    @media (min-width: 832px) {
-     // margin-bottom: -20px;
-    }
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #990000;
   }
 `;
 
@@ -81,7 +81,7 @@ UploadContainer.Heading = styled.div`
       & ~.upload-wrap {
         padding-top: 58px;
         padding-bottom: 0;
-        margin-bottom: 15px
+        margin-bottom: 57px
       }
     }
     &.select-category {
@@ -113,7 +113,7 @@ UploadContainer.CategoriesWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 auto 40px;
+    margin: 0 auto 60px;
 
     &.fans-want {
       padding-bottom: 2px;
@@ -138,17 +138,18 @@ UploadContainer.CategoriesWrapper = styled.div`
     font-size: 18px !important;
     white-space: pre-line;
     line-height: 25px;
-    top: -5px;
+    top: -12px;
     &.input-label-shrink {
       font-size: 13px !important;
       line-height: 18px;
       color: #555 !important;
       margin-top: 15px;
+      margin-bottom: 10px;
     }
     + div {
       margin-top: 43px;
       @media (min-width: 832px) {
-        margin-top: 33px;
+        margin-top: 28px;
       }
     }
   }
@@ -201,11 +202,14 @@ UploadContainer.BrowseCategories = styled.div`
   @media (max-width: 831px) {
     color: #b7b7b7;
   }
+  .select__multi-value {
+    margin-top: 6px;
+  }
   .select__multi-value__label {
     font-family: Gilroy-Medium;
     font-size: 16px;
     line-height: 18px;
-    padding: 5px 5px 5px 0;
+    padding: 5px 5px 3px 0;
   }
 `;
 
@@ -285,6 +289,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     width: 100%;
   }
   .subCategoryHeading {
+    color: #555;
     font-family: Gilroy-SemiBold;
     font-size: 19px;
     line-height: 23px;

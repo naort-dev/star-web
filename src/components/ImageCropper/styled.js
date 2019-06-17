@@ -121,7 +121,7 @@ CropperStyled.ButtonWrapper = styled.div`
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;
   background-color: #ededed;
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-SemiBold;
   font-size: 18px;
   text-align: center;
   color: #2f839d;
