@@ -4,7 +4,6 @@ const initalState = {
   homeFeatured: {
     title: '',
     data: [],
-    homeVideos: {},
   },
   loading: false,
   error: null,
@@ -31,9 +30,7 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         homeFeatured: {
           title: action.title,
-          data: action.list,
-          homeVideos: action.homePageVideos,
-        },
+          data: action.list,        },
       };
 
     case FEATURED_STARS.successCategory:

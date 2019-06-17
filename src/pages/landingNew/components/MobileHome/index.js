@@ -146,7 +146,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.VideoWrapper>
                   <VideoRender
                     autoPlay
-                    videoSrc={featuredStars.homeFeatured.homeVideos.star_video && featuredStars.homeFeatured.homeVideos.star_video.url}
+                    videoSrc="assets/videos/landing-star-video.mp4"
                     variableHeight
                     cover="assets/images/default-cover.jpg"
                   />
@@ -164,7 +164,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.VideoWrapper className="small-video">
                   <VideoRender
                     autoPlay
-                    videoSrc={featuredStars.homeFeatured.homeVideos.fan_video && featuredStars.homeFeatured.homeVideos.fan_video.url}
+                    videoSrc="assets/videos/landing-fan-video.MOV"
                     variableHeight
                     cover="assets/images/default-cover.jpg"
                   />
