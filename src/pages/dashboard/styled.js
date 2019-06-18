@@ -43,7 +43,7 @@ export const Layout = styled.section`
       width: 310px;
     }
     @media (min-width: 832px) {
-      width: 522px;
+      width: 560px;
     }
     @media (min-width: 1280px) {
       width: 567px;
