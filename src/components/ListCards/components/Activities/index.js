@@ -120,7 +120,7 @@ const ActivityCard = props => {
           heading: `${recentCount} Recent activities`,
           value_main: `${props.data.recent_comment_count} comment | ${props.data.recent_reaction_video_count} responses`,
           value_sub: `${props.data.recent_rating_count} ratings`,
-          btnTextPrimary: 'Respond',
+          btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
           url: '/manage/bookings',
         },
@@ -135,7 +135,7 @@ const ActivityCard = props => {
           heading: `${props.data.recent_tip_count} Tips`,
           value_main: `Total: $${props.data.recent_tip_amount}`,
           value_sub: '',
-          btnTextPrimary: 'Respond',
+          btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
           url: '',
         },
@@ -150,7 +150,7 @@ const ActivityCard = props => {
           heading: `You’ve got money!`,
           value_main: `$312.50 was deposited 3/15!`,
           value_sub: '',
-          btnTextPrimary: 'Respond',
+          btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
           url: '',
         },
@@ -226,7 +226,7 @@ const ActivityCard = props => {
               <BoldTextM>
                 {card.value_main}
                 {card.value_sub && (
-                  <BoldTextM>
+                  <BoldTextM className="sub-content">
                     <span className="bar-separator">&nbsp;|&nbsp;</span>
                     {card.value_sub}
                   </BoldTextM>

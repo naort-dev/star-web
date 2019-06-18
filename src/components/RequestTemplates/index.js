@@ -242,7 +242,7 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
-              {getVideoFor('hostName')}
+              {getVideoFor('hostName', true)}
               {getDate(true)}
             </FlexBox>
           );

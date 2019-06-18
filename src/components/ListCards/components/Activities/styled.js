@@ -19,7 +19,7 @@ export const Layout = styled.section`
     ${media.smallScreen} {
       padding: 10px;
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding: 17px 22px;
       margin-bottom: 13px;
       min-height: 74px;
@@ -35,10 +35,16 @@ export const Layout = styled.section`
         padding-left: 48px;
       }
     }
-    .bar-separator {
-      display: none;
+    .sub-content {
+      display: block;
       ${media.webView} {
         display: inline-block;
+      }
+      .bar-separator {
+        display: none;
+        ${media.webView} {
+          display: inline-block;
+        }
       }
     }
   }
@@ -68,6 +74,9 @@ export const Layout = styled.section`
   .button-promote {
     width: 329px;
     height: 55px;
+    ${media.smallScreen} {
+      font-size: 16px;
+    }
   }
   .button-margin {
     padding-top: 18px;
@@ -85,7 +94,7 @@ export const Layout = styled.section`
     color: #5d5d5d;
     padding-top: 32px;
     padding-bottom: 18px;
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding-top: 17px;
     }
   }
