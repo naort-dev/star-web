@@ -33,7 +33,7 @@ export const Layout = styled.section`
 export const UserCardWrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 45px;
 `;
 
 export const TopSection = styled.section`
@@ -101,13 +101,12 @@ export const BottomSection = styled.section`
     font-family: Gilroy-MediumItalic;
     font-size: 12px;
     color: #555555;
-    padding-top: 10px;
+    padding-top: 5px;
     text-align: center;
     width: 188px;
     margin: 0 auto;
     ${media.webView} {
       width: 100%;
-      padding-top: 5px;
       padding-left: 0;
     }
   }
