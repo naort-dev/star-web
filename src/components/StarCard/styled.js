@@ -7,10 +7,7 @@ export const Layout = styled.section`
     margin-bottom: 10px;
   }
   .headLbl {
-    font-size: 40px;
-    ${media.smallScreen} {
-      font-size: 24px;
-    }
+    font-size: 26px;
     font-family: Gilroy-Semibold;
     &:before {
       font-size: 14px;
@@ -22,8 +19,11 @@ export const Layout = styled.section`
         padding-bottom: 3px;
       }
     }
-    @media(max-width: 831px) {
-      font-size: 26px;
+    @media(min-width: 832px) {
+      font-size: 33px;
+    }
+    @media(min-width: 1280px) {
+      font-size: 40px;
     }
   }
   .earnings {
