@@ -229,12 +229,12 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {getVideoFor('hostName')} {getVideoFrom('userName')}
+              {getVideoFor('hostName', true)} {getVideoFrom('userName', true)}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {getRelationship()} {getDate(true)}
+              {getRelationship(true)} {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
