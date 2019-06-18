@@ -10,7 +10,16 @@ const Dashboard = props => {
   useEffect(() => {
     props.getDashboardData();
   }, []);
-  const goBack = () => {};
+  const goBack = () => {
+    props.history.goBack();
+  };
+  const buttonClickHandler = card => {
+    props.history.push(card.data.url);
+  };
+  const promoteClick = () => {
+    props.history.push('/manage/promotional-tools');
+  };
+
   return (
     <Layout>
       <SubHeader heading="My Starsona" onClick={goBack} />
@@ -18,7 +27,11 @@ const Dashboard = props => {
         <section className="middle-section">
           <StarCard data={props.dashBoardData} />
           {Object.keys(props.dashBoardData).length > 0 && (
-            <ActivityCard data={props.dashBoardData} />
+            <ActivityCard
+              data={props.dashBoardData}
+              buttonClick={buttonClickHandler}
+              promoteClick={promoteClick}
+            />
           )}
         </section>
         <Social>
@@ -32,6 +45,7 @@ const Dashboard = props => {
 Dashboard.propTypes = {
   getDashboardData: PropTypes.func.isRequired,
   dashBoardData: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default Dashboard;

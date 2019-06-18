@@ -22,6 +22,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Review Designs',
     btnTextSecondary: '',
+    url: '/manage/promotional-tools',
   },
   {
     heading: 'Create a sample video',
@@ -29,6 +30,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Create Video',
     btnTextSecondary: '',
+    url: '',
   },
   {
     heading: 'Consider your pricing',
@@ -36,6 +38,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update price',
     btnTextSecondary: '',
+    url: '',
   },
   {
     heading: 'Update your bio',
@@ -43,6 +46,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Referral program',
     btnTextSecondary: '',
+    url: '',
   },
   {
     heading: 'Referral program',
@@ -50,6 +54,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Check it out!',
     btnTextSecondary: '',
+    url: '',
   },
   {
     heading: 'Update your welcome video',
@@ -58,6 +63,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update video',
     btnTextSecondary: '',
+    url: '',
   },
 ];
 
@@ -80,40 +86,50 @@ const Dollar = (
 
 const ActivityCard = props => {
   const [recentList, updateRecent] = useState([]);
+  const [earningsList, updateEarnings] = useState([]);
   useEffect(() => {
     const activityList = [];
-    if (props.data.open_booking_count > 0) {
+    const recentCount =
+      props.data.recent_comment_count +
+      props.data.recent_reaction_video_count +
+      props.data.recent_rating_count;
+    if (props.data.open_booking_count > 0 && activityList.length < 3) {
       activityList.push({
         style: elmStyles[0],
-        primary: true,
+        secondary: false,
         icon: Tick,
         card: {
           heading: `${props.data.open_booking_count} Open bookings`,
-          value_main: '1 expiring soon',
+          value_main:
+            props.data.expiring_bookings > 0
+              ? `${props.data.expiring_bookings} expiring soon`
+              : '',
           value_sub: '',
           btnTextPrimary: 'Respond',
           btnTextSecondary: 'Now',
+          url: '/manage/bookings?type=open',
         },
       });
     }
-    if (props.data.activity_count > 0) {
+    if (recentCount > 0 && activityList.length < 3) {
       activityList.push({
-        style: elmStyles[0],
-        primary: false,
+        style: elmStyles[1],
+        secondary: true,
         icon: Heart,
         card: {
-          heading: `${props.data.recent_tip_count} Tips`,
-          value_main: `1 comment | 2 responses`,
-          value_sub: '2 ratings',
+          heading: `${recentCount} Recent activities`,
+          value_main: `${props.data.recent_comment_count} comment | ${props.data.recent_reaction_video_count} responses`,
+          value_sub: `${props.data.recent_rating_count} ratings`,
           btnTextPrimary: 'Respond',
           btnTextSecondary: 'Now',
+          url: '/manage/bookings',
         },
       });
     }
-    if (props.data.recent_tip_count > 0) {
+    if (props.data.recent_tip_count > 0 && activityList.length < 3) {
       activityList.push({
-        style: elmStyles[0],
-        primary: false,
+        style: elmStyles[1],
+        secondary: true,
         icon: Dollar,
         card: {
           heading: `${props.data.recent_tip_count} Tips`,
@@ -121,13 +137,14 @@ const ActivityCard = props => {
           value_sub: '',
           btnTextPrimary: 'Respond',
           btnTextSecondary: 'Now',
+          url: '',
         },
       });
     }
-    if (props.data.payment > 0) {
+    if (props.data.payment > 0 && activityList.length < 3) {
       activityList.push({
-        style: elmStyles[0],
-        primary: false,
+        style: elmStyles[1],
+        secondary: true,
         icon: Dollar,
         card: {
           heading: `You’ve got money!`,
@@ -135,14 +152,66 @@ const ActivityCard = props => {
           value_sub: '',
           btnTextPrimary: 'Respond',
           btnTextSecondary: 'Now',
+          url: '',
         },
       });
     }
     updateRecent(activityList);
+
+    const earnings = [];
+
+    if (activityList.length < 3 && earnings.length < 3) {
+      if (!props.data.social_promotion) {
+        earnings.push({
+          style: elmStyles[0],
+          secondary: true,
+          icon: Tick,
+          card: ctaList[1],
+        });
+      }
+      if (!props.data.condider_pricing && earnings.length < 3) {
+        earnings.push({
+          style: elmStyles[0],
+          secondary: true,
+          icon: Tick,
+          card: ctaList[3],
+        });
+      }
+
+      if (!props.data.has_biography && earnings.length < 3) {
+        earnings.push({
+          style: elmStyles[0],
+          secondary: true,
+          icon: Tick,
+          card: ctaList[4],
+        });
+      }
+      if (!props.data.has_referral && earnings.length < 3) {
+        earnings.push({
+          style: elmStyles[0],
+          secondary: true,
+          icon: Tick,
+          card: ctaList[5],
+        });
+      }
+      if (!props.data.update_welcome_video && earnings.length < 3) {
+        earnings.push({
+          style: elmStyles[0],
+          secondary: true,
+          icon: Tick,
+          card: ctaList[6],
+        });
+      }
+    }
+
+    updateEarnings(earnings);
   }, []);
 
+  const buttonClick = card => () => {
+    props.buttonClick({ data: card, ...props.callBackProps });
+  };
+
   const getCard = (elmProps, btnType, icon, card, index) => {
-    debugger;
     return (
       <Card
         className="activityCard"
@@ -168,9 +237,7 @@ const ActivityCard = props => {
           <Button
             secondary={btnType}
             className={elmProps.btnClass}
-            onClick={() =>
-              props.buttonClick({ data: card, ...props.callBackProps })
-            }
+            onClick={buttonClick(card)}
           >
             {card.btnTextPrimary}
             <span className="btn-extra">&nbsp;{card.btnTextSecondary}</span>
@@ -179,29 +246,52 @@ const ActivityCard = props => {
       </Card>
     );
   };
+
+  const getRecentActivity = () => {
+    if (recentList.length > 0)
+      return (
+        <React.Fragment>
+          <h2 className="head2">Recent Activity</h2>
+          {recentList.map((activity, index) => {
+            return getCard(
+              activity.style,
+              activity.secondary,
+              activity.icon,
+              activity.card,
+              index,
+            );
+          })}
+        </React.Fragment>
+      );
+
+    return <React.Fragment />;
+  };
+
+  const getEarnings = () => {
+    if (recentList.length < 3) {
+      return (
+        <React.Fragment>
+          <h2 className="head2">How can I increase my earnings?</h2>
+          {earningsList.map((earning, index) => {
+            return getCard(
+              earning.style,
+              earning.secondary,
+              earning.icon,
+              earning.card,
+              index,
+            );
+          })}
+        </React.Fragment>
+      );
+    }
+    return <React.Fragment />;
+  };
+
   return (
     <Layout>
-      <h2 className="head2">Recent Activity</h2>
-      {recentList.map((activity, index) => {
-        return getCard(
-          activity.style,
-          activity.primary,
-          activity.icon,
-          activity.card,
-          index,
-        );
-      })}
+      {getRecentActivity()}
+      {getEarnings()}
 
-      {recentList.length < 3 &&
-        earningList.map((activity, index) => {
-          return getCard(
-            activity.style,
-            activity.primary,
-            activity.icon,
-            activity.card,
-            index,
-          );
-        })}
       {/* <Card className="activityCard">
         <FlexBox className="activityCard-inner">
           <span className="web-icons">
@@ -237,7 +327,11 @@ const ActivityCard = props => {
         </FlexBox>
       </Card> */}
       <FlexCenter className="button-margin">
-        <Button secondary className="button-promote">
+        <Button
+          secondary
+          className="button-promote"
+          onClick={props.promoteClick}
+        >
           Increase Earnings! Promote Now
         </Button>
       </FlexCenter>
@@ -250,6 +344,7 @@ ActivityCard.propTypes = {
   cardClick: PropTypes.func,
   callBackProps: PropTypes.object,
   data: PropTypes.object.isRequired,
+  promoteClick: PropTypes.func.isRequired,
 };
 
 ActivityCard.defaultProps = {

@@ -30,6 +30,7 @@ export const Layout = styled.section`
       }
     }
     .todo-padding {
+      padding-right: 20px;
       ${media.webView} {
         padding-left: 48px;
       }
@@ -47,6 +48,7 @@ export const Layout = styled.section`
     min-width: 91px;
     min-height: 40px;
     font-size: 14px;
+    padding: 5px;
     ${media.webView} {
       min-width: 160px;
       width: 160px;
