@@ -47,7 +47,9 @@ MoreStyled.Popover = styled(Popover)`
 
 MoreStyled.Option = styled.span`
   display: block;
-  margin: 15px;
+  margin: 15px 0;
+  cursor: pointer;
+  padding: 0 15px;
 `;
 
 export default MoreStyled;

@@ -11,6 +11,7 @@ export const Content = styled.section`
   }
   .scrollRenderView {
     overflow: auto !important;
+    margin: 0 !important;
   }
 `;
 
@@ -19,6 +20,10 @@ export const ModalContainer = styled.section`
   height: 100%;
   .customScroll {
     height: calc(100% - 80px) !important;
+
+    & > div {
+      overflow: auto !important;
+    }
   }
 `;
 

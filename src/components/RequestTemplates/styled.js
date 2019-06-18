@@ -32,9 +32,10 @@ Templates.InputWrapper = styled.div`
   .input-field {
     color: #615195;
     font-size: 22px;
+    line-height: 25px;
     font-family: Gilroy-Medium;
     text-align: center;
-    padding: 6px 0 3px;
+    padding: 6px 0 5px;
   }
   .float-label {
     width: 100%;

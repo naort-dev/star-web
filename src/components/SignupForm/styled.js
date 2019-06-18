@@ -407,12 +407,13 @@ LoginContainer.WrapsInput = styled.div`
     }
   }
   input {
-    font-family: Gilroy;
+    font-family: Gilroy-Medium;
     font-size: 22px;
-    line-height: 1.14;
+    line-height: 25px;
     text-align: center;
     color: #615195;
     text-align: center;
+    padding: 6px 0 5px;
     &.input-label-first-name {
       &::-webkit-input-placeholder { font-size: 18px;}
       &:-moz-placeholder { font-size: 18px;}

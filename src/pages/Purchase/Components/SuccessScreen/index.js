@@ -15,7 +15,11 @@ const SuccessScreen = props => {
   return (
     <Layout className="content-wrapper">
       <CloseButton onClick={props.closeHandler} className="closeBtn" />
-      <Scrollbars className="successScroll">
+      <Scrollbars className="successScroll"
+       renderView={prop => (
+        <div {...prop} className="scrollRenderView" />
+      )}
+      >
         <FlexCenter>
           <span className="successImg" />
         </FlexCenter>

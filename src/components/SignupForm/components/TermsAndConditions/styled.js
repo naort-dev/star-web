@@ -16,6 +16,10 @@ const TermsConditionsWrapper = styled.div`
       margin-bottom: 22px;
       margin-top: 4px;
     }
+
+    p p:not(:last-child) {
+      margin-bottom: 15px
+    }
   }
 `;
 
@@ -57,6 +61,11 @@ TermsConditionsWrapper.Description = styled.p`
   text-align: left;
   color: #555555;
   padding: 0 0 10px;
+
+  .terms-wrapper & {
+    font-size: 16px;
+    line-height: 26px;
+  }
 `;
 TermsConditionsWrapper.Content = `
 
