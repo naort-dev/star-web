@@ -131,6 +131,7 @@ const OpenBookings = props => {
     } else {
       props.updateSelected('');
       updateSelectedBooking({});
+      updateCardClicked(false);
     }
     clearVideo();
   }, [props.selected, props.bookingsList.data]);

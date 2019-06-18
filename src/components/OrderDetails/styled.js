@@ -47,6 +47,10 @@ OrderStyled.DetailList = styled.ul`
       display: table-cell;
       padding-left: 10px;
       padding-bottom: 10px;
+      line-height: 25px;
+      .detail-comment {
+        display: block;
+      }
     }
   }
 `;

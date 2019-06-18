@@ -51,8 +51,14 @@ const GeneralList = (props) => {
     );
   };
 
+  const onCardClick = () => {
+    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+      props.onPrimaryClick();
+    }
+  }
+
   return (
-    <Card>
+    <Card onClick={onCardClick}>
       <GeneralStyled>
         <GeneralStyled.Section>
           <LeftContent className='left-content'>
