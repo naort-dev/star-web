@@ -91,6 +91,7 @@ class App extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      if (nextProps.isLoggedIn) this.props.dashBoardUpdate();
       this.props.fetchProfessionsList();
       this.props.fetchAllProfessions();
       this.props.clearSignupFlow();
