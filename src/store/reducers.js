@@ -7,7 +7,7 @@ import featuredStars from '../pages/landing/reducers/featuredStars';
 import trendingStars from '../pages/landing/reducers/trendingStars';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
-import starDetails from '../pages/starProfile/reducers'
+import starDetails from '../pages/starProfile/reducers';
 import professionsList from './shared/reducers/professionsList';
 import signupDetails from './shared/reducers/signupDetails';
 import groupTypes from './shared/reducers/groupTypes';
@@ -42,6 +42,7 @@ import memberList from '../pages/groupProfile/reducers/membersList';
 import groupTypesListing from './shared/reducers/groupTypeListing';
 import commonReducer from './shared/reducers/commonReducer';
 import subCategoryList from './shared/reducers/subCategoryLists';
+import dashBoard from '../pages/dashboard/reducers';
 
 const appReducer = combineReducers({
   config,
@@ -85,6 +86,7 @@ const appReducer = combineReducers({
   groupTypesListing,
   commonReducer,
   subCategoryList,
+  dashBoard,
 });
 
 const rootReducer = (state, action) => {

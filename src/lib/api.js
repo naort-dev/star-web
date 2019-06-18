@@ -9,7 +9,7 @@ class Api {
   static getGroupTypes = 'v1/user/group_types/';
   static getVideosList = 'v2/request/featured_videos/';
   static login = 'v1/user/login/';
-  static register = 'v2/user/register/'
+  static register = 'v2/user/register/';
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
   static socialMediaLogin = 'v1/user/socialsignup/';
   static authGetCelebDetails = 'v2/user/user_details/';
@@ -38,8 +38,10 @@ class Api {
   static updateNotification = 'v1/user/notification_settings/';
   static updatePhoto = 'v2/user/profileimages/';
   static celebrityProfile = 'v2/user/celebrity_profile/';
-  static getImageCredentials = imageType => `v1/user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
-  static getawsCredentials = (key, extension, fileType) => `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
+  static getImageCredentials = imageType =>
+    `v1/user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
+  static getawsCredentials = (key, extension, fileType) =>
+    `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'v1/request/change_request_status/';
   static rating = 'v1/user/fan/celebrity_rating/';
   static requestFeedback = 'v1/request/feedback/';
@@ -70,9 +72,12 @@ class Api {
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
   static getSubCategoryList = 'v2/user/professions/?parent=false';
-  static getGroupDetails = groupID => `v1/user/user_details/${groupID}/get_details`;
-  static getGroupMemberList = groupID => `v1/user/group_list/?account=${groupID}`;
+  static getGroupDetails = groupID =>
+    `v1/user/user_details/${groupID}/get_details`;
+  static getGroupMemberList = groupID =>
+    `v1/user/group_list/?account=${groupID}`;
+  static dashboardUpdate = 'v2/user/dashboard_update/';
+  static dashBoard = 'v2/user/celebrity_dashboard/';
 }
 
 export default Api;
-

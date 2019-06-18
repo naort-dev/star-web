@@ -28,24 +28,20 @@ import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import LoaderProgress from './components/Progress';
 import { StarProfile } from './pages/starProfile';
-// import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
-// import { StarSupporters } from './pages/starSupporters';
-// import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
 import { GroupListing } from './pages/groupListing';
 import { ManageUser } from './pages/manageUser';
-// import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import {
   fetchUserDetails,
   updateUserRole,
 } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
-import Loader from './components/Loader';
 import Toast from './components/Toast';
+import { dashBoardUpdate } from './services/userManagement';
 
 class App extends React.Component {
   constructor(props) {
@@ -87,6 +83,10 @@ class App extends React.Component {
       this.props.updateLoginStatus(userData);
       this.props.fetchUserDetails(userData.id);
     }
+  }
+
+  componentDidMount() {
+    this.props.dashBoardUpdate();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -255,7 +255,13 @@ class App extends React.Component {
               <Route path="/unauthorized" component={Unauthorized} />
               <Route path="/not-found" component={Page404} />
               {/* <Route exact path="/" component={Landing} /> */}
-              <Route exact path="/" render={(props) => (<Landing {...props} cookies={this.props.cookies}/>)} />
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <Landing {...props} cookies={this.props.cookies} />
+                )}
+              />
               <Route exact path="/:id" component={StarProfile} />
               {/* <Route exact path="/group-profile/:id" component={Landing} /> */}
               <Route component={Page404} />
@@ -271,6 +277,7 @@ App.propTypes = {
   configLoading: PropTypes.bool.isRequired,
   userDataLoaded: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  dashBoardUpdate: PropTypes.func.isRequired,
 };
 
 const mapState = state => ({
@@ -297,6 +304,7 @@ const mapProps = dispatch => ({
   toggleSignup: state => dispatch(toggleSignup(state)),
   clearSignupFlow: () => dispatch(clearSignupFlow()),
   completedSignup: value => dispatch(completedSignup(value)),
+  dashBoardUpdate: () => dispatch(dashBoardUpdate()),
 });
 
 export default withCookies(

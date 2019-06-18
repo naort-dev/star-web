@@ -524,7 +524,8 @@ const Question = props => {
                       isShow={stateObject.showHideFlg}
                       isQA={props.bookedItem.request_type === 3}
                     >
-                      {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
+                      {/* {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'} */}
+                      Instructions
                     </ShowHide>
                   )}
               </React.Fragment>
