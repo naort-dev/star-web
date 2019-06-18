@@ -15,4 +15,11 @@ export const Layout = styled.section`
     padding-left: 0;
     padding-right: 0;
   }
+  .head1 {
+    ${media.webView} {
+      text-align: left;
+    }
+  }
 `;
+
+export const MenuSection = styled.section``;

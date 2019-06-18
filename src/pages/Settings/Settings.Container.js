@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import Account from './Account.Component';
-import { getDashboardData } from '../../services/userManagement';
+import Settings from './Settings.Component';
 
 const mapStates = state => ({});
 function mapDispatch(dispatch) {
@@ -10,4 +9,4 @@ function mapDispatch(dispatch) {
 export default connect(
   mapStates,
   mapDispatch,
-)(Account);
+)(Settings);
