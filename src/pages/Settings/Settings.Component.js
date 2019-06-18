@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import SubHeader from 'components/SubHeader';
 import { Layout, MenuSection } from './styled';
+import AccountInfo from './Components/AccountInfo';
 
 const Settings = props => {
   const goBack = () => {
@@ -13,11 +14,7 @@ const Settings = props => {
       <SubHeader heading="My Account Settings" onClick={goBack} />
       <MenuSection></MenuSection>
       <Switch>
-        <Route path="/manage/dashboard" render={() => 'profile'} />
-        {/* <Route path="/manage/bookings" component={Bookings} />
-        <Route path="/manage/promotional-tools" component={PromoTool} />
-        <Route path="/manage/profile" render={() => 'profile'} /> */}
-        {/* <Route path="/manage/earnings" render={() => 'earnings'} /> */}
+        <Route path="/manage/settings/account-info" component={AccountInfo} />
       </Switch>
     </Layout>
   );

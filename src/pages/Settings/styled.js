@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
-import { Card } from 'styles/CommonStyled';
 
 export const Layout = styled.section`
   width: 100%;
