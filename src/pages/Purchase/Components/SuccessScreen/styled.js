@@ -76,10 +76,11 @@ export const Content = styled.section`
     color: #4b4b4b;
     font-size: 16px;
     line-height: 24px;
-    padding-bottom: 48px;
+    padding-bottom: 28px;
   }
   .browseBtn {
     width: 300px;
     height: 60px;
+    margin: 0 auto 25px !important;
   }
 `;

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import dompurify from 'dompurify';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 import { FlexBoxSB } from 'styles/CommonStyled';
 import {
@@ -54,7 +55,9 @@ const CategoryList = ({
                 />
               </ImageWrapper>
               <Message>
-                <HeaderText>{item.header}</HeaderText>
+                <HeaderText dangerouslySetInnerHTML={{
+                  __html: dompurify.sanitize(item.header),
+                }}></HeaderText>
                 <Paragraph>{item.text}</Paragraph>
               </Message>
               <Icon icon={faAngleRight} />

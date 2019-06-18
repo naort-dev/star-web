@@ -53,6 +53,9 @@ ActionStyled.Description = styled.span`
   .long-description {
     display: none;
   }
+  &#action-description {
+    white-space: normal !important;
+  }
   strong {
     font-family: Gilroy-medium;
   }
