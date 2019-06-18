@@ -33,10 +33,10 @@ export const Layout = styled.section`
 `;
 
 export const ContentWrapper = styled.section`
-  padding-bottom: 35px;
+  padding-bottom: 27px;
   cursor: pointer;
   ${media.mobileScreen} {
-    padding-bottom: 38px;
+    padding-bottom: 35px;
   }
 `;
 
@@ -44,6 +44,9 @@ export const HeaderText = styled.h3`
   font-family: Gilroy-SemiBold;
   font-size: 20px;
   color: #2f839d;
+  span {
+    display: inline-block;
+  }
 `;
 export const Paragraph = styled.p`
   font-family: Gilroy-Light;

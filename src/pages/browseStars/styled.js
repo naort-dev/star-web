@@ -98,7 +98,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
 
 CategoryPageStyled.FilterSection = styled.div`
   position: fixed;
-  padding-top: 26px;
+  padding-top: 12px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -177,6 +177,10 @@ CategoryPageStyled.FeaturedSection = styled.div`
   margin-top: 24px;
   z-index: 1;
 
+  @media(max-width: 832px) {
+    margin-top: 16px;
+  }
+
 
 
   &:before {
@@ -253,10 +257,11 @@ CategoryPageStyled.Toolbar = styled.div`
 `;
 
 CategoryPageStyled.Content = styled.div`
-  height: 100%;
-  padding: 12px 16px;
+  //height: 100%;
+  padding: 16px;
   position: relative;
   @media(min-width: 832px) {
+    padding: 12px 16px;
     overflow: initial;
     background: ${props => props.theme.white};
   }
@@ -277,7 +282,6 @@ CategoryPageStyled.MainContent = styled.div`
   }
   &.fixed-filter {
     .subcategory-list {
-      margin-top: -16px;
       margin-bottom: 5px;
       padding: 0 16px;
 

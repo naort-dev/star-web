@@ -20,13 +20,16 @@ export const Layout = styled.section`
   }
   .continue-button {
     height: 60px;
-    margin-bottom: 75px;
+    margin-bottom: 25px;
   }
   .cus-drop {
     width: 100%;
   }
   .scroll-wrap {
     height: 260px !important;
+  }
+  .dropdown-wrapper {
+    margin-bottom: 30px;
   }
 
   &.content-wrapper {
