@@ -19,7 +19,7 @@ export const Layout = styled.section`
     ${media.smallScreen} {
       padding: 10px;
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding: 17px 22px;
       margin-bottom: 13px;
       min-height: 74px;
@@ -30,14 +30,21 @@ export const Layout = styled.section`
       }
     }
     .todo-padding {
+      padding-right: 20px;
       ${media.webView} {
         padding-left: 48px;
       }
     }
-    .bar-separator {
-      display: none;
+    .sub-content {
+      display: block;
       ${media.webView} {
         display: inline-block;
+      }
+      .bar-separator {
+        display: none;
+        ${media.webView} {
+          display: inline-block;
+        }
       }
     }
   }
@@ -47,6 +54,7 @@ export const Layout = styled.section`
     min-width: 91px;
     min-height: 40px;
     font-size: 14px;
+    padding: 5px;
     ${media.webView} {
       min-width: 160px;
       width: 160px;
@@ -66,6 +74,9 @@ export const Layout = styled.section`
   .button-promote {
     width: 329px;
     height: 55px;
+    ${media.smallScreen} {
+      font-size: 16px;
+    }
   }
   .button-margin {
     padding-top: 18px;
@@ -83,7 +94,7 @@ export const Layout = styled.section`
     color: #5d5d5d;
     padding-top: 32px;
     padding-bottom: 18px;
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding-top: 17px;
     }
   }

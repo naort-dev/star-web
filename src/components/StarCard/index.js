@@ -17,10 +17,10 @@ const StarCard = ({ data }) => {
       <Card className="cardLayout">
         <FlexBoxSB className="flex-start">
           <span data-val="Total earnings:" className="earnings headLbl">
-            ${data.totalEarning}
+            ${data.total_earnings}
           </span>
           <span data-val="Pending payments:" className="payments headLbl">
-            ${data.pendingPayment}
+            ${data.pending_payments}
           </span>
         </FlexBoxSB>
         <span className="earningPercentage">
@@ -34,21 +34,21 @@ const StarCard = ({ data }) => {
               <FontAwesomeIcon icon={faPlay} />
               <Label>Videos:</Label>
             </span>
-            <Value>{data.videos}</Value>
+            <Value>{data.total_video_count}</Value>
           </SummaryItem>
           <SummaryItem>
             <span>
               <FontAwesomeIcon icon={faComment} className="commenticon" />
               <Label>Comments:</Label>
             </span>
-            <Value>{data.comments}</Value>
+            <Value>{data.total_comment_count}</Value>
           </SummaryItem>
           <SummaryItem>
             <span>
               <FontAwesomeIcon icon={faHeart} />
               <Label>Reaction videos:</Label>
             </span>
-            <Value>{data.reactionVideos}</Value>
+            <Value>{data.total_reaction_video_count}</Value>
           </SummaryItem>
           <SummaryItem className="rating-wrap">
             <span>

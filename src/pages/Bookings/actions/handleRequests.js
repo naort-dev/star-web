@@ -1,8 +1,7 @@
-import { updateToast } from 'store/shared/actions/commonActions';
+import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
+import { bookingsListFetchSuccess } from './getBookingsList';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from '../../../store/shared/actions/getUserDetails';
-
 
 export const REQUESTS = {
   start: 'requests/START',
@@ -23,14 +22,22 @@ export const requestFetchFailed = error => ({
   error,
 });
 
-export const changeRequestStatus = (requestId, requestStatus, comment) => (
+export const changeBookingList = (requestId, requestStatus) => (dispatch, getState) => {
+  let { data: bookingsList, count, offset, videoStatus } = getState().bookingsList;
+  if (requestStatus === 5) { // decline bookings
+    bookingsList = bookingsList.filter(booking => booking.booking_id !== requestId);
+    offset -= 1;
+    count -= 1;
+  }
+  dispatch(bookingsListFetchSuccess(bookingsList, offset, count, videoStatus));
+}
+
+export const changeBookingStatus = (requestId, requestStatus, comment) => (
   dispatch,
   getState,
 ) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
-  const { status, offset, role } = getState().myVideosList;
-  const { id } = getState().userDetails.settings_userDetails;
   dispatch(requestFetchStart());
+  dispatch(loaderAction(true));
   return fetch
     .post(
       Api.changeRequestStatus,
@@ -38,26 +45,27 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (
         id: requestId,
         status: requestStatus,
         comment,
-      },
-      {
-        headers: {
-          Authorization: `token ${authToken}`,
-        },
-      },
+      }
     )
     .then(resp => {
+      dispatch(loaderAction(false));
       if (resp.data && resp.data.success) {
         dispatch(requestFetchEnd());
-        dispatch(fetchMyVideosList(0, true, role, status));
-        dispatch(fetchUserDetails(id));
+        dispatch(changeBookingList(requestId, requestStatus))
       } else {
-        dispatch(requestFetchEnd());
+        dispatch(requestFetchEnd(requestId, requestStatus));
       }
+      return resp.data.success;
     })
     .catch(exception => {
       dispatch(requestFetchEnd());
       dispatch(requestFetchFailed(exception));
-    });
+      dispatch(updateToast({
+        value: true,
+        message: exception.response.data.error.message,
+        variant: 'error',
+      }))
+    })
 };
 
 export const responseVideo = (requestId, fileName, callBack) => (
@@ -91,11 +99,11 @@ export const responseVideo = (requestId, fileName, callBack) => (
       }
     })
     .catch(exception => {
-      updateToast({
+      dispatch(updateToast({
         value: true,
-        message: exception.message,
+        message: exception.response.data.error.message,
         variant: 'error',
-      });
+      }));
       dispatch(requestFetchEnd());
       dispatch(requestFetchFailed(exception));
     });

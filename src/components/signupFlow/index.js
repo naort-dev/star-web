@@ -190,9 +190,9 @@ class SignupFlow extends React.Component {
   }
   continueSignUp = () => {
     const queryString = this.props.location ? parseQueryString(this.props.location.search): '';
-    if(queryString.demo_user) {
+    if(queryString.migrated) {
       this.setState({
-        currentStep: queryString.demo_user ? 1 : this.state.currentstep,
+        currentStep: queryString.migrated ? 1 : this.state.currentstep,
         completedSignup: true,
         selectedType:'star'
       });

@@ -217,6 +217,10 @@ const Question = props => {
                 {!stateObject.continueFlg && (
                   <div>
                     <h1 className="quesHead">What you should say?</h1>
+                    <h1 className="instruction-head-mob">
+                      Ask the question to {props.starNM}
+                    </h1>
+
                     <QuestionBuilder questionsList={questions} />
                   </div>
                 )}
@@ -264,7 +268,8 @@ const Question = props => {
               }
               isShow={stateObject.showHideFlg}
             >
-              {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
+              {/* {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'} */}
+              Instructions
             </ShowHide>
           )}
         </React.Fragment>

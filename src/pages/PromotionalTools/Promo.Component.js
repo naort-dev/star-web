@@ -40,7 +40,9 @@ const templates = [
 ];
 
 const PromoTools = props => {
-  const goBack = () => {};
+  const goBack = () => {
+    props.history.goBack();
+  };
   const getSocial = () => {
     return (
       <React.Fragment>
@@ -129,6 +131,8 @@ const PromoTools = props => {
   );
 };
 
-PromoTools.propTypes = {};
+PromoTools.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default PromoTools;

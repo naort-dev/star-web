@@ -7,6 +7,11 @@ const StarViewStyled = styled.div`
 StarViewStyled.VideoWrapper = styled.div`
   width: 195.7px;
   height: 301.9px;
+  .player-icon-wrap {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: unset;
+  }
   .video-container {
     box-shadow: none;
   }

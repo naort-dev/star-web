@@ -16,6 +16,10 @@ const initialState = {
     data: null,
     starMode: false,
   },
+  updateBookingModal: {
+    active: false,
+    requestId: null,
+  },
   popUp: false,
 };
 
@@ -74,6 +78,17 @@ export default (state = { ...initialState }, action) => {
         ...state,
         requestFlow: false,
         requestFlowDetails: null,
+      };
+
+    case TOGGLE_MODALS.toggleUpdateBooking:
+      return {
+        ...state,
+        updateBookingModal: {
+          ...state.updateBookingModal,
+          active: action.state,
+          requestId: action.requestId,
+          starMode: action.starMode,
+        },
       };
 
     case TOGGLE_MODALS.toggleBookingModal:
