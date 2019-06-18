@@ -202,7 +202,7 @@ function FormContainer(props) {
 
   return (
     <Layout className="content-wrapper">
-      <FlexCenter>
+      <FlexCenter className="dropdown-wrapper">
         <Dropdown
           options={optionsList}
           selected={bookingData.occasion}

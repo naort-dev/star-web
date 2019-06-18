@@ -82,6 +82,7 @@ SignUpMethod.Button = styled.button`
     @media(min-width: 831px) {
       margin-top: 0;
       padding-top: 3px;
+      margin-bottom: 0;
       .label {
         margin-top: -6px;
       }

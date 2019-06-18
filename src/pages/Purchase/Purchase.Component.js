@@ -145,7 +145,7 @@ class Purchase extends Component {
             starsonaRequest={this.props.starsonaRequest}
             starNM={
               this.props.userDetails.nick_name !== '' &&
-              this.props.userDetails.nick_name
+                this.props.userDetails.nick_name
                 ? this.props.userDetails.nick_name
                 : this.props.userDetails.first_name
             }
@@ -184,6 +184,8 @@ class Purchase extends Component {
             termText={
               this.state.category === 2 ? termsAnnouncement : qAndATerms
             }
+            buttonText={this.state.category === 2 ? "Continue" : "Agree"}
+            isChechbox={this.state.category === 2 ? true : false}
           />
         );
       } else if (this.state.category === 1) {
@@ -488,13 +490,13 @@ class Purchase extends Component {
             <Scrollbars>{this.getCustomStep()}</Scrollbars>
           </ModalContainer>
         ) : (
-          <CancelConfirm
-            modalClose={this.modalClose}
-            requestFLowClose={this.clearStore}
-            // eslint-disable-next-line
-            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
-          />
-        )}
+            <CancelConfirm
+              modalClose={this.modalClose}
+              requestFLowClose={this.clearStore}
+              // eslint-disable-next-line
+              starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+            />
+          )}
       </Modal>
     );
   }
@@ -530,7 +532,7 @@ Purchase.propTypes = {
   audioRecordHandler: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
-  fetchOccasionlist: () => {},
+  fetchOccasionlist: () => { },
   OccasionDetails: [],
   videoFile: {},
 };

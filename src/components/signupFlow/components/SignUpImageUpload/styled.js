@@ -291,7 +291,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: 515px;
+    height: 525px;
     width: 100%;
   }
   .subCategoryHeading {
@@ -302,7 +302,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     margin-bottom: 10px;
     max-width: 270px;
     span {
-      font-family: Gilroy-Light;
+      font-family: Gilroy;
       font-size: 14px;
       display: block;
     }

@@ -1,7 +1,7 @@
 export const dataModal = name => ({
   category: [
     {
-      header: 'Personalized Shout-Out',
+      header: `Personalized <span>Shout-Out</span>`,
       text: `Celebrate everyday moments with a personalized video greeting from ${name}. Birthdays, encouragement, graduations… you pick.`,
       icon: '../../assets/images/shoutout.svg',
       type: 1,

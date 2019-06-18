@@ -28,7 +28,7 @@ export const Layout = styled.section`
   }
   .continue-btn {
     height: 60px;
-    margin-bottom: 75px;
+    margin-bottom: 25px;
     align-self: flex-end;
     ${media.webView} {
       margin-left: 37px;

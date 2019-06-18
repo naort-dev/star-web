@@ -12,7 +12,6 @@ export const Layout = styled.section`
   p {
     font-size: 12px;
     text-align: center;
-    max-width: 344px;
     font-family: Gilroy;
     color: #4b4b4b;
     .bluetext {
@@ -23,7 +22,7 @@ export const Layout = styled.section`
   }
   button {
     margin-top: 5px;
-    margin-bottom: 75px;
+    margin-bottom: 25px;
   }
   .script {
     color:#2f839d;
@@ -37,17 +36,21 @@ export const Layout = styled.section`
       max-width: 100%;
       width: 100%;
       padding: 0 20px;
-      margin: 0 0 15px;
+      margin: 0 auto 15px;
       & > section:nth-child(2) {
         width: 100%;
         max-width: 100%;
         margin: 0;
-        padding: 18px 15px;
+        padding: 18px 20px;
+        min-width: inherit;
 
         p {
           max-width: 100%;
         }
       }
+    }
+    & > section:nth-child(2) {
+      padding: 0 20px;
     }
   }
 
@@ -69,7 +72,7 @@ export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
     max-width: 100%;
-    width: calc(100% - 15px);
+    width: 100%;
     padding: 0 30px;
     margin: 0;
 
@@ -78,9 +81,17 @@ export const FlexBoxCenter = styled(FlexCenter)`
       max-width: 100%;
     }
   }
-  &.private-checkbox label {
-    font-family: Gilroy;
-  }
+  &.private-checkbox{
+    padding: 15px 90px 5px;
+
+    ${media.mobileScreen} {
+      padding: 15px 70px 5px
+    }
+
+    label {
+      font-family: Gilroy;
+    }
+  } 
 `;
 
 export const TextAreaWrapper = styled.section`

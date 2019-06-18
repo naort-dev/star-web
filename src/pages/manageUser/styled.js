@@ -23,7 +23,7 @@ ManageStyled.Container = styled.div`
   @media(min-width: 832px) {
     flex-direction: row;
     padding: 47px 10px 50px;
-    max-width: 732px;
+    max-width: 800px;
   }
   @media(min-width: 1280px) {
     max-width: 1246px;
@@ -52,7 +52,9 @@ ManageStyled.MobileHeading = ManageStyled.Visiblity.extend`
 
 ManageStyled.SidebarWrapper = ManageStyled.Visiblity.extend`
   @media(min-width: 832px) {
-    display: inline-block;
+    max-width: 22%;
+  }
+  @media(min-width: 1280px) {
     max-width: 20%;
   }
 `;

@@ -119,7 +119,7 @@ QuickViewStyled.ActionBar = styled.div`
 
 QuickViewStyled.ActionContent = styled.div`
   display: flex;
-  max-width: ${props => (props.available ? 'calc(100% - 305px)' : '100%')};
+  max-width: ${props => (props.available ? 'calc(100% - 225px)' : '100%')};
   align-items: center;
 `;
 
