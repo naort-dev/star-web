@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { Dashboard } from '../dashboard';
 import { Bookings } from '../Bookings';
 import { MyVideos } from '../myVideos';
+import { Account } from '../accountSettings';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -51,7 +52,7 @@ const ManageUser = props => {
               <Route path="/manage/promotional-tools" component={PromoTool} />
               <Route path="/manage/profile" render={() => 'profile'} />
               <Route path="/manage/earnings" render={() => 'earnings'} />
-              <Route path="/manage/settings" render={() => 'settings'} />
+              <Route path="/manage/settings" component={Account} />
               <Route path="/manage/referral" render={() => 'referral'} />
             </Switch>
           ) : (

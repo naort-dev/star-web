@@ -141,14 +141,15 @@ const ActivityCard = props => {
         },
       });
     }
-    if (props.data.payment > 0 && activityList.length < 3) {
+    //recent_deposit_date
+    if (props.data.recent_deposit_amount > 0 && activityList.length < 3) {
       activityList.push({
         style: elmStyles[1],
         secondary: true,
         icon: Dollar,
         card: {
           heading: `You’ve got money!`,
-          value_main: `$312.50 was deposited 3/15!`,
+          value_main: `$${props.data.recent_deposit_amount} was deposited 3/15!`,
           value_sub: '',
           btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
