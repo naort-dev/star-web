@@ -279,7 +279,7 @@ export const ShowHide = styled.span`
   ${media.webView} {
     display: none;
   }
-  :after,
+  /* :after, */
   :before {
     position: relative;
     top: ${props => (props.isShow ? '-3px' : '3px')};
@@ -291,7 +291,7 @@ export const ShowHide = styled.span`
     border-top: 1px solid #2f839d;
     transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
     margin-right: 28px;
-    margin-left: 28px;
+    /* margin-left: 28px; */
   }
 `;
 

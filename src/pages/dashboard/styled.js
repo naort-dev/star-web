@@ -11,13 +11,12 @@ export const Layout = styled.section`
     padding-left: 0;
     padding-right: 0;
   }
-  @media(max-width: 831px) {
-    padding-top: 30px;
+  ${media.smallScreen} {
+    padding-left: 0;
+    padding-right: 0;
   }
-  .head1 {
-    ${media.webView} {
-      text-align: left;
-    }
+  @media (max-width: 831px) {
+    padding-top: 30px;
   }
   .arrow {
     ${media.webView} {
@@ -27,21 +26,26 @@ export const Layout = styled.section`
   .head1 {
     padding-top: 9px;
     padding-bottom: 32px;
+    color: #888888;
     ${media.webView} {
+      text-align: left;
       padding-top: 9px;
       padding-bottom: 32px;
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding-bottom: 22px;
     }
   }
   .middle-section {
     width: 336px;
     margin: 0 auto;
-    @media(min-width: 832px) {
-      width: 522px;
+    ${media.smallScreen}{
+      width: 310px;
     }
-    @media(min-width: 1280px) {
+    @media (min-width: 832px) {
+      width: 560px;
+    }
+    @media (min-width: 1280px) {
       width: 567px;
     }
   }
