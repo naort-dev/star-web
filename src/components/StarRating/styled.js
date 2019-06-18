@@ -11,7 +11,7 @@ RatingStyled.Rating = styled.label`
   vertical-align: middle;
   line-height: 1;
   font-size: ${props => (props.big ? '2.5em' : '1.5em')};
-  color: ${props => (props.selected ? '#FF6C58' : '#ABABAB')};
+  color: ${props => (props.selected ? '#FF6C58' : '#e6e6e6')};
   transition: color .2s ease-out;
   &:hover {
     cursor: pointer;
