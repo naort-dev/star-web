@@ -82,10 +82,10 @@ const OrderDetails = (props) => {
         </OrderStyled.ScriptWrapper>
         {
           props.starMode && bookingData.request_status !== 5 &&
-            <React.Fragment>
+            <OrderStyled.ColumnCenter>
               <Checkbox />
-              <p>Hide from profile</p>
-            </React.Fragment>
+              <span className="check-text ">Hide from profile</span>
+            </OrderStyled.ColumnCenter>
         }
         <OrderStyled.Details>
           <OrderStyled.DetailList>

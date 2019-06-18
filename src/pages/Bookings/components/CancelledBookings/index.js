@@ -18,7 +18,7 @@ const CancelledBookings = (props) => {
   
   const [selected, updateSelected] = useState({});
 
-  const fetchList = (low, high) => {
+  const fetchList = (low) => {
     props.fetchBookingsList(low, false, celebCancelledStatusList)
   }
 
