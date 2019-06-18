@@ -1,7 +1,4 @@
-export const commonAuthRoutes = [
-  '/manage',
-  '/manage/profile',
-]
+export const commonAuthRoutes = ['/manage', '/manage/profile'];
 
 export const fanRoutes = [
   '/manage/refer-star',
@@ -15,11 +12,9 @@ export const starRoutes = [
   '/manage/bookings',
   '/manage/earnings',
   '/manage/settings',
+  '/manage/settings/account-info',
 ];
-export const groupRoutes = [
-  ...fanRoutes,
-  '/user/star-supporters',
-];
+export const groupRoutes = [...fanRoutes, '/user/star-supporters'];
 export const protectedRoutes = [
   ...commonAuthRoutes,
   ...fanRoutes,
