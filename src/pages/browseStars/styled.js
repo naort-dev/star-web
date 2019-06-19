@@ -120,15 +120,16 @@ CategoryPageStyled.FilterSection = styled.div`
     `}
     display: block;
   }
-  @media(min-width: 832px) and (min-width: 1280px) {
-    margin-top: -1px;
-  }
   @media(min-width: 1280px) {
     max-width: 1246px;
     margin: 0 auto;
     ${props => props.fixedContent && `
       max-width: 100%;
     `}
+  }
+  @media(min-width: 832px) and (min-width: 1280px) {
+    margin-top: -1px;
+    padding-top: 13px;
   }
 `;
 
