@@ -6,9 +6,6 @@ export const Layout = styled.section`
   height: 97%;
   padding: 0;
   margin: 0 auto;
-  ${media.realMobile} {
-    padding: 10px 0;
-  }
   p {
     font-size: 12px;
     text-align: center;
@@ -90,6 +87,9 @@ export const FlexBoxCenter = styled(FlexCenter)`
 
     label {
       font-family: Gilroy;
+      ${media.mobileScreen} {
+        margin-bottom: 0;
+      }
     }
   } 
 `;
@@ -104,7 +104,7 @@ export const TextAreaWrapper = styled.section`
   }
   margin: 10px 0;
   ${media.realMobile} {
-    margin: 10px 20px;
+    margin: 10px 20px 0;
   }
   textarea {
     width: 100%;
