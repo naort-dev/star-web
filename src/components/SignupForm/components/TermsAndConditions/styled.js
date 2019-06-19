@@ -15,10 +15,13 @@ const TermsConditionsWrapper = styled.div`
       height: 439px !important;
       margin-bottom: 22px;
       margin-top: 4px;
+      max-width: 590px;
     }
 
     p p:not(:last-child) {
-      margin-bottom: 15px
+      margin-bottom: 8px;
+      font-size: 12px;
+      line-height: 2;
     }
   }
 `;
