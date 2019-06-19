@@ -43,7 +43,7 @@ const StarStyled = CardContainer.extend`
       font-family: Gilroy-Regular;
     }
   }
-  @media(min-width: 832px) {
+  @media(min-width: 1280px) {
     flex-direction: row;
     align-items: center;
     padding-top: 18px;
@@ -79,7 +79,7 @@ StarStyled.UserImage = LeftContent.extend`
   background-position: center center;
   background-size: cover;
   border-radius: 8px;
-  @media(min-width: 832px) {
+  @media(min-width: 1280px) {
     display: block;
   }
 `;
