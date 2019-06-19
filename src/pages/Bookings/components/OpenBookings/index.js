@@ -19,7 +19,7 @@ import { CompactCard } from '../../../../components/ListCards';
 import RespondAction from './components/RespondAction';
 import { options } from '../../constants';
 import OpenStyled from './styled';
-import { toggleUpdateBooking } from '../../../../store/shared/actions/toggleModals';
+import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
 import { responseVideo } from '../../actions/handleRequests';
 import { updateBookingList } from '../../actions/getBookingsList';
 
@@ -131,6 +131,7 @@ const OpenBookings = props => {
     } else {
       props.updateSelected('');
       updateSelectedBooking({});
+      updateCardClicked(false);
     }
     clearVideo();
   }, [props.selected, props.bookingsList.data]);
@@ -187,6 +188,7 @@ const OpenBookings = props => {
             updateToast={props.updateToast}
             bookedItem={selectedBooking}
             buttonLabel={getButtonLabels()}
+            toggleContactSupport={props.toggleContactSupport}
             toggleUpdateBooking={props.toggleUpdateBooking}
             nextClick={nextClick}
             backArrowHandler={backArrowHandler}
@@ -222,6 +224,7 @@ OpenBookings.propTypes = {
   selected: PropTypes.string,
   updateBookingList: PropTypes.func.isRequired,
   toggleUpdateBooking: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 };
 
 OpenBookings.defaultProps = {
@@ -251,7 +254,8 @@ function mapDispatchToProps(dispatch) {
     updateBookingList: data => {
       dispatch(updateBookingList(data));
     },
-    toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode))
+    toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode)),
+    toggleContactSupport: state => dispatch(toggleContactSupport(state)),
   };
 }
 export default connect(

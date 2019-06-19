@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
-import { Card } from 'styles/CommonStyled';
 
 export const Layout = styled.section`
   width: 100%;
@@ -15,4 +14,11 @@ export const Layout = styled.section`
     padding-left: 0;
     padding-right: 0;
   }
+  .head1 {
+    ${media.webView} {
+      text-align: left;
+    }
+  }
 `;
+
+export const MenuSection = styled.section``;

@@ -86,11 +86,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dashBoardUpdate();
+    if (this.props.isLoggedIn) this.props.dashBoardUpdate();
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      if (nextProps.isLoggedIn) this.props.dashBoardUpdate();
       this.props.fetchProfessionsList();
       this.props.fetchAllProfessions();
       this.props.clearSignupFlow();
@@ -201,7 +202,7 @@ class App extends React.Component {
 
               <Route
                 exact
-                path="/manage/:type?"
+                path="/manage/:type?/:inner?"
                 component={protectRoute({
                   RouteComponent: ManageUser,
                 })}
