@@ -127,8 +127,8 @@ CategoryPageStyled.FilterSection = styled.div`
       max-width: 100%;
     `}
   }
-  @media(min-width: 832px) and (min-width: 1280px) {
-    margin-top: -1px;
+  @media(min-width: 832px) and (max-width: 1280px) {
+    margin-top: -3px;
     padding-top: 13px;
   }
 `;
