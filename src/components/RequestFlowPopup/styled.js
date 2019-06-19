@@ -26,7 +26,8 @@ PopupStyled.Dialog = styled(Dialog)`
   .paper-root {
     max-width: 100%;
     @media (min-width: 832px) {
-      max-height: calc(100% - 30px);
+      //max-height: calc(100% - 30px);
+      max-height: 700px;
       border-radius: 20px;
       height: auto;
       width: auto;
