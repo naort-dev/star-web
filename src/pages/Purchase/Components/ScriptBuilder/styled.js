@@ -58,17 +58,25 @@ export const Layout = styled.section`
     }
   }
 
-  &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0 0 auto;
+  ${media.webView} {
+    &.content-wrapper > *:not(.button-wrapper) {
+      flex: 0 0 auto;
+    }
+
+    &.content-wrapper > .button-wrapper {
+      flex: 1 0 auto;
+    }
+
+
+    &.content-wrapper > .button-wrapper .continue-button {
+      align-self: flex-end
+    }
   }
 
-  &.content-wrapper > .button-wrapper {
-    flex: 1 0 auto;
-  }
-
-
-  &.content-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
+  ${media.mobileScreen} {
+    &.content-wrapper > .button-wrapper {
+      margin-top: 10px;
+    }
   }
 `;
 
