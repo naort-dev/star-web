@@ -76,7 +76,7 @@ const MultiSelectStyled = styled.div`
       padding: 0 4px 0 0;
       font-family: Gilroy-Regular;
       font-size: 14px;
-      line-height: 18px
+      line-height: 18px;
       color: ${props => props.theme.greyishBrown};
       .fans-want &,
       .select-category & {
