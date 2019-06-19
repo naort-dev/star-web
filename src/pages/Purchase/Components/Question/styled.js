@@ -11,6 +11,11 @@ export const Layout = styled.section`
     padding: 0 20px;
     position: relative;
   }
+  .question {
+    font-family: Gilroy-SemiBold;
+    font-size: 14px;
+    line-height: 22px;
+  }
   .button {
     width: 242px;
   }
@@ -79,6 +84,9 @@ export const Layout = styled.section`
     opacity: 0.3;
     pointer-events: none;
   }
+  .questionWrapper:last-child {
+    padding-bottom: 35px;
+  }
 `;
 
 export const VideoContainer = styled.section`
@@ -116,7 +124,8 @@ export const QuestionContainer = styled.section`
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
-    padding-left: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
     padding-top: 20px;
     bottom: 0;
     border-radius: 23px;
@@ -134,10 +143,11 @@ export const QuestionContainer = styled.section`
     }
   }
   .instruction-head-mob {
-    font-family: Gilroy;
-    font-size: 14px;
     color: #fff;
     padding-bottom: 15px;
+    font-family: Gilroy-SemiBold;
+    font-size: 18px;
+    line-height: 22px;
     ${media.webView} {
       display: none;
     }
@@ -185,8 +195,9 @@ export const ShowHide = styled.span`
   }
   /* :after, */
   :before {
-    position: relative;
-    top: ${props => (props.isShow ? '-3px' : '3px')};
+    position: absolute;
+    top: ${props => (props.isShow ? '6px' : '12px')};
+    left: 24px;
     content: '';
     display: inline-block;
     width: 10px;
