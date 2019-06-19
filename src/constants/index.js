@@ -72,3 +72,32 @@ event, and I agree to hold harmless Star Name, Starsona and its
 affiliates and representatives from any liability for any and all
 damage caused by or related to the use of the information as published
 in this event.`;
+
+export const supportOptions = [{
+  label: 'Getting started',
+  value: 'Getting started',
+}, {
+  label: 'Your account',
+  value: 'Your account',
+}, {
+  label: 'Bookings',
+  value: 'Bookings',
+}, {
+  label: 'Payments, payouts, and refunds',
+  value: 'Payments, payouts, and refunds',
+}, {
+  label: 'Videos',
+  value: 'Videos',
+}, {
+  label: 'Reviews and reactions',
+  value: 'Reviews and reactions',
+}, {
+  label: 'General',
+  value: 'General',
+}, {
+  label: 'Technical issues',
+  value: 'Technical issues',
+}, {
+  label: 'Safety and privacy',
+  value: 'Safety and privacy',
+}]

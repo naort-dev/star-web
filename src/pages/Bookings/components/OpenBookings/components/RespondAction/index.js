@@ -265,7 +265,6 @@ const Question = props => {
   };
 
   const onSelectAction = (option) => {
-    console.log(option)
     if (option.value === 'decline') {
       props.toggleUpdateBooking(true, props.bookedItem.booking_id, true);
     } else if(option.value === 'contact') {
