@@ -23,13 +23,14 @@ export const bookingsListFetchEnd = () => ({
   type: BOOKINGS_LIST.end,
 });
 
-export const bookingsListFetchSuccess = (list, offset, count, videoStatus) => {
+export const bookingsListFetchSuccess = (list, offset, count, videoStatus, miscData = {}) => {
   return {
     type: BOOKINGS_LIST.success,
     list,
     offset,
     count,
     videoStatus,
+    miscData,
   };
 };
 
@@ -84,12 +85,17 @@ export const fetchBookingsList = (offset, refresh, requestStatus) => (
       if (resp.data && resp.data.success) {
         dispatch(bookingsListFetchEnd());
         const { count } = resp.data.data;
+        const miscData = {
+          highCancel: resp.data.data.high_cancel,
+          highCancelCount: resp.data.data.high_cancel_count,
+        }
         dispatch(
           bookingsListFetchSuccess(
             resp.data.data.request_list,
             offset,
             count,
             videoStatus,
+            miscData,
           ),
         );
       } else {

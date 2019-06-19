@@ -20,6 +20,7 @@ const initialState = {
     active: false,
     requestId: null,
   },
+  supportModal: false,
   popUp: false,
 };
 
@@ -101,6 +102,12 @@ export default (state = { ...initialState }, action) => {
           starMode: action.starMode,
         },
       };
+
+      case TOGGLE_MODALS.toggleContactSupport:
+        return {
+          ...state,
+          supportModal: action.state,
+        };
 
     case TOGGLE_MODALS.togglePopup:
       return {

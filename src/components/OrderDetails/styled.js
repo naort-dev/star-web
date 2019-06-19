@@ -27,6 +27,15 @@ OrderStyled.Heading = styled.span`
   margin: 30px 0;
 `;
 
+OrderStyled.ColumnCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 13px;
+  .check-text {
+    padding-top: 5px;
+  }
+`;
+
 OrderStyled.DetailList = styled.ul`
   display: table;
   padding: 20px 0;
@@ -47,6 +56,10 @@ OrderStyled.DetailList = styled.ul`
       display: table-cell;
       padding-left: 10px;
       padding-bottom: 10px;
+      line-height: 25px;
+      .detail-comment {
+        display: block;
+      }
     }
   }
 `;

@@ -128,6 +128,7 @@ class Bookings extends React.Component {
               bookingsList={props.bookingsList}
               config={props.config}
               dropValue={dropValue}
+              toggleBookingModal={props.toggleBookingModal}
               handleCategoryChange={this.handleCategoryChange}
             />
         }

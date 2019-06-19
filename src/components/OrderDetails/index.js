@@ -4,6 +4,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
+import RequestFlowPopup from '../RequestFlowPopup';
+import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
 import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
@@ -46,70 +48,94 @@ const OrderDetails = (props) => {
     )
   }
 
+  const WrapperComponent = props.isModal ? 
+    RequestFlowPopup : React.Fragment
+
   return (
-    <OrderStyled>
-      {
-        !props.disableHeader &&
-          <React.Fragment>
-            <CloseButton onClick={props.closeModal} />
-            <OrderStyled.HeaderText>
-              {renderHeading()}
-            </OrderStyled.HeaderText>
-            <OrderStyled.Heading>
-              Order Details
-            </OrderStyled.Heading>
-          </React.Fragment>
-      }
-      <OrderStyled.ScriptWrapper>
+    <WrapperComponent closePopUp={props.closeModal}>
+      <OrderStyled>
         {
-          bookingData.request_details.booking_statement &&
-            <Script script={bookingData.request_details.booking_statement} />
+          !props.disableHeader &&
+            <React.Fragment>
+              <CloseButton onClick={props.closeModal} />
+              <OrderStyled.HeaderText>
+                {renderHeading()}
+              </OrderStyled.HeaderText>
+              <OrderStyled.Heading>
+                Order Details
+              </OrderStyled.Heading>
+            </React.Fragment>
         }
-        <span className='additional-info'>
-          <span className='info-item title'>Additional information:</span>
-          <span className='info-item value'>
-            {
-              bookingData.request_details.important_info || 'None'
-            }
+        <OrderStyled.ScriptWrapper>
+          {
+            bookingData.request_details.booking_statement &&
+              <Script script={bookingData.request_details.booking_statement} />
+          }
+          <span className='additional-info'>
+            <span className='info-item title'>Additional information:</span>
+            <span className='info-item value'>
+              {
+                bookingData.request_details.important_info || 'None'
+              }
+            </span>
           </span>
-        </span>
-      </OrderStyled.ScriptWrapper>
-      <OrderStyled.Details>
-        <OrderStyled.DetailList>
-          <li className='detail-item'>
-            <span className='detail-title'>Purchased:</span>
-            <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
-          </li>
-          <li className='detail-item'>
-            <span className='detail-title'>Paid:</span>
-            <span className='detail-value'>${bookingData.order_details.amount}</span>
-          </li>
-          <li className='detail-item'>
-            <span className='detail-title'>Recorded:</span>
-            <span className='detail-value'>March 22, 2019</span>
-          </li>
-          <li className='detail-item'>
-            <span className='detail-title'>Order #:</span>
-            <span className='detail-value'>{bookingData.order_details.order}</span>
-          </li>
-        </OrderStyled.DetailList>
-        <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
-      </OrderStyled.Details>
-    </OrderStyled>
+        </OrderStyled.ScriptWrapper>
+        {
+          props.starMode && bookingData.request_status !== 5 &&
+            <OrderStyled.ColumnCenter>
+              <Checkbox />
+              <span className="check-text ">Hide from profile</span>
+            </OrderStyled.ColumnCenter>
+        }
+        <OrderStyled.Details>
+          <OrderStyled.DetailList>
+            <li className='detail-item'>
+              <span className='detail-title'>Purchased:</span>
+              <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
+            </li>
+            <li className='detail-item'>
+              <span className='detail-title'>Paid:</span>
+              <span className='detail-value'>${bookingData.order_details.amount}</span>
+            </li>
+            <li className='detail-item'>
+              <span className='detail-title'>Recorded:</span>
+              <span className='detail-value'>
+                {bookingData.request_status === 5 ? 'CANCELLED' : moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
+                {
+                  bookingData.request_status === 5 &&
+                    <span className='detail-comment'>{bookingData.comment}</span>
+                }
+              </span>
+            </li>
+            <li className='detail-item'>
+              <span className='detail-title'>Order #:</span>
+              <span className='detail-value'>{bookingData.order_details.order}</span>
+            </li>
+          </OrderStyled.DetailList>
+          {
+            !props.disableFooter &&
+              <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
+          }
+        </OrderStyled.Details>
+      </OrderStyled>
+    </WrapperComponent>
   )
 }
 
 OrderDetails.defaultProps = {
-  disableHeader: true,
+  disableHeader: false,
+  disableFooter: false,
+  onPrimaryClick: () => {},
 }
 
 OrderDetails.propTypes = {
   bookingData: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
-  onPrimaryClick: PropTypes.func.isRequired,
+  onPrimaryClick: PropTypes.func,
   disableHeader: PropTypes.bool,
   toggleUpdateBooking: PropTypes.func.isRequired,
   starMode: PropTypes.bool.isRequired,
+  disableFooter: PropTypes.bool,
 }
 
 const mapDispatchToProps = dispatch => ({

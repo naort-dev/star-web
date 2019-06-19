@@ -6,6 +6,8 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 20,
+  highCancel: false,
+  highCancelCount: 0,
   status: 'all',
 };
 
@@ -31,6 +33,8 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         offset: action.offset,
         data: action.list,
+        highCancel: action.miscData.highCancel,
+        highCancelCount: action.miscData.highCancelCount,
         count: action.count,
         status: action.videoStatus,
       };
