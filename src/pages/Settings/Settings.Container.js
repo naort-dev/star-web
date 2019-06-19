@@ -1,9 +1,21 @@
 import { connect } from 'react-redux';
+import { updateUserDetails } from 'store/shared/actions/saveSettings';
+import { changePassword } from 'store/shared/actions/changePassword';
 import Settings from './Settings.Component';
 
-const mapStates = state => ({});
+const mapStates = state => ({
+  userDetails: state.userDetails.settings_userDetails,
+  celbDetails: state.userDetails.settings_celebrityDetails,
+});
 function mapDispatch(dispatch) {
-  return {};
+  return {
+    updateUserDetails: (id, obj) => {
+      dispatch(updateUserDetails(id, obj));
+    },
+    changePassword: data => {
+      dispatch(changePassword(data));
+    },
+  };
 }
 
 export default connect(
