@@ -26,13 +26,14 @@ export const Container = styled(Layout)`
     line-height: 26px;
   }
   .heading {
-    font-size: 24px;
+    font-size: 34px;
     font-family: Gilroy;
     padding-top: 38px;
     @media (max-width: 831px) {
       padding-top: 0;
       max-width: 260px;
       line-height: 32px;
+      font-size: 24px;
     }
   }
   .whiteBtn {
