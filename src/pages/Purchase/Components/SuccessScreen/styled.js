@@ -64,11 +64,10 @@ export const Content = styled.section`
     color: #ff6c58;
     font-size: 40px;
     line-height: 39px;
-    width: 220px;
+    width: 100%;
     margin: 0 auto;
     padding-bottom: 24px;
     ${media.webView} {
-      width: 100%;
       font-size: 34px;
     }
   }
