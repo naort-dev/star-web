@@ -61,19 +61,6 @@ export const Layout = styled.section`
     }
   }
 
-  &.content-wrapper.occasion-wrapper > *:not(.button-wrapper) {
-    flex: 0 0 auto;
-  }
-
-  &.content-wrapper.occasion-wrapper > .button-wrapper {
-    flex: 1 0 auto;
-  }
-
-
-  &.content-wrapper.occasion-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
-  }
-
   .drop-custom-scroll {
     max-height: 250px !important;
     overflow: auto !important;
@@ -87,6 +74,7 @@ Layout.EventStep2 = styled.div`
     padding-top: 0;
     padding-bottom: 20px;
     min-height: inherit;
+    min-height: 150px;
   }
 
   .label {

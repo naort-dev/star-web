@@ -41,6 +41,10 @@ export const Layout = styled.section`
         padding: 18px 20px;
         min-width: inherit;
 
+        ${media.webView} {
+          margin: 0 20px;
+        }
+
         p {
           max-width: 100%;
         }
@@ -48,20 +52,31 @@ export const Layout = styled.section`
     }
     & > section:nth-child(2) {
       padding: 0 20px;
+      ${media.webView} {
+        padding: 0 40px;
+      }
     }
   }
 
-  &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0 0 auto;
+  ${media.webView} {
+    &.content-wrapper > *:not(.button-wrapper) {
+      flex: 0 0 auto;
+    }
+
+    &.content-wrapper > .button-wrapper {
+      flex: 1 0 auto;
+    }
+
+
+    &.content-wrapper > .button-wrapper .continue-button {
+      align-self: flex-end
+    }
   }
 
-  &.content-wrapper > .button-wrapper {
-    flex: 1 0 auto;
-  }
-
-
-  &.content-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
+  ${media.mobileScreen} {
+    &.content-wrapper > .button-wrapper {
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -110,6 +125,7 @@ export const TextAreaWrapper = styled.section`
     width: 100%;
     border-radius: 10px;
     border: solid 1px #e0e0e0;
+    background: none;
     resize: none;
     padding: 15px;
     max-width: 425px;
@@ -125,12 +141,15 @@ export const TextAreaWrapper = styled.section`
     }
     ::placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     :-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     ::-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
   }
 `;

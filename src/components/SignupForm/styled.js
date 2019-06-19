@@ -414,30 +414,36 @@ LoginContainer.WrapsInput = styled.div`
     color: #615195;
     text-align: center;
     padding: 6px 0 5px;
-    &.input-label-first-name {
-      &::-webkit-input-placeholder { font-size: 18px;}
+
+    &::-webkit-input-placeholder { font-size: 18px;}
       &:-moz-placeholder { font-size: 18px;}
       &::-moz-placeholder {  font-size: 18px;}
       &:-ms-input-placeholder { font-size: 18px;}
     }
-    &.input-label-last-name {
-      &::-webkit-input-placeholder { font-size: 18px;}
-      &:-moz-placeholder { font-size: 18px;}
-      &::-moz-placeholder {  font-size: 18px;}
-      &:-ms-input-placeholder { font-size: 18px;}
-    }
-    &.input-label-stage-name {
-      &::-webkit-input-placeholder { font-size: 17px;}
-      &:-moz-placeholder { font-size: 17px;}
-      &::-moz-placeholder {  font-size: 17px;}
-      &:-ms-input-placeholder { font-size: 17px;}
-    }
-    &.input-label-email {
-      &::-webkit-input-placeholder { font-size: 16px;}
-      &:-moz-placeholder { font-size: 16px;}
-      &::-moz-placeholder {  font-size: 16px;}
-      &:-ms-input-placeholder { font-size: 16px;}
-    }
+    // &.input-label-first-name {
+    //   &::-webkit-input-placeholder { font-size: 18px;}
+    //   &:-moz-placeholder { font-size: 18px;}
+    //   &::-moz-placeholder {  font-size: 18px;}
+    //   &:-ms-input-placeholder { font-size: 18px;}
+    // }
+    // &.input-label-last-name {
+    //   &::-webkit-input-placeholder { font-size: 18px;}
+    //   &:-moz-placeholder { font-size: 18px;}
+    //   &::-moz-placeholder {  font-size: 18px;}
+    //   &:-ms-input-placeholder { font-size: 18px;}
+    // }
+    // &.input-label-stage-name {
+    //   &::-webkit-input-placeholder { font-size: 17px;}
+    //   &:-moz-placeholder { font-size: 17px;}
+    //   &::-moz-placeholder {  font-size: 17px;}
+    //   &:-ms-input-placeholder { font-size: 17px;}
+    // }
+    // &.input-label-email {
+    //   &::-webkit-input-placeholder { font-size: 16px;}
+    //   &:-moz-placeholder { font-size: 16px;}
+    //   &::-moz-placeholder {  font-size: 16px;}
+    //   &:-ms-input-placeholder { font-size: 16px;}
+    // }
   }
   input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }
   input:-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 18- */
@@ -534,6 +540,10 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-bottom: 20px;
   @media(min-width:832px){
     margin-top: 22px;
+  }
+
+  .fan-form &.align-center {
+    margin-top: 40px;
   }
 `;
 LoginContainer.SignupLine = styled.div`

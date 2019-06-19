@@ -65,6 +65,11 @@ TermsConditionsWrapper.Description = styled.p`
   .terms-wrapper & {
     font-size: 16px;
     line-height: 26px;
+    padding-right: 10px;
+
+    media(min-width:832px){
+      padding: 0 10px 10px 0;
+    }
   }
 `;
 TermsConditionsWrapper.Content = `
