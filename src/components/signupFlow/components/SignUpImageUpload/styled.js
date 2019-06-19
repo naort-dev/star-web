@@ -302,7 +302,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     margin-bottom: 10px;
     max-width: 270px;
     span {
-      font-family: Gilroy;
+      font-family: Gilroy_Light;
       font-size: 14px;
       display: block;
     }
@@ -381,7 +381,7 @@ UploadContainer.Item = styled.li`
 
   &.categoryItem {
     background-color: #fff;
-    color: ${props => (props.selected ? props.theme.flatBlue : '#555')} !important;
+    color: ${props => (props.selected ? props.theme.flatBlue : '#999')} !important;
     font-family: ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
   }
 `;
@@ -452,6 +452,9 @@ ImageUpload.UploadedImage = styled.div`
   justify-content: center;
   padding-bottom: 20px;
   flex-direction: column;
+  ${media.mobileView} {
+    padding-bottom: 0;
+  }
 `;
 
 ImageUpload.CoverImage = styled.div`
@@ -477,12 +480,24 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
     props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4'};
   background-repeat: no-repeat;
   background-size: cover;
+  ${props => props.imageUrl && `
+    box-shadow: 0 3px 16px 0 #0000004a;
+  `}
   cursor: pointer;
   text-align: center;
+  flex: 0 0 auto;
+  ${media.mobileView} {
+    padding-bottom: 0;
+    width: 124px;
+    height: 124px;
+  }
 
   &:last-child {
     margin-left: 22px;
     margin-right: 0;
+    ${media.mobileView} {
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -635,6 +650,9 @@ ImageUpload.CropperLightButton = styled.button`
   }
   & > svg {
     margin-right: 5px;
+  }
+  &:last-child {
+    margin-right: 0;
   }
   .icon {
     font-size: 19px;

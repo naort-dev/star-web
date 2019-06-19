@@ -30,6 +30,10 @@ export const Layout = styled.section`
   }
   .dropdown-wrapper {
     margin-bottom: 30px;
+
+    ${media.mobileScreen} {
+      margin-bottom: 20px;
+    }
   }
 
   &.content-wrapper {
@@ -41,20 +45,22 @@ export const Layout = styled.section`
       background-color: #FF6C58;
     }
   }
-
-  &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0 0 auto;
-  }
-
-  &.content-wrapper > .button-wrapper {
-    flex: 1 0 auto;
-  }
-
-
-  &.content-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
-  }
   
+  ${media.webView} {
+    &.content-wrapper > *:not(.button-wrapper) {
+      flex: 0 0 auto;
+    }
+
+    &.content-wrapper > .button-wrapper {
+      flex: 1 0 auto;
+    }
+
+
+    &.content-wrapper > .button-wrapper .continue-button {
+      align-self: flex-end
+    }
+  }
+
   .drop-custom-scroll {
     max-height: 250px !important;
     overflow: auto !important;
@@ -63,6 +69,14 @@ export const Layout = styled.section`
 Layout.EventStep2 = styled.div`
   padding-top: 15px;
   min-height: 165px;
+
+  ${media.mobileScreen} {
+    padding-top: 0;
+    padding-bottom: 20px;
+    min-height: inherit;
+    min-height: 150px;
+  }
+
   .label {
     font-size: 18px;
   }

@@ -18,6 +18,7 @@ const MoreActions = (props) => {
 
   const onSelectOption = optionItem => () => {
     props.onSelectOption(optionItem)
+    handleClose();
   }
 
   return (

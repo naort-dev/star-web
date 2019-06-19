@@ -48,7 +48,7 @@ SetPriceWrapper.Title = styled.div`
 
   @media(max-width:831px){
     padding-top: 29px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   &+ .image-wrap {

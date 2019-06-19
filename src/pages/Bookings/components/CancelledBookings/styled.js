@@ -4,6 +4,13 @@ const CancelledStyled = styled.div`
   .pagination-wrapper {
     margin: 13px 0;
   }
+  .cancel-count-notification {
+    margin: 0 auto;
+    margin-bottom: 18px;
+    @media(min-width: 832px) {
+      width: 75%;
+    }
+  }
   @media(min-width: 832px) {
     padding-bottom: 41px;
     .pagination-wrapper {

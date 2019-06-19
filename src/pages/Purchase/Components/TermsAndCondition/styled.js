@@ -5,9 +5,12 @@ import { media } from 'styles/mediaQueries';
 export const Layout = styled.section`
   width: 100%;
   height: 97%;
-  max-width: 500px;
+  max-width: calc(100% - 80px);
   margin: 0 auto;
   padding-top: 10px;
+  ${media.mobileScreen} {
+    max-width: 100%;
+  }
   .termsWrapper {
     display: flex;
     font-family: Gilroy;
@@ -18,11 +21,11 @@ export const Layout = styled.section`
       padding: 0 20px 20px;
     }
     p {
-      font-size: 16px;
-      line-height: 26px;
 
       p:not(:last-child) {
-        margin-bottom:15px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        line-height: 2;
       }
     }
   }

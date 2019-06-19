@@ -37,7 +37,7 @@ RegSuccessWrapper.HeaderText = styled.div`
 `;
 RegSuccessWrapper.ButtonWrapper = styled.div`
 text-align: center;
-margin-top: 2px;
+margin-top: 25px;
 margin-bottom: 20px;
 display: flex;
 flex-direction: column;
@@ -62,8 +62,8 @@ justify-content: center;
 `;
 
 RegSuccessWrapper.Type = styled.div`
-  padding-bottom: 32px;
-  margin-top: 48px;
+  padding-bottom: 0;
+  margin-top: 30px;
   @media(min-width: 832px){
     margin-top: -7px;
   }

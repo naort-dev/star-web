@@ -6,6 +6,7 @@ export const TextInput = props => (
   <TextFieldStyled
     error={props.error}
     placeholder={props.placeholder}
+    multiline={props.multiline}
     type={props.type}
     name={props.name}
     value={props.value}
