@@ -3,4 +3,5 @@ export { GeneralList } from './components/GeneralList';
 export { StarCompleted } from './components/StarCompleted';
 export { CompactCard } from './components/CompactCard';
 export { CompletedCard } from './components/CompletedCard';
+export { FanGeneralList } from './components/FanGeneralList';
 
