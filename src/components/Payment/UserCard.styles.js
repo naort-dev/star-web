@@ -107,6 +107,7 @@ export const BottomSection = styled.section`
     margin: 0 auto;
     &.card-note {
       text-align: left;
+      width: 100%;
     }
     ${media.webView} {
       width: 100%;

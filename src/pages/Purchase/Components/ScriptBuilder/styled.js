@@ -117,6 +117,7 @@ export const TextAreaWrapper = styled.section`
     width: 100%;
     border-radius: 10px;
     border: solid 1px #e0e0e0;
+    background: none;
     resize: none;
     padding: 15px;
     max-width: 425px;
