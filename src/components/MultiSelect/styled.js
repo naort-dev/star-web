@@ -81,8 +81,8 @@ const MultiSelectStyled = styled.div`
       .fans-want &,
       .select-category & {
         font-family: Gilroy-Medium;
-        font-size: 16px;
-        padding: 5px 5px 3px 0;
+        font-size: 14px;
+        padding: 3px 5px 3px 0;
       }
     }
     .select__multi-value__remove {
