@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const SupportStyled = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   .drop-down {
     display: block;
     margin: 26.8px 0;
-    @media(min-width: 832px) {
-      width: 100%;
-    }
+    width: 100%;
   }
 
   .MuiFormControl {
@@ -38,10 +39,6 @@ const SupportStyled = styled.div`
   }
   @media(min-width: 832px) {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 `;
 
