@@ -6,6 +6,7 @@ import { Layout, MenuSection } from './styled';
 import AccountInfo from './Components/AccountInfo';
 import Password from './Components/Password';
 import Payment from './Components/Payment';
+import Notification from './Components/Notification';
 
 const Settings = props => {
   const goBack = () => {
@@ -22,12 +23,23 @@ const Settings = props => {
         />
         <Route
           path="/manage/settings/password"
-          render={childProps => <Password {...childProps} />}
+          render={childProps => <Password {...childProps} {...props}/>}
         />
 
         <Route
           path="/manage/settings/payment"
-          render={childProps => <Payment {...childProps} />}
+          render={childProps => (
+            <Payment
+              {...childProps}
+              stripeCard={props.stripeCard}
+              stripeUrl={props.stripeUrl}
+            />
+          )}
+        />
+
+         <Route
+          path="/manage/settings/notification"
+          render={childProps => <Notification {...childProps} {...props}/>}
         />
       </Switch>
     </Layout>
@@ -36,6 +48,12 @@ const Settings = props => {
 
 Settings.propTypes = {
   history: PropTypes.object.isRequired,
+  stripeCard: PropTypes.string,
+  stripeUrl: PropTypes.string,
+};
+Settings.defaultProps = {
+  stripeCard: '',
+  stripeUrl: '',
 };
 
 export default Settings;

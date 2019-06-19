@@ -14,14 +14,35 @@ const Payment = props => {
           Set up your payment account so we can pay you for your videos and your
           referrals.
         </p>
+        <FlexCenter>
+          {props.stripeCard === '' ? (
+            <a className="button" href="#" target="_blank">
+              + Set up Stripe Account
+            </a>
+          ) : (
+            <a
+              className="button"
+              href={props.stripeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {props.stripeCard}
+            </a>
+          )}
+        </FlexCenter>
       </Wrap>
-      <FlexCenter>
-          <Button></Button>
-      </FlexCenter>
     </Container>
   );
 };
 
-Payment.propTypes = {};
+Payment.propTypes = {
+  stripeCard: PropTypes.string,
+  stripeUrl: PropTypes.string,
+};
+
+Payment.defaultProps = {
+  stripeCard: '',
+  stripeUrl: '',
+};
 
 export default Payment;
