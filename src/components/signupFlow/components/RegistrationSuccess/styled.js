@@ -62,8 +62,8 @@ justify-content: center;
 `;
 
 RegSuccessWrapper.Type = styled.div`
-  padding-bottom: 32px;
-  margin-top: 48px;
+  padding-bottom: 0;
+  margin-top: 30px;
   @media(min-width: 832px){
     margin-top: -7px;
   }
