@@ -231,11 +231,11 @@ TypeSelectorWrapper.Button = styled.button`
   }
 `;
 TypeSelectorWrapper.Type = styled.div`
-  padding-bottom: 53px;
+  padding-bottom: 25px;
   cursor: pointer;
   transition: all .2s ease-in-out;
   &:hover { transform: scale(1.1);}
-  @media(min-width: 832px){
+  @media(max-width: 832px){
     padding-bottom: 12px;
   }
 `;

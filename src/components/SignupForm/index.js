@@ -323,7 +323,7 @@ class SignUpForm extends React.Component {
           {this.props.signupRole === 'star' && (
             <DotsContainer dotsCount={3} selectedDot={1} />
           )}
-          <LoginContainer.InputFieldsWrapper>
+          <LoginContainer.InputFieldsWrapper className={this.props.signupDetails.role === ROLE_FAN && 'fan-form'}>
             <LoginContainer.InputContainer>
               {this.props.statusCode === '410' ? (
                 <LoginContainer.EmptyDiv />

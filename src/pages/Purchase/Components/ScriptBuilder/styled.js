@@ -41,6 +41,10 @@ export const Layout = styled.section`
         padding: 18px 20px;
         min-width: inherit;
 
+        ${media.webView} {
+          margin: 0 20px;
+        }
+
         p {
           max-width: 100%;
         }
@@ -48,6 +52,9 @@ export const Layout = styled.section`
     }
     & > section:nth-child(2) {
       padding: 0 20px;
+      ${media.webView} {
+        padding: 0 40px;
+      }
     }
   }
 
@@ -125,12 +132,15 @@ export const TextAreaWrapper = styled.section`
     }
     ::placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     :-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     ::-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
   }
 `;
