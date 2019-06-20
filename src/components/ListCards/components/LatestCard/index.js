@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComment,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import QuickComment from '../../../QuickComment';
-import { Card } from 'styles/CommonStyled';
 import { MediumText, HeadingBold, FlexColumn, LightHeading } from '../../styled';
 import CommentItem from '../../../CommentItem';
 import StarStyled from './styled';
 
-const StarCompleted = (props) => {
+const LatestCard = (props) => {
 
   const renderHeading = () => {
     switch(props.type) {
@@ -71,7 +71,7 @@ const StarCompleted = (props) => {
     <Card>
       <StarStyled className='star-container'>
         <StarStyled.LeftWrapper>
-          <StarStyled.UserImage imageUrl='' />
+          <StarStyled.UserImage imageUrl='' starMode={props.starMode} />
           <FlexColumn className='description-wrapper'>
             <LightHeading className='heading'>{renderHeading()}</LightHeading>
             <MediumText className='card-description'>
@@ -94,8 +94,13 @@ const StarCompleted = (props) => {
   )
 }
 
-StarCompleted.propTypes = {
-  type: PropTypes.string.isRequired,
+LatestCard.propTypes = {
+  starMode: false,
 }
 
-export { StarCompleted };
+LatestCard.propTypes = {
+  type: PropTypes.string.isRequired,
+  starMode: PropTypes.bool,
+}
+
+export { LatestCard };

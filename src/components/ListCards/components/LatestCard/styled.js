@@ -78,7 +78,13 @@ StarStyled.UserImage = LeftContent.extend`
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
-  border-radius: 8px;
+  ${props => props.starMode ? `
+    border-radius: 8px;
+  ` : `
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  `}
   @media(min-width: 832px) {
     display: block;
   }
