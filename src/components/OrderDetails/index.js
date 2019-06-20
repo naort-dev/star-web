@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -7,13 +7,18 @@ import Script from '../Script';
 import RequestFlowPopup from '../RequestFlowPopup';
 import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
+import ModalHeader from '../ModalHeader';
+import { openStatusList, completedStatusList } from '../../constants/requestStatusList';
+import BookingTitle from '../BookingTitle';
 import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
 const OrderDetails = (props) => {
 
-  const { bookingData } = props;
+  const { bookingData, starMode } = props;
+  const [requestType, updateRequestType] = useState('');
+
 
   const renderHeading = () => {
     const requestDetails = bookingData.request_details;
@@ -48,14 +53,32 @@ const OrderDetails = (props) => {
     )
   }
 
+  useEffect(() => {
+    if (openStatusList.indexOf(bookingData.request_status) >= 0) {
+      updateRequestType('open');
+    } else if (completedStatusList.indexOf(bookingData.request_status) >= 0) {
+      updateRequestType('completed');
+    } else {
+      updateRequestType('cancelled');
+    }
+  }, [])
+
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
 
   return (
-    <WrapperComponent closePopUp={props.closeModal}>
+    <WrapperComponent disableClose={!starMode} noPadding={!starMode} closePopUp={props.closeModal}>
+      {
+        !starMode && props.isModal &&
+          <ModalHeader
+            starImage={bookingData.avatar_photo && bookingData.avatar_photo.thumbnail_url}
+            closeHandler={props.closeModal}
+            customHeading={<BookingTitle secondary requestData={bookingData} />}
+          />
+      }
       <OrderStyled>
         {
-          !props.disableHeader &&
+          !props.disableHeader && starMode &&
             <React.Fragment>
               <CloseButton onClick={props.closeModal} />
               <OrderStyled.HeaderText>
@@ -95,14 +118,19 @@ const OrderDetails = (props) => {
             </li>
             <li className='detail-item'>
               <span className='detail-title'>Paid:</span>
-              <span className='detail-value'>${bookingData.order_details.amount}</span>
+              <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
             </li>
             <li className='detail-item'>
               <span className='detail-title'>Recorded:</span>
               <span className='detail-value'>
-                {bookingData.request_status === 5 ? 'CANCELLED' : moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
                 {
-                  bookingData.request_status === 5 &&
+                  requestType === 'open' &&
+                    'The star has 7 days to complete your booking.'
+                }
+                { requestType === 'cancelled' && 'CANCELLED'}
+                { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
+                {
+                  requestType === 'cancelled' &&
                     <span className='detail-comment'>{bookingData.comment}</span>
                 }
               </span>
@@ -114,7 +142,16 @@ const OrderDetails = (props) => {
           </OrderStyled.DetailList>
           {
             !props.disableFooter &&
-              <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
+              <React.Fragment>
+                {
+                  requestType === 'completed' &&
+                    <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
+                }
+                {
+                  requestType === 'open' &&
+                    <OrderStyled.TextButton>Make changes</OrderStyled.TextButton>
+                }
+              </React.Fragment>
           }
         </OrderStyled.Details>
       </OrderStyled>
@@ -125,6 +162,7 @@ const OrderDetails = (props) => {
 OrderDetails.defaultProps = {
   disableHeader: false,
   disableFooter: false,
+  isModal: false,
   onPrimaryClick: () => {},
 }
 
@@ -136,6 +174,7 @@ OrderDetails.propTypes = {
   toggleUpdateBooking: PropTypes.func.isRequired,
   starMode: PropTypes.bool.isRequired,
   disableFooter: PropTypes.bool,
+  isModal: PropTypes.bool,
 }
 
 const mapDispatchToProps = dispatch => ({

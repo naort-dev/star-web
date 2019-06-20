@@ -41,8 +41,7 @@ const AllBookings = props => {
         <SectionHead>Recent Activity</SectionHead>
       </BookingsStyled.SectionHeader>
       <LatestCard type="comment" />
-      <LatestCard type="reaction" />
-      <LatestCard type="tip" />
+      {/* <FanGeneralList key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} /> */}
       <LatestCard type="rating" />
     </React.Fragment>
   );

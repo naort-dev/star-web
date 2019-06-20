@@ -5,12 +5,16 @@ import { PopupHeading } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import PrimaryButton from '../PrimaryButton';
 import Dropdown from '../Dropdown';
+import ModalHeader from '../ModalHeader';
+import BookingTitle from '../BookingTitle';
 import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { changeRequestStatus } from '../../pages/myVideos/actions/handleRequests';
 import { changeBookingStatus } from '../../pages/Bookings/actions/handleRequests';
 import UpdateStyled from './styled';
 
 const UpdateBooking = (props) => {
+
+  const { starMode, requestData } = props.updateBooking;
 
   const [declineReasons, setReasonList] = useState([]);
   const [reason, setReason] = useState({});
@@ -44,13 +48,27 @@ const UpdateBooking = (props) => {
 
   return (
     <RequestFlowPopup
+      disableClose={!starMode}
+      noPadding={!starMode}
       classes={{ root: 'alternate-modal-root' }}
       closePopUp={props.toggleUpdateBooking(false)}
     >
-      <UpdateStyled>
+      {
+        !starMode &&
+          <ModalHeader
+            starImage={requestData.avatar_photo && requestData.avatar_photo.thumbnail_url}
+            closeHandler={props.toggleUpdateBooking(false)}
+            customHeading={<BookingTitle secondary requestData={requestData} />}
+          />
+      }
+      <UpdateStyled starMode={starMode}>
         <PopupHeading>
-          Why would you like to 
-          decline this booking?
+          {
+            starMode ?
+              `Why would you like to 
+              decline this booking?`
+            : `Are you sure you want to cancel this booking?`
+          }
         </PopupHeading>
         <Dropdown
           rootClass="drop-down"
@@ -59,9 +77,14 @@ const UpdateBooking = (props) => {
           options={declineReasons}
           labelKey="label"
           valueKey="value"
+          placeHolder={!starMode && 'Select reason'}
           onChange={updateReason}
         />
-        <PrimaryButton onClick={onReasonSubmit}>Submit</PrimaryButton>
+        <PrimaryButton onClick={onReasonSubmit}>{ starMode ? 'Submit' : 'Cancel Booking' }</PrimaryButton>
+        {
+          !starMode &&
+            <PrimaryButton className='secondary-btn' secondary onClick={onReasonSubmit}>Continue with booking</PrimaryButton>        
+        }
       </UpdateStyled>
     </RequestFlowPopup>
   )

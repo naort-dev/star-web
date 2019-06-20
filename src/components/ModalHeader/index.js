@@ -44,7 +44,7 @@ const Header = props => {
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />
       </FlexCenter>
-      <HeaderText>{props.header}</HeaderText>
+      <HeaderText>{props.customHeading || props.header}</HeaderText>
     </HeaderDiv>
   );
 };
@@ -54,6 +54,7 @@ Header.propTypes = {
   backArrowHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   header: PropTypes.string,
+  customHeading: PropTypes.string,
   starImage: PropTypes.string,
 };
 Header.defaultProps = {
