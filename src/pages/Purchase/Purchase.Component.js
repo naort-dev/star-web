@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { getStarName } from 'utils/dataToStringFormatter';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
+import Header from 'components/ModalHeader';
 import { termsAnnouncement } from 'constants';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
@@ -17,7 +18,6 @@ import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
 import SuccessScreen from './Components/SuccessScreen';
-import Header from './Components/Header';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
@@ -145,7 +145,7 @@ class Purchase extends Component {
             starsonaRequest={this.props.starsonaRequest}
             starNM={
               this.props.userDetails.nick_name !== '' &&
-                this.props.userDetails.nick_name
+              this.props.userDetails.nick_name
                 ? this.props.userDetails.nick_name
                 : this.props.userDetails.first_name
             }
@@ -184,7 +184,7 @@ class Purchase extends Component {
             termText={
               this.state.category === 2 ? termsAnnouncement : qAndATerms
             }
-            buttonText={this.state.category === 2 ? "Continue" : "Agree"}
+            buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
             isChechbox={this.state.category === 2 ? true : false}
           />
         );
@@ -490,13 +490,13 @@ class Purchase extends Component {
             <Scrollbars>{this.getCustomStep()}</Scrollbars>
           </ModalContainer>
         ) : (
-            <CancelConfirm
-              modalClose={this.modalClose}
-              requestFLowClose={this.clearStore}
-              // eslint-disable-next-line
-              starNM={nick_name !== '' && nick_name ? nick_name : first_name}
-            />
-          )}
+          <CancelConfirm
+            modalClose={this.modalClose}
+            requestFLowClose={this.clearStore}
+            // eslint-disable-next-line
+            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+          />
+        )}
       </Modal>
     );
   }
@@ -532,7 +532,7 @@ Purchase.propTypes = {
   audioRecordHandler: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
-  fetchOccasionlist: () => { },
+  fetchOccasionlist: () => {},
   OccasionDetails: [],
   videoFile: {},
 };

@@ -7,9 +7,13 @@ const PrimaryButton = React.forwardRef((props, forwardRef) => (
   <ButtonStyled {...props} className={`common-btn ${props.className}`} innerRef={forwardRef}>{props.children}</ButtonStyled>
 ));
 
+PrimaryButton.defaultProps = {
+  className: '',
+}
+
 PrimaryButton.propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default PrimaryButton;

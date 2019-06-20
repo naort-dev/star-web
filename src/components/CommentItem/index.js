@@ -51,7 +51,7 @@ const CommentItem = (props) => {
           { renderComment() }
           <span className='comment-footer'>
             <span className='time'>7 hours</span>
-            <span className='action'>action</span>
+            {/* <span className='action'>action</span> */}
           </span>
         </CommentStyled.Comment>
       </CommentStyled.Container>

@@ -26,6 +26,7 @@ export const starInnerLinks = [
     url: '/manage/dashboard',
   },
   { linkName: 'Bookings', selectedName: 'requests', url: '/manage/bookings' },
+  { linkName: 'My videos', selectedName: 'myVideos', url: '/manage/my-videos' },
   {
     linkName: 'Promotional Tools',
     selectedName: 'promotional',

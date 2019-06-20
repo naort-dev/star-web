@@ -23,7 +23,7 @@ CommentStyled.ProfileImage = styled.span`
 CommentStyled.Comment = styled.span`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
-  padding: 15px 8px 8px 15px;
+  padding: 10px 8px 8px 15px;
   border-radius: 10px;
   max-width: 228px;
   ${props => (props.receive ? `
@@ -35,10 +35,12 @@ CommentStyled.Comment = styled.span`
   `)}
   .comment {
     font-family: Gilroy-Light;
-    font-size: 12px;
+    font-size: 14px;
     color: #3c3c3c;
     display: block;
     line-height: 18px;
+    max-height: 35px;
+    overflow: hidden;
     .text-bold {
       font-family: Gilroy-Medium;
       font-size: 14px;
@@ -82,7 +84,7 @@ CommentStyled.Comment = styled.span`
   .comment-footer {
     display: flex;
     width: 100%;
-    margin-top: 3px;
+    margin-top: 6px;
     justify-content: space-between;
     align-items: center;
     .time {
