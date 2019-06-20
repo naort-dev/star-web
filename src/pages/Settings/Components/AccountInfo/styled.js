@@ -1,43 +1,44 @@
 import styled from 'styled-components';
-import { Card } from 'styles/CommonStyled';
 import { media } from 'styles/mediaQueries';
+import { Form } from '../../styled';
 
-export const Layout = styled(Card)`
-  width: 700px;
-  height: 717px;
-  .sub-head {
-    font-size: 24px;
-    font-family: Gilroy;
-    color: #ff6c58;
-    text-align: center;
-  }
-  display: flex;
-  justify-content: center;
-`;
-
-export const Wrapper = styled.section`
-  width: 422px;
-  ${media.webView} {
-    padding-top: 59px;
-  }
-`;
-
-export const Form = styled.section`
-  .input-field {
-    text-align: center;
-    width: 100%;
-  }
+export const FormContainer = styled(Form)`
   .row-wrap {
-    .MuiFormControl {
-      width: 48%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 54px;
+
+    ${media.mobileScreen} {
+      width: 232px;
+      margin: 0 auto;
+    }
+    ${media.webView} {
+      justify-content: space-between;
+      flex-direction: row;
+      padding-bottom: 30px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .inputWrapper {
+      padding-bottom: 13px;
+      width: 100%;
+      ${media.webView} {
+        width: 48%;
+      }
     }
   }
 `;
+
 export const InputLabel = styled.span`
   width: 100%;
   display: inline-block;
-  font-size: 12px;
-  color: #555555;
+  font-size: 14px;
+  ${media.webView} {
+    font-size: 12px;
+  }
+  color: ${props => (props.error ? '#980100' : '#555555')};
   font-family: Gilroy;
   text-align: center;
+  padding-bottom: 10px;
 `;

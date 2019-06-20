@@ -64,7 +64,7 @@ const UpdateBooking = (props) => {
 UpdateBooking.propTypes = {
   toggleUpdateBooking: PropTypes.func.isRequired,
   changeBookingStatus: PropTypes.func.isRequired,
-  updateBooking: PropTypes.func.isRequired,
+  updateBooking: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
 }
 

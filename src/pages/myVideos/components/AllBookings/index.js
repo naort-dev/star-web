@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { SectionHead, EmptyText } from 'styles/CommonStyled';
 import { options } from '../../constants';
-import { GeneralList, LatestCard } from '../../../../components/ListCards';
+import { FanGeneralList, LatestCard } from '../../../../components/ListCards';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import BookingsStyled from '../../styled';
@@ -22,30 +21,16 @@ const AllBookings = props => {
         placeHolder="Select a booking type"
       />
       <BookingsStyled.SectionHeader>
-        <SectionHead>Open Bookings</SectionHead>
-        {props.bookingsList.data.length > 0 && (
-          <span
-            role="presentation"
-            className="info-text"
-            onClick={props.setRequestType({
-              title: 'Open Bookings',
-              id: 'open',
-            })}
-          >
-            View all <strong>{props.bookingsList.count}</strong> open bookings
-          </span>
-        )}
+        <SectionHead>Open Requests</SectionHead>
       </BookingsStyled.SectionHeader>
       {props.bookingsList.loading && <Loader />}
       {!props.bookingsList.loading && props.bookingsList.data.length === 0 && (
         <EmptyText>
-          You currently do not have any recent activity. Visit &nbsp;{' '}
-          <Link to="/manage/promotional-tools">Promote Yourself</Link> &nbsp; to
-          get those fans booking.
+          You currently do not have any recent activity.
         </EmptyText>
       )}
       {props.bookingsList.data.slice(0, 2).map(bookItem => (
-        <GeneralList
+        <FanGeneralList
           expiration={props.config.request_expiration_days}
           onPrimaryClick={props.onOpenClick(bookItem.booking_id)}
           key={bookItem.booking_id}
@@ -53,12 +38,12 @@ const AllBookings = props => {
         />
       ))}
       <BookingsStyled.SectionHeader>
-        <SectionHead className="latest-activity">Latest Activity</SectionHead>
+        <SectionHead>Recent Activity</SectionHead>
       </BookingsStyled.SectionHeader>
-      <LatestCard type="comment" starMode />
-      <LatestCard type="reaction" starMode />
-      <LatestCard type="tip" starMode />
-      <LatestCard type="rating" starMode />
+      <LatestCard type="comment" />
+      <LatestCard type="reaction" />
+      <LatestCard type="tip" />
+      <LatestCard type="rating" />
     </React.Fragment>
   );
 };

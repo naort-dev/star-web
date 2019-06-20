@@ -1,7 +1,6 @@
-
+import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-
 
 export const UPDATE_NOTIFICATION = {
   start: 'fetch_start/update_notification',
@@ -19,12 +18,11 @@ export const updateNotificationFetchEnd = () => ({
   type: UPDATE_NOTIFICATION.end,
 });
 
-export const updateNotificationFetchSuccess = (details) => {
-  return (
-    {
-      type: UPDATE_NOTIFICATION.success,
-      details,
-    });
+export const updateNotificationFetchSuccess = details => {
+  return {
+    type: UPDATE_NOTIFICATION.success,
+    details,
+  };
 };
 
 export const updateNotificationFetchFailed = error => ({
@@ -35,7 +33,6 @@ export const resetNotification = () => ({
   type: UPDATE_NOTIFICATION.reset,
 });
 
-
 export const updateNotification = obj => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
@@ -44,23 +41,43 @@ export const updateNotification = obj => (dispatch, getState) => {
     API_URL = `${Api.updateNotification}`;
     options = {
       headers: {
-        'Authorization': `token ${auth_token.authentication_token}`,
+        Authorization: `token ${auth_token.authentication_token}`,
       },
     };
   }
   dispatch(updateNotificationFetchStart());
-  return fetch.post(API_URL, obj, options).then((resp) => {
-    if (resp.data && resp.data.success) {
+  dispatch(loaderAction(true));
+  return fetch
+    .post(API_URL, obj, options)
+    .then(resp => {
+      if (resp.data && resp.data.success) {
+        dispatch(updateNotificationFetchEnd());
+        dispatch(updateNotificationFetchSuccess(resp.data.data));
+      } else {
+        dispatch(updateNotificationFetchEnd());
+        dispatch(updateNotificationFetchFailed('404'));
+      }
+      dispatch(loaderAction(false));
+      dispatch(
+        updateToast({
+          value: true,
+          message: 'Successfully updated',
+          variant: 'success',
+        }),
+      );
+      return resp.data;
+    })
+    .catch(exception => {
       dispatch(updateNotificationFetchEnd());
-      dispatch(updateNotificationFetchSuccess(resp.data.data));
-    } else {
-      dispatch(updateNotificationFetchEnd());
-      dispatch(updateNotificationFetchFailed('404'));
-    }
-    return resp.data;
-  }).catch((exception) => {
-    dispatch(updateNotificationFetchEnd());
-    dispatch(updateNotificationFetchFailed(exception.response.data));
-    return exception.response.data;
-  })
+      dispatch(loaderAction(false));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
+      dispatch(updateNotificationFetchFailed(exception.response.data));
+      return exception.response.data;
+    });
 };
