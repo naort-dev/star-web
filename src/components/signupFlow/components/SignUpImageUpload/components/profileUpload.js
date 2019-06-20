@@ -220,12 +220,12 @@ export default class ProfileUpload extends React.Component {
                   imageUrl={this.props.image}
                 >
                 </ImageUpload.ProfileImageWrapper>
-                <ImageUpload.ButtonWrapper>
-                  <ImageUpload.CropperLightButton onClick={this.props.onTakePicture}>
+                <ImageUpload.ButtonWrapper isMultiline={this.props.multiline? true : false}>
+                  <ImageUpload.CropperLightButton isMultiline={this.props.multiline? true : false} onClick={this.props.onTakePicture}>
                     <FontAwesomeIcon icon={faCamera} className="icon take-picture"/>
                     Take picture
                   </ImageUpload.CropperLightButton>
-                  <ImageUpload.CropperLightButton>
+                  <ImageUpload.CropperLightButton isMultiline={this.props.multiline? true : false}>
                     <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profileUpload" onChange={() => this.onUploadFileChange()} type="file" />
                     <FontAwesomeIcon icon={faUpload} className="icon upload-picture"/>
                     Upload picture

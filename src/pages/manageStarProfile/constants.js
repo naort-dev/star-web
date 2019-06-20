@@ -6,21 +6,21 @@ export const STAR_PROFILE = {
       selectedName: 'name&photo',
       url: '/manage/profile/name-photo',
     },
-    { linkName: 'Bookings', selectedName: 'requests', url: '/manage/bookings' },
+    { linkName: 'Welcome Video', selectedName: 'requests', url: '/manage/bookings' },
     {
-      linkName: 'Promotional Tools',
+      linkName: 'Bio',
       selectedName: 'promotional',
       url: '/manage/promotional-tools',
     },
-    { linkName: 'Profile', selectedName: 'profile', url: '/manage/profile' },
-    { linkName: 'Earnings', selectedName: 'earnings', url: '/manage/earnings' },
+    { linkName: 'Industry', selectedName: 'profile', url: '/manage/profile' },
+    { linkName: 'Tags', selectedName: 'earnings', url: '/manage/earnings' },
     {
-      linkName: 'Account Settings',
+      linkName: 'Social handles',
       selectedName: 'settings',
       url: '/manage/settings',
     },
     {
-      linkName: 'Referral Program',
+      linkName: 'Price & Limits',
       selectedName: 'referral',
       tooltip:
         'Do you have contacts that would enjoy Starsona? Help them sign up using your referral code and earn 20% of our commission!',

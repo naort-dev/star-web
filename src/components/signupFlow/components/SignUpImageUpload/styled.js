@@ -629,6 +629,9 @@ ImageUpload.CropperLightButton = styled.button`
   outline: none;
   margin-right: 10px;
   position: relative;
+  @media (max-width: 832px) {
+    margin-bottom: ${(props) => (props.isMultiline ? '10px' : '0px')}
+  }
   &:hover {
     background-color: #2f839d;
     color: #ededed;
@@ -650,6 +653,7 @@ ImageUpload.CropperLightButton = styled.button`
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 16px;
   display: flex;
+  flex-direction: ${(props) => (props.isMultiline ? 'column' : 'inherit')}
   @media (min-width: 832px) {
     margin-top: 20px;
   }

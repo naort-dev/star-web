@@ -18,11 +18,35 @@ Content.Description = styled.div`
   line-height: 1.44;
   text-align: center;
   color: #888888;
+  @media(min-width: 832px) {
+    width: 190px;
+    height: 65px;
+  }
 `;
 Content.Visiblity = styled.div`
   display: ${props => props.hidden ? 'none' : 'block'};
   @media(min-width: 832px) {
     display: block;
+  }
+`;
+
+Content.CommonContent = styled.div`
+  display:flex;
+  flex-direction: column;
+  @media(min-width: 832px) {
+    width: 190px;
+    height: 65px;
+    flex-direction: row;
+  }
+`;
+Content.InnerWrapper = styled.div`
+  display:flex;
+  flex-direction:row;
+`;
+Content.SidebarWrapper = Content.Visiblity.extend`
+  @media(min-width: 832px) {
+    display: inline-block;
+    max-width: 20%;
   }
 `;
 Content.RightContent = Content.Visiblity.extend`

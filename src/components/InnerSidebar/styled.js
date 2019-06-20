@@ -30,7 +30,8 @@ SidebarStyled.LinkList = styled.ul`
 SidebarStyled.LinkItem = styled.li`
   font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
   color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.69;
   cursor: pointer;
   border-bottom: ${props => `1px solid ${props.theme.white}`};
   a, .log-out {
