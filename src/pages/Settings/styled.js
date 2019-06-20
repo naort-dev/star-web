@@ -12,10 +12,18 @@ export const Layout = styled.section`
   }
 `;
 
-export const MenuSection = styled.section``;
+export const ContentWrapper = styled.section`
+  display: flex;
+  .sub-menu-wrap {
+    width: 268px;
+    .menu-ul {
+      padding: 0;
+    }
+  }
+`;
 
 export const Container = styled(Card)`
-  height: 100%;
+  height: 100vh;
   border-radius: 0;
   background: #f6f6f6;
   ${media.webView} {

@@ -35,13 +35,13 @@ export const Wrap = styled(Wrapper)`
   .sub-text {
     font-family: Gilroy;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 21px;
     color: #555;
   }
   .main-text {
     font-family: Gilroy-Light;
     font-size: 14px;
-    line-height: 25px;
+    line-height: 21px;
     color: #555;
     padding-left: 2px;
   }

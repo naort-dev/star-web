@@ -5,42 +5,42 @@ import { Container } from '../../styled';
 import { Wrap } from './styled';
 
 const Notification = props => {
-  const checkboxChange = () => {};
+  const checkboxChange = notification => value => {
+    props.handleCheck(notification, value);
+  };
 
   return (
     <Container>
       <Wrap>
         <h2 className="sub-head">Notifications</h2>
         <span className="head-text">Allow the following:</span>
-        <div className="termsWrapper">
-          <Checkbox onChang={checkboxChange} />
-          <p className="main-text">
-            <p className="sub-text">Messages from Starsona</p> These are
-            communications regarding corporate updates such as updates to terms
-            or privacy policy, etc.
-          </p>
-        </div>
-        <div className="termsWrapper">
-          <Checkbox onChang={checkboxChange} />
-          <p className="main-text">
-            <p className="sub-text">Account updates</p> Messages when changes to
-            your specific account information are made.
-          </p>
-        </div>
-        <div className="termsWrapper">
-          <Checkbox onChang={checkboxChange} />
-          <p className="main-text">
-            <p className="sub-text">My Starsona updates</p> Messages regarding
-            bookings (e.g. new requests, reminders, reactions).
-          </p>
-        </div>
+
+        {props.notifications.map((notification, index) => {
+          return (
+            <div className="termsWrapper" key={index}>
+              <Checkbox
+                onChange={checkboxChange(notification)}
+                checked={notification.value}
+              />
+              <p className="main-text">
+                <p className="sub-text">{notification.mainText}</p>{' '}
+                {notification.subText}
+              </p>
+            </div>
+          );
+        })}
       </Wrap>
     </Container>
   );
 };
 
-Notification.propTypes = {};
+Notification.propTypes = {
+  notifications: PropTypes.array.isRequired,
+  handleCheck: PropTypes.func,
+};
 
-Notification.defaultProps = {};
+Notification.defaultProps = {
+  handleCheck: () => {},
+};
 
 export default Notification;
