@@ -4,10 +4,13 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Card } from 'styles/CommonStyled';
 import MoreActions from '../../../MoreActions';
+import PrimaryButton from '../../../PrimaryButton';
+import Share from '../../../Share';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
 import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
+import { findCompletedVideo } from '../../../../utils/dataformatter';
 import { useMedia } from '../../../../utils/domUtils';
 import { moreOptions } from './constants';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
@@ -73,6 +76,8 @@ const FanGeneralList = (props) => {
       props.toggleUpdateBooking(true, props.data.booking_id, false);
     } else if(option.value === 'contact') {
       props.toggleContactSupport(true);
+    } else if(option.value === 'download') {
+      console.log(findCompletedVideo(props.data));
     }
   }
 
@@ -127,6 +132,30 @@ const FanGeneralList = (props) => {
               requestType === 'cancelled' &&
                 <React.Fragment>
                   Cancelled by you | <span className='action' onClick={props.onPrimaryClick} />
+                </React.Fragment>
+            }
+            {
+              requestType === 'completed' &&
+                <React.Fragment>
+                  {
+                    isMobile ?
+                     <React.Fragment>
+                       <span className='btn-links' onClick={props.onPrimaryClick}>Share</span>
+                        | &nbsp; <span className='btn-links' onClick={props.onPrimaryClick}>View video</span>
+                      </React.Fragment>
+                    : 
+                      <React.Fragment>
+                        <Share
+                          secondary
+                          buttonText='Share'
+                          classes={{
+                            button: 'action-button share',
+                          }}
+                          shareUrl={''}
+                        />                  
+                        <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>View video</PrimaryButton>
+                      </React.Fragment>
+                  }
                 </React.Fragment>
             }
           </GeneralStyled.Details>
