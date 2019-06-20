@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
-import { Container } from '../../styled';
+import { Container } from '../styled';
 import { Wrap } from './styled';
 
 const Notification = props => {

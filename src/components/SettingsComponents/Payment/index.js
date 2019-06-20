@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlexCenter } from 'styles/CommonStyled';
-import Button from 'components/PrimaryButton';
-import { Container } from '../../styled';
+import { Container } from '../styled';
 import { Wrap } from './styled';
 
 const Payment = props => {

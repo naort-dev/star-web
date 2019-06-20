@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
-import { Form } from '../../styled';
+import { Form } from '../styled';
 
 export const FormContainer = styled(Form)`
   .row-wrap {
