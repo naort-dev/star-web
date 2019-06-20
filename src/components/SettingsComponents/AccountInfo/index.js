@@ -97,7 +97,14 @@ const AccountInfo = props => {
   return (
     <Container>
       <Wrapper>
-        <h2 className="sub-head">Account Information</h2>
+        <h2
+          className="sub-head"
+          data-web="Account Information"
+          data-mob="Account Info"
+        >
+          {' '}
+          {''}
+        </h2>
         <FormContainer>
           {errorObject.firstNameErr || errorObject.lastNameErr ? (
             <InputLabel

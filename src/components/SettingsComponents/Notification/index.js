@@ -13,22 +13,23 @@ const Notification = props => {
     <Container>
       <Wrap>
         <h2 className="sub-head">Notifications</h2>
-        <span className="head-text">Allow the following:</span>
-
-        {props.notifications.map((notification, index) => {
-          return (
-            <div className="termsWrapper" key={index}>
-              <Checkbox
-                onChange={checkboxChange(notification)}
-                checked={notification.value}
-              />
-              <p className="main-text">
-                <p className="sub-text">{notification.mainText}</p>{' '}
-                {notification.subText}
-              </p>
-            </div>
-          );
-        })}
+        <section className="terms-container">
+          <span className="head-text">Allow the following:</span>
+          {props.notifications.map((notification, index) => {
+            return (
+              <div className="termsWrapper" key={index}>
+                <Checkbox
+                  onChange={checkboxChange(notification)}
+                  checked={notification.value}
+                />
+                <p className="main-text">
+                  <p className="sub-text">{notification.mainText}</p>{' '}
+                  {notification.subText}
+                </p>
+              </div>
+            );
+          })}
+        </section>
       </Wrap>
     </Container>
   );

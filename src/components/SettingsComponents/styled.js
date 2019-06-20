@@ -4,6 +4,7 @@ import { Card } from 'styles/CommonStyled';
 
 export const Container = styled(Card)`
   height: 100vh;
+  width: 100%;
   border-radius: 0;
   background: #f6f6f6;
   ${media.webView} {
@@ -16,11 +17,22 @@ export const Container = styled(Card)`
   justify-content: center;
 
   .sub-head {
-    font-size: 24px;
+    &:before {
+      content: attr(data-mob);
+      ${media.webView} {
+        content: attr(data-web);
+      }
+    }
+    font-size: 28px;
     font-family: Gilroy;
     color: #ff6c58;
     text-align: center;
     padding-bottom: 50px;
+    padding-top: 34px;
+    ${media.webView} {
+      font-size: 24px;
+      padding-top: 0;
+    }
   }
 `;
 

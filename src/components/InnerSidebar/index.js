@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons';
 import Tooltip from '../ToolTip';
 import { logOutUser } from '../../store/shared/actions/login';
 import { SidebarStyled } from './styled';
@@ -13,8 +15,13 @@ const InnerSidebar = props => {
         <Tooltip title={link.tooltip} key={link.selectedName}>
           <SidebarStyled.LinkItem
             selected={link.url === props.location.pathname}
+            className="menu-li"
+            completed={link.completed}
           >
-            <Link to={link.url}>{link.linkName}</Link>
+            <FontAwesomeIcon className="tick-circle" icon={faCheckCircle} />
+            <Link className="link-item" to={link.url}>
+              {link.linkName}
+            </Link>
           </SidebarStyled.LinkItem>
         </Tooltip>
       );
@@ -23,8 +30,13 @@ const InnerSidebar = props => {
       <SidebarStyled.LinkItem
         key={link.selectedName}
         selected={link.url === props.location.pathname}
+        className="menu-li"
+        completed={link.completed}
       >
-        <Link to={link.url}>{link.linkName}</Link>
+        <FontAwesomeIcon className="tick-circle" icon={faCheckCircle} />
+        <Link className="link-item" to={link.url}>
+          {link.linkName}
+        </Link>
       </SidebarStyled.LinkItem>
     );
   };
