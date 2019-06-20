@@ -12,6 +12,8 @@ export const starRoutes = [
   '/manage/earnings',
   '/manage/settings',
   '/manage/settings/account-info',
+  '/manage/settings/password',
+  '/manage/settings/payment',
 ];
 export const groupRoutes = [...fanRoutes, '/user/star-supporters'];
 export const protectedRoutes = [

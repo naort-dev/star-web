@@ -302,7 +302,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     margin-bottom: 10px;
     max-width: 270px;
     span {
-      font-family: Gilroy;
+      font-family: Gilroy_Light;
       font-size: 14px;
       display: block;
     }
