@@ -5,6 +5,7 @@ const GeneralStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+  position: relative;
   .left-content {
     display: none;
   }
@@ -46,6 +47,16 @@ GeneralStyled.Section = styled.div`
       font-family: Gilroy-Medium;
       font-size: 14px;
       cursor: pointer;
+    }
+  }
+  .more-action-root {
+    @media(max-width: 831px) {
+      position: absolute;
+      bottom: -6px;
+      right: 3px;
+      .more-action-icon {
+        border: none;
+      }
     }
   }
   .action-button {
@@ -95,12 +106,6 @@ GeneralStyled.Details = styled.span`
   .time {
     color: ${props => props.theme.brown};
     margin-right: 5px;
-    .time-head {
-      display: none;
-      @media(min-width: 832px) {
-        display: inline;
-      }
-    }
     &.expiring {
       color: #cc0000;
     }
@@ -115,9 +120,6 @@ GeneralStyled.Details = styled.span`
     }
   }
   @media(min-width: 832px) {
-    ${props => !props.isOpen && `
-      margin: 0;
-    `}
     margin-right: 21.3px;
 
     .comment {
