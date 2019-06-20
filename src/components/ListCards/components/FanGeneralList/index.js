@@ -8,12 +8,15 @@ import { requestTypes } from '../../../../constants/requestTypes';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
 import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
+import { useMedia } from '../../../../utils/domUtils';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
 import GeneralStyled from './styled';
 
 const FanGeneralList = (props) => {
 
   const [requestType, updateRequestType] = useState('');
+
+  const isMobile = useMedia('(max-width: 831px)');
 
   useEffect(() => {
     if (openStatusList.indexOf(props.data.request_status) >= 0) {
@@ -29,7 +32,7 @@ const FanGeneralList = (props) => {
     if (requestTypes[props.data.request_type] === 'Q&A') {
       return (
         <MediumText>
-          <HeadingBold>Question</HeadingBold> requested from <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>Answer</HeadingBold> to question for <HeadingBold>{props.data.fan}</HeadingBold>
         </MediumText>
       )
     } else if (requestTypes[props.data.request_type] === 'Shout-out') {
@@ -50,7 +53,7 @@ const FanGeneralList = (props) => {
     const actualTimeObject = moment();
     const currentTimeObject = moment.utc(time).add(parseInt(props.expiration, 0), 'days');
     const timeDifference = currentTimeObject.diff(actualTimeObject, 'hours');
-    if (timeDifference > 48) { // does not expires in 48 hours
+    if (timeDifference > 120) { // does not expires in 120 hours
       return (
         <span className='time'>
           <span className='time-head'>Requested</span> { getTime(time) }
@@ -72,14 +75,8 @@ const FanGeneralList = (props) => {
     }
   }
 
-  const onCardClick = () => {
-    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
-      props.onPrimaryClick();
-    }
-  }
-
   return (
-    <Card onClick={onCardClick}>
+    <Card>
       <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>
         <GeneralStyled.Section imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>     
           {
@@ -88,14 +85,26 @@ const FanGeneralList = (props) => {
                 <span className='profile-image' />
               </LeftContent>
           }
-          {
-            !props.isOpen && <span className="cancel-heading">Cancelled</span>
-          }
           <GeneralStyled.Description imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>
             <span className='mini-title'>
               {
                 requestType === 'open' &&
-                  <React.Fragment>Waiting for <span className='star-name'>{props.data.celebrity}</span> to deliver a</React.Fragment>
+                  <React.Fragment>
+                    {
+                      isMobile ?
+                        <React.Fragment>
+                          <span className='star-name'>{props.data.celebrity}</span>
+                        </React.Fragment>
+                      :
+                        <React.Fragment>
+                          Waiting for <span className='star-name'>{props.data.celebrity}</span> to deliver a
+                        </React.Fragment>
+                    }
+                  </React.Fragment>
+              }
+              {
+                requestType === 'cancelled' &&
+                  <span className='star-name'>{props.data.celebrity}</span>
               }
               {
                 requestType === 'completed' &&
@@ -106,17 +115,17 @@ const FanGeneralList = (props) => {
           </GeneralStyled.Description>
         </GeneralStyled.Section>
         <GeneralStyled.Section>
-          <GeneralStyled.Details isOpen={props.isOpen}>
+          <GeneralStyled.Details>
             {
               requestType === 'open' &&
                 <React.Fragment>
-                  Requested &nbsp;{renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
+                  {renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
                 </React.Fragment>
             }
             {
               requestType === 'cancelled' &&
                 <React.Fragment>
-                  Cancelled by you
+                  Cancelled by you | <span className='action' onClick={props.onPrimaryClick} />
                 </React.Fragment>
             }
           </GeneralStyled.Details>
@@ -125,17 +134,20 @@ const FanGeneralList = (props) => {
               <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>Respond Now</PrimaryButton>
             : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
           } */}
-          <MoreActions
-            classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-            options={[{
-              label: 'Contact support',
-              value: 'contact',
-            }, {
-              label: 'Cancel booking',
-              value: 'cancel',
-            }]}
-            onSelectOption={onSelectAction}
-          />
+          {
+            (((requestType === 'open' || requestType === 'cancelled') && !isMobile) || requestType === 'completed')  &&
+              <MoreActions
+                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                options={[{
+                  label: 'Contact support',
+                  value: 'contact',
+                }, {
+                  label: 'Cancel booking',
+                  value: 'cancel',
+                }]}
+                onSelectOption={onSelectAction}
+              />
+          }
         </GeneralStyled.Section>
       </GeneralStyled>
     </Card>
@@ -143,14 +155,15 @@ const FanGeneralList = (props) => {
 }
 
 FanGeneralList.defaultProps = {
-  isOpen: true,
+
 }
 
 FanGeneralList.propTypes = {
   data: PropTypes.object.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
   expiration: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool,
+  toggleUpdateBooking: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

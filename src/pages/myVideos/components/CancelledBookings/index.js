@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { EmptyText } from 'styles/CommonStyled'
 import { options } from '../../constants';
-import { celebCancelledStatusList } from '../../../../constants/requestStatusList';
 import { fetchMyVideosList } from '../../actions/getMyVideosList';
 import { FanGeneralList } from '../../../../components/ListCards';
 import OrderDetails from '../../../../components/OrderDetails';
-import Pagination from '../../../../components/Pagination';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import CancelledStyled from './styled';
@@ -16,10 +14,6 @@ import CancelledStyled from './styled';
 const CancelledBookings = (props) => {
   
   const [selected, updateSelected] = useState({});
-
-  const fetchList = (low) => {
-    props.fetchMyVideosList(low, false, celebCancelledStatusList)
-  }
 
   const onSetSelected = (bookItem) => () => {
     updateSelected(bookItem)
@@ -52,15 +46,7 @@ const CancelledBookings = (props) => {
       {
         !props.bookingsList.loading && props.bookingsList.data.length === 0 &&
           <EmptyText>
-            You currently do not have any cancelled bookings.<br />
-            Note: This is a great thing!
-          </EmptyText>
-      }
-      {
-        props.bookingsList.highCancel &&
-          <EmptyText className='cancel-count-notification'>
-            You have had {props.bookingsList.highCancelCount} within the last 30 days.
-            Make sure you try and complete your bookings to keep your ratings up as well as your satisfaction with the stars. 
+            You currently do not have any cancelled bookings.
           </EmptyText>
       }
       {
