@@ -8,7 +8,7 @@ import PrimaryButton from '../../../PrimaryButton';
 import Share from '../../../Share';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
-import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
+import { toggleUpdateBooking, toggleContactSupport, toggleBookingModal } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
 import { findCompletedVideo } from '../../../../utils/dataformatter';
 import { useMedia } from '../../../../utils/domUtils';
@@ -70,6 +70,10 @@ const FanGeneralList = (props) => {
         </span>
     );
   };
+
+  const openVideo = () => {
+    props.toggleBookingModal(true, {...props.data, id: props.data.booking_id}, false);
+  }
 
   const onSelectAction = (option) => {
     if (option.value === 'cancel') {
@@ -141,7 +145,7 @@ const FanGeneralList = (props) => {
                     !isDesktop ?
                      <React.Fragment>
                        <span className='btn-links' onClick={props.onPrimaryClick}>Share</span>
-                        | &nbsp; <span className='btn-links' onClick={props.onPrimaryClick}>View video</span>
+                        | &nbsp; <span className='btn-links' onClick={openVideo}>View video</span>
                       </React.Fragment>
                     : 
                       <React.Fragment>
@@ -153,7 +157,7 @@ const FanGeneralList = (props) => {
                           }}
                           shareUrl={''}
                         />                  
-                        <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>View video</PrimaryButton>
+                        <PrimaryButton className="action-button" onClick={openVideo}>View video</PrimaryButton>
                       </React.Fragment>
                   }
                 </React.Fragment>
@@ -188,11 +192,14 @@ FanGeneralList.propTypes = {
   expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
   toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
+  toggleBookingModal: (state, bookingData, starMode) =>
+  dispatch(toggleBookingModal(state, bookingData, starMode)),
 })
 
 const FanGeneralListComponent = connect(null, mapDispatchToProps)(FanGeneralList)

@@ -6,6 +6,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import PrimaryButton from '../PrimaryButton';
 import Dropdown from '../Dropdown';
 import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
+import { changeRequestStatus } from '../../pages/myVideos/actions/handleRequests';
 import { changeBookingStatus } from '../../pages/Bookings/actions/handleRequests';
 import UpdateStyled from './styled';
 
@@ -30,6 +31,11 @@ const UpdateBooking = (props) => {
   const onReasonSubmit = () => {
     if (props.updateBooking.starMode) {
       props.changeBookingStatus(props.updateBooking.requestId, 5, reason.label) // decline a booking
+        .then(() => {
+          props.toggleUpdateBooking(false)();
+        })
+    } else {
+      props.changeRequestStatus(props.updateBooking.requestId, 5, reason.label) // cancel a booking
         .then(() => {
           props.toggleUpdateBooking(false)();
         })
@@ -64,6 +70,7 @@ const UpdateBooking = (props) => {
 UpdateBooking.propTypes = {
   toggleUpdateBooking: PropTypes.func.isRequired,
   changeBookingStatus: PropTypes.func.isRequired,
+  changeRequestStatus: PropTypes.func.isRequired,
   updateBooking: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
 }
@@ -75,7 +82,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleUpdateBooking: (state, requestId) => () => dispatch(toggleUpdateBooking(state, requestId)),
-  changeBookingStatus: (requestId, requestStatus, comment) => dispatch(changeBookingStatus(requestId, requestStatus, comment))
+  changeBookingStatus: (requestId, requestStatus, comment) => dispatch(changeBookingStatus(requestId, requestStatus, comment)),
+  changeRequestStatus: (requestId, requestStatus, comment) => dispatch(changeRequestStatus(requestId, requestStatus, comment)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateBooking);
