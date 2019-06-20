@@ -4,8 +4,8 @@ import { isEmpty } from 'lodash';
 import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
-import { Container } from '../../styled';
-import { FormContainer, InputLabel, Wrap } from './styled';
+import { Container } from '../styled';
+import { FormContainer, Wrap } from './styled';
 
 const Password = props => {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +55,7 @@ const Password = props => {
   };
 
   const saveChanges = () => {
-    props.changePassword({ new_password: formData.password, old_password: '' });
+    props.passwordUpdate({ new_password: formData.password });
   };
 
   const validateForm = () => {
@@ -157,7 +157,7 @@ const Password = props => {
 };
 
 Password.propTypes = {
-  changePassword: PropTypes.func.isRequired,
+  passwordUpdate: PropTypes.func.isRequired,
 };
 
 export default Password;

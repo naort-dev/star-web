@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import SubHeader from 'components/SubHeader';
 import InnerSidebar from 'components/InnerSidebar';
+import AccountInfo from 'components/SettingsComponents/AccountInfo';
+import Password from 'components/SettingsComponents/Password';
+import Payment from 'components/SettingsComponents/Payment';
+import Notification from 'components/SettingsComponents/Notification';
 import { Layout, ContentWrapper } from './styled';
-import AccountInfo from './Components/AccountInfo';
-import Password from './Components/Password';
-import Payment from './Components/Payment';
-import Notification from './Components/Notification';
+
 import { Links } from './Constants';
 
 const Settings = props => {
@@ -51,6 +52,17 @@ const Settings = props => {
     });
   };
 
+  const handleAccountSave = userDetails => {
+    props.updateUserDetails(props.userDetails.id, {
+      celebrity_details: {},
+      user_details: userDetails,
+    });
+  };
+
+  const passwordUpdate = passwordData => {
+    props.changePassword(passwordData);
+  };
+
   return (
     <Layout>
       <SubHeader heading="My Account Settings" onClick={goBack} />
@@ -59,11 +71,23 @@ const Settings = props => {
         <Switch>
           <Route
             path="/manage/settings/account-info"
-            render={childProps => <AccountInfo {...childProps} {...props} />}
+            render={childProps => (
+              <AccountInfo
+                {...childProps}
+                {...props}
+                handleAccountSave={handleAccountSave}
+              />
+            )}
           />
           <Route
             path="/manage/settings/password"
-            render={childProps => <Password {...childProps} {...props} />}
+            render={childProps => (
+              <Password
+                {...childProps}
+                {...props}
+                passwordUpdate={passwordUpdate}
+              />
+            )}
           />
 
           <Route
@@ -99,6 +123,8 @@ Settings.propTypes = {
   stripeUrl: PropTypes.string,
   userDetails: PropTypes.object.isRequired,
   updateNotification: PropTypes.func.isRequired,
+  updateUserDetails: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',

@@ -5,7 +5,7 @@ import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
 import { FormContainer, InputLabel } from './styled';
-import { Container, Wrapper } from '../../styled';
+import { Container, Wrapper } from '../styled';
 
 const AccountInfo = props => {
   const [formData, updateFormData] = useState({
@@ -65,13 +65,10 @@ const AccountInfo = props => {
   };
 
   const saveChanges = () => {
-    props.updateUserDetails(props.userDetails.id, {
-      celebrity_details: {},
-      user_details: {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-      },
+    props.handleAccountSave({
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
     });
   };
 
@@ -153,7 +150,7 @@ const AccountInfo = props => {
 
 AccountInfo.propTypes = {
   userDetails: PropTypes.object.isRequired,
-  updateUserDetails: PropTypes.func.isRequired,
+  handleAccountSave: PropTypes.func.isRequired,
 };
 
 export default AccountInfo;
