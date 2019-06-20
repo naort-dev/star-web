@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const GeneralStyled = styled.div`
-  padding: 9px 20.5px;
+  padding: 17px 20.5px;
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
@@ -9,11 +9,23 @@ const GeneralStyled = styled.div`
     display: none;
   }
   @media(min-width: 832px) {
+    .left-content {
+      display: inherit;
+    }
+  }
+  @media(min-width: 1280px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    .left-content {
-      display: inherit;
+    padding: 9px 20.5px;
+  }
+  @media(min-width: 832px) and (max-width: 1280px) {
+    width: 100%;
+    padding: 9px 20.5px 20px;
+  }
+  .inner-top {
+    @media(min-width: 832px) and (max-width: 1280px) {
+      margin-bottom: -10px
     }
   }
 `;
@@ -59,6 +71,9 @@ GeneralStyled.Section = styled.div`
       min-height: auto;
       height: 40px;
     }
+    @media(min-width: 832px) and (max-width: 1280px) {
+      // display: none;
+    }
   }
   @media(min-width: 832px) {
     align-items: center;
@@ -67,10 +82,16 @@ GeneralStyled.Section = styled.div`
       display: none;
     }
   }
+  @media(min-width: 832px) and (max-width: 1280px) {
+
+  }
 `;
 GeneralStyled.Description = styled.span`
   @media(min-width: 832px) {
     padding-left: 19.3px;
+  }
+  @media(min-width: 832px) and (max-width: 1280px) {
+
   }
 `;
 
@@ -115,6 +136,9 @@ GeneralStyled.Details = styled.span`
     .comment {
       margin-right: 39px;
     }
+  }
+  @media(min-width: 832px) and (max-width: 1280px) {
+    padding-left: 29px;
   }
 `;
 export default GeneralStyled;
