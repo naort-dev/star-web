@@ -15,6 +15,7 @@ export const starRoutes = [
   '/manage/bookings',
   '/manage/earnings',
   '/manage/settings',
+  '/manage/profile/name-photo',
 ];
 export const groupRoutes = [
   ...fanRoutes,

@@ -5,6 +5,7 @@ import { Dashboard } from '../dashboard';
 import { Bookings } from '../Bookings';
 import { MyVideos } from '../myVideos';
 import { Account } from '../accountSettings';
+import { ManageStarProfile } from '../manageStarProfile';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -50,7 +51,7 @@ const ManageUser = props => {
               <Route path="/manage/dashboard" component={Dashboard} />
               <Route path="/manage/bookings" component={Bookings} />
               <Route path="/manage/promotional-tools" component={PromoTool} />
-              <Route path="/manage/profile" render={() => 'profile'} />
+              <Route path="/manage/profile/" component={ManageStarProfile} />
               <Route path="/manage/earnings" render={() => 'earnings'} />
               <Route path="/manage/settings" component={Account} />
               <Route path="/manage/referral" render={() => 'referral'} />

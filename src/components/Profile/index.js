@@ -1,0 +1,1 @@
+export { NameAndPhoto } from './components/NameAndPhoto';
