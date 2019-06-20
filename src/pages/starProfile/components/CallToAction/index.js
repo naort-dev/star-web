@@ -46,29 +46,29 @@ const CallToAction = (props) => {
   })
 
   return (
-    <ActionStyled onClick={toggleRequestFlowMobile} available={props.celebDetails.availability}>
-    <ActionStyled.ActionContent available={props.celebDetails.availability}>
-      <ActionStyled.AvatarWrapper>
-        <StarProfileStyled.Avatar imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
-      </ActionStyled.AvatarWrapper>
-      <ActionStyled.DescriptionWrapper>
-        <ActionStyled.Description id="action-description">
-          {
-            props.celebDetails.availability ? 
-              <React.Fragment>
-                Book <span className="long-description">a shoutout from </span>
-                <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+    <ActionStyled onClick={toggleRequestFlow} available={props.celebDetails.availability}>
+      <ActionStyled.ActionContent available={props.celebDetails.availability}>
+        <ActionStyled.AvatarWrapper>
+          <StarProfileStyled.Avatar imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url} />
+        </ActionStyled.AvatarWrapper>
+        <ActionStyled.DescriptionWrapper>
+          <ActionStyled.Description id="action-description">
+            {
+              props.celebDetails.availability ?
+                <React.Fragment>
+                  Book <span className="long-description">a shoutout from </span>
+                  <strong>{getShortName()}</strong> for <strong>${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                  <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
               </React.Fragment>
-            :
-              <React.Fragment>
-                <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
-              </React.Fragment>
-          }
-        </ActionStyled.Description>
-      </ActionStyled.DescriptionWrapper>
-    </ActionStyled.ActionContent>
-    {
-      props.celebDetails.availability &&
+            }
+          </ActionStyled.Description>
+        </ActionStyled.DescriptionWrapper>
+      </ActionStyled.ActionContent>
+      {
+        props.celebDetails.availability &&
         <ActionStyled.ActionSection>
           <ActionStyled.ArrowWrapper>
             <FontAwesomeIcon icon={faChevronRight} />
@@ -77,8 +77,8 @@ const CallToAction = (props) => {
           </ActionStyled.ArrowWrapper>
           <PrimaryButton className='action-button' onClick={toggleRequestFlow}>Book Now</PrimaryButton>
         </ActionStyled.ActionSection>
-    }
-  </ActionStyled>
+      }
+    </ActionStyled>
   )
 }
 
