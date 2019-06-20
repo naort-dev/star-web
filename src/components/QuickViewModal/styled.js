@@ -37,6 +37,13 @@ QuickViewStyled.Categories = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  @media (min-width: 832px) {
+    width: 80%;
+    overflow: visible;
+    white-space: normal !important;
+    line-height: 20px;
+  }
 `;
 
 QuickViewStyled.StarName = styled.span`
