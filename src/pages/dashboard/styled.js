@@ -18,6 +18,9 @@ export const Layout = styled.section`
   @media (max-width: 831px) {
     padding-top: 30px;
   }
+  .top-heading {
+    padding-top: 9px;
+  }
   .arrow {
     ${media.webView} {
       display: none;
