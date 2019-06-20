@@ -6,13 +6,9 @@ export const Layout = styled.section`
   height: 97%;
   padding: 0;
   margin: 0 auto;
-  ${media.realMobile} {
-    padding: 10px 0;
-  }
   p {
     font-size: 12px;
     text-align: center;
-    max-width: 344px;
     font-family: Gilroy;
     color: #4b4b4b;
     .bluetext {
@@ -23,7 +19,7 @@ export const Layout = styled.section`
   }
   button {
     margin-top: 5px;
-    margin-bottom: 75px;
+    margin-bottom: 25px;
   }
   .script {
     color:#2f839d;
@@ -37,31 +33,50 @@ export const Layout = styled.section`
       max-width: 100%;
       width: 100%;
       padding: 0 20px;
-      margin: 0 0 15px;
+      margin: 0 auto 15px;
       & > section:nth-child(2) {
         width: 100%;
         max-width: 100%;
         margin: 0;
-        padding: 18px 15px;
+        padding: 18px 20px;
+        min-width: inherit;
+
+        ${media.webView} {
+          margin: 0 20px;
+        }
 
         p {
           max-width: 100%;
         }
       }
     }
+    & > section:nth-child(2) {
+      padding: 0 20px;
+      ${media.webView} {
+        padding: 0 40px;
+      }
+    }
   }
 
-  &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0 0 auto;
+  ${media.webView} {
+    &.content-wrapper > *:not(.button-wrapper) {
+      flex: 0 0 auto;
+    }
+
+    &.content-wrapper > .button-wrapper {
+      flex: 1 0 auto;
+    }
+
+
+    &.content-wrapper > .button-wrapper .continue-button {
+      align-self: flex-end
+    }
   }
 
-  &.content-wrapper > .button-wrapper {
-    flex: 1 0 auto;
-  }
-
-
-  &.content-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
+  ${media.mobileScreen} {
+    &.content-wrapper > .button-wrapper {
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -69,7 +84,7 @@ export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
     max-width: 100%;
-    width: calc(100% - 15px);
+    width: 100%;
     padding: 0 30px;
     margin: 0;
 
@@ -78,9 +93,20 @@ export const FlexBoxCenter = styled(FlexCenter)`
       max-width: 100%;
     }
   }
-  &.private-checkbox label {
-    font-family: Gilroy;
-  }
+  &.private-checkbox{
+    padding: 15px 90px 5px;
+
+    ${media.mobileScreen} {
+      padding: 15px 70px 5px
+    }
+
+    label {
+      font-family: Gilroy;
+      ${media.mobileScreen} {
+        margin-bottom: 0;
+      }
+    }
+  } 
 `;
 
 export const TextAreaWrapper = styled.section`
@@ -93,12 +119,13 @@ export const TextAreaWrapper = styled.section`
   }
   margin: 10px 0;
   ${media.realMobile} {
-    margin: 10px 20px;
+    margin: 10px 20px 0;
   }
   textarea {
     width: 100%;
     border-radius: 10px;
     border: solid 1px #e0e0e0;
+    background: none;
     resize: none;
     padding: 15px;
     max-width: 425px;
@@ -114,12 +141,15 @@ export const TextAreaWrapper = styled.section`
     }
     ::placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     :-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
     ::-ms-input-placeholder {
       color: #b7b7b7;
+      white-space:pre-line;
     }
   }
 `;

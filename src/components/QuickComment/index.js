@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt } from '@fortawesome/free-solid-svg-icons';
-import { commentList } from './constants';
+import { commentGenerator } from './utils';
+import addVideoComment from '../../services/addVideoComment';
 import CommentStyled from './styled';
 
 const QuickComment = (props) => {
@@ -30,10 +31,26 @@ const QuickComment = (props) => {
     }
   }
 
+  const addComment = (comment) => async () => {
+    props.loaderAction(true);
+    try {
+      await addVideoComment(props.videoId, comment);
+      handleClose();
+    } catch(exception) {
+      props.updateToast({
+        value: true,
+        message: exception.response.data.error.message,
+        variant: 'error',
+      })
+    }
+    props.loaderAction(false);
+  }
+
+  const { fanName } = props;
   return (
     <CommentStyled showList={showList} className={props.classes.root}>
       <CommentStyled.CommentIcon showList={showList} innerRef={anchorEl} onClick={openList}>
-        <FontAwesomeIcon icon={faBolt} />
+        <span className='icon-image' />
         <span className='quick-arrow' />
       </CommentStyled.CommentIcon>
         <CommentStyled.Popover
@@ -66,8 +83,8 @@ const QuickComment = (props) => {
                   renderThumbVertical={scrollProps => <div {...scrollProps} className="thumb-vertical"/>}
                 >
                   {
-                    commentList.map(comment => (
-                      <li className="comment-item">{comment}</li>
+                    commentGenerator(fanName).map(comment => (
+                      <li className="comment-item" onClick={addComment(comment)}>{comment}</li>
                     ))
                   }
                 </Scrollbars>
@@ -85,10 +102,20 @@ const QuickComment = (props) => {
 
 QuickComment.defaultProps = {
   classes: {},
+  fanName: '',
 }
 
 QuickComment.propTypes = {
   classes: PropTypes.object,
+  fanName: PropTypes.string,
+  videoId: PropTypes.string.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  updateToast: PropTypes.func.isRequired,
 }
 
-export default QuickComment;
+const mapDispatchToProps = dispatch => ({
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loaderAction: state => dispatch(loaderAction(state)),
+});
+
+export default connect(null, mapDispatchToProps)(QuickComment);

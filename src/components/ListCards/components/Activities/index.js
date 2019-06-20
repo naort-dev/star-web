@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Card, FlexCenter, TickText } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -117,7 +118,7 @@ const ActivityCard = props => {
         secondary: true,
         icon: Heart,
         card: {
-          heading: `${recentCount} Recent activities`,
+          heading: `${recentCount} Activities`,
           value_main: `${props.data.recent_comment_count} comment | ${props.data.recent_reaction_video_count} responses`,
           value_sub: `${props.data.recent_rating_count} ratings`,
           btnTextPrimary: 'View',
@@ -141,7 +142,7 @@ const ActivityCard = props => {
         },
       });
     }
-    //recent_deposit_date
+
     if (props.data.recent_deposit_amount > 0 && activityList.length < 3) {
       activityList.push({
         style: elmStyles[1],
@@ -149,7 +150,11 @@ const ActivityCard = props => {
         icon: Dollar,
         card: {
           heading: `You’ve got money!`,
-          value_main: `$${props.data.recent_deposit_amount} was deposited 3/15!`,
+          value_main: `$${
+            props.data.recent_deposit_amount
+          } was deposited ${moment(props.data.recent_deposit_date).format(
+            'MM/DD',
+          )}!`,
           value_sub: '',
           btnTextPrimary: 'View',
           btnTextSecondary: 'Now',

@@ -1,8 +1,7 @@
-
+import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails, userDetailsFetchSuccess } from './getUserDetails'
-
+import { fetchUserDetails, userDetailsFetchSuccess } from './getUserDetails';
 
 export const UPDATE_USER_DETAILS = {
   start: 'fetch_start/update_user_details',
@@ -20,12 +19,11 @@ export const updateUserDetailsFetchEnd = () => ({
   type: UPDATE_USER_DETAILS.end,
 });
 
-export const updateUserDetailsFetchSuccess = (details) => {
-  return (
-    {
-      type: UPDATE_USER_DETAILS.success,
-      details,
-    });
+export const updateUserDetailsFetchSuccess = details => {
+  return {
+    type: UPDATE_USER_DETAILS.success,
+    details,
+  };
 };
 
 export const updateUserDetailsFetchFailed = error => ({
@@ -36,7 +34,6 @@ export const resetUserDetails = () => ({
   type: UPDATE_USER_DETAILS.reset,
 });
 
-
 export const updateUserDetails = (id, obj) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
@@ -45,22 +42,42 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
     API_URL = `${Api.modifyUserDetails}/${id}/`;
     options = {
       headers: {
-        'Authorization': `token ${auth_token.authentication_token}`,
+        Authorization: `token ${auth_token.authentication_token}`,
       },
     };
   }
   dispatch(updateUserDetailsFetchStart());
-  return fetch.put(API_URL, obj, options).then((resp) => {
-    if (resp.data && resp.data.success) {
+  dispatch(loaderAction(true));
+  return fetch
+    .put(API_URL, obj, options)
+    .then(resp => {
+      if (resp.data && resp.data.success) {
+        dispatch(updateUserDetailsFetchEnd());
+        dispatch(updateUserDetailsFetchSuccess(resp.data.data));
+      } else {
+        dispatch(updateUserDetailsFetchEnd());
+        dispatch(updateUserDetailsFetchFailed('404'));
+      }
+      dispatch(loaderAction(false));
+      dispatch(
+        updateToast({
+          value: true,
+          message: 'Successfully updated',
+          variant: 'success',
+        }),
+      );
+    })
+    .catch(exception => {
+      dispatch(loaderAction(false));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
       dispatch(updateUserDetailsFetchEnd());
-      dispatch(updateUserDetailsFetchSuccess(resp.data.data));
-    } else {
-      dispatch(updateUserDetailsFetchEnd());
-      dispatch(updateUserDetailsFetchFailed('404'));
-    }
-  }).catch((exception) => {
-    dispatch(updateUserDetailsFetchEnd());
-    dispatch(updateUserDetailsFetchFailed(exception));
-    return Promise.reject(exception);
-  });
+      dispatch(updateUserDetailsFetchFailed(exception));
+      return Promise.reject(exception);
+    });
 };

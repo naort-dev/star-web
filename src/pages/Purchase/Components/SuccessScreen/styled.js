@@ -64,11 +64,10 @@ export const Content = styled.section`
     color: #ff6c58;
     font-size: 40px;
     line-height: 39px;
-    width: 220px;
+    width: 100%;
     margin: 0 auto;
     padding-bottom: 24px;
     ${media.webView} {
-      width: 100%;
       font-size: 34px;
     }
   }
@@ -76,10 +75,11 @@ export const Content = styled.section`
     color: #4b4b4b;
     font-size: 16px;
     line-height: 24px;
-    padding-bottom: 48px;
+    padding-bottom: 28px;
   }
   .browseBtn {
     width: 300px;
     height: 60px;
+    margin: 0 auto 25px !important;
   }
 `;

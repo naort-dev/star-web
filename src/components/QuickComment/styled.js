@@ -24,8 +24,13 @@ CommentStyled.CommentIcon = styled.span`
   justify-content: center;
   cursor: pointer;
   position: relative;
-  svg {
-    transform: rotateZ(32deg);
+  .icon-image {
+    width: 10px;
+    height: 16px;
+    display: block;
+    background: ${props => props.showList ? 'url(assets/images/lightning_white.svg)' : 'url(assets/images/lightning.svg)'};
+    background-repeat: no-repeat;
+    background-size: contain;
   }
   .quick-arrow {
     position: absolute;

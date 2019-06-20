@@ -7,14 +7,21 @@ const BookingsStyled = styled.div`
   .arrow {
     width: 14px;
     height: 28px;
-    top: 97px;
+    top: 24px;
     ${media.webView} {
       display: none;
     }
   }
+  .top-heading {
+    padding-top: 9px;
+    margin-bottom: 28px;
+  }
+  .latest-activity {
+    padding-top: 17px;
+  }
   .drop-down {
     width: 100%;
-    margin-bottom: 26.8px;
+    margin-bottom: 23.8px;
     @media(min-width: 832px) {
       width: 275px;
     }
@@ -39,7 +46,7 @@ BookingsStyled.Header = styled.span`
 BookingsStyled.SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 0 17px;
   .info-text {
     color: ${props => props.theme.flatBlue};
     font-family: Gilroy-Medium;

@@ -8,7 +8,8 @@ const MoreActions = (props) => {
   const anchorEl = useRef(null);
   const [showList, toggleList] = useState(false);
 
-  const openList = () => {
+  const openList = (event) => {
+    event.stopPropagation();
     toggleList(!showList);
   };
 
@@ -18,6 +19,7 @@ const MoreActions = (props) => {
 
   const onSelectOption = optionItem => () => {
     props.onSelectOption(optionItem)
+    handleClose();
   }
 
   return (

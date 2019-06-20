@@ -17,7 +17,7 @@ const ActionStyled = styled.div`
   background-color: ${props =>
     props.available ? props.theme.orangePink : props.theme.brownGrey};
   @media (min-width: 375px) {
-    padding: 10px 31px;
+    padding: 10px 10px;
   }
   @media (min-width: 832px) {
     height: 111px;
@@ -27,6 +27,9 @@ const ActionStyled = styled.div`
 
 ActionStyled.AvatarWrapper = styled.div`
   padding-right: 19.3px;
+  @media (max-width: 831px) {
+    padding-right: 5px;
+  }
   ${StarProfileStyled.Avatar} {
     margin-top: 0;
     width: 48.6px;
@@ -41,7 +44,7 @@ ActionStyled.AvatarWrapper = styled.div`
 `;
 
 ActionStyled.DescriptionWrapper = styled.div`
-  width: calc(100% - 50px);
+  width: calc(100% - 20px);
   @media (min-width: 832px) {
     width: calc(100% - 80px);
   }
@@ -52,6 +55,9 @@ ActionStyled.Description = styled.span`
   padding-top: 4px;
   .long-description {
     display: none;
+  }
+  &#action-description {
+    white-space: normal !important;
   }
   strong {
     font-family: Gilroy-medium;

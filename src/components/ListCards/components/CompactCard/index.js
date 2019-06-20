@@ -49,8 +49,12 @@ const CompactCard = props => {
   );
 };
 
+CompactCard.defaultProps = {
+  bookData: {},
+}
+
 CompactCard.propTypes = {
-  bookdata: PropTypes.object.isRequired,
+  bookData: PropTypes.object,
   selected: PropTypes.bool.isRequired,
   expiration: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

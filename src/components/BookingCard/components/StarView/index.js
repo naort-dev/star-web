@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { numberToCommaFormatter } from '../../../../utils/dataformatter';
 import CommentBox from '../../../CommentBox';
 import QuickComment from '../../../QuickComment';
 import VideoRender from '../../../VideoRender';
+import { findCompletedVideo } from '../../../../utils/dataformatter';
 import Share from '../../../Share';
 import BookingStyled from '../../styled';
 import StarViewStyled from './styled';
 
 const StarView = (props) => {
+
+  const [videoId, updateVideoId] = useState('');
+
   const { bookingData } = props;
   const video = bookingData.request_video.find(videoItem => videoItem.video_status === 1) // get completed video
+
+  useEffect(() => {
+    updateVideoId(findCompletedVideo(bookingData).video_id);
+  }, [props.bookingData.id])
 
   return (
     <StarViewStyled>
@@ -53,7 +61,7 @@ const StarView = (props) => {
           </BookingStyled.CommentList>
           <StarViewStyled.CommentWrapper>
             <CommentBox classes={{root: 'comment-box'}} />
-            <QuickComment classes={{root: 'quick-comment'}} />
+            <QuickComment fanName={bookingData.fan} videoId={videoId} classes={{root: 'quick-comment'}} />
           </StarViewStyled.CommentWrapper>
           <BookingStyled.OrderText starMode onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
         </BookingStyled.RightSection>

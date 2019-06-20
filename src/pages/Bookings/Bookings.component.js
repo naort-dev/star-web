@@ -90,7 +90,7 @@ class Bookings extends React.Component {
     return (
       <BookingsStyled>
         <BackArrow className="arrow" onClick={this.onBackClick} />
-        <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
+        <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
         {
           dropValue.id === 'all'&&
             <AllBookings
@@ -128,6 +128,7 @@ class Bookings extends React.Component {
               bookingsList={props.bookingsList}
               config={props.config}
               dropValue={dropValue}
+              toggleBookingModal={props.toggleBookingModal}
               handleCategoryChange={this.handleCategoryChange}
             />
         }

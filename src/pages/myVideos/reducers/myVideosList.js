@@ -5,8 +5,9 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
-  limit: 10,
-  role: 'fan_id',
+  limit: 20,
+  highCancel: false,
+  highCancelCount: 0,
   status: 'all',
 };
 
@@ -32,9 +33,10 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         offset: action.offset,
         data: action.list,
+        highCancel: action.miscData.highCancel,
+        highCancelCount: action.miscData.highCancelCount,
         count: action.count,
         status: action.videoStatus,
-        role: action.role,
       };
 
     case MY_VIDEOS_LIST.failed:
@@ -44,6 +46,12 @@ export default (state = { ...initalState }, action) => {
       };
 
     case MY_VIDEOS_LIST.updateList:
+      return {
+        ...state,
+        data: action.data,
+      };
+
+    case MY_VIDEOS_LIST.update:
       return {
         ...state,
         data: action.data,

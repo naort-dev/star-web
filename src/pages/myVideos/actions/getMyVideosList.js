@@ -10,6 +10,7 @@ export const MY_VIDEOS_LIST = {
   failed: 'fetch_failed/MY_VIDEOS_LIST',
   updateList: 'update/MY_VIDEOS_LIST',
   reset: 'RESET/MY_VIDEOS_LIST',
+  update: 'UPDATE_MY_VIDEOS_LIST',
 };
 
 export const myVideosListFetchStart = (refresh, token) => ({
@@ -22,16 +23,15 @@ export const myVideosListFetchEnd = () => ({
   type: MY_VIDEOS_LIST.end,
 });
 
-export const myVideosListFetchSuccess = (list, offset, count, videoStatus, role) => {
-  return (
-    {
-      type: MY_VIDEOS_LIST.success,
-      list,
-      offset,
-      count,
-      videoStatus,
-      role,
-    });
+export const myVideosListFetchSuccess = (list, offset, count, videoStatus, miscData = {}) => {
+  return {
+    type: MY_VIDEOS_LIST.success,
+    list,
+    offset,
+    count,
+    videoStatus,
+    miscData,
+  };
 };
 
 export const myVideosListFetchFailed = error => ({
@@ -48,7 +48,12 @@ export const myVideosListReset = () => ({
   type: MY_VIDEOS_LIST.reset,
 });
 
-export const updateVideosList = (id, newData) => (dispatch, getState) => {
+export const updateBookingList = data => ({
+  type: MY_VIDEOS_LIST.update,
+  data,
+});
+
+export const updateMyVideosList = (id, newData) => (dispatch, getState) => {
   const originalList = cloneDeep(getState().myVideosList.data);
   const dataIndex = originalList.findIndex(item => item.id === id);
   originalList[dataIndex] = newData;
@@ -56,37 +61,51 @@ export const updateVideosList = (id, newData) => (dispatch, getState) => {
   dispatch(myVideosListUpdate(originalList));
 };
 
-export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) => (dispatch, getState) => {
-  const { status, limit, role } = getState().myVideosList;
+export const fetchMyVideosList = (offset, refresh, requestStatus) => (
+  dispatch,
+  getState,
+) => {
+  const { status, limit } = getState().myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
-  const finalRole = currentRole ? currentRole: role;
   const source = CancelToken.source();
   if (typeof getState().myVideosList.token !== typeof undefined) {
-    getState().myVideosList.token.cancel('Operation canceled due to new request.');
+    getState().myVideosList.token.cancel(
+      'Operation canceled due to new request.',
+    );
   }
   dispatch(myVideosListFetchStart(refresh, source));
-  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=${finalRole}`, {
-    cancelToken: source.token,
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(myVideosListFetchEnd());
-      let list = getState().myVideosList.data;
-      const { count } = resp.data.data;
-      let newOffset = offset;
-      if (refresh) {
-        list = resp.data.data.request_list;
-        newOffset = 0;
+  return fetch
+    .get(
+      `${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=fan_id`,
+      {
+        cancelToken: source.token,
+      },
+    )
+    .then(resp => {
+      if (resp.data && resp.data.success) {
+        dispatch(myVideosListFetchEnd());
+        const { count } = resp.data.data;
+        const miscData = {
+          highCancel: resp.data.data.high_cancel,
+          highCancelCount: resp.data.data.high_cancel_count,
+        }
+        dispatch(
+          myVideosListFetchSuccess(
+            resp.data.data.request_list,
+            offset,
+            count,
+            videoStatus,
+            miscData,
+          ),
+        );
       } else {
-        list = [...list, ...resp.data.data.request_list];
+        dispatch(myVideosListFetchEnd());
       }
-      dispatch(myVideosListFetchSuccess(list, newOffset, count, videoStatus, finalRole));
-    } else {
-      dispatch(myVideosListFetchEnd());
-    }
-  }).catch((exception) => {
-    if (axios.isCancel(exception)) {
-      dispatch(myVideosListFetchEnd());
-    }
-    dispatch(myVideosListFetchFailed(exception));
-  });
+    })
+    .catch(exception => {
+      if (axios.isCancel(exception)) {
+        dispatch(myVideosListFetchEnd());
+      }
+      dispatch(myVideosListFetchFailed(exception));
+    });
 };

@@ -7,7 +7,7 @@ export const Content = styled.section`
   position: relative;
   height: calc(100% - 197px);
   ${media.mobileScreen} {
-    height: calc(100% - 200px);
+    height: calc(100% - 218px);
   }
   .scrollRenderView {
     overflow: auto !important;

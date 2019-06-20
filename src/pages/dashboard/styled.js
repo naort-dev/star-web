@@ -18,10 +18,8 @@ export const Layout = styled.section`
   @media (max-width: 831px) {
     padding-top: 30px;
   }
-  .head1 {
-    ${media.webView} {
-      text-align: left;
-    }
+  .top-heading {
+    padding-top: 9px;
   }
   .arrow {
     ${media.webView} {
@@ -31,7 +29,9 @@ export const Layout = styled.section`
   .head1 {
     padding-top: 9px;
     padding-bottom: 32px;
+    color: #888888;
     ${media.webView} {
+      text-align: left;
       padding-top: 9px;
       padding-bottom: 32px;
     }
@@ -46,7 +46,7 @@ export const Layout = styled.section`
       width: 310px;
     }
     @media (min-width: 832px) {
-      width: 522px;
+      width: 560px;
     }
     @media (min-width: 1280px) {
       width: 567px;

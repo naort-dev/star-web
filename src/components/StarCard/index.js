@@ -24,8 +24,7 @@ const StarCard = ({ data }) => {
           </span>
         </FlexBoxSB>
         <span className="earningPercentage">
-          Your Earnings: {data.starEarnings}%; Starsona: {data.starsonaEarnings}
-          %
+          Your Earnings: 75%; Starsona: 25%
         </span>
 
         <Summary>

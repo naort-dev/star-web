@@ -16,14 +16,14 @@ class ScriptBuilder extends Component {
     this.starDataSet1 = [
       {
         size: '28px',
-        horizontal: '2%',
+        horizontal: '1%',
         vertical: '35px',
         rotation: '15deg',
         color: '#46829a',
       },
       {
         size: '22px',
-        horizontal: '8%',
+        horizontal: '5%',
         vertical: '15px',
         rotation: '0deg',
         color: '#46829a',
@@ -39,9 +39,9 @@ class ScriptBuilder extends Component {
     this.starDataSet2 = [
       {
         size: '34px',
-        horizontal: '92%',
+        horizontal: '95%',
         vertical: '35px',
-        rotation: '0deg',
+        rotation: '20deg',
         color: '#46829a',
       },
       {

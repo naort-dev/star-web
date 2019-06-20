@@ -60,7 +60,7 @@ OpenStyled.RightSection = Card.extend`
     width: 100%;
     height: 100%;
     left: 0;
-    z-index: 15555555;
+    z-index: 1000;
     display: none;
     ${props => props.clicked && `display: block;`}
     overflow: scroll;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from "lodash"
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/PrimaryButton';
@@ -189,11 +190,11 @@ function FormContainer(props) {
   useEffect(() => {
     validationTypeCheck();
   }, [
-    FormData.hostName,
-    FormData.specification,
-    FormData.templateType,
-    props.pageCount,
-  ]);
+      FormData.hostName,
+      FormData.specification,
+      FormData.templateType,
+      props.pageCount,
+    ]);
 
   const getScript = value => {
     updateScriptText(value);
@@ -201,8 +202,8 @@ function FormContainer(props) {
   };
 
   return (
-    <Layout className="content-wrapper">
-      <FlexCenter>
+    <Layout className={`content-wrapper ${isEmpty(bookingData.occasion) && "occasion-wrapper"}`}>
+      <FlexCenter className="dropdown-wrapper">
         <Dropdown
           options={optionsList}
           selected={bookingData.occasion}
