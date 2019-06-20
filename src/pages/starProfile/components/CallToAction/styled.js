@@ -22,13 +22,14 @@ const ActionStyled = styled.div`
   @media (min-width: 832px) {
     height: 111px;
     padding: 0 65px;
+    cursor: pointer;
   }
 `;
 
 ActionStyled.AvatarWrapper = styled.div`
   padding-right: 19.3px;
   @media (max-width: 831px) {
-    padding-right: 5px;
+    padding-right: 15px;
   }
   ${StarProfileStyled.Avatar} {
     margin-top: 0;
@@ -58,6 +59,9 @@ ActionStyled.Description = styled.span`
   }
   &#action-description {
     white-space: normal !important;
+    @media (max-width: 832px) {
+      font-size: 24px !important;
+    }
   }
   strong {
     font-family: Gilroy-medium;

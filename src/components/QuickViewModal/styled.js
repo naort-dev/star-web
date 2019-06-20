@@ -13,6 +13,16 @@ QuickViewStyled.VideoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.image-only {
+    align-items: flex-start;
+
+    span {
+      margin-top: 25px;
+      width: 280px;
+      height: 280px;
+    }
+  }
 `;
 
 QuickViewStyled.Content = styled.div`
@@ -115,6 +125,7 @@ QuickViewStyled.ActionBar = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
+  cursor: pointer;
 `;
 
 QuickViewStyled.ActionContent = styled.div`

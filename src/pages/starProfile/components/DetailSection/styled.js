@@ -33,7 +33,7 @@ DetailStyled.StarName = styled.span`
     text-indent: -5px;
   }
   @media(max-width: 831px) {
-    padding-bottom: 16px;
+    padding-bottom: 10px;
     margin-bottom: -3px !important;
     text-align: center;
     &.mob-big-name {
@@ -55,7 +55,7 @@ DetailStyled.Categories = styled.span`
     margin-bottom: 2px;
   }
   @media(max-width: 831px) {
-    padding-bottom: 16px;
+    padding-bottom: 10px;
   }
 `;
 
