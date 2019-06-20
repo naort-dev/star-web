@@ -20,7 +20,7 @@ const FanGeneralList = (props) => {
 
   const [requestType, updateRequestType] = useState('');
 
-  const isMobile = useMedia('(max-width: 831px)');
+  const isDesktop = useMedia('(min-width: 1280px)');
 
   useEffect(() => {
     if (openStatusList.indexOf(props.data.request_status) >= 0) {
@@ -97,7 +97,7 @@ const FanGeneralList = (props) => {
                 requestType === 'open' &&
                   <React.Fragment>
                     {
-                      isMobile ?
+                      !isDesktop ?
                         <React.Fragment>
                           <span className='star-name'>{props.data.celebrity}</span>
                         </React.Fragment>
@@ -138,7 +138,7 @@ const FanGeneralList = (props) => {
               requestType === 'completed' &&
                 <React.Fragment>
                   {
-                    isMobile ?
+                    !isDesktop ?
                      <React.Fragment>
                        <span className='btn-links' onClick={props.onPrimaryClick}>Share</span>
                         | &nbsp; <span className='btn-links' onClick={props.onPrimaryClick}>View video</span>
@@ -165,7 +165,7 @@ const FanGeneralList = (props) => {
             : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
           } */}
           {
-            (((requestType === 'open' || requestType === 'cancelled') && !isMobile) || requestType === 'completed')  &&
+            (((requestType === 'open' || requestType === 'cancelled') && isDesktop) || requestType === 'completed')  &&
               <MoreActions
                 classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
                 options={moreOptions[requestType]}
