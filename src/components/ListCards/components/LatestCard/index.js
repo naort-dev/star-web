@@ -75,8 +75,7 @@ const LatestCard = (props) => {
           <FlexColumn className='description-wrapper'>
             <LightHeading className='heading'>{renderHeading()}</LightHeading>
             <MediumText className='card-description'>
-              <HeadingBold>Birthday</HeadingBold> message <br />
-              for <HeadingBold>Sarah</HeadingBold>
+              <HeadingBold>Birthday</HeadingBold> message for <HeadingBold>Sarah</HeadingBold>
             </MediumText>
           </FlexColumn>
         </StarStyled.LeftWrapper>

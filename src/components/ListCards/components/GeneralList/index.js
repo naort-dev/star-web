@@ -16,19 +16,22 @@ const GeneralList = (props) => {
     if (requestTypes[props.data.request_type] === 'Q&A') {
       return (
         <MediumText>
-          <HeadingBold>Question</HeadingBold> requested from <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>Question</HeadingBold> requested <br />
+          from <HeadingBold>{props.data.fan}</HeadingBold>
         </MediumText>
       )
     } else if (requestTypes[props.data.request_type] === 'Shout-out') {
       return (
         <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout <br />
+          for <HeadingBold>{props.data.fan}</HeadingBold>
         </MediumText>
       )
     }
     return (
       <MediumText>
-        <HeadingBold>{props.data.occasion}</HeadingBold> announcement for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold>  <br />
+          for <HeadingBold>announcement</HeadingBold>
       </MediumText>
     )
   }
@@ -60,7 +63,7 @@ const GeneralList = (props) => {
   return (
     <Card onClick={onCardClick}>
       <GeneralStyled>
-        <GeneralStyled.Section>
+        <GeneralStyled.Section className="inner-top">
           <LeftContent className='left-content'>
             <TickText className={!props.isOpen && 'close-icon'}>
               {
