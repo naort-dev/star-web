@@ -53,7 +53,7 @@ const AllBookings = props => {
         />
       ))}
       <BookingsStyled.SectionHeader>
-        <SectionHead>Latest Activity</SectionHead>
+        <SectionHead className="latest-activity">Latest Activity</SectionHead>
       </BookingsStyled.SectionHeader>
       <LatestCard type="comment" starMode />
       <LatestCard type="reaction" starMode />

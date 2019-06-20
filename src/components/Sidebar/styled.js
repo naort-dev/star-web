@@ -46,6 +46,10 @@ SidebarStyled.LinkItem = styled.li`
     }
     .notification-count {
       display: flex;
+      min-width: 37px;
+      height: 30px;
+      padding: 0 5px;
+      justify-content: center;
       align-items: center;
     }
     @media(min-width: 832px) {
