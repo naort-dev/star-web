@@ -9,6 +9,7 @@ import { openStatusList, completedStatusList } from '../../../../constants/reque
 import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
 import { useMedia } from '../../../../utils/domUtils';
+import { moreOptions } from './constants';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
 import GeneralStyled from './styled';
 
@@ -138,13 +139,7 @@ const FanGeneralList = (props) => {
             (((requestType === 'open' || requestType === 'cancelled') && !isMobile) || requestType === 'completed')  &&
               <MoreActions
                 classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-                options={[{
-                  label: 'Contact support',
-                  value: 'contact',
-                }, {
-                  label: 'Cancel booking',
-                  value: 'cancel',
-                }]}
+                options={moreOptions[requestType]}
                 onSelectOption={onSelectAction}
               />
           }
@@ -155,13 +150,13 @@ const FanGeneralList = (props) => {
 }
 
 FanGeneralList.defaultProps = {
-
+  expiration: '',
 }
 
 FanGeneralList.propTypes = {
   data: PropTypes.object.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
-  expiration: PropTypes.string.isRequired,
+  expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
 }

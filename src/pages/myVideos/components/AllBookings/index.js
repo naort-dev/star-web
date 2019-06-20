@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SectionHead, EmptyText } from 'styles/CommonStyled';
 import { options } from '../../constants';
-import { FanGeneralList, StarCompleted } from '../../../../components/ListCards';
+import { FanGeneralList, LatestCard } from '../../../../components/ListCards';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import BookingsStyled from '../../styled';
@@ -40,10 +40,10 @@ const AllBookings = props => {
       <BookingsStyled.SectionHeader>
         <SectionHead>Recent Activity</SectionHead>
       </BookingsStyled.SectionHeader>
-      <StarCompleted type="comment" />
-      <StarCompleted type="reaction" />
-      <StarCompleted type="tip" />
-      <StarCompleted type="rating" />
+      <LatestCard type="comment" />
+      <LatestCard type="reaction" />
+      <LatestCard type="tip" />
+      <LatestCard type="rating" />
     </React.Fragment>
   );
 };

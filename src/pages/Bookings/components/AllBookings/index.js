@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { SectionHead, EmptyText } from 'styles/CommonStyled';
 import { options } from '../../constants';
-import { GeneralList, StarCompleted } from '../../../../components/ListCards';
+import { GeneralList, LatestCard } from '../../../../components/ListCards';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import BookingsStyled from '../../styled';
@@ -55,10 +55,10 @@ const AllBookings = props => {
       <BookingsStyled.SectionHeader>
         <SectionHead>Latest Activity</SectionHead>
       </BookingsStyled.SectionHeader>
-      <StarCompleted type="comment" />
-      <StarCompleted type="reaction" />
-      <StarCompleted type="tip" />
-      <StarCompleted type="rating" />
+      <LatestCard type="comment" starMode />
+      <LatestCard type="reaction" starMode />
+      <LatestCard type="tip" starMode />
+      <LatestCard type="rating" starMode />
     </React.Fragment>
   );
 };
