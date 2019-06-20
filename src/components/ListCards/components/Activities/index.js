@@ -118,7 +118,7 @@ const ActivityCard = props => {
         secondary: true,
         icon: Heart,
         card: {
-          heading: `${recentCount} Recent activities`,
+          heading: `${recentCount} Activities`,
           value_main: `${props.data.recent_comment_count} comment | ${props.data.recent_reaction_video_count} responses`,
           value_sub: `${props.data.recent_rating_count} ratings`,
           btnTextPrimary: 'View',

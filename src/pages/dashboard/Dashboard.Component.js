@@ -22,7 +22,7 @@ const Dashboard = props => {
 
   return (
     <Layout>
-      <SubHeader heading="My Starsona" onClick={goBack} />
+      <SubHeader heading="My Starsona" className="top-heading" onClick={goBack} />
       <Wrapper>
         <section className="middle-section">
           <StarCard data={props.dashBoardData} />
