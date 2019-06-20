@@ -22,7 +22,7 @@ export const pipeSeparator = (list, key) => {
       if (index === list.length - 1) {
         string += `${listItem[key]}`;
       } else {
-        string += `${listItem[key]}\xa0|\xa0`;
+        string += `${listItem[key]} | `;
       }
     });
     return string;
