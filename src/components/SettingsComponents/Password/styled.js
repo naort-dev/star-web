@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
-import { Form, Wrapper } from '../../styled';
+import { Form, Wrapper } from '../styled';
 
 export const FormContainer = styled(Form)`
   .inputWrapper {
