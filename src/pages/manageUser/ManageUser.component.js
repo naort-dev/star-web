@@ -49,6 +49,7 @@ const ManageUser = props => {
             <Switch>
               <Route path="/manage/dashboard" component={Dashboard} />
               <Route path="/manage/bookings" component={Bookings} />
+              <Route path="/manage/my-videos" component={MyVideos} />
               <Route path="/manage/promotional-tools" component={PromoTool} />
               <Route path="/manage/profile" render={() => 'profile'} />
               <Route path="/manage/earnings" render={() => 'earnings'} />
