@@ -6,6 +6,9 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
 import { requestTypes } from '../../constants/requestTypes';
 import StarView from './components/StarView';
+import BookingTitle from '../BookingTitle';
+import ModalHeader from '../ModalHeader';
+
 import Loader from '../Loader';
 import { getRequestDetails } from '../../services/request';
 import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
@@ -73,6 +76,7 @@ const BookingCard = (props) => {
 
   return (
     <RequestFlowPopup
+      noPadding={!starMode}
       disableClose
       closePopUp={closeModal}
     >
@@ -81,10 +85,23 @@ const BookingCard = (props) => {
           <Loader />
         :
           <BookingStyled.Wrapper>
-            <CloseButton className="close-btn" onClick={closeModal} />
-            <BookingStyled.HeaderText>
-              {renderHeading()}
-            </BookingStyled.HeaderText>
+            {
+              !starMode &&
+                <ModalHeader
+                  starImage={requestData.avatar_photo && requestData.avatar_photo.thumbnail_url}
+                  closeHandler={closeModal}
+                  customHeading={<BookingTitle secondary requestData={requestData} />}
+                />
+            }
+            {
+              starMode &&
+                <React.Fragment>
+                  <CloseButton className="close-btn" onClick={closeModal} />
+                  <BookingStyled.HeaderText>
+                    {renderHeading()}
+                  </BookingStyled.HeaderText>
+                </React.Fragment>
+            }
             <BookingStyled showDetails={showDetails}>
               <BookingStyled.Booking>
                 {

@@ -104,10 +104,10 @@ const OrderDetails = (props) => {
           </span>
         </OrderStyled.ScriptWrapper>
         {
-          props.starMode && bookingData.request_status !== 5 &&
+          requestType === 'completed' &&
             <OrderStyled.ColumnCenter>
               <Checkbox />
-              <span className="check-text ">Hide from profile</span>
+              <span className="check-text ">{ starMode ? 'Hide from profile' : 'Make my video private!' }</span>
             </OrderStyled.ColumnCenter>
         }
         <OrderStyled.Details>
