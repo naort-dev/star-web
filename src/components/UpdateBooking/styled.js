@@ -5,6 +5,14 @@ const UpdateStyled = Styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${props => !props.starMode && `
+    padding: 40px 30px;
+  `}
+
+  .secondary-btn {
+    margin-top: 16px;
+  }
+
   .drop-down {
     display: block;
     margin: 26.8px;
@@ -14,7 +22,9 @@ const UpdateStyled = Styled.div`
   }
 
   @media(min-width: 832px) {
-    height: 100%;
+    ${props => props.starMode && `
+      height: 100%;
+    `}
   }
 `;
 

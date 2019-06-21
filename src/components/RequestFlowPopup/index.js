@@ -68,6 +68,7 @@ class RequestFlowPopup extends React.Component {
       >
         <PopupStyled.SmallContainer
           className={`${this.props.classes.root} modal-root`}
+          noPadding={this.props.noPadding}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}
           innerRef={this.popupContent}

@@ -27,6 +27,14 @@ OrderStyled.Heading = styled.span`
   margin: 30px 0;
 `;
 
+OrderStyled.TextButton = styled.span`
+  display: block;
+  color: ${props => props.theme.flatBlue};
+  cursor: pointer;
+  font-size: 16px;
+  font-family: Gilroy-Regular;
+`;
+
 OrderStyled.ColumnCenter = styled.div`
   display: flex;
   justify-content: center;

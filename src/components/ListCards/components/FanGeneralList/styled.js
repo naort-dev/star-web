@@ -66,10 +66,14 @@ GeneralStyled.Section = styled.div`
       font-family: Gilroy-Medium;
       font-size: 14px;
       min-width: auto;
+      margin-right: 10px;
       width: 160px;
       padding: 5px 10px;
       min-height: auto;
       height: 40px;
+      &.share {
+        width: 93px;
+      }
     }
   }
   @media(min-width: 832px) {
@@ -109,6 +113,11 @@ GeneralStyled.Details = styled.span`
     &.expiring {
       color: #cc0000;
     }
+  }
+  .btn-links {
+    color: ${props => props.theme.flatBlue};
+    margin-right: 5px;
+    cursor: pointer;
   }
   .action {
     color: ${props => props.theme.flatBlue};
