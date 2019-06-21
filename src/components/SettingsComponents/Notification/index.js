@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'components/Checkbox';
 import { Container } from '../styled';
@@ -8,6 +8,10 @@ const Notification = props => {
   const checkboxChange = notification => value => {
     props.handleCheck(notification, value);
   };
+
+  useEffect(() => {
+    if (!props.is_viewed) props.updateNotificationViewed();
+  }, []);
 
   return (
     <Container>
@@ -39,11 +43,14 @@ Notification.propTypes = {
   notifications: PropTypes.array.isRequired,
   handleCheck: PropTypes.func,
   webHead: PropTypes.string,
+  updateNotificationViewed: PropTypes.func.isRequired,
+  is_viewed: PropTypes.bool,
 };
 
 Notification.defaultProps = {
   handleCheck: () => {},
   webHead: '',
+  is_viewed: false,
 };
 
 export default Notification;

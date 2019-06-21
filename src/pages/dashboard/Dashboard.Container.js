@@ -7,8 +7,8 @@ const mapStates = state => ({
 });
 function mapDispatch(dispatch) {
   return {
-    getDashboardData: () => {
-      dispatch(getDashboardData());
+    getDashboardData: callBack => {
+      dispatch(getDashboardData(callBack));
     },
   };
 }
