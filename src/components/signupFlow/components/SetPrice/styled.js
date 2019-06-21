@@ -61,7 +61,7 @@ SetPriceWrapper.ButtonWrapper = styled.div`
   @media(max-width:831px){
     padding-top: ${props => (props.confirmation ? '87px' : '0')};
   }
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 `;
 
 SetPriceWrapper.WrapsInput = styled.div`
