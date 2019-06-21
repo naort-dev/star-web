@@ -9,8 +9,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchBookingsList: (offset, refresh, requestStatus) =>
-    dispatch(fetchBookingsList(offset, refresh, requestStatus)),
+  fetchBookingsList: (offset, refresh, requestStatus, filterParam, sortParam) =>
+    dispatch(fetchBookingsList(offset, refresh, requestStatus, filterParam, sortParam)),
   toggleBookingModal: (state, bookingData, starMode) =>
     dispatch(toggleBookingModal(state, bookingData, starMode)),
 });

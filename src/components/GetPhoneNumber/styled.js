@@ -41,7 +41,7 @@ export const Content = styled.section`
   margin: 0 auto;
   text-align: center;
   font-family: Gilroy;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
   ${media.webView} {
     max-width: 400px;
   }
@@ -49,7 +49,7 @@ export const Content = styled.section`
     color: #ff6c58;
     padding-bottom: 3px;
     padding-top: 15px;
-    font-size: 30px;
+    font-size: 0;
     ${media.webView} {
       padding-top: 33px;
     }
@@ -80,7 +80,7 @@ export const Content = styled.section`
     font-size: 16px;
     line-height: 21px;
     text-align: center;
-    color: rgb(85, 85, 85);
+    color: #7c7c7c;
     width: 100%;
     margin: 0px auto;
   }
@@ -103,6 +103,10 @@ export const Content = styled.section`
 Layout.Phonenumber = styled.div`
   padding-bottom: 44px;
   padding-top: 43px;
+  @media (max-width: 831px) {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
   .react-phone-number-input__input{
     text-align: center;
     font-family: Gilroy;
