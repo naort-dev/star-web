@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Elements } from 'react-stripe-elements';
 import { isEmpty } from 'lodash';
+import Tooltip from 'components/ToolTip';
 import {
   UserCardWrapper,
   TopSection,
@@ -12,6 +13,9 @@ import { FlexCenter, FlexBoxSB } from '../../styles/CommonStyled';
 import CardList from './CardList';
 import Button from '../PrimaryButton';
 import Checkout from './Checkout';
+
+const tooltipMsg =
+  'A hold in the amount of the video has been placed on your credit card, however the charge will only go through if the Star completes the video within 7 days. If the Star is unable to complete the video for whatever reason, the hold on the funds will be released.';
 
 const UserCard = props => {
   const [isNewCard, cardSelection] = useState(false);
@@ -62,11 +66,6 @@ const UserCard = props => {
                 <span className="bookingType">{props.type}</span>
               </span>
             </FlexBoxSB>
-            {/* {!isNewCard && (
-              <span className="edit" onClick={newPay(true)}>
-                EDIT
-              </span>
-            )} */}
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
@@ -79,9 +78,14 @@ const UserCard = props => {
                 <span className="cardType">{props.celebDetails.charity}</span>
               </span>
             )}
-            <span className="amount">${props.celebDetails.rate}</span>
+            <Tooltip title={tooltipMsg}>
+              <span className="amount">${props.celebDetails.rate}</span>
+            </Tooltip>
           </FlexBoxSB>
-          <p className={`note ${props.celebDetails.charity !== "" && "card-note"}`}>
+          <p
+            className={`note ${props.celebDetails.charity !== '' &&
+              'card-note'}`}
+          >
             Your card will be charged when the video has been delivered.
           </p>
         </BottomSection>
@@ -97,38 +101,38 @@ const UserCard = props => {
           />
         </Elements>
       ) : (
-          <React.Fragment>
-            <span className="selectCard centerAlign">Select Card</span>
-            {Object.keys(props.CardList).length > 0 && (
-              <CardList
-                Cards={props.CardList}
-                getCardSelected={getCardSelected}
-                deleteCard={props.modifySourceList}
-                updateCustomerId={props.updateCustomerId}
-                loaderAction={props.loaderAction}
-                selectedCardIndex={selectedCardIndex}
-              />
-            )}
-            <span
-              className="newCard centerAlign"
-              onClick={newPay(true)}
-              role="presentation"
-            >
-              Pay Using New Card
+        <React.Fragment>
+          <span className="selectCard centerAlign">Select Card</span>
+          {Object.keys(props.CardList).length > 0 && (
+            <CardList
+              Cards={props.CardList}
+              getCardSelected={getCardSelected}
+              deleteCard={props.modifySourceList}
+              updateCustomerId={props.updateCustomerId}
+              loaderAction={props.loaderAction}
+              selectedCardIndex={selectedCardIndex}
+            />
+          )}
+          <span
+            className="newCard centerAlign"
+            onClick={newPay(true)}
+            role="presentation"
+          >
+            Pay Using New Card
           </span>
 
-            <FlexCenter>
-              <Button
-                className="button"
-                onClick={payWithExistingCrd}
-                disabled={selectedCard === null}
-                isDisabled={selectedCard === null}
-              >
-                Pay ${props.celebDetails.rate}
-              </Button>
-            </FlexCenter>
-          </React.Fragment>
-        )}
+          <FlexCenter>
+            <Button
+              className="button"
+              onClick={payWithExistingCrd}
+              disabled={selectedCard === null}
+              isDisabled={selectedCard === null}
+            >
+              Pay ${props.celebDetails.rate}
+            </Button>
+          </FlexCenter>
+        </React.Fragment>
+      )}
       <FlexCenter>
         <img
           alt="stripe logo"

@@ -12,23 +12,24 @@ const Notification = props => {
   return (
     <Container>
       <Wrap>
-        <h2 className="sub-head">Notifications</h2>
-        <span className="head-text">Allow the following:</span>
-
-        {props.notifications.map((notification, index) => {
-          return (
-            <div className="termsWrapper" key={index}>
-              <Checkbox
-                onChange={checkboxChange(notification)}
-                checked={notification.value}
-              />
-              <p className="main-text">
-                <p className="sub-text">{notification.mainText}</p>{' '}
-                {notification.subText}
-              </p>
-            </div>
-          );
-        })}
+        <h2 className="sub-head">{props.webHead}</h2>
+        <section className="terms-container">
+          <span className="head-text">Allow the following:</span>
+          {props.notifications.map((notification, index) => {
+            return (
+              <div className="termsWrapper" key={index}>
+                <Checkbox
+                  onChange={checkboxChange(notification)}
+                  checked={notification.value}
+                />
+                <p className="main-text">
+                  <p className="sub-text">{notification.mainText}</p>{' '}
+                  {notification.subText}
+                </p>
+              </div>
+            );
+          })}
+        </section>
       </Wrap>
     </Container>
   );
@@ -37,10 +38,12 @@ const Notification = props => {
 Notification.propTypes = {
   notifications: PropTypes.array.isRequired,
   handleCheck: PropTypes.func,
+  webHead: PropTypes.string,
 };
 
 Notification.defaultProps = {
   handleCheck: () => {},
+  webHead: '',
 };
 
 export default Notification;

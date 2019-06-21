@@ -97,7 +97,14 @@ const AccountInfo = props => {
   return (
     <Container>
       <Wrapper>
-        <h2 className="sub-head">Account Information</h2>
+        <h2
+          className="sub-head"
+          data-web={props.webHead}
+          data-mob={props.mobHead}
+        >
+          {' '}
+          {''}
+        </h2>
         <FormContainer>
           {errorObject.firstNameErr || errorObject.lastNameErr ? (
             <InputLabel
@@ -151,6 +158,13 @@ const AccountInfo = props => {
 AccountInfo.propTypes = {
   userDetails: PropTypes.object.isRequired,
   handleAccountSave: PropTypes.func.isRequired,
+  webHead: PropTypes.string,
+  mobHead: PropTypes.string,
+};
+
+AccountInfo.defaultProps = {
+  webHead: '',
+  mobHead: '',
 };
 
 export default AccountInfo;
