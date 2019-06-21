@@ -23,10 +23,6 @@ export const Wrap = styled(Wrapper)`
       p:not(:last-child) {
         margin-bottom: 5px;
       }
-      * {
-        font-size: 12px;
-        line-height: 16px;
-      }
     }
   }
   .head-text {
