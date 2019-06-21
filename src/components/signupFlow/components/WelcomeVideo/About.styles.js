@@ -41,16 +41,18 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
+  .button-wrapper {
+    padding-bottom: 12px;
+  }
   .skip {
-    display: inline-block;
+    display: block;
     width: 100%;
     text-align: center;
-    padding-top: 12px;
     color: #615195;
     cursor: pointer;
     font-family: Gilroy;
     font-size: 14px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
 `;
 

@@ -35,7 +35,7 @@ const About = props => {
           </QuesWrapper>
         </React.Fragment>
       )}
-      <FlexCenter>
+      <FlexCenter claName="button-wrapper">
         <Button className="button" onClick={props.continueCallback}>
           Continue
         </Button>

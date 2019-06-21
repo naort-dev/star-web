@@ -195,10 +195,13 @@ LoginContainer.Label = styled.div`
     }
   }
   @media(max-width:831px){
-    margin-top: 5px;
-    margin-bottom: 5.5px;
+    margin-bottom: 0;
+    padding-top: 5px;
+    margin-top: 10px;
+    line-height: 24px;
+    padding-bottom: 10px;
     &.optional-text {
-      margin-top: 10px;
+      margin-top: 18px;
       margin-bottom: -2px;
     }
   }
@@ -253,7 +256,7 @@ LoginContainer.PrivacyContent = styled.div`
   text-align: left;
   max-width: 300px;
   position: relative;
-  margin: 19px auto 39px;
+  margin: 10px auto;
   @media(min-width: 832px) {
     margin: 33px auto 0;
     max-width: 341px;
