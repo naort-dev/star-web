@@ -5,7 +5,7 @@ import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
 import CancelledBookings from './components/CancelledBookings';
-import { options } from './constants';
+import { options, filterOptions, sortBy } from './constants';
 import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {} from '../../styles/CommonStyled';
@@ -17,6 +17,20 @@ class Bookings extends React.Component {
     let dropValue;
     const queryString = parseQueryString(this.props.location.search);
     const newDropValue = options.find(option => option.id === queryString.type);
+    let filter = filterOptions.find(filterItem => filterItem.id === queryString.filter);
+    let sort = sortBy.find(sortItem => sortItem.id === queryString.sort);
+    if (!filter) {
+      filter = {
+        title: 'Show all',
+        id: '',
+      }
+    }
+    if (!sort) {
+      sort = {
+        title: 'Most recent',
+        id: '',
+      }
+    }
     if (newDropValue && newDropValue.id !== 'all') {
       dropValue = newDropValue;
       this.fetchList(newDropValue.id);
@@ -29,7 +43,9 @@ class Bookings extends React.Component {
     }
     this.state = {
       dropValue,
+      filter,
       selected: '',
+      sort,
     };
   }
 
@@ -55,7 +71,7 @@ class Bookings extends React.Component {
     this.setState({ selected: bookId });
   };
 
-  fetchList = type => {
+  fetchList = (type, filter={}, sort={}) => {
     switch (type) {
       case 'all':
         this.props.fetchBookingsList(0, true, 'all');
@@ -64,7 +80,7 @@ class Bookings extends React.Component {
         this.props.fetchBookingsList(0, true, celebOpenStatusList);
         break;
       case 'completed':
-        this.props.fetchBookingsList(0, true, celebCompletedStatusList);
+        this.props.fetchBookingsList(0, true, celebCompletedStatusList, filter.id, sort.id);
         break;
       case 'cancelled':
         this.props.fetchBookingsList(0, true, celebCancelledStatusList);
@@ -76,16 +92,26 @@ class Bookings extends React.Component {
   };
 
   handleCategoryChange = option => {
+    const {filter, sort } = this.state;
     this.setState({ dropValue: option });
     if (option.id === 'all') {
       this.fetchList('open');
     } else {
-      this.fetchList(option.id);
+      this.fetchList(option.id, filter, sort);
     }
   };
 
+  handleFilterOrSort = (type) => (option) => {
+    const { dropValue } = this.state;
+    let {filter, sort } = this.state;
+    this.setState({ [type]: option });
+    filter = type === 'filter' ? option : filter;
+    sort = type === 'sort' ? option: sort;
+    this.fetchList(dropValue.id, filter, sort);
+  }
+
   render() {
-    const { dropValue, selected } = this.state;
+    const { dropValue, selected, filter, sort } = this.state;
     const { props } = this;
     return (
       <BookingsStyled>
@@ -119,8 +145,11 @@ class Bookings extends React.Component {
               <CompletedBookings
                 bookingsList={props.bookingsList}
                 dropValue={dropValue}
+                filter={filter}
+                sort={sort}
                 toggleBookingModal={props.toggleBookingModal}
                 handleCategoryChange={this.handleCategoryChange}
+                handleFilterOrSort={this.handleFilterOrSort}
               />
           }
           {
