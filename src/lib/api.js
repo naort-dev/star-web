@@ -50,7 +50,7 @@ class Api {
   static reactionAbuse = 'v1/request/reaction_abuse/';
   static stripeRegistration = 'v1/payments/getstripeurl/';
   static checkStripe = 'v1/payments/stripe_dashboard/';
-  static changePassword = 'v1/user/changepassword/';
+  static changePassword = 'v2/user/changepassword/';
   static getEarningsList = 'v1/payments/earnings_list/';
   static requestReferral = 'v1/user/referral_request/';
   static getReferralList = 'v1/user/referral_list/';
@@ -78,6 +78,8 @@ class Api {
     `v1/user/group_list/?account=${groupID}`;
   static dashboardUpdate = 'v2/user/dashboard_update/';
   static dashBoard = 'v2/user/celebrity_dashboard/';
+  static notificationViewed = 'v2/user/settings_viewed/';
+  static updateUnseenCount = 'v1/user/update_unseen_count';
 }
 
 export default Api;

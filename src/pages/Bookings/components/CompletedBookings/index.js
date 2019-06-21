@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
@@ -8,16 +8,13 @@ import Search from '../../../../components/Search';
 import Loader from '../../../../components/Loader';
 import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
-import { options, filterOptions, SortBy } from '../../constants';
+import { options, filterOptions, sortBy } from '../../constants';
 import CompletedStyled from './styled';
 
 const CompletedBookings = (props) => {
 
-  const [filterVal, setFilterVal] = useState({});
-  const [sortVal, setSortVal] = useState({});
-
   const fetchList = (low, high) => {
-    props.fetchBookingsList(low, false, celebCompletedStatusList)
+    props.fetchBookingsList(low, false, celebCompletedStatusList, props.filter.id, props.sort.id);
   }
 
   const onCompletedClick = (requestData) => () => {
@@ -40,21 +37,21 @@ const CompletedBookings = (props) => {
         <Dropdown
           rootClass='drop-down filter'
           secondary
-          selected={filterVal}
+          selected={props.filter}
           options={filterOptions}
           labelKey="title"
           valueKey="id"
-          onChange={setFilterVal}
+          onChange={props.handleFilterOrSort('filter')}
           placeHolder="Filter"
         />
         <Dropdown
           rootClass='drop-down sort-by'
           secondary
-          selected={sortVal}
-          options={SortBy}
+          selected={props.sort}
+          options={sortBy}
           labelKey="title"
           valueKey="id"
-          onChange={setSortVal}
+          onChange={props.handleFilterOrSort('sort')}
           placeHolder="Sort by"
         />
         <Search
@@ -109,11 +106,14 @@ CompletedBookings.propTypes = {
   handleCategoryChange: PropTypes.func.isRequired,
   bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
+  handleFilterOrSort: PropTypes.func.isRequired,
+  sort: PropTypes.object.isRequired,
+  filter: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchBookingsList: (offset, refresh, requestStatus) => dispatch(fetchBookingsList(offset, refresh, requestStatus)),
+  fetchBookingsList: (offset, refresh, requestStatus, filter, sort) => dispatch(fetchBookingsList(offset, refresh, requestStatus, filter, sort)),
 })
 
 export default connect(null, mapDispatchToProps)(CompletedBookings);

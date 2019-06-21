@@ -25,3 +25,9 @@ export const validatePromo = (promo) => {
   }))
     .then(resp => resp.data)
 }
+
+export const updateUnseenCount = () => {
+  return (fetch(Api.updateUnseenCount)
+    .then(resp => resp.data)
+  )
+}

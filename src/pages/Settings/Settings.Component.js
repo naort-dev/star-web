@@ -104,7 +104,7 @@ const Settings = props => {
         }
         break;
       case 'Notification':
-        if (false) {
+        if (props.userDetails.notification_settings.is_viewed) {
           const temp = { ...link };
           temp.completed = true;
           return temp;
@@ -191,6 +191,8 @@ const Settings = props => {
                   {...childProps}
                   notifications={getNotifications()}
                   handleCheck={handleCheck}
+                  updateNotificationViewed={props.updateNotificationViewed}
+                  is_viewed={props.userDetails.notification_settings.is_viewed}
                   mobHead="Notifications"
                   webHead="Notifications"
                 />,
@@ -213,6 +215,7 @@ Settings.propTypes = {
   changePassword: PropTypes.func.isRequired,
   dashboardURL: PropTypes.string,
   celbDetails: PropTypes.object.isRequired,
+  updateNotificationViewed: PropTypes.func.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',

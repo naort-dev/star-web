@@ -217,14 +217,22 @@ const ActivityCard = props => {
     props.buttonClick({ data: card, ...props.callBackProps });
   };
 
-  const getCard = (elmProps, btnType, icon, card, index) => {
+  const getCard = (
+    elmProps,
+    btnType,
+    icon,
+    card,
+    index,
+    customFlexCls,
+    btnClsCustom,
+  ) => {
     return (
       <Card
         className="activityCard"
         onClick={() => props.cardClick({ data: card, ...props.callBackProps })}
         key={index}
       >
-        <FlexBox className="activityCard-inner">
+        <FlexBox className={`activityCard-inner ${customFlexCls}`}>
           <span className="web-icons">
             {icon}
             <FlexColumn className={elmProps.flexClass}>
@@ -242,7 +250,7 @@ const ActivityCard = props => {
           </span>
           <Button
             secondary={btnType}
-            className={elmProps.btnClass}
+            className={`${elmProps.btnClass} ${btnClsCustom}`}
             onClick={buttonClick(card)}
           >
             {card.btnTextPrimary}
@@ -265,6 +273,8 @@ const ActivityCard = props => {
               activity.icon,
               activity.card,
               index,
+              '',
+              '',
             );
           })}
         </React.Fragment>
@@ -285,6 +295,8 @@ const ActivityCard = props => {
               earning.icon,
               earning.card,
               index,
+              'custom-flex',
+              'custom-button',
             );
           })}
         </React.Fragment>
@@ -297,41 +309,6 @@ const ActivityCard = props => {
     <Layout>
       {getRecentActivity()}
       {getEarnings()}
-
-      {/* <Card className="activityCard">
-        <FlexBox className="activityCard-inner">
-          <span className="web-icons">
-            {Heart}
-            <FlexColumn className="web-padding">
-              <HeadingBold>5 Activities</HeadingBold>
-              <BoldTextM>
-                1 comment | 2 responses
-                <BoldTextM>
-                  <span className="bar-separator">&nbsp;|&nbsp;</span>2 ratings
-                </BoldTextM>
-              </BoldTextM>
-            </FlexColumn>
-          </span>
-          <Button secondary className="button-activity">
-            View <span className="btn-extra">&nbsp;Now</span>
-          </Button>
-        </FlexBox>
-      </Card>
-
-      <Card className="activityCard last-child">
-        <FlexBox className="activityCard-inner">
-          <span className="web-icons">
-            {Dollar}
-            <FlexColumn className="web-padding">
-              <HeadingBold>2 Tips</HeadingBold>
-              <BoldTextM>Total: $20</BoldTextM>
-            </FlexColumn>
-          </span>
-          <Button secondary className="button-activity">
-            View <span className="btn-extra">&nbsp;Now</span>
-          </Button>
-        </FlexBox>
-      </Card> */}
       <FlexCenter className="button-margin">
         <Button
           secondary
