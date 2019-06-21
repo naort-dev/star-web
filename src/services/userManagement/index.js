@@ -1,10 +1,9 @@
+import { cloneDeep } from 'lodash';
+import { updateUserDetails } from 'store/shared/actions/getUserDetails';
 import Api from '../../lib/api';
 import { fetch } from '../fetch';
 import { dashBoardSuccess } from '../../pages/dashboard/actions';
-import {
-  loaderAction,
-  updateToast,
-} from '../../store/shared/actions/commonActions';
+import { updateToast } from '../../store/shared/actions/commonActions';
 
 export const dashBoardUpdate = () => dispatch => {
   return fetch
@@ -13,16 +12,15 @@ export const dashBoardUpdate = () => dispatch => {
     .catch();
 };
 
-export const getDashboardData = () => dispatch => {
-  dispatch(loaderAction(true));
+export const getDashboardData = callBack => dispatch => {
   return fetch
     .get(Api.dashBoard, {})
     .then(resp => {
       dispatch(dashBoardSuccess(resp.data.data.dashboard));
-      dispatch(loaderAction(false));
+      if (callBack) callBack();
     })
     .catch(error => {
-      dispatch(loaderAction(false));
+      if (callBack) callBack();
       dispatch(
         updateToast({
           value: true,
@@ -31,4 +29,22 @@ export const getDashboardData = () => dispatch => {
         }),
       );
     });
+};
+
+function getUpdatedUserDetails(getState) {
+  const temp = cloneDeep(getState().userDetails.settings_userDetails);
+  temp.notification_settings.is_viewed = true;
+  return {
+    userDetails: temp,
+    celbDetails: getState().userDetails.settings_celebrityDetails,
+  };
+}
+
+export const updateNotificationViewed = () => (dispatch, getState) => {
+  return fetch
+    .post(Api.notificationViewed, {})
+    .then(resp => {
+      dispatch(updateUserDetails(getUpdatedUserDetails(getState)));
+    })
+    .catch(error => {});
 };
