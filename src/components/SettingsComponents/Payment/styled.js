@@ -5,7 +5,6 @@ import { Form, Wrapper } from '../styled';
 export const FormContainer = styled(Form)``;
 
 export const Wrap = styled(Wrapper)`
-  width: 497px;
   .note {
     font-size: 16px;
     font-family: Gilroy-Light;
@@ -13,7 +12,13 @@ export const Wrap = styled(Wrapper)`
     width: 256px;
     margin: 0 auto;
     text-align: center;
-    ${media.webView}{
+    &:before {
+      content: attr(data-mob);
+      ${media.webView} {
+        content: attr(data-web);
+      }
+    }
+    ${media.webView} {
       width: 100%;
       text-align: left;
     }
@@ -27,8 +32,14 @@ export const Wrap = styled(Wrapper)`
     height: 55px;
     display: flex;
     align-items: center;
+    &:before {
+      content: attr(data-mob);
+      ${media.webView} {
+        content: attr(data-web);
+      }
+    }
     cursor: pointer;
-    ${media.webView}{
+    ${media.webView} {
       width: 400px;
     }
   }

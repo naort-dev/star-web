@@ -74,7 +74,10 @@ Layout.EventStep2 = styled.div`
     padding-top: 0;
     padding-bottom: 20px;
     min-height: inherit;
-    min-height: 150px;
+
+    .occasion-wrapper & {
+      min-height: 150px;
+    }
   }
 
   .label {

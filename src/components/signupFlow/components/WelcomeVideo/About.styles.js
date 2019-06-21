@@ -17,6 +17,9 @@ export const Layout = styled.section`
     @media (max-width: 831px) {
       padding-top: 15px;
     }
+    @media (min-width: 832px) {
+      padding-bottom: 0;
+    }
   }
   .note {
     font-family: Gilroy;
@@ -74,7 +77,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;

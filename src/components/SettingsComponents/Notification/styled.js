@@ -5,11 +5,14 @@ import { Form, Wrapper } from '../styled';
 export const FormContainer = styled(Form)``;
 
 export const Wrap = styled(Wrapper)`
-  width: 278px;
+  padding-left: 44px;
+  padding-right: 70px;
+  width: 100%;
   ${media.webView} {
     width: 398px;
+    padding-left: 0;
+    padding-right: 0;
   }
-
   .termsWrapper {
     display: flex;
     font-family: Gilroy;
@@ -18,9 +21,11 @@ export const Wrap = styled(Wrapper)`
     padding-bottom: 20px;
     p {
       p:not(:last-child) {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
+      }
+      * {
         font-size: 12px;
-        line-height: 2;
+        line-height: 16px;
       }
     }
   }

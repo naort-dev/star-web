@@ -40,6 +40,8 @@ export const InputLabel = styled.span`
 `;
 
 export const Wrap = styled(Wrapper)`
+  margin: 0 auto;
+  width: 400px;
   .note {
     font-size: 14px;
     font-family: Gilroy;

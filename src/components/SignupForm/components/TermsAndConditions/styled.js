@@ -6,10 +6,13 @@ const TermsConditionsWrapper = styled.div`
   @media(min-width: 1025px) {
     height: calc(100% - 55px);
   }
+  @media(max-width:831px){
+    height: calc(100% - 111px);
+  }
   .terms-wrapper {
-    height: 529px !important;
+    height: calc(100% - -35px) !important;
     max-width: 470px;
-    margin: 26px auto 25px;
+    margin: 5px auto 10px;
 
     @media(min-width:832px){
       height: 439px !important;
@@ -19,13 +22,12 @@ const TermsConditionsWrapper = styled.div`
     }
 
     p {
-      p {
+      p:not(:last-child) {
+        margin-bottom: 5px;
+      }
+      * {
         font-size: 12px;
         line-height: 16px;
-
-        &:not(:last-child) {
-          margin-bottom: 5px;
-        }
       }
     }
   }
@@ -60,6 +62,9 @@ TermsConditionsWrapper.HeaderText = styled.div`
 TermsConditionsWrapper.ButtonWrapper = styled.div`
   text-align:center;
   padding-bottom: 30px;
+  @media(max-width:831px){
+    padding-bottom: 10px;
+  }
 `;
 
 TermsConditionsWrapper.Description = styled.p`
@@ -75,7 +80,7 @@ TermsConditionsWrapper.Description = styled.p`
     line-height: 26px;
     padding-right: 10px;
 
-    media(min-width:832px){
+    @media(min-width:832px){
       padding: 0 10px 10px 0;
     }
   }
