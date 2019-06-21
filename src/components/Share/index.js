@@ -34,14 +34,14 @@ const Share = (props) => {
   const shareUrl = `https://${props.shareUrl}`;
 
   return (
-    <ShareStyled>
+    <ShareStyled className={props.classes.root}>
       <PrimaryButton
         secondary={props.secondary}
         ref={shareAnchor}
-        className='action-btn'
+        className={`action-btn ${props.classes.button}`}
         onClick={toggleList(true)}
       >
-        Share This
+        { props.buttonText }
       </PrimaryButton>
       <Popover
         id="share-popper"
@@ -90,11 +90,15 @@ const Share = (props) => {
 
 Share.defaultProps = {
   secondary: false,
+  classes: {},
+  buttonText: 'Share This'
 };
 
 Share.propTypes = {
   shareUrl: PropTypes.string.isRequired,
   secondary: PropTypes.bool,
+  classes: PropTypes.object,
+  buttonText: PropTypes.string,
 }
 
 export default Share;

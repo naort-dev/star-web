@@ -67,6 +67,13 @@ const StarStyled = CardContainer.extend`
       margin-top: 9px;
     }
   }
+  @media(min-width: 832px) and (max-width: 1280px){
+    .description-wrapper {
+      .heading {
+        margin-bottom: 15px;
+      }
+    }
+  }
 `;
 
 StarStyled.LeftWrapper = styled.div`
@@ -104,7 +111,7 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
   }
   .comment-section {
     height: 73px;
-    width: 50%;
+    width: 209px;
     overflow: hidden;
   }
   .divider {
@@ -130,11 +137,17 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     margin-top: 0;
     align-items: center;
     .comment-section {
-      width: 209px;
+      width: 224px;
     }
     .action-text {
       position: static;
       margin-left: 24px;
+    }
+  }
+  @media(min-width: 832px) and (max-width: 1280px) {
+    .comment-section {
+      width: 330px;
+      max-width: 100%;
     }
   }
 `;

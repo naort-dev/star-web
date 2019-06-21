@@ -31,6 +31,14 @@ const BookingsStyled = styled.div`
   }
 `;
 
+BookingsStyled.Container = styled.div`
+    @media(max-width: 831px) {
+      width: 336px;
+      margin: 0px auto;
+    }
+  }
+`;
+
 BookingsStyled.Header = styled.span`
   font-family: Gilroy-Light;
   font-size: 30px;
@@ -54,6 +62,9 @@ BookingsStyled.SectionHeader = styled.div`
     cursor: pointer;
     strong {
       font-family: Gilroy-Bold;
+    }
+    @media(max-width: 831px) {
+      display: none;
     }
   }
 `;
