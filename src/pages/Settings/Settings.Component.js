@@ -89,7 +89,7 @@ const Settings = props => {
   const linkStatus = link => {
     switch (link.selectedName) {
       case 'Password':
-        if (props.userDetails.has_requested_referral) {
+        if (false) {
           const temp = { ...link };
           temp.completed = true;
           return temp;
@@ -104,7 +104,7 @@ const Settings = props => {
         }
         break;
       case 'Notification':
-        if (props.userDetails.has_requested_referral !== '') {
+        if (false) {
           const temp = { ...link };
           temp.completed = true;
           return temp;
@@ -146,6 +146,8 @@ const Settings = props => {
                   {...childProps}
                   {...props}
                   handleAccountSave={handleAccountSave}
+                  mobHead="Account Info"
+                  webHead="Account Information"
                 />,
               )
             }
@@ -158,6 +160,8 @@ const Settings = props => {
                   {...childProps}
                   {...props}
                   passwordUpdate={passwordUpdate}
+                  mobHead="Update Password"
+                  webHead="Update Password"
                 />,
               )
             }
@@ -172,6 +176,8 @@ const Settings = props => {
                   stripeCard={props.stripeCard}
                   stripeUrl={props.stripeUrl}
                   dashboardURL={props.dashboardURL}
+                  mobHead="Payment Account"
+                  webHead="My Payment Account"
                 />,
               )
             }
@@ -185,6 +191,8 @@ const Settings = props => {
                   {...childProps}
                   notifications={getNotifications()}
                   handleCheck={handleCheck}
+                  mobHead="Notifications"
+                  webHead="Notifications"
                 />,
               )
             }

@@ -12,7 +12,7 @@ const Notification = props => {
   return (
     <Container>
       <Wrap>
-        <h2 className="sub-head">Notifications</h2>
+        <h2 className="sub-head">{props.webHead}</h2>
         <section className="terms-container">
           <span className="head-text">Allow the following:</span>
           {props.notifications.map((notification, index) => {
@@ -38,10 +38,12 @@ const Notification = props => {
 Notification.propTypes = {
   notifications: PropTypes.array.isRequired,
   handleCheck: PropTypes.func,
+  webHead: PropTypes.string,
 };
 
 Notification.defaultProps = {
   handleCheck: () => {},
+  webHead: '',
 };
 
 export default Notification;

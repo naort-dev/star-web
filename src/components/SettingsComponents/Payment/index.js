@@ -10,8 +10,8 @@ const Payment = props => {
       <Wrap>
         <h2
           className="sub-head"
-          data-web="My Payment Account"
-          data-mob="Payment"
+          data-web={props.webHead}
+          data-mob={props.mobHead}
         >
           {''}
         </h2>
@@ -49,12 +49,16 @@ Payment.propTypes = {
   stripeCard: PropTypes.string,
   stripeUrl: PropTypes.string,
   dashboardURL: PropTypes.string,
+  webHead: PropTypes.string,
+  mobHead: PropTypes.string,
 };
 
 Payment.defaultProps = {
   stripeCard: '',
   stripeUrl: '',
   dashboardURL: '',
+  webHead: '',
+  mobHead: '',
 };
 
 export default Payment;

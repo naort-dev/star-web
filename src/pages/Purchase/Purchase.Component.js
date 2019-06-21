@@ -21,7 +21,7 @@ import SuccessScreen from './Components/SuccessScreen';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
-const qAndATerms = (
+const getTerms = (
   <React.Fragment>
     <p>
       The information provided by the Star via a Starsona video, and any
@@ -181,11 +181,9 @@ class Purchase extends Component {
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
-            termText={
-              this.state.category === 2 ? termsAnnouncement : qAndATerms
-            }
+            termText={getTerms}
             buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
-            isChechbox={this.state.category === 2 ? true : false}
+            isCheckbox={this.state.category === 2}
           />
         );
       } else if (this.state.category === 1) {

@@ -99,8 +99,8 @@ const AccountInfo = props => {
       <Wrapper>
         <h2
           className="sub-head"
-          data-web="Account Information"
-          data-mob="Account Info"
+          data-web={props.webHead}
+          data-mob={props.mobHead}
         >
           {' '}
           {''}
@@ -158,6 +158,13 @@ const AccountInfo = props => {
 AccountInfo.propTypes = {
   userDetails: PropTypes.object.isRequired,
   handleAccountSave: PropTypes.func.isRequired,
+  webHead: PropTypes.string,
+  mobHead: PropTypes.string,
+};
+
+AccountInfo.defaultProps = {
+  webHead: '',
+  mobHead: '',
 };
 
 export default AccountInfo;
