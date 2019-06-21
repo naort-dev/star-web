@@ -18,20 +18,16 @@ CommentStyled.CommentIcon = styled.span`
   border-radius: 50%;
   background: ${props => props.showList ? props.theme.flatBlue : '#fff'};
   color: ${props => props.showList ? '#fff' : props.theme.flatBlue};
+  ${props => props.disable && `
+    background: ${props.theme.veryLightPinkTwo};
+    color: ${props.theme.brownGrey};
+  `}
   display: block;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   position: relative;
-  .icon-image {
-    width: 10px;
-    height: 16px;
-    display: block;
-    background: ${props => props.showList ? 'url(assets/images/lightning_white.svg)' : 'url(assets/images/lightning.svg)'};
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
   .quick-arrow {
     position: absolute;
     display: ${props => props.showList ? 'block' : 'none'};

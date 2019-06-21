@@ -57,10 +57,10 @@ export const updateBookingList = data => ({
 });
 
 export const updateBookingsList = (id, newData) => (dispatch, getState) => {
-  const originalList = cloneDeep(getState().bookingsList.data);
+  const originalList = cloneDeep(getState().bookings.bookingsList.data);
   const dataIndex = originalList.findIndex(item => item.id === id);
   originalList[dataIndex] = newData;
-  dispatch(bookingsListFetchStart(false, getState().bookingsList.token));
+  dispatch(bookingsListFetchStart(false, getState().bookings.bookingsList.token));
   dispatch(bookingsListUpdate(originalList));
 };
 
@@ -69,7 +69,7 @@ export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = 
   getState,
 ) => {
   const { unseen_bookings: unseenBookings } = getState().userDetails.settings_userDetails;
-  const { status, limit } = getState().bookingsList;
+  const { status, limit } = getState().bookings.bookingsList;
   const videoStatus = requestStatus ? requestStatus : status;
   const source = CancelToken.source();
   let filterString = '';
@@ -84,8 +84,8 @@ export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = 
       sortString = `${sortString}&${sortOption.id}=${sortOption.id === sortParam}`;
     }
   })
-  if (typeof getState().bookingsList.token !== typeof undefined) {
-    getState().bookingsList.token.cancel(
+  if (typeof getState().bookings.bookingsList.token !== typeof undefined) {
+    getState().bookings.bookingsList.token.cancel(
       'Operation canceled due to new request.',
     );
   }

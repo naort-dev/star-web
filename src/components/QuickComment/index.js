@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import { Scrollbars } from 'react-custom-scrollbars';
+import LightningIcon from '../LightningIcon';
+import ToolTip from '../ToolTip';
 import { commentGenerator } from './utils';
 import addVideoComment from '../../services/addVideoComment';
 import CommentStyled from './styled';
@@ -11,10 +13,13 @@ const QuickComment = (props) => {
 
   const anchorEl = useRef(null);
   const scrollRef = useRef(null);
+  const [disable, setDisable] = useState(false);
   const [showList, toggleList] = useState(false);
 
   const openList = () => {
-    toggleList(!showList);
+    if (!disable) {
+      toggleList(!showList);
+    }
   };
 
   const handleClose = () => {
@@ -35,6 +40,9 @@ const QuickComment = (props) => {
     props.loaderAction(true);
     try {
       await addVideoComment(props.videoId, comment);
+      if (props.once) {
+        setDisable(true);
+      }
       handleClose();
     } catch(exception) {
       props.updateToast({
@@ -48,11 +56,12 @@ const QuickComment = (props) => {
 
   const { fanName } = props;
   return (
-    <CommentStyled showList={showList} className={props.classes.root}>
-      <CommentStyled.CommentIcon showList={showList} innerRef={anchorEl} onClick={openList}>
-        <span className='icon-image' />
-        <span className='quick-arrow' />
-      </CommentStyled.CommentIcon>
+    <ToolTip title={disable ? "You have sent a comment!" : ''} placement="top" >
+      <CommentStyled showList={showList} className={props.classes.root}>
+        <CommentStyled.CommentIcon disable={disable} showList={showList} innerRef={anchorEl} onClick={openList}>
+          <LightningIcon className='icon-image' />
+          <span className='quick-arrow' />
+        </CommentStyled.CommentIcon>
         <CommentStyled.Popover
           id="quick-comment-popper"
           open={showList}
@@ -96,13 +105,15 @@ const QuickComment = (props) => {
             </CommentStyled.ListWrapper>
           </CommentStyled.OptionWrapper>
         </CommentStyled.Popover>
-    </CommentStyled>
+      </CommentStyled>
+    </ToolTip>
   )
 }
 
 QuickComment.defaultProps = {
   classes: {},
   fanName: '',
+  once: false,
 }
 
 QuickComment.propTypes = {
@@ -111,6 +122,7 @@ QuickComment.propTypes = {
   videoId: PropTypes.string.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
+  once: PropTypes.bool,
 }
 
 const mapDispatchToProps = dispatch => ({
