@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes, { oneOfType } from 'prop-types';
+import PropTypes from 'prop-types';
+import Rating from 'react-rating';
 import { FlexBoxSB, Card } from 'styles/CommonStyled';
-import StarRating from '../StarRating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
@@ -9,6 +9,7 @@ import {
   faHeart,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faLightStar } from '@fortawesome/pro-light-svg-icons';
 import { Layout, SummaryItem, Label, Value, Summary } from './styled';
 
 const StarCard = ({ data }) => {
@@ -54,10 +55,17 @@ const StarCard = ({ data }) => {
               <FontAwesomeIcon icon={faStar} />
               <Label className="rating-label">Rating</Label>
             </span>
-            <StarRating
-              rating={data.rating}
-              rootClass="rating"
-              ratingClass="start-rate"
+            <Rating
+              className="rating"
+              emptySymbol={
+                <FontAwesomeIcon className="rating-star" icon={faLightStar} />
+              }
+              fullSymbol={
+                <FontAwesomeIcon className="rating-star" icon={faStar} />
+              }
+              fractions={2}
+              initialRating={data.rating}
+              readonly
             />
           </SummaryItem>
         </Summary>
