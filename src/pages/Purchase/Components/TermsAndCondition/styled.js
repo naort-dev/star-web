@@ -35,9 +35,6 @@ export const Layout = styled.section`
     height: 60px;
     margin-bottom: 25px;
     align-self: flex-end;
-    ${media.webView} {
-      margin-left: 37px;
-    }
   }
   &.content-wrapper {
     display: flex;

@@ -11,7 +11,6 @@ export const Content = styled.section`
   }
   .scrollRenderView {
     overflow: auto !important;
-    margin: 0 !important;
   }
 `;
 
