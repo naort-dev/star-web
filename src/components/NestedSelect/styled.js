@@ -33,6 +33,8 @@ const NestedSelectStyled = styled.div`
     .select__input {
       color: #615195;
       padding: 0px 0;
+      font-size: 18px !important;
+      line-height: 18px !important;
     }
     .select__multi-value {
       border-width: 1px;

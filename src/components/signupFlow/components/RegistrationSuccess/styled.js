@@ -38,7 +38,7 @@ RegSuccessWrapper.HeaderText = styled.div`
 RegSuccessWrapper.ButtonWrapper = styled.div`
 text-align: center;
 margin-top: 25px;
-margin-bottom: 20px;
+padding-bottom: 20px;
 display: flex;
 flex-direction: column;
 align-items: center;
