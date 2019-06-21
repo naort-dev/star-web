@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ToolTip from '../ToolTip';
 import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ToolTip from '../ToolTip';
 import { commentGenerator } from './utils';
 import addVideoComment from '../../services/addVideoComment';
 import CommentStyled from './styled';
