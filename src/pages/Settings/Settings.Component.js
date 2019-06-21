@@ -89,7 +89,7 @@ const Settings = props => {
   const linkStatus = link => {
     switch (link.selectedName) {
       case 'Password':
-        if (false) {
+        if (props.celbDetails.has_password) {
           const temp = { ...link };
           temp.completed = true;
           return temp;
@@ -212,6 +212,7 @@ Settings.propTypes = {
   updateUserDetails: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
   dashboardURL: PropTypes.string,
+  celbDetails: PropTypes.object.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',
