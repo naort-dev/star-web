@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { cloneDeep } from 'lodash';
+import { celebOpenStatusList } from '../../../constants/requestStatusList';
+import { updateUnseenCount } from '../../../services';
 import Api from '../../../lib/api';
+import { filterOptions, sortBy } from '../constants';
 import { fetch, CancelToken } from '../../../services/fetch';
 
 export const BOOKINGS_LIST = {
@@ -61,13 +64,26 @@ export const updateBookingsList = (id, newData) => (dispatch, getState) => {
   dispatch(bookingsListUpdate(originalList));
 };
 
-export const fetchBookingsList = (offset, refresh, requestStatus) => (
+export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = '', sortParam = '') => (
   dispatch,
   getState,
 ) => {
+  const { unseen_bookings: unseenBookings } = getState().userDetails.settings_userDetails;
   const { status, limit } = getState().bookingsList;
   const videoStatus = requestStatus ? requestStatus : status;
   const source = CancelToken.source();
+  let filterString = '';
+  let sortString = '';
+  filterOptions.forEach((filterOption) => {
+    if (filterOption.id !== '') {
+      filterString = `${filterString}&${filterOption.id}=${filterOption.id === filterParam}`;
+    }
+  })
+  sortBy.forEach((sortOption) => {
+    if (sortOption.id !== '') {
+      sortString = `${sortString}&${sortOption.id}=${sortOption.id === sortParam}`;
+    }
+  })
   if (typeof getState().bookingsList.token !== typeof undefined) {
     getState().bookingsList.token.cancel(
       'Operation canceled due to new request.',
@@ -76,13 +92,16 @@ export const fetchBookingsList = (offset, refresh, requestStatus) => (
   dispatch(bookingsListFetchStart(refresh, source));
   return fetch
     .get(
-      `${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=celebrity_id`,
+      `${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}${filterString}${sortString}&role=celebrity_id`,
       {
         cancelToken: source.token,
       },
     )
     .then(resp => {
       if (resp.data && resp.data.success) {
+        if (celebOpenStatusList.indexOf(videoStatus) >= 0 && unseenBookings) {
+          updateUnseenCount();
+        }
         dispatch(bookingsListFetchEnd());
         const { count } = resp.data.data;
         const miscData = {

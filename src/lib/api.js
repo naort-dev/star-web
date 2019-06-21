@@ -78,6 +78,7 @@ class Api {
     `v1/user/group_list/?account=${groupID}`;
   static dashboardUpdate = 'v2/user/dashboard_update/';
   static dashBoard = 'v2/user/celebrity_dashboard/';
+  static updateUnseenCount = 'v1/user/update_unseen_count';
 }
 
 export default Api;

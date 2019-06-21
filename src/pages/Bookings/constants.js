@@ -14,7 +14,7 @@ export const options = [{
 
 export const filterOptions = [{
   title: 'Show all',
-  id: 'all',
+  id: '',
 }, {
   title: 'Rated',
   id: 'rated',
@@ -32,13 +32,13 @@ export const filterOptions = [{
   id: 'favorites',
 }];
 
-export const SortBy = [{
+export const sortBy = [{
   title: 'Most recent',
-  id: 'MostRecent',
+  id: '',
 }, {
   title: 'Oldest',
   id: 'oldest',
 }, {
-  title: 'Recent activity',
-  id: 'recentActivity',
+  title: 'Recent fan activity',
+  id: 'recent_activity',
 }];
