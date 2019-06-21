@@ -1,22 +1,26 @@
 export const Links = [
   {
     linkName: 'Account Info',
-    selectedName: '',
+    selectedName: 'Account',
     url: '/manage/settings/account-info',
+    completed: true,
   },
   {
     linkName: 'Password',
-    selectedName: '',
+    selectedName: 'Password',
     url: '/manage/settings/password',
+    completed: false,
   },
   {
     linkName: 'Payment account',
-    selectedName: '',
+    selectedName: 'Payment',
     url: '/manage/settings/payment',
+    completed: false,
   },
   {
     linkName: 'Notification',
-    selectedName: '',
+    selectedName: 'Notification',
     url: '/manage/settings/notification',
+    completed: false,
   },
 ];

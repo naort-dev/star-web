@@ -5,11 +5,14 @@ import { Form, Wrapper } from '../styled';
 export const FormContainer = styled(Form)``;
 
 export const Wrap = styled(Wrapper)`
-  width: 278px;
+  padding-left: 44px;
+  padding-right: 70px;
+  width: 100%;
   ${media.webView} {
     width: 398px;
+    padding-left: 0;
+    padding-right: 0;
   }
-
   .termsWrapper {
     display: flex;
     font-family: Gilroy;

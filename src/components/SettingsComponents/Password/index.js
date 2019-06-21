@@ -113,7 +113,7 @@ const Password = props => {
   return (
     <Container>
       <Wrap>
-        <h2 className="sub-head">Update Password</h2>
+        <h2 className="sub-head">{props.webHead}</h2>
         <FormContainer>
           {getInput({
             placeholder: 'Password',
@@ -158,6 +158,10 @@ const Password = props => {
 
 Password.propTypes = {
   passwordUpdate: PropTypes.func.isRequired,
+  webHead: PropTypes.string,
+};
+Password.defaultProps = {
+  webHead: '',
 };
 
 export default Password;
