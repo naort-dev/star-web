@@ -8,6 +8,10 @@ import CommentStyled from './styled';
 
 const CommentItem = (props) => {
 
+  const onReactionClick = () => {
+    props.onReactionClick(props.commentDetails.reaction_file_url, props.commentDetails.reaction_thumbnail_url,  props.commentDetails.file_type);
+  }
+
   const renderComment = () => {
     const { type } = props;
     if (type === 'reaction')  {
@@ -17,14 +21,14 @@ const CommentItem = (props) => {
             <span className='text-description'>Reaction recorded:</span>
             <span className="text-bold">{moment.utc(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
           </span>
-          <PrimaryButton className='action-button'>Play Now</PrimaryButton>
+          <PrimaryButton className='action-button' onClick={onReactionClick}>Play Now</PrimaryButton>
         </span>
       )
     } else if (type === 'tip') {
       return (
         <span className='comment tip'>
           <span className='title'>{props.user} tipped you</span>
-          <span className="text-bold">$100</span>
+          <span className="text-bold">${props.commentDetails.amount}</span>
         </span>
       )
     } else if (type === 'rating') {
@@ -40,7 +44,7 @@ const CommentItem = (props) => {
     return (
       <span className='comment'>
         <span className="text-bold user-name">{props.user}</span>
-        This is amazing ... I adore PG. How did you get this done??
+        {props.commentDetails.comments}
       </span>
     )
   }
@@ -67,6 +71,7 @@ CommentItem.defaultProps = {
   classes: {},
   user: '',
   time: new Date(),
+  onReactionClick: () => {},
   commentDetails: {},
 }
 
@@ -77,6 +82,7 @@ CommentItem.propTypes = {
   user: PropTypes.string,
   time: PropTypes.Date,
   commentDetails: PropTypes.object,
+  onReactionClick: PropTypes.func,
 }
 
 export default CommentItem;

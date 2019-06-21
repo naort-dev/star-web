@@ -86,18 +86,22 @@ const LatestCard = (props) => {
       return (
         <MediumText className='card-description'>
           <HeadingBold>{request.occasion}</HeadingBold> shoutout
-          for <HeadingBold>{request.fan}</HeadingBold>
+           for <HeadingBold>{request.fan}</HeadingBold>
         </MediumText>
       )
     }
     return (
-      <MediumText className='card-description'>
-          <HeadingBold>{request.occasion}</HeadingBold>
-          for <HeadingBold>announcement</HeadingBold>
+      <MediumText>
+        <HeadingBold>{request.occasion}</HeadingBold> announcement <br />
+        for <HeadingBold>{request.fan}</HeadingBold>
       </MediumText>
     )
   }
 
+  const onReactionClick = (reactionUrl, reactionThumbnail, reactionType) => {
+    props.toggleBookingModal(true, {...request, id:request.id, reactionUrl, reactionThumbnail, reactionType}, true);
+  }
+  
   const onViewDetails = () => {
     props.toggleBookingModal(true, {...request, id:request.id}, true);
   }
@@ -108,7 +112,7 @@ const LatestCard = (props) => {
     <Card>
       <StarStyled className='star-container'>
         <StarStyled.LeftWrapper>
-          <StarStyled.UserImage imageUrl='' starMode={props.starMode} />
+          <StarStyled.UserImage imageUrl={request.fan_photo && request.fan_photo.thumbnail_url} starMode={props.starMode} />
           <FlexColumn className='description-wrapper'>
             <LightHeading className='heading'>{renderHeading()}</LightHeading>
             {
@@ -122,11 +126,12 @@ const LatestCard = (props) => {
             user={activity.activity_from_user}
             time={activity.created_date}
             commentDetails={activity.activity_details}
+            onReactionClick={onReactionClick}
             classes={{ comment: 'comment-section' }}
             receive
           />
           <span className='divider'>
-            <QuickComment once videoId={videoId} classes={{root: 'quick-comment-root'}} />
+            <QuickComment fanName={activity.activity_from_user} once videoId={videoId} classes={{root: 'quick-comment-root'}} />
           </span>
           <span className='action-text' onClick={onViewDetails}>
             View details

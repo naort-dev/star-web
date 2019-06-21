@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import { Scrollbars } from 'react-custom-scrollbars';
+import LightningIcon from '../LightningIcon';
 import ToolTip from '../ToolTip';
 import { commentGenerator } from './utils';
 import addVideoComment from '../../services/addVideoComment';
@@ -58,7 +59,7 @@ const QuickComment = (props) => {
     <ToolTip title={disable ? "You have sent a comment!" : ''} placement="top" >
       <CommentStyled showList={showList} className={props.classes.root}>
         <CommentStyled.CommentIcon disable={disable} showList={showList} innerRef={anchorEl} onClick={openList}>
-          <span className='icon-image' />
+          <LightningIcon className='icon-image' />
           <span className='quick-arrow' />
         </CommentStyled.CommentIcon>
         <CommentStyled.Popover

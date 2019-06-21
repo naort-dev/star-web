@@ -108,6 +108,7 @@ const BookingCard = (props) => {
                   starMode &&
                     <StarView
                       bookingData={requestData}
+                      modalData={props.bookingModal.data}
                       toggleDetails={setDetails}
                       closeModal={closeModal}
                     />

@@ -30,8 +30,8 @@ const GeneralList = (props) => {
     }
     return (
       <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold>  <br />
-          for <HeadingBold>announcement</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> announcement <br />
+          for <HeadingBold>{props.data.fan}</HeadingBold>
       </MediumText>
     )
   }
