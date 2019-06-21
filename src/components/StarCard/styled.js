@@ -98,23 +98,25 @@ export const SummaryItem = styled.li`
   }
   .rating {
     width: 50%;
-    padding-left: 40px;
-    ${media.smallScreen} {
-      font-size: 12px;
-    }
+    padding-left: 44px;
     ${media.webView} {
       width: 65%;
       padding-left: 0;
     }
-  }
-  .start-rate {
-    padding: 0;
   }
   .commenticon {
     transform: rotateY(180deg);
   }
   .rating-star {
     color: #ff6c58;
+    padding-right: 4px;
+    font-size: 16px;
+    ${media.webView} {
+      font-size: 20px;
+    }
+    ${media.smallScreen} {
+      font-size: 14px;
+    }
   }
 `;
 export const Label = styled.span`
