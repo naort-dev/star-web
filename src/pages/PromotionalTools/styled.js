@@ -45,7 +45,7 @@ export const Layout = styled.section`
     }
   }
   .share-text {
-    font-family: Gilroy_Light;
+    font-family: Gilroy-Light;
     font-size: 16px;
     color: #999;
     display: inline-block;
