@@ -45,11 +45,12 @@ export const resetRequestFlow = () => ({
   type: TOGGLE_MODALS.resetRequestFlow,
 });
 
-export const toggleUpdateBooking = (state,requestId, starMode) => ({
+export const toggleUpdateBooking = (state,requestId, starMode, requestData) => ({
   type: TOGGLE_MODALS.toggleUpdateBooking,
   state,
   requestId,
   starMode,
+  requestData,
 });
 
 export const toggleContactSupport = state => ({

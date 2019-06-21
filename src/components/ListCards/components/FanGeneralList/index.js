@@ -4,10 +4,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Card } from 'styles/CommonStyled';
 import MoreActions from '../../../MoreActions';
+import PrimaryButton from '../../../PrimaryButton';
+import Share from '../../../Share';
+import OrderDetails from '../../../OrderDetails';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
-import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
+import { toggleUpdateBooking, toggleContactSupport, toggleBookingModal } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
+import { findCompletedVideo } from '../../../../utils/dataformatter';
 import { useMedia } from '../../../../utils/domUtils';
 import { moreOptions } from './constants';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
@@ -16,8 +20,8 @@ import GeneralStyled from './styled';
 const FanGeneralList = (props) => {
 
   const [requestType, updateRequestType] = useState('');
-
-  const isMobile = useMedia('(max-width: 831px)');
+  const [requestSelected, setRequest] = useState(null);
+  const isDesktop = useMedia('(min-width: 1280px)');
 
   useEffect(() => {
     if (openStatusList.indexOf(props.data.request_status) >= 0) {
@@ -50,6 +54,10 @@ const FanGeneralList = (props) => {
     )
   }
 
+  const selectRequest = (request) => () => {
+    setRequest(request);
+  }
+
   const renderTime = (time) => {
     const actualTimeObject = moment();
     const currentTimeObject = moment.utc(time).add(parseInt(props.expiration, 0), 'days');
@@ -68,16 +76,30 @@ const FanGeneralList = (props) => {
     );
   };
 
+  const openVideo = () => {
+    props.toggleBookingModal(true, {...props.data, id: props.data.booking_id}, false);
+  }
+
   const onSelectAction = (option) => {
     if (option.value === 'cancel') {
-      props.toggleUpdateBooking(true, props.data.booking_id, false);
+      props.toggleUpdateBooking(true, props.data.booking_id, false, props.data);
     } else if(option.value === 'contact') {
       props.toggleContactSupport(true);
+    } else if(option.value === 'download') {
+      console.log(findCompletedVideo(props.data));
     }
   }
 
   return (
     <Card>
+      {
+        requestSelected &&
+          <OrderDetails
+            isModal
+            closeModal={selectRequest(null)}
+            bookingData={requestSelected}
+          />
+      }
       <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>
         <GeneralStyled.Section imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>     
           {
@@ -92,7 +114,7 @@ const FanGeneralList = (props) => {
                 requestType === 'open' &&
                   <React.Fragment>
                     {
-                      isMobile ?
+                      !isDesktop ?
                         <React.Fragment>
                           <span className='star-name'>{props.data.celebrity}</span>
                         </React.Fragment>
@@ -120,13 +142,37 @@ const FanGeneralList = (props) => {
             {
               requestType === 'open' &&
                 <React.Fragment>
-                  {renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
+                  {renderTime(props.data.created_date)} | <span className='action' onClick={selectRequest(props.data)} />
                 </React.Fragment>
             }
             {
               requestType === 'cancelled' &&
                 <React.Fragment>
-                  Cancelled by you | <span className='action' onClick={props.onPrimaryClick} />
+                  Cancelled by you | <span className='action' onClick={selectRequest(props.data)} />
+                </React.Fragment>
+            }
+            {
+              requestType === 'completed' &&
+                <React.Fragment>
+                  {
+                    !isDesktop ?
+                     <React.Fragment>
+                       <span className='btn-links' onClick={selectRequest(props.data)}>Share</span>
+                        | &nbsp; <span className='btn-links' onClick={openVideo}>View video</span>
+                      </React.Fragment>
+                    : 
+                      <React.Fragment>
+                        <Share
+                          secondary
+                          buttonText='Share'
+                          classes={{
+                            button: 'action-button share',
+                          }}
+                          shareUrl={''}
+                        />                  
+                        <PrimaryButton className="action-button" onClick={openVideo}>View video</PrimaryButton>
+                      </React.Fragment>
+                  }
                 </React.Fragment>
             }
           </GeneralStyled.Details>
@@ -136,7 +182,7 @@ const FanGeneralList = (props) => {
             : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
           } */}
           {
-            (((requestType === 'open' || requestType === 'cancelled') && !isMobile) || requestType === 'completed')  &&
+            (((requestType === 'open' || requestType === 'cancelled') && isDesktop) || requestType === 'completed')  &&
               <MoreActions
                 classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
                 options={moreOptions[requestType]}
@@ -159,11 +205,14 @@ FanGeneralList.propTypes = {
   expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode)),
+  toggleUpdateBooking: (state, requestId, mode, requestData) => dispatch(toggleUpdateBooking(state, requestId, mode, requestData)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
+  toggleBookingModal: (state, bookingData, starMode) =>
+  dispatch(toggleBookingModal(state, bookingData, starMode)),
 })
 
 const FanGeneralListComponent = connect(null, mapDispatchToProps)(FanGeneralList)
