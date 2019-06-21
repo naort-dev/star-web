@@ -15,9 +15,13 @@ const Payment = props => {
         >
           {''}
         </h2>
-        <p className="note">
-          Set up your payment account so we can pay you for your videos and your
-          referrals.
+        <p
+          className="note"
+          data-web="Set up your payment account so we can pay you for your videos and your
+          referrals."
+          data-mob="We want to get you paid as quickly as possible, so make sure you get your Stripe account setup."
+        >
+          {''}
         </p>
         <FlexCenter>
           {props.stripeCard === '' ? (
@@ -26,8 +30,10 @@ const Payment = props => {
               href={props.stripeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              data-web="Create Stripe Account"
+              data-mob="+ Set up Stripe Account"
             >
-              + Set up Stripe Account
+              {''}
             </a>
           ) : (
             <a
