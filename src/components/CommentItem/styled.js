@@ -15,6 +15,7 @@ CommentStyled.ProfileImage = styled.span`
   width: 40px;
   height: 40px;
   display: block;
+  border-radius: 50%;
   background: ${props => (props.profileImage ? `url(${props.profileImage})` : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;

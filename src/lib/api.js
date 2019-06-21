@@ -80,6 +80,7 @@ class Api {
   static dashBoard = 'v2/user/celebrity_dashboard/';
   static notificationViewed = 'v2/user/settings_viewed/';
   static updateUnseenCount = 'v1/user/update_unseen_count';
+  static getRecentActivity = 'v2/user/recent_activity/';
 }
 
 export default Api;

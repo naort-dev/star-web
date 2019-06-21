@@ -16,7 +16,7 @@ import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/Purchase/reducers/occasionList';
-import bookingsList from '../pages/Bookings/reducers/bookingsList';
+import bookings from '../pages/Bookings/reducers';
 import myVideosList from '../pages/myVideos/reducers/myVideosList';
 import groupSupporters from '../pages/starSupporters/reducers';
 import groupListing from '../pages/groupListing/reducers';
@@ -61,7 +61,7 @@ const appReducer = combineReducers({
   followCelebrityStatus,
   occasionList,
   myVideosList,
-  bookingsList,
+  bookings,
   bookingData,
   otherRelation,
   paymentDetails,

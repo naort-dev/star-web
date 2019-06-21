@@ -18,6 +18,9 @@ CommentStyled.CommentIcon = styled.span`
   border-radius: 50%;
   background: ${props => props.showList ? props.theme.flatBlue : '#fff'};
   color: ${props => props.showList ? '#fff' : props.theme.flatBlue};
+  ${props => props.disable && `
+    background: ${props.theme.veryLightPinkTwo};
+  `}
   display: block;
   display: flex;
   align-items: center;

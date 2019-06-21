@@ -31,8 +31,11 @@ export function iosPriceFinder(actualPrice, priceList) {
 }
 
 export function findCompletedVideo(bookingData) {
-  const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
-  return finalVideo;
+  if (bookingData) {
+    const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
+    return finalVideo;
+  }
+  return null
 }
 
 export function parseQueryString(queryString) {
