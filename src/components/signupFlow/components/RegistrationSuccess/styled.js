@@ -46,9 +46,12 @@ justify-content: center;
 @media(min-width: 832px){
   flex-direction: row;
 }
+@media(max-width: 831px){
+  margin-top: 0;
+}
   .success-button {
     @media(max-width: 831px){
-      margin-bottom:20px;
+      margin-bottom:0;
     }
     @media(min-width: 832px){
       &:first-child {
@@ -63,7 +66,7 @@ justify-content: center;
 
 RegSuccessWrapper.Type = styled.div`
   padding-bottom: 0;
-  margin-top: 30px;
+  margin-top: 15px;
   @media(min-width: 832px){
     margin-top: -7px;
   }
@@ -86,7 +89,7 @@ RegSuccessWrapper.Label = styled.div`
   font-family: Gilroy;
   font-size: 34px;
   font-weight: 500;
-  line-height: 0.88;
+  line-height: 38px;
   text-align: center;
   color:  #ff6c58;
   padding-top: 10px;
@@ -105,6 +108,7 @@ RegSuccessWrapper.Description = styled.div`
   }
   @media(max-width: 831px){
     font-size: 17px;
+    line-height: 24px;
     color: #7c7c7c;
     margin: 0 auto;
     max-width: 310px;
@@ -120,8 +124,9 @@ RegSuccessWrapper.HighLight = styled.div`
   width: 80%;
   margin: 0 auto;
   @media(max-width: 831px){
-    padding-top: 22px;
+    padding-top: 10px;
     color: #7c7c7c;
+    width: 100%;
   }
 `;
 

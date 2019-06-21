@@ -195,7 +195,7 @@ UploadContainer.ButtonWrapper = styled.div`
   text-align: center;
   margin-bottom: 20px;
   @media (max-width: 831px) {
-    margin-top: 30px;
+    margin-top: 20px;
   }
 `;
 
@@ -302,7 +302,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     margin-bottom: 10px;
     max-width: 270px;
     span {
-      font-family: Gilroy_Light;
+      font-family: Gilroy-Light;
       font-size: 14px;
       display: block;
     }
@@ -684,7 +684,7 @@ ImageUpload.VideoElement = styled.video`
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
-  background: #000;
+  background: #fff;
   overflow: hidden;
   .videoError {
     min-height: 500px;

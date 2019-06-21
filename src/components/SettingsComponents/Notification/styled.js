@@ -18,9 +18,11 @@ export const Wrap = styled(Wrapper)`
     padding-bottom: 20px;
     p {
       p:not(:last-child) {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
+      }
+      * {
         font-size: 12px;
-        line-height: 2;
+        line-height: 16px;
       }
     }
   }
