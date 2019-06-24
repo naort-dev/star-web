@@ -95,7 +95,9 @@ CommentStyled.OptionWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
-    img {
+    .emoji-icon {
+      width: 24px;
+      height: 30px;
       cursor: pointer;
     }
   }

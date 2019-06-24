@@ -84,10 +84,10 @@ const QuickComment = (props) => {
           <CommentStyled.OptionWrapper>
             <span className="option-title">Post a Quick Response</span>
             <span className="emoji-list">
-              <img alt='heart' src='assets/images/heart.png' />
-              <img alt='happy' src='assets/images/happy.png' />
-              <img alt='trophy' src='assets/images/trophy.png' />
-              <img alt='thumbsup' src='assets/images/thumbsup.png' />
+              <img className='emoji-icon' alt='heart' src='assets/images/heart.png' onClick={addComment('❤️')} />
+              <img className='emoji-icon' alt='happy' src='assets/images/happy.png' onClick={addComment('😃')} />
+              <img className='emoji-icon' alt='trophy' src='assets/images/trophy.png' onClick={addComment('🏆')} />
+              <img className='emoji-icon' alt='thumbsup' src='assets/images/thumbsup.png' onClick={addComment('👍')} />
             </span>
             <CommentStyled.ListWrapper>
               <ul className="comment-list">

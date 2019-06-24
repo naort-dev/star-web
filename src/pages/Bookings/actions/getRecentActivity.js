@@ -29,7 +29,7 @@ export const recentActivityFetchFailed = error => ({
 
 export const fetchRecentActivity = () => (dispatch) => {
   dispatch(recentActivityFetchStart());
-  return fetch.get(`${Api.getRecentActivity}?role=celebrity`).then((resp) => {
+  return fetch.get(`${Api.getRecentActivity}?role=celebrity&limit=20`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(recentActivityFetchEnd());
       dispatch(recentActivityFetchSuccess(resp.data.data.recent_activities));

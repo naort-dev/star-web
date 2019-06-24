@@ -102,7 +102,12 @@ const StarView = (props) => {
           <StarViewStyled.DetailWrapper>
               <span>
                 <BookingStyled.title className='title'>Paid:</BookingStyled.title>
-                <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                {
+                  bookingData.fund_payed_out && bookingData.fund_payed_out.payed_out_amount && bookingData.fund_payed_out.payed_out_date ?
+                    <BookingStyled.Description>${ numberToCommaFormatter(bookingData.fund_payed_out.payed_out_amount)} on {moment.utc(bookingData.fund_payed_out.payed_out_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                  :
+                    <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)}</BookingStyled.Description>
+                }
               </span>
           </StarViewStyled.DetailWrapper>
           <BookingStyled.CommentList>
