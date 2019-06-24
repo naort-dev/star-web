@@ -126,7 +126,7 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     }
   }
   .comment-section {
-    height: 73px;
+    min-height: 73px;
     width: 209px;
     overflow: hidden;
   }
@@ -163,6 +163,12 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
   @media(min-width: 832px) and (max-width: 1280px) {
     .comment-section {
       width: 330px;
+      max-width: 100%;
+    }
+  }
+  @media(min-width: 1280px) {
+    .comment-section {
+      width: 267px;
       max-width: 100%;
     }
   }

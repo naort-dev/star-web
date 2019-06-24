@@ -36,6 +36,7 @@ import changePassword from '../store/shared/reducers/changePassword';
 import socialMediaData from '../store/shared/reducers/socialMediaState';
 import photoUpload from './shared/reducers/photoUpload';
 import modals from './shared/reducers/modals';
+import activitiesList from '../store/shared/reducers/activitiesList';
 import commentsList from '../store/shared/reducers/commentsList';
 import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
@@ -64,6 +65,7 @@ const appReducer = combineReducers({
   bookings,
   bookingData,
   otherRelation,
+  activitiesList,
   paymentDetails,
   videoRecorder,
   videoUploader,
