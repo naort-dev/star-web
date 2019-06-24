@@ -31,3 +31,11 @@ export const updateUnseenCount = () => {
     .then(resp => resp.data)
   )
 }
+
+export const contactSupport = (topic, comments) => {
+  return (fetch.post(Api.contactSupport, {
+    topic,
+    comments,
+  }))
+    .then(resp => resp.data)
+}
