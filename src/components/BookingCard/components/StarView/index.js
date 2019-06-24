@@ -18,6 +18,7 @@ const StarView = (props) => {
   const [videoId, updateVideoId] = useState('');
   const [video, setVideo] = useState('');
   const { bookingData } = props;
+  const { fund_payed_out: fundPayed } = bookingData;
 
   useEffect(() => {
     updateVideoId(findCompletedVideo(bookingData).video_id);
@@ -102,7 +103,12 @@ const StarView = (props) => {
           <StarViewStyled.DetailWrapper>
               <span>
                 <BookingStyled.title className='title'>Paid:</BookingStyled.title>
-                <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                {
+                  fundPayed && fundPayed.payed_out_amount && fundPayed.payed_out_date ?
+                    <BookingStyled.Description>${ numberToCommaFormatter(fundPayed.payed_out_amount)} on {moment.utc(fundPayed.payed_out_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                  :
+                    <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)}</BookingStyled.Description>
+                }
               </span>
           </StarViewStyled.DetailWrapper>
           <BookingStyled.CommentList>

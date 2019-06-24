@@ -28,6 +28,7 @@ CommentStyled.Comment = styled.span`
   border-radius: 10px;
   max-width: 228px;
   position: relative;
+  min-width: 121px;
   ${props => (props.receive ? `
     border-top-left-radius: 0;
     margin-left: 15.2px;
