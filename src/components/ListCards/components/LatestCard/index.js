@@ -124,8 +124,9 @@ const LatestCard = (props) => {
           <CommentItem
             type={props.type}
             user={activity.activity_from_user}
-            time={activity.created_date}
+            time={activity.activity_details && activity.activity_details.created_date}
             commentDetails={activity.activity_details}
+            disableAction
             onReactionClick={onReactionClick}
             classes={{ comment: 'comment-section' }}
             receive

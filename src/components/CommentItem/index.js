@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import MoreActions from '../MoreActions';
 import PrimaryButton from '../PrimaryButton';
 import StarRating from '../StarRating';
 import { getTime } from '../../utils/dataToStringFormatter';
@@ -21,7 +22,7 @@ const CommentItem = (props) => {
             <span className='text-description'>Reaction recorded:</span>
             <span className="text-bold">{moment.utc(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
           </span>
-          <PrimaryButton className='action-button' onClick={onReactionClick}>Play Now</PrimaryButton>
+          <PrimaryButton className='action-button' onClick={onReactionClick}>Play</PrimaryButton>
         </span>
       )
     } else if (type === 'tip') {
@@ -49,15 +50,32 @@ const CommentItem = (props) => {
     )
   }
 
+  const getUserImage = () => {
+    if (props.type === 'comment') {
+      return props.commentDetails.user && props.commentDetails.user.image_url
+    }
+    return props.commentDetails.user_image_url;
+  }
+
   return (
     <CommentStyled>
       <CommentStyled.Container>
-        <CommentStyled.ProfileImage profileImage={props.commentDetails.user_image_url} />
+        <CommentStyled.ProfileImage profileImage={getUserImage()} />
         <CommentStyled.Comment className={props.classes.comment} receive={props.receive}>
           { renderComment() }
           <span className='comment-footer'>
             <span className='time'>{getTime(props.time)}</span>
-            {/* <span className='action'>action</span> */}
+            {
+              !props.disableAction &&
+                <MoreActions
+                  classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                  options={[{
+                    label: 'Hide from profile',
+                    value: 'hide',
+                  }]}
+                  // onSelectOption={onSelectAction}
+                />
+            }
           </span>
         </CommentStyled.Comment>
       </CommentStyled.Container>
@@ -71,6 +89,7 @@ CommentItem.defaultProps = {
   classes: {},
   user: '',
   time: new Date(),
+  disableAction: false,
   onReactionClick: () => {},
   commentDetails: {},
 }
@@ -81,6 +100,7 @@ CommentItem.propTypes = {
   classes: PropTypes.object,
   user: PropTypes.string,
   time: PropTypes.Date,
+  disableAction: PropTypes.bool,
   commentDetails: PropTypes.object,
   onReactionClick: PropTypes.func,
 }

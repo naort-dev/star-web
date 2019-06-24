@@ -91,7 +91,7 @@ export const withScroll = (WrappedComponent) => {
     }
 
     renderLoader = () => {
-      if (!this.props.customLoader) {
+      if (!this.props.customLoader && this.props.loading) {
         return <Loader class="loader" />
       }
       return null
