@@ -44,7 +44,8 @@ export const Layout = styled.section`
     width: 336px;
     margin: 0 auto;
     ${media.smallScreen} {
-      width: 310px;
+      width: 100%;
+      padding: 0 20px;
     }
     @media (min-width: 832px) {
       width: 560px;
