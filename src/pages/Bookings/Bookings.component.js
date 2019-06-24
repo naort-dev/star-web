@@ -41,6 +41,7 @@ class Bookings extends React.Component {
       };
       this.fetchList('open');
     }
+    props.fetchRecentActivity();
     this.state = {
       dropValue,
       filter,
@@ -122,6 +123,7 @@ class Bookings extends React.Component {
             dropValue.id === 'all'&&
               <AllBookings
                 bookingsList={props.bookingsList}
+                recentActivity={props.recentActivity}
                 dropValue={dropValue}
                 config={props.config}
                 handleCategoryChange={this.handleCategoryChange}
@@ -175,6 +177,8 @@ Bookings.propTypes = {
   fetchBookingsList: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
+  fetchRecentActivity: PropTypes.func.isRequired,
+  recentActivity: PropTypes.object.isRequired,
 };
 
 export default Bookings;

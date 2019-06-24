@@ -100,6 +100,7 @@ export default (state = { ...initialState }, action) => {
         bookingModal: {
           ...state.bookingModal,
           active: action.state,
+          data: action.state ? action.bookingData : null,
           requestId: action.bookingData && action.bookingData.id,
           starMode: action.starMode,
         },

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -13,6 +14,17 @@ function arrowGenerator(color) {
       '&::before': {
         borderWidth: '0 1em 1em 1em',
         borderColor: `transparent transparent ${color} transparent`,
+      },
+    },
+    '&[x-placement*="top"] $arrow': {
+      bottom: 0,
+      left: '50%',
+      marginBottom: '-0.95em',
+      width: '3em',
+      height: '1em',
+      '&::before': {
+        borderWidth: '1em 1em 0 1em',
+        borderColor: `${color} transparent transparent transparent`,
       },
     },
   };
@@ -50,8 +62,13 @@ const ToolTip = (props) => {
 
   const arrowRef = useRef(null);
 
+  if (props.title === '') {
+    return props.children;
+  }
+
   return (
     <Tooltip
+      {...props}
       title={
         <React.Fragment>
           { props.title }
@@ -73,6 +90,17 @@ const ToolTip = (props) => {
       { props.children }
     </Tooltip>
   );
+}
+
+ToolTip.defaultProps = {
+  classes: {},
+  title: '',
+}
+
+ToolTip.propTypes = {
+  children: PropTypes.object.isRequired,
+  classes: PropTypes.object,
+  title: PropTypes.string,
 }
 
 export default withStyles(styles)(ToolTip);

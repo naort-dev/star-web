@@ -55,10 +55,15 @@ const AllBookings = props => {
       <BookingsStyled.SectionHeader>
         <SectionHead className="latest-activity">Latest Activity</SectionHead>
       </BookingsStyled.SectionHeader>
-      <LatestCard type="comment" starMode />
-      <LatestCard type="reaction" starMode />
+      {props.recentActivity.loading && <Loader />}
+      {
+        props.recentActivity.activityList.map((activity) => (
+          <LatestCard activity={activity} type={activity.activity_type} starMode />
+        ))
+      }
+      {/* <LatestCard type="reaction" starMode />
       <LatestCard type="tip" starMode />
-      <LatestCard type="rating" starMode />
+      <LatestCard type="rating" starMode /> */}
     </React.Fragment>
   );
 };
@@ -70,6 +75,7 @@ AllBookings.propTypes = {
   onOpenClick: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   setRequestType: PropTypes.func.isRequired,
+  recentActivity: PropTypes.object.isRequired,
 };
 
 export default AllBookings;

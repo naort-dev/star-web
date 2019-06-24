@@ -49,9 +49,11 @@ export const Content = styled.section`
     color: #ff6c58;
     padding-bottom: 3px;
     padding-top: 15px;
-    font-size: 0;
+    font-size: 20px;
+    padding-top: 0;
     ${media.webView} {
       padding-top: 33px;
+      padding-bottom: 10px;
     }
   }
   .otpTitle {

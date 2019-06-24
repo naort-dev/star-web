@@ -48,6 +48,7 @@ SidebarStyled.LinkItem = styled.li`
       display: flex;
       min-width: 37px;
       height: 30px;
+      line-height: 30px;
       padding: 0 5px;
       justify-content: center;
       align-items: center;

@@ -32,6 +32,18 @@ export default class VideoRender extends React.Component {
     };
     this.profileImage.src = this.props.profile;
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.cover !== this.props.cover) {
+      this.coverImage.onload = () => {
+        if (this.mounted) {
+          this.setState({ coverImage: this.coverImage.src });
+        }
+      };
+      this.coverImage.src = this.props.cover;
+    }
+  }
+
   componentWillUnmount() {
     this.mounted = false;
   }
@@ -50,6 +62,7 @@ export default class VideoRender extends React.Component {
 
   render() {
     const { props } = this;
+
     return (
       <VideoRenderDiv variableWidth={props.variableWidth} variableHeight={props.variableHeight} onClick={props.enableVideoPopup}>
         <VideoRenderDiv.Container

@@ -15,6 +15,7 @@ CommentStyled.ProfileImage = styled.span`
   width: 40px;
   height: 40px;
   display: block;
+  border-radius: 50%;
   background: ${props => (props.profileImage ? `url(${props.profileImage})` : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -23,9 +24,10 @@ CommentStyled.ProfileImage = styled.span`
 CommentStyled.Comment = styled.span`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
-  padding: 10px 8px 8px 15px;
+  padding: 10px 8px 18px 15px;
   border-radius: 10px;
   max-width: 228px;
+  position: relative;
   ${props => (props.receive ? `
     border-top-left-radius: 0;
     margin-left: 15.2px;
@@ -87,6 +89,10 @@ CommentStyled.Comment = styled.span`
     margin-top: 6px;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    bottom: 6px;
+    left: 15px;
+    right: 8px;
     .time {
       font-family: Gilroy-Regular;
       font-size: 10px;
