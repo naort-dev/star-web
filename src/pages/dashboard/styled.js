@@ -27,13 +27,14 @@ export const Layout = styled.section`
     }
   }
   .head1 {
-    padding-top: 9px;
+    padding-top: 4px;
     padding-bottom: 32px;
     color: #888888;
+    font-weight: normal;
     ${media.webView} {
       text-align: left;
       padding-top: 9px;
-      padding-bottom: 32px;
+      padding-bottom: 25px;
     }
     @media (max-width: 831px) {
       padding-bottom: 22px;
@@ -47,6 +48,7 @@ export const Layout = styled.section`
     }
     @media (min-width: 832px) {
       width: 560px;
+      flex: 1 1 auto;
     }
     @media (min-width: 1280px) {
       width: 567px;

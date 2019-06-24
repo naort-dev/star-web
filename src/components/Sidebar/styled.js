@@ -21,7 +21,7 @@ SidebarStyled.AvatarImage = styled.div`
 `;
 
 SidebarStyled.LinkList = styled.ul`
-  padding: 28px 40px;
+  padding: 28px 25px;
   @media(min-width: 832px) {
     padding: 32px 0;
   }
@@ -32,7 +32,11 @@ SidebarStyled.LinkItem = styled.li`
   color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
   font-size: 18px;
   cursor: pointer;
-  border-bottom: ${props => `1px solid ${props.theme.white}`};
+  @media(max-width: 831px) {
+    &:not(:last-child) {
+      border-bottom: ${props => `1px solid ${props.theme.borderGrey}`};
+    }
+  }
   a, .log-out {
     padding: 10px 0 12.35px;
     display: flex;
@@ -46,19 +50,26 @@ SidebarStyled.LinkItem = styled.li`
     }
     .notification-count {
       display: flex;
-      min-width: 37px;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 5px;
+      line-height: 14px;
+      padding: 8px 10px 5px;
       justify-content: center;
       align-items: center;
     }
     @media(min-width: 832px) {
       justify-content: flex-start;
       align-items: flex-end;
+      line-height: 27px;
       .notification-count {
-        margin-left: 5px;
+        margin-left: 8px;
       }
+    }
+    @media(max-width: 831px) {
+      color: #555;
+    }
+  }
+  & > span {
+    @media(max-width: 831px) {
+      color: #555;
     }
   }
 `;

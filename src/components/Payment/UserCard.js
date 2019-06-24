@@ -72,7 +72,7 @@ const UserCard = props => {
           <FlexBoxSB
             className={isEmpty(props.celebDetails.charity) && 'center'}
           >
-            {props.celebDetails.charity !== '' && (
+            {!isEmpty(props.celebDetails.charity) && (
               <span className="colDir">
                 <span className="labelHead">All proceeds go to:</span>
                 <span className="cardType">{props.celebDetails.charity}</span>
@@ -101,38 +101,38 @@ const UserCard = props => {
           />
         </Elements>
       ) : (
-        <React.Fragment>
-          <span className="selectCard centerAlign">Select Card</span>
-          {Object.keys(props.CardList).length > 0 && (
-            <CardList
-              Cards={props.CardList}
-              getCardSelected={getCardSelected}
-              deleteCard={props.modifySourceList}
-              updateCustomerId={props.updateCustomerId}
-              loaderAction={props.loaderAction}
-              selectedCardIndex={selectedCardIndex}
-            />
-          )}
-          <span
-            className="newCard centerAlign"
-            onClick={newPay(true)}
-            role="presentation"
-          >
-            Pay Using New Card
+          <React.Fragment>
+            <span className="selectCard centerAlign">Select Card</span>
+            {Object.keys(props.CardList).length > 0 && (
+              <CardList
+                Cards={props.CardList}
+                getCardSelected={getCardSelected}
+                deleteCard={props.modifySourceList}
+                updateCustomerId={props.updateCustomerId}
+                loaderAction={props.loaderAction}
+                selectedCardIndex={selectedCardIndex}
+              />
+            )}
+            <span
+              className="newCard centerAlign"
+              onClick={newPay(true)}
+              role="presentation"
+            >
+              Pay Using New Card
           </span>
 
-          <FlexCenter>
-            <Button
-              className="button"
-              onClick={payWithExistingCrd}
-              disabled={selectedCard === null}
-              isDisabled={selectedCard === null}
-            >
-              Pay ${props.celebDetails.rate}
-            </Button>
-          </FlexCenter>
-        </React.Fragment>
-      )}
+            <FlexCenter>
+              <Button
+                className="button"
+                onClick={payWithExistingCrd}
+                disabled={selectedCard === null}
+                isDisabled={selectedCard === null}
+              >
+                Pay ${props.celebDetails.rate}
+              </Button>
+            </FlexCenter>
+          </React.Fragment>
+        )}
       <FlexCenter>
         <img
           alt="stripe logo"
