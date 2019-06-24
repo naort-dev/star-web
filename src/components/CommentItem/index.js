@@ -66,11 +66,11 @@ const CommentItem = (props) => {
           <span className='comment-footer'>
             <span className='time'>{getTime(props.time)}</span>
             {
-              !props.disableAction &&
+              !props.disableAction && (props.type === 'reactions' || props.type === 'comment') &&
                 <MoreActions
                   classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
                   options={[{
-                    label: 'Hide from profile',
+                    label: 'Hide from public',
                     value: 'hide',
                   }]}
                   // onSelectOption={onSelectAction}

@@ -16,7 +16,6 @@ import StarViewStyled from './styled';
 const StarView = (props) => {
 
   const [videoId, updateVideoId] = useState('');
-  const commentRef = useRef(null);
   const [video, setVideo] = useState('');
   const { bookingData } = props;
 
@@ -106,10 +105,14 @@ const StarView = (props) => {
                 <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
               </span>
           </StarViewStyled.DetailWrapper>
-          <BookingStyled.CommentList innerRef={commentRef}>
-            <Scrollbars autoHide>
+          <BookingStyled.CommentList>
+            <Scrollbars
+              autoHide
+              renderView={scrollProps => <div {...scrollProps} id="comments-scroll-target" />}
+            >
               <CommentListing
-                scrollTarget={commentRef.current}
+                notCenter
+                scrollTarget='comments-scroll-target'
                 dataList={props.activitiesList.data}
                 noDataText='No records found'
                 loading={props.activitiesList.loading}

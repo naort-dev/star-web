@@ -11,7 +11,7 @@ export const withScroll = (WrappedComponent) => {
     height: 100%;
     min-height: 300px;
     position: relative;
-    ${props => props.loading && !props.customLoader && (`
+    ${props => props.loading && !props.notCenter && !props.customLoader && (`
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,7 +117,7 @@ export const withScroll = (WrappedComponent) => {
 
     render() {
       return (
-        <ListStyled loading={this.props.loading} customLoader={this.props.customLoader}>
+        <ListStyled loading={this.props.loading} notCenter={this.props.notCenter} customLoader={this.props.customLoader}>
           {
             !this.props.dataList.length && this.props.loading && !this.props.customLoader ?
               this.renderLoader()
