@@ -11,6 +11,7 @@ export const Layout = styled.section`
     font-family: Gilroy-Semibold;
     &:before {
       font-size: 14px;
+      line-height: 18px;
       color: #9b9b9b;
       display: flex;
       padding-bottom: 5px;
@@ -121,7 +122,7 @@ export const SummaryItem = styled.li`
 `;
 export const Label = styled.span`
   padding-left: 16px;
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 14px;
   color: #484848;
   ${media.smallScreen} {

@@ -10,6 +10,9 @@ export const Layout = styled.section`
   ${media.webView} {
     max-width: 400px;
   }
+  .button.payment-btn {
+    margin-top: 25px;
+  }
 `;
 
 export const SubHeader = styled.section`

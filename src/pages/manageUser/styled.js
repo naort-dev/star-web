@@ -43,7 +43,7 @@ ManageStyled.MobileHeading = ManageStyled.Visiblity.extend`
   font-family: Gilroy-Light;
   font-size: 30px;
   color: ${props => props.theme.brownGrey};
-  padding: 27px 0;
+  padding: 27px 0 20px;
   margin: 0 auto;
   @media(min-width: 832px) {
     display: none;
