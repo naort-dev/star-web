@@ -92,8 +92,8 @@ export const Layout = styled.section`
     }
   }
   .button-margin {
-    padding-top: 18px;
-    padding-bottom: 40px;
+    padding-top: 10px;
+    padding-bottom: 20px;
     ${media.webView} {
       display: none;
     }
@@ -109,7 +109,8 @@ export const Layout = styled.section`
     padding-top: 28px;
     padding-bottom: 18px;
     @media (max-width: 831px) {
-      padding-top: 17px;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
   }
   .web-icons {

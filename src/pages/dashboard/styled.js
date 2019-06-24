@@ -16,7 +16,7 @@ export const Layout = styled.section`
     padding-right: 0;
   }
   @media (max-width: 831px) {
-    padding-top: 30px;
+    padding-top: 20px;
   }
   .top-heading {
     padding-top: 9px;
@@ -37,14 +37,15 @@ export const Layout = styled.section`
       padding-bottom: 25px;
     }
     @media (max-width: 831px) {
-      padding-bottom: 22px;
+      padding-bottom: 17px;
     }
   }
   .middle-section {
     width: 336px;
     margin: 0 auto;
     ${media.smallScreen} {
-      width: 310px;
+      width: 100%;
+      padding: 0 20px;
     }
     @media (min-width: 832px) {
       width: 560px;
