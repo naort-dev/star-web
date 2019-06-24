@@ -3,9 +3,6 @@ import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
-  &.customStar-layout {
-    margin-bottom: 10px;
-  }
   .headLbl {
     font-size: 26px;
     font-family: Gilroy-Semibold;

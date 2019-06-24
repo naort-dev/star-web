@@ -65,6 +65,7 @@ SidebarStyled.LinkItem = styled.li`
     }
     @media(max-width: 831px) {
       color: #555;
+      line-height: 22px;
     }
   }
   & > span {
