@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { updateUserDetails } from 'store/shared/actions/saveSettings';
 import { changePassword } from 'store/shared/actions/changePassword';
 import { updateNotification } from 'store/shared/actions/updateNotification';
+import { updateNotificationViewed } from 'services/userManagement';
 import Settings from './Settings.Component';
 
 const mapStates = state => ({
@@ -9,6 +10,7 @@ const mapStates = state => ({
   celbDetails: state.userDetails.settings_celebrityDetails,
   stripeCard: state.stripeRegistration.cardDetails,
   stripeUrl: state.stripeRegistration.dashboardURL,
+  dashboardURL: state.stripeRegistration.dashboardURL,
 });
 function mapDispatch(dispatch) {
   return {
@@ -20,6 +22,9 @@ function mapDispatch(dispatch) {
     },
     updateNotification: obj => {
       dispatch(updateNotification(obj));
+    },
+    updateNotificationViewed: () => {
+      dispatch(updateNotificationViewed());
     },
   };
 }

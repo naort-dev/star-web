@@ -42,7 +42,7 @@ export const Layout = styled.section`
   .middle-section {
     width: 336px;
     margin: 0 auto;
-    ${media.smallScreen}{
+    ${media.smallScreen} {
       width: 310px;
     }
     @media (min-width: 832px) {
@@ -57,6 +57,17 @@ export const Layout = styled.section`
 export const Wrapper = styled.section`
   ${media.webView} {
     display: flex;
+  }
+  .middle-section {
+    position: relative;
+    .custom-loader {
+      position: absolute;
+      height: auto;
+      top: 12%;
+      ${media.webView} {
+        top: 15%;
+      }
+    }
   }
 `;
 

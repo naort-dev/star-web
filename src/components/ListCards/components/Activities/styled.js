@@ -16,6 +16,17 @@ export const Layout = styled.section`
     .activityCard-inner {
       width: 100%;
     }
+    .custom-flex {
+      flex-direction: column;
+      align-items: flex-start;
+      ${media.webView} {
+        flex-direction: row;
+      }
+    }
+    .custom-button {
+      min-width: 200px;
+      margin: 10px auto;
+    }
     ${media.smallScreen} {
       padding: 10px;
     }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  width: 100%
+  width: 100%;
   &.customStar-layout {
     margin-bottom: 10px;
   }
@@ -15,14 +15,14 @@ export const Layout = styled.section`
       display: flex;
       padding-bottom: 5px;
       font-family: Gilroy-Medium;
-      @media(max-width: 831px) {
+      @media (max-width: 831px) {
         padding-bottom: 3px;
       }
     }
-    @media(min-width: 832px) {
+    @media (min-width: 832px) {
       font-size: 33px;
     }
-    @media(min-width: 1280px) {
+    @media (min-width: 1280px) {
       font-size: 40px;
     }
   }
@@ -49,7 +49,7 @@ export const Layout = styled.section`
     ${media.webView} {
       padding: 29px 38px 23px;
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding: 21px 23px 13px;
     }
   }
@@ -63,7 +63,7 @@ export const Layout = styled.section`
     ${media.webView} {
       display: none;
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding-top: 7px;
       padding-bottom: 16px;
     }
@@ -71,12 +71,11 @@ export const Layout = styled.section`
   .rating-wrap {
     align-items: flex-start;
     .rating-label {
-
     }
     .rating {
       margin-top: 1px;
       .start-rate {
-        @media(max-width: 831px) {
+        @media (max-width: 831px) {
           font-size: 17px !important;
         }
       }
@@ -99,20 +98,25 @@ export const SummaryItem = styled.li`
   }
   .rating {
     width: 50%;
-    padding-left: 40px;
-    ${media.smallScreen} {
-      font-size: 12px;
-    }
+    padding-left: 44px;
     ${media.webView} {
       width: 65%;
       padding-left: 0;
     }
   }
-  .start-rate {
-    padding: 0;
-  }
   .commenticon {
     transform: rotateY(180deg);
+  }
+  .rating-star {
+    color: #ff6c58;
+    padding-right: 4px;
+    font-size: 16px;
+    ${media.webView} {
+      font-size: 20px;
+    }
+    ${media.smallScreen} {
+      font-size: 14px;
+    }
   }
 `;
 export const Label = styled.span`
@@ -145,7 +149,7 @@ export const Summary = styled.ul`
   }
   li {
     padding-bottom: 9px;
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       padding-bottom: 6px;
     }
   }

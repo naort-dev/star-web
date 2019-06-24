@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SectionHead, EmptyText } from 'styles/CommonStyled';
 import { options } from '../../constants';
-import { FanGeneralList, LatestCard } from '../../../../components/ListCards';
+import { FanGeneralList } from '../../../../components/ListCards';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import BookingsStyled from '../../styled';
@@ -40,10 +40,9 @@ const AllBookings = props => {
       <BookingsStyled.SectionHeader>
         <SectionHead>Recent Activity</SectionHead>
       </BookingsStyled.SectionHeader>
-      <LatestCard type="comment" />
-      <LatestCard type="reaction" />
-      <LatestCard type="tip" />
-      <LatestCard type="rating" />
+      {/* <LatestCard type="comment" /> */}
+      {/* <FanGeneralList key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} /> */}
+      {/* <LatestCard type="rating" /> */}
     </React.Fragment>
   );
 };

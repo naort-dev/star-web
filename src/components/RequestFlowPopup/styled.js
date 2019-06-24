@@ -48,7 +48,7 @@ PopupStyled.Container = styled.div`
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
-  padding: ${props => (props.modalView ? '0' : '40px 30px')};
+  padding: ${props => (props.noPadding ? '0' : '40px 30px')};
   width: 100%;
   background-color: #fff;
   overflow: auto;

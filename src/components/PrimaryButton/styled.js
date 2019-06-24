@@ -21,6 +21,7 @@ const ButtonStyled = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 30px;
+  line-height: 24px;
   color: ${props => props.secondary ? props.theme.flatBlue : '#fff'};
   max-width: 100%;
   border: ${props => `1px solid ${props.theme.flatBlue}`};

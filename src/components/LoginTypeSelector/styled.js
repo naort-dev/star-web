@@ -173,7 +173,7 @@ TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
   }
 `;
 TypeSelectorWrapper.OptionWrapper = styled.div`
-  padding-bottom: 28px;
+  padding-bottom: 15px;
   @media(min-width:832px){
     padding: 10px 29px;
   }
@@ -185,7 +185,7 @@ TypeSelectorWrapper.HeaderText = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #ff6c58;
-  padding: 41px 0 35px;
+  padding: 25px 0 12px;
   @media(min-width:832px){
     font-size: 24px;
     padding: 45px 0 37px;

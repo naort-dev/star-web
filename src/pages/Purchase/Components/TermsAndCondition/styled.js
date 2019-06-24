@@ -21,11 +21,13 @@ export const Layout = styled.section`
       padding: 0 20px 20px;
     }
     p {
-
-      p:not(:last-child) {
-        margin-bottom: 8px;
+      p {
         font-size: 12px;
-        line-height: 2;
+        line-height: 16px;
+
+        &:not(:last-child) {
+          margin-bottom: 5px;
+        }
       }
     }
   }
@@ -33,9 +35,6 @@ export const Layout = styled.section`
     height: 60px;
     margin-bottom: 25px;
     align-self: flex-end;
-    ${media.webView} {
-      margin-left: 37px;
-    }
   }
   &.content-wrapper {
     display: flex;

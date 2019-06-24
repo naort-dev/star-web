@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
 
 const SidebarStyled = styled.div`
   width: 100%;
@@ -6,23 +7,9 @@ const SidebarStyled = styled.div`
   flex-direction: column;
 `;
 
-SidebarStyled.AvatarImage = styled.div`
-  border: none;
-  border-radius: 50%;
-  display: block;
-  width: 170px;
-  margin: 0 auto;
-  height: 170px;
-  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/fan-profile-pic.svg)')} no-repeat;
-  background-position: center center;
-  background-size: cover;
-  position: relative;
-`;
-
 SidebarStyled.LinkList = styled.ul`
   padding: 28px 40px;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     padding: 32px 0;
   }
 `;
@@ -31,35 +18,35 @@ SidebarStyled.LinkItem = styled.li`
   font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
   color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
   font-size: 16px;
-  line-height: 1.69;
-  cursor: pointer;
-  border-bottom: ${props => `1px solid ${props.theme.white}`};
-  a, .log-out {
-    padding: 10px 0 12.35px;
-    display: flex;
+  // line-height: 1.69;
+  border-bottom: 1px solid #e2e2e2;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  ${media.webView} {
+    border-bottom: none;
+    padding-left: 0;
   }
+  cursor: pointer;
   a {
     justify-content: space-between;
     align-items: center;
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       font-family: Gilroy-Medium;
       color: ${props => props.theme.flatBlue};
     }
-    .notification-count {
-      display: flex;
-      min-width: 37px;
-      height: 30px;
-      padding: 0 5px;
-      justify-content: center;
-      align-items: center;
-    }
-    @media(min-width: 832px) {
-      justify-content: flex-start;
-      align-items: flex-end;
-      .notification-count {
-        margin-left: 9px;
-      }
-    }
+  }
+  .link-item {
+    display: inline-block;
+    padding-left: 18px;
+  }
+  .tick-circle {
+    font-size: 24px;
+    color: ${props => (props.completed ? '#ff6c58' : '#fff')};
   }
 `;
 

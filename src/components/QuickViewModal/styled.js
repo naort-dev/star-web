@@ -13,6 +13,16 @@ QuickViewStyled.VideoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.image-only {
+    align-items: flex-start;
+
+    span {
+      margin-top: 25px;
+      width: 280px;
+      height: 280px;
+    }
+  }
 `;
 
 QuickViewStyled.Content = styled.div`
@@ -27,6 +37,13 @@ QuickViewStyled.Categories = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  @media (min-width: 832px) {
+    width: 80%;
+    overflow: visible;
+    white-space: normal !important;
+    line-height: 20px;
+  }
 `;
 
 QuickViewStyled.StarName = styled.span`
@@ -115,6 +132,7 @@ QuickViewStyled.ActionBar = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
+  cursor: pointer;
 `;
 
 QuickViewStyled.ActionContent = styled.div`

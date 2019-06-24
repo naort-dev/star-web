@@ -27,8 +27,8 @@ export const Layout = styled.section`
     }
   }
   .successScroll {
-    margin-top: 87px;
-    height: calc(100% - 87px) !important;
+    margin-top: 44px;
+    height: calc(100% - 44px) !important;
     display: inline-block;
     ${media.webView} {
       margin-top: 39px;

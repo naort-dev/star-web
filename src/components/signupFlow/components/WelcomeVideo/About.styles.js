@@ -17,6 +17,9 @@ export const Layout = styled.section`
     @media (max-width: 831px) {
       padding-top: 15px;
     }
+    @media (min-width: 832px) {
+      padding-bottom: 0;
+    }
   }
   .note {
     font-family: Gilroy;
@@ -38,16 +41,18 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
+  .button-wrapper {
+    padding-bottom: 12px;
+  }
   .skip {
-    display: inline-block;
+    display: block;
     width: 100%;
     text-align: center;
-    padding-top: 12px;
     color: #615195;
     cursor: pointer;
     font-family: Gilroy;
     font-size: 14px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
 `;
 
@@ -74,7 +79,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;

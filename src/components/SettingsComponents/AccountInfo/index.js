@@ -76,7 +76,14 @@ const AccountInfo = props => {
     validateForm();
   }, [errorObject, formData]);
 
-  const getTextInput = ({ placeholder, state, value, error, errorState }) => {
+  const getTextInput = ({
+    placeholder,
+    state,
+    value,
+    error,
+    errorState,
+    nativeProps,
+  }) => {
     return (
       <section className="inputWrapper">
         <TextInput
@@ -89,7 +96,7 @@ const AccountInfo = props => {
             classes: { error: 'error-field', input: 'input-field' },
           }}
           InputLabelProps={{ classes: { root: 'float-label' } }}
-          nativeProps={{}}
+          nativeProps={nativeProps}
         />
       </section>
     );
@@ -97,7 +104,14 @@ const AccountInfo = props => {
   return (
     <Container>
       <Wrapper>
-        <h2 className="sub-head">Account Information</h2>
+        <h2
+          className="sub-head"
+          data-web={props.webHead}
+          data-mob={props.mobHead}
+        >
+          {' '}
+          {''}
+        </h2>
         <FormContainer>
           {errorObject.firstNameErr || errorObject.lastNameErr ? (
             <InputLabel
@@ -115,6 +129,7 @@ const AccountInfo = props => {
               value: formData.firstName,
               error: errorObject.firstNameErr,
               errorState: 'firstNameErr',
+              nativeProps: {},
             })}
             {getTextInput({
               placeholder: 'Last Name',
@@ -122,6 +137,7 @@ const AccountInfo = props => {
               value: formData.lastName,
               error: errorObject.lastNameErr,
               errorState: 'lastNameErr',
+              nativeProps: {},
             })}
           </section>
           <InputLabel error={errorObject.emailErr}>Email address</InputLabel>
@@ -131,6 +147,7 @@ const AccountInfo = props => {
             value: formData.email,
             error: errorObject.emailErr,
             errorState: 'emailErr',
+            nativeProps: { readOnly: true },
           })}
         </FormContainer>
         <FlexCenter>
@@ -151,6 +168,13 @@ const AccountInfo = props => {
 AccountInfo.propTypes = {
   userDetails: PropTypes.object.isRequired,
   handleAccountSave: PropTypes.func.isRequired,
+  webHead: PropTypes.string,
+  mobHead: PropTypes.string,
+};
+
+AccountInfo.defaultProps = {
+  webHead: '',
+  mobHead: '',
 };
 
 export default AccountInfo;

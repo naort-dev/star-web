@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,12 +8,18 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import QuickComment from '../../../QuickComment';
+import { requestTypes } from '../../../../constants/requestTypes';
+import { findCompletedVideo } from '../../../../utils/dataformatter'
+import { toggleBookingModal } from '../../../../store/shared/actions/toggleModals';
 import { MediumText, HeadingBold, FlexColumn, LightHeading } from '../../styled';
 import CommentItem from '../../../CommentItem';
 import StarStyled from './styled';
 
 const LatestCard = (props) => {
 
+  const { activity } = props;
+  const { request = {} } = activity;
+  
   const renderHeading = () => {
     switch(props.type) {
       case 'comment':
@@ -64,28 +71,69 @@ const LatestCard = (props) => {
           </React.Fragment>
         );
       default : return null
+    }
   }
+
+  const renderDescription = () => {
+    if (requestTypes[request.request_type] === 'Q&A') {
+      return (
+        <MediumText className='card-description'>
+          <HeadingBold>Question</HeadingBold> requested
+          from <HeadingBold>{request.fan}</HeadingBold>
+        </MediumText>
+      )
+    } else if (requestTypes[request.request_type] === 'Shout-out') {
+      return (
+        <MediumText className='card-description'>
+          <HeadingBold>{request.occasion}</HeadingBold> shoutout
+           for <HeadingBold>{request.fan}</HeadingBold>
+        </MediumText>
+      )
+    }
+    return (
+      <MediumText>
+        <HeadingBold>{request.occasion}</HeadingBold> announcement <br />
+        for <HeadingBold>{request.fan}</HeadingBold>
+      </MediumText>
+    )
   }
+
+  const onReactionClick = (reactionUrl, reactionThumbnail, reactionType) => {
+    props.toggleBookingModal(true, {...request, id:request.id, reactionUrl, reactionThumbnail, reactionType}, true);
+  }
+  
+  const onViewDetails = () => {
+    props.toggleBookingModal(true, {...request, id:request.id}, true);
+  }
+
+  const videoId = useMemo(() => findCompletedVideo(request).video_id, [activity.id])
 
   return (
     <Card>
       <StarStyled className='star-container'>
         <StarStyled.LeftWrapper>
-          <StarStyled.UserImage imageUrl='' starMode={props.starMode} />
+          <StarStyled.UserImage imageUrl={request.fan_photo && request.fan_photo.thumbnail_url} starMode={props.starMode} />
           <FlexColumn className='description-wrapper'>
             <LightHeading className='heading'>{renderHeading()}</LightHeading>
-            <MediumText className='card-description'>
-              <HeadingBold>Birthday</HeadingBold> message <br />
-              for <HeadingBold>Sarah</HeadingBold>
-            </MediumText>
+            {
+              renderDescription()
+            }
           </FlexColumn>
         </StarStyled.LeftWrapper>
         <StarStyled.CommentContainer>
-          <CommentItem classes={{ comment: 'comment-section' }} receive/>
+          <CommentItem
+            type={props.type}
+            user={activity.activity_from_user}
+            time={activity.created_date}
+            commentDetails={activity.activity_details}
+            onReactionClick={onReactionClick}
+            classes={{ comment: 'comment-section' }}
+            receive
+          />
           <span className='divider'>
-            <QuickComment classes={{root: 'quick-comment-root'}} />
+            <QuickComment fanName={activity.activity_from_user} once videoId={videoId} classes={{root: 'quick-comment-root'}} />
           </span>
-          <span className='action-text'>
+          <span className='action-text' onClick={onViewDetails}>
             View details
           </span>
         </StarStyled.CommentContainer>
@@ -94,13 +142,23 @@ const LatestCard = (props) => {
   )
 }
 
-LatestCard.propTypes = {
+LatestCard.defaultProps = {
   starMode: false,
+  activity: {},
 }
 
 LatestCard.propTypes = {
   type: PropTypes.string.isRequired,
   starMode: PropTypes.bool,
+  activity: PropTypes.object,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
-export { LatestCard };
+const mapDispatchToProps = dispatch => ({
+  toggleBookingModal: (state, bookingData, starMode) =>
+  dispatch(toggleBookingModal(state, bookingData, starMode)),
+})
+
+const LatestCardComponent = connect(null, mapDispatchToProps)(LatestCard)
+
+export { LatestCardComponent as LatestCard };
