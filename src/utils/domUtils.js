@@ -20,7 +20,13 @@ export const CheckInViewport = (node) => {
 };
 
 export const useMedia = (mediaQuery) => {
-  const [match, setMatch] = useState(false);
+
+  const setInitialValue = () => {
+    const mediaList = window.matchMedia(mediaQuery);
+    return mediaList.matches;
+  }
+
+  const [match, setMatch] = useState(setInitialValue());
   const setMatchValue = (matchEvent) => {
     setMatch(matchEvent.matches);
   }

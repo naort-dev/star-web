@@ -5,6 +5,22 @@ export const Layout = styled.section`
   height: 100%;
   padding-left: 40px;
   padding-right: 31px;
+  .top-heading {
+    padding-top: 9px;
+    margin-bottom: 28px;
+  }
+`;
+
+Layout.Header = styled.span`
+  font-family: Gilroy-Light;
+  font-size: 30px;
+  color: ${props => props.theme.brownGrey};
+  text-align: center;
+  display: block;
+  margin-bottom: 15px;
+  @media(min-width: 832px) {
+    text-align: left;
+  }
 `;
 export const Content = styled.div`
  
@@ -16,7 +32,7 @@ Content.Description = styled.div`
   font-family: Gilroy-Bold;
   font-size: 16px;
   line-height: 1.44;
-  text-align: center;
+  text-align: left;
   color: #888888;
   @media(min-width: 832px) {
     width: 190px;
