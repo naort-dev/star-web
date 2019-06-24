@@ -10,4 +10,7 @@
   width: 14px;
   height: 28px;
   top: 110px;
+  @media(max-width: 831px) {
+    top:101px;
+  }
 }
