@@ -8,9 +8,16 @@ import HeaderSection from './styled';
 import CategorySection from './components/CategorySection';
 import SecondaryButton from '../SecondaryButton';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
-import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
+import {
+  fetchSuggestionList,
+  resetSearchParam,
+} from '../../store/shared/actions/getSuggestionsList';
 import { getStarName } from '../../utils/dataToStringFormatter';
-import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
+import {
+  toggleLogin,
+  toggleSignup,
+  toggleRefer,
+} from '../../store/shared/actions/toggleModals';
 import Search from '../Search';
 
 class Header extends React.Component {
@@ -28,39 +35,39 @@ class Header extends React.Component {
     this.mounted = true;
   }
 
-  componentWillMount() { 
-    if (this.props.isLoggedIn) {
-      const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
-      this.setProfileImage(profilePhoto);
-    }
-  }
+  // componentWillMount() {
+  //   if (this.props.isLoggedIn) {
+  //     const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
+  //     this.setProfileImage(profilePhoto);
+  //   }
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatarPhoto) {
-      const profilePhoto = nextProps.userValue.settings_userDetails.avatarPhoto;
-      this.setProfileImage(profilePhoto);
-      this.setState({ profilePhoto: null });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatarPhoto) {
+  //     const profilePhoto = nextProps.userValue.settings_userDetails.avatarPhoto;
+  //     this.setProfileImage(profilePhoto);
+  //     this.setState({ profilePhoto: null });
+  //   }
+  // }
 
   componentWillUnmount() {
     this.mounted = false;
   }
 
-  setProfileImage = (photo) => {
+  setProfileImage = photo => {
     this.profileImage.src = photo;
     this.profileImage.onload = () => {
       if (this.mounted) {
         this.setState({ profilePhoto: this.profileImage.src });
       }
     };
-  }
+  };
 
   handleProfileClick = () => {
     if (this.props.location.pathname !== '/manage') {
       this.props.history.push('/manage');
     }
-  }
+  };
 
   handleBackClick = () => {
     const { showCategories } = this.state;
@@ -69,65 +76,81 @@ class Header extends React.Component {
     } else if (this.props.onBackClick) {
       this.props.onBackClick();
     }
-  }
+  };
 
   toggleCategories = () => {
     const { showCategories } = this.state;
     this.setState({ showCategories: !showCategories });
-  }
+  };
 
   render() {
     const { props } = this;
     const userDetails = props.userValue.settings_userDetails;
     const { showCategories } = this.state;
     return (
-      <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed} desktopSearch={this.props.desktopSearch}>
-        <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
+      <HeaderSection
+        innerRef={props.forwardRef}
+        notFixed={props.notFixed}
+        desktopSearch={this.props.desktopSearch}
+      >
+        <HeaderSection.HeaderDiv
+          notFixed={props.notFixed}
+          shouldAlign={props.disableLogo && props.disableSearch}
+        >
           <HeaderSection.MobileIconWrapper>
-            {
-              (showCategories || this.props.showBack) &&
-                <HeaderSection.BackIcon>
-                  <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
-                </HeaderSection.BackIcon>
-            }
-            {
-              !showCategories &&
-                <HeaderSection.MenuButton onClick={this.toggleCategories} >
-                  <FontAwesomeIcon icon={faBars} />
-                </HeaderSection.MenuButton>
-            }
+            {(showCategories || this.props.showBack) && (
+              <HeaderSection.BackIcon>
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  onClick={this.handleBackClick}
+                />
+              </HeaderSection.BackIcon>
+            )}
+            {!showCategories && (
+              <HeaderSection.MenuButton onClick={this.toggleCategories}>
+                <FontAwesomeIcon icon={faBars} />
+              </HeaderSection.MenuButton>
+            )}
           </HeaderSection.MobileIconWrapper>
-          {
-            !props.disableLogo &&
-              <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-                <Link to="/">
-                  <HeaderSection.ImgLogo
-                    src="assets/images/logo_starsona.svg"
-                    alt=""
-                  />
-                </Link>
-              </HeaderSection.HeaderLeft>
-          }
+          {!props.disableLogo && (
+            <HeaderSection.HeaderLeft hide={this.state.searchActive}>
+              <Link to="/">
+                <HeaderSection.ImgLogo
+                  src="assets/images/logo_starsona.svg"
+                  alt=""
+                />
+              </Link>
+            </HeaderSection.HeaderLeft>
+          )}
           <HeaderSection.HeaderRight visible={!showCategories}>
-            {
-              this.props.isLoggedIn ?
-                <React.Fragment>
-                  <HeaderSection.ProfileWrapper onClick={this.handleProfileClick}>
-                    {
-                      this.state.profilePhoto ?
-                        <HeaderSection.ProfileButton
-                          profileUrl={this.state.profilePhoto}
-                        />
-                      :
-                        <HeaderSection.SignInButtonMobile noHide>
-                          <FontAwesomeIcon icon={faUserCircle} />
-                        </HeaderSection.SignInButtonMobile>
+            {this.props.isLoggedIn ? (
+              <React.Fragment>
+                <HeaderSection.ProfileWrapper onClick={this.handleProfileClick}>
+                  {this.props.userValue.settings_userDetails.avatarPhoto ? (
+                    <HeaderSection.ProfileButton
+                      profileUrl={
+                        this.props.userValue.settings_userDetails.avatarPhoto
+                      }
+                    />
+                  ) : (
+                    <HeaderSection.SignInButtonMobile noHide>
+                      <FontAwesomeIcon icon={faUserCircle} />
+                    </HeaderSection.SignInButtonMobile>
+                  )}
+                  <HeaderSection.ProfileName
+                    profilePhoto={
+                      this.props.userValue.settings_userDetails.avatarPhoto
                     }
-                    <HeaderSection.ProfileName profilePhoto={this.state.profilePhoto}>
-                      { userDetails && getStarName(userDetails.nick_name, userDetails.first_name, userDetails.last_name) }
-                    </HeaderSection.ProfileName>
-                  </HeaderSection.ProfileWrapper>
-                  {/* {
+                  >
+                    {userDetails &&
+                      getStarName(
+                        userDetails.nick_name,
+                        userDetails.first_name,
+                        userDetails.last_name,
+                      )}
+                  </HeaderSection.ProfileName>
+                </HeaderSection.ProfileWrapper>
+                {/* {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
@@ -161,34 +184,47 @@ class Header extends React.Component {
                         <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   } */}
-                </React.Fragment>
-            :
-                <React.Fragment>
-                  <HeaderSection.SignInButtonMobile onClick={() => this.props.toggleLogin(true)}>
-                    <FontAwesomeIcon icon={faUserCircle} />
-                  </HeaderSection.SignInButtonMobile>
-                  <SecondaryButton className='auth-button' secondary={!props.notFixed} onClick={() => this.props.toggleSignup(true)}>
-                    Sign Up
-                  </SecondaryButton>
-                  <SecondaryButton className='auth-button' secondary={!props.notFixed} onClick={() => this.props.toggleLogin(true)}>
-                    Log In
-                  </SecondaryButton>
-                </React.Fragment>
-            }
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <HeaderSection.SignInButtonMobile
+                  onClick={() => this.props.toggleLogin(true)}
+                >
+                  <FontAwesomeIcon icon={faUserCircle} />
+                </HeaderSection.SignInButtonMobile>
+                <SecondaryButton
+                  className="auth-button"
+                  secondary={!props.notFixed}
+                  onClick={() => this.props.toggleSignup(true)}
+                >
+                  Sign Up
+                </SecondaryButton>
+                <SecondaryButton
+                  className="auth-button"
+                  secondary={!props.notFixed}
+                  onClick={() => this.props.toggleLogin(true)}
+                >
+                  Log In
+                </SecondaryButton>
+              </React.Fragment>
+            )}
           </HeaderSection.HeaderRight>
-          {
-            !this.props.disableSearch &&
-              <HeaderSection.SearchWrapper desktopSearch={this.props.desktopSearch}>
-                <Search />
-              </HeaderSection.SearchWrapper>
-          }
+          {!this.props.disableSearch && (
+            <HeaderSection.SearchWrapper
+              desktopSearch={this.props.desktopSearch}
+            >
+              <Search />
+            </HeaderSection.SearchWrapper>
+          )}
         </HeaderSection.HeaderDiv>
-        {
-          !props.notFixed &&
-            <HeaderSection.CategoryWrapper visible={showCategories}>
-              <CategorySection showCategories closeCategories={this.toggleCategories} />
-            </HeaderSection.CategoryWrapper>
-        }
+        {!props.notFixed && (
+          <HeaderSection.CategoryWrapper visible={showCategories}>
+            <CategorySection
+              showCategories
+              closeCategories={this.toggleCategories}
+            />
+          </HeaderSection.CategoryWrapper>
+        )}
       </HeaderSection>
     );
   }
@@ -203,10 +239,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   toggleRefer: state => dispatch(toggleRefer(state)),
-  fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
+  fetchSuggestionList: searchParam =>
+    dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Header),
+);
