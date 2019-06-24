@@ -21,19 +21,20 @@ export const Layout = styled.section`
 `;
 
 Layout.SubheaderWrap = styled.div`
+  order: 1;
   color: ${(props)=>props.theme.orangePink};
   fontsize: 24px;
 `;
 
 Layout.InputWrap = styled.div`
-  order:1;
+  order:2;
   @media (min-width: 832px) {
     order: 3;
   }
 `;
 
 Layout.ButtonWrapper = styled.div`
-
+  order:4
 `;
 /* styles for profile image */
 
@@ -92,6 +93,10 @@ ImageUpload.Heading = styled.div`
 `;
 
 UploadContainer.ProfileUploadWrap = styled.div`
+  order: 3;
+  @media (min-width: 832px) {
+    order: 2;
+  }
   .profileupload{
     height: inherit !important;
   }

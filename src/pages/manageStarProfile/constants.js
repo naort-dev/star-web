@@ -6,7 +6,7 @@ export const STAR_PROFILE = {
       selectedName: 'name&photo',
       url: '/manage/profile/name-photo',
     },
-    { linkName: 'Welcome Video', selectedName: 'requests', url: '/manage/bookings' },
+    { linkName: 'Welcome Video', selectedName: 'requests', url: '/manage/profile/welcome-video' },
     {
       linkName: 'Bio',
       selectedName: 'promotional',

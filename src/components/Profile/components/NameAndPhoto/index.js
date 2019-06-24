@@ -32,12 +32,10 @@ class NameAndPhoto extends React.Component {
   setTakePicture = () => {
     // this.props.scrollRef.scrollTop = 0;
     this.setState({ takePicture: true, cropper: false });
-    debugger
   };
 
   setProfileImage = (imageResult, exif, extension) => {
     // this.props.scrollRef.scrollTop = 0;
-    debugger
     this.setState({
       cropper: true,
       currentExif: exif,
@@ -106,7 +104,6 @@ class NameAndPhoto extends React.Component {
     this.uploadImage();
   }
   render () {
-  console.log('asdasd')
     return (
       <Layout>
         <Layout.SubheaderWrap>

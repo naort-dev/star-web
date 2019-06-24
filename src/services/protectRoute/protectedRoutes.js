@@ -12,6 +12,7 @@ export const starRoutes = [
   '/manage/earnings',
   '/manage/settings',
   '/manage/profile/name-photo',
+  '/manage/profile/welcome-video',
   '/manage/settings/account-info',
   '/manage/settings/password',
   '/manage/settings/payment',

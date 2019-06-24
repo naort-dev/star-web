@@ -34,9 +34,8 @@ Content.CommonContent = styled.div`
   display:flex;
   flex-direction: column;
   @media(min-width: 832px) {
-    width: 190px;
-    height: 65px;
     flex-direction: row;
+    justify-content: space-between;
   }
 `;
 Content.InnerWrapper = styled.div`
