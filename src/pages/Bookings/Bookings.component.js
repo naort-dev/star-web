@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { BackArrow, EmptyText } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
@@ -180,7 +181,7 @@ class Bookings extends React.Component {
               </React.Fragment>
               :
                 <EmptyText>You currently do not have any bookings.
-                  Visit Promote Yourself to spread the word you are available.
+                  Visit&nbsp;<Link to="/manage/promotional-tools">Promote Yourself</Link>&nbsp;to spread the word you are available.
                 </EmptyText>
           }
         </BookingsStyled.Container>
