@@ -60,7 +60,7 @@ const CommentItem = (props) => {
   }
 
   const onSelectAction = (optionItem) => {
-    if (optionItem.value === 'hide') {
+    if (optionItem.value === 'toggleVisiblity') {
       props.toggleActivityVisibility(props.activityId);
     }
   }
@@ -83,8 +83,8 @@ const CommentItem = (props) => {
                 <MoreActions
                   classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
                   options={[{
-                    label: 'Hide from public',
-                    value: 'hide',
+                    label: `${props.visible ? 'Hide from public' : 'Show on public site'}`,
+                    value: 'toggleVisiblity',
                   }]}
                   onSelectOption={onSelectAction}
                 />

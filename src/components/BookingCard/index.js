@@ -10,7 +10,7 @@ import BookingTitle from '../BookingTitle';
 import ModalHeader from '../ModalHeader';
 
 import Loader from '../Loader';
-import { getRequestDetails, hideVideoFromProfile } from '../../services/request';
+import { getRequestDetails } from '../../services/request';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList } from '../../store/shared/actions/getActivities'
 import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
