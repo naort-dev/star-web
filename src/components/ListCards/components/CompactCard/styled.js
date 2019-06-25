@@ -35,6 +35,11 @@ CompactStyled.DetailsWrapper = styled.div`
     justify-content: space-between;
     width: 65px;
   }
+  .time {
+    &.expiring {
+      color: #cc0000;
+    }
+  }
   .time-text {
     font-family: Gilroy-Medium;
     font-size: 14px;

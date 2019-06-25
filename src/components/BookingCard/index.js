@@ -11,6 +11,8 @@ import ModalHeader from '../ModalHeader';
 
 import Loader from '../Loader';
 import { getRequestDetails } from '../../services/request';
+import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
+import { fetchActivitiesList } from '../../store/shared/actions/getActivities'
 import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
@@ -108,6 +110,10 @@ const BookingCard = (props) => {
                   starMode &&
                     <StarView
                       bookingData={requestData}
+                      fetchActivitiesList={props.fetchActivitiesList}
+                      loaderAction={props.loaderAction}
+                      updateToast={props.updateToast}
+                      activitiesList={props.activitiesList}
                       modalData={props.bookingModal.data}
                       toggleDetails={setDetails}
                       closeModal={closeModal}
@@ -136,14 +142,22 @@ const BookingCard = (props) => {
 BookingCard.propTypes = {
   toggleBookingModal: PropTypes.func.isRequired,
   bookingModal: PropTypes.object.isRequired,
+  fetchActivitiesList: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  activitiesList: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   bookingModal: state.modals.bookingModal,
+  activitiesList: state.activitiesList,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
+  fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh)),
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loaderAction: state => dispatch(loaderAction(state)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingCard);

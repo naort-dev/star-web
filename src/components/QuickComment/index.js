@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
+import { fetchActivitiesList } from 'store/shared/actions/getActivities'
 import { Scrollbars } from 'react-custom-scrollbars';
 import LightningIcon from '../LightningIcon';
 import ToolTip from '../ToolTip';
@@ -43,6 +44,9 @@ const QuickComment = (props) => {
       if (props.once) {
         setDisable(true);
       }
+      if (props.bookingId) {
+        props.fetchActivitiesList(props.bookingId, 0, true);
+      }
       handleClose();
     } catch(exception) {
       props.updateToast({
@@ -80,10 +84,10 @@ const QuickComment = (props) => {
           <CommentStyled.OptionWrapper>
             <span className="option-title">Post a Quick Response</span>
             <span className="emoji-list">
-              <img alt='heart' src='assets/images/heart.png' />
-              <img alt='happy' src='assets/images/happy.png' />
-              <img alt='trophy' src='assets/images/trophy.png' />
-              <img alt='thumbsup' src='assets/images/thumbsup.png' />
+              <img className='emoji-icon' alt='heart' src='assets/images/heart.png' onClick={addComment('❤️')} />
+              <img className='emoji-icon' alt='happy' src='assets/images/happy.png' onClick={addComment('😃')} />
+              <img className='emoji-icon' alt='trophy' src='assets/images/trophy.png' onClick={addComment('🏆')} />
+              <img className='emoji-icon' alt='thumbsup' src='assets/images/thumbsup.png' onClick={addComment('👍')} />
             </span>
             <CommentStyled.ListWrapper>
               <ul className="comment-list">
@@ -114,6 +118,7 @@ QuickComment.defaultProps = {
   classes: {},
   fanName: '',
   once: false,
+  bookingId: undefined,
 }
 
 QuickComment.propTypes = {
@@ -122,12 +127,15 @@ QuickComment.propTypes = {
   videoId: PropTypes.string.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
+  fetchActivitiesList: PropTypes.func.isRequired,
   once: PropTypes.bool,
+  bookingId: PropTypes.string,
 }
 
 const mapDispatchToProps = dispatch => ({
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),
+  fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh))
 });
 
 export default connect(null, mapDispatchToProps)(QuickComment);

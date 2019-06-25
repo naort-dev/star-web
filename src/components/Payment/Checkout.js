@@ -176,7 +176,7 @@ class Checkout extends React.Component {
         </FlexBox>
         <FlexCenter>
           <Button
-            className="button"
+            className="button payment-btn"
             disabled={this.state.formValid}
             isDisabled={this.state.formValid}
           >

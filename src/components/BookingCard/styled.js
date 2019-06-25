@@ -80,6 +80,7 @@ BookingStyled.HeaderText = styled.h5`
   }
   @media(min-width: 832px) {
     color: ${props => props.theme.flatBlue};
+    padding-right: 53px;
   }
 `;
 
@@ -141,9 +142,7 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  @media(min-width: 832px) {
-    height: 342px;
-  }
+  height: 342px;
 `;
 
 export default BookingStyled;

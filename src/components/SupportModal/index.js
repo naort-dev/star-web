@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {connect } from 'react-redux';
 import { PopupHeading } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import PrimaryButton from '../PrimaryButton';
 import Dropdown from '../Dropdown';
 import { TextInput } from '../TextField';
-import { supportOptions } from '../../constants';
 import { toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import SupportStyled from './styled';
 
@@ -35,7 +35,7 @@ const SupportModal = (props) => {
             rootClass="drop-down"
             selected={supportOption}
             secondary
-            options={supportOptions}
+            options={props.config.supportTopics}
             labelKey="label"
             valueKey="value"
             onChange={updateSupportOption}
@@ -57,6 +57,11 @@ const SupportModal = (props) => {
       </SupportStyled>
     </RequestFlowPopup>
   );
+}
+
+SupportModal.propTypes = {
+  config: PropTypes.object.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

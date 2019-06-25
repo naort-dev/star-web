@@ -36,7 +36,14 @@ const processConfig = (config) => {
   const tips = config.tip_amounts ? config.tip_amounts.split(',') : [];
   const requestFeedback = config.request_feedback ? config.request_feedback.split(',') : [];
   const declineComments = config.decline_comments ? config.decline_comments.split(',') : [];
+  const supportTopics  = config.topics ? config.topics.topics.map((topic) => {
+    return ({
+      label: topic,
+      value: topic,
+    })
+  }): [];
   newConfig.tipAmounts = tips;
+  newConfig.supportTopics = supportTopics;
   newConfig.requestFeedback = requestFeedback;
   newConfig.declineComments = declineComments;
   return newConfig;
