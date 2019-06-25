@@ -8,19 +8,15 @@ const ListingStyled = styled.ul`
   padding: 10px 0;
 `;
 
-ListingStyled.Content = styled.li`
+ListingStyled.Content = styled.div`
   margin-bottom: 22px;
+  display: flex;
+  ${props => props.sentComment && `
+    justify-content: flex-end;
+  `}
   &:last-child {
     margin-bottom: 0;
   }
-`;
-
-ListingStyled.NoDataText = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  font-family: Gilroy-Medium;
 `;
 
 export default ListingStyled;

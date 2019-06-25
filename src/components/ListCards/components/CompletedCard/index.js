@@ -63,9 +63,9 @@ const CompletedCard = (props) => {
   }
   
   return (
-    <CompletedStyled className={props.classes.root} onClick={props.onClick} isFavorite={props.data.favorite}>
+    <CompletedStyled className={props.classes.root} onClick={props.onClick} isFavorite={props.data.video_favorite}>
       <span className='favorite-icon' onClick={onFavoriteClick}>
-        <FontAwesomeIcon icon={props.data.favorite ? faHeart : faHeartLight} />
+        <FontAwesomeIcon icon={props.data.video_favorite ? faHeart : faHeartLight} />
       </span>
       <CompletedStyled.Container>
         <CompletedStyled.ProfilePic imageUrl={requestVideo.s3_thumbnail_url} />
