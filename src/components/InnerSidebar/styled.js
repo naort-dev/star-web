@@ -15,6 +15,10 @@ SidebarStyled.LinkList = styled.ul`
 `;
 
 SidebarStyled.LinkItem = styled.li`
+  font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+  color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
+  font-size: 16px;
+  // line-height: 1.69;
   border-bottom: 1px solid #e2e2e2;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -25,12 +29,7 @@ SidebarStyled.LinkItem = styled.li`
     border-bottom: none;
     padding-left: 0;
   }
-  font-family: Gilroy;
-  color: ${props =>
-    props.selected ? props.theme.flatBlue : props.theme.brownGrey};
-  font-size: 18px;
   cursor: pointer;
-
   a {
     justify-content: space-between;
     align-items: center;

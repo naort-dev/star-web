@@ -263,5 +263,8 @@ injectGlobal`
 .alternate-modal-root {
   background: #f6f6f6;
 }
+.custom-modal{
+  padding: 75px 0;
+}
 `
 ;

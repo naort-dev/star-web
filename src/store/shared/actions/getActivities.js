@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 
@@ -38,10 +39,27 @@ export const resetActivitiesList = () => ({
   type: ACTIVITIES_LIST.reset,
 });
 
+export const toggleActivityVisibility = (activityId) => (dispatch, getState) => {
+  return fetch.post(Api.toggleActivityVisibility, {
+    activity: activityId,
+  })
+    .then((resp) => {
+      if (resp.data && resp.data.success) {
+        const { data: activitiesList, count, offset } = getState().activitiesList;
+        const activity = activitiesList.find(activityItem => activityItem.id === activityId);
+        const activityIndex = activitiesList.findIndex(activityItem => activityItem.id === activityId);
+        activity.public_visibility = !activity.public_visibility;
+        const newList = cloneDeep(activitiesList);
+        newList[activityIndex] = activity;
+        dispatch(activitiesListFetchSuccess(newList, count, offset));
+      }
+    })
+}
+
 export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, getState) => {
-  const { limit, count } = getState().commentsList;
+  const { count, limit } = getState().activitiesList;
   dispatch(activitiesListFetchStart(refresh));
-  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}`).then((resp) => {
+  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}&offset=${offset}&limit=${limit}`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(activitiesListFetchEnd());
       let list = getState().activitiesList.data;
@@ -49,7 +67,7 @@ export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, ge
       if (refresh) {
         list = resp.data.data.recent_activities;
       } else {
-        list = [...resp.data.data.recent_activities, ...list];
+        list = [...list, ...resp.data.data.recent_activities];
       }
       dispatch(activitiesListFetchSuccess(list, newCount, offset));
     } else {
