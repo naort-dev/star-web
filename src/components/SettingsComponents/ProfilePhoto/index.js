@@ -69,7 +69,7 @@ const ProfilePhoto = props => {
 
   return (
     <Container>
-      <Wrap imageUrl={croppedData.croppedUrl}>
+      <Wrap imageUrl={croppedData.croppedUrl || props.profImg}>
         <h2
           className="sub-head"
           data-web={props.webHead}
@@ -122,11 +122,13 @@ ProfilePhoto.propTypes = {
   webHead: PropTypes.string,
   mobHead: PropTypes.string,
   updateProfilePhoto: PropTypes.func.isRequired,
+  profImg: PropTypes.string,
 };
 
 ProfilePhoto.defaultProps = {
   webHead: '',
   mobHead: '',
+  profImg: '',
 };
 
 export default ProfilePhoto;

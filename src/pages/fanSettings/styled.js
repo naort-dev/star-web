@@ -23,6 +23,12 @@ export const Layout = styled.section`
       display: block;
     }
   }
+  .click-here {
+    font-size: 16px;
+    color: #2f839d;
+    font-family: Gilroy-Light;
+    cursor: pointer;
+  }
 `;
 
 export const ContentWrapper = styled.section`

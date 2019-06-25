@@ -148,6 +148,14 @@ const Settings = props => {
                   handleAccountSave={handleAccountSave}
                   mobHead="Account Info"
                   webHead="Account Information"
+                  labels={{
+                    firstNameLbl: 'First Name',
+                    lastNameLbl: 'Last Name',
+                    emailLbl: 'Email',
+                    emailHead: 'Email address',
+                    nameHead: 'Use your real name so we can pay you',
+                    buttonLbl: 'Save',
+                  }}
                 />,
               )
             }
@@ -162,6 +170,14 @@ const Settings = props => {
                   passwordUpdate={passwordUpdate}
                   mobHead="Update Password"
                   webHead="Update Password"
+                  showPasswd
+                  labels={{
+                    password: 'First Name',
+                    confirmPasswd: 'Last Name',
+                    hint:
+                      'Passwords must be a minimum of 8 characters and include at least one special character like !?@#',
+                    buttonLbl: 'Save',
+                  }}
                 />,
               )
             }
@@ -178,6 +194,14 @@ const Settings = props => {
                   dashboardURL={props.dashboardURL}
                   mobHead="Payment Account"
                   webHead="My Payment Account"
+                  labels={{
+                    btnWeb: 'Create Stripe Account',
+                    btnMob: '+ Set up Stripe Account',
+                    noteWeb:
+                      'Set up your payment account so we can pay you for your videos and your referrals.',
+                    noteMob:
+                      'We want to get you paid as quickly as possible, so make sure you get your Stripe account setup.',
+                  }}
                 />,
               )
             }

@@ -10,7 +10,9 @@ const ImageModal = props => {
   return (
     <Modal open>
       <Layout>
-        <h2 className="modal-head">Crop your photo</h2>
+        <h2 className="modal-head">
+          {props.isUpload ? 'Crop your photo' : 'Take your photo'}
+        </h2>
         <CloseButton onClick={props.closeCropper} />
         {props.isUpload ? (
           <ImageCropper

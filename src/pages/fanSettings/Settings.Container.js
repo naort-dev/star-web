@@ -4,6 +4,7 @@ import { changePassword } from 'store/shared/actions/changePassword';
 import { updateNotification } from 'store/shared/actions/updateNotification';
 import { updateNotificationViewed } from 'services/userManagement';
 import { updateProfilePhoto } from 'store/shared/actions/updateProfilePhoto';
+import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
 import Settings from './Settings.Component';
 
 const mapStates = state => ({
@@ -29,6 +30,12 @@ function mapDispatch(dispatch) {
     },
     updateProfilePhoto: obj => {
       dispatch(updateProfilePhoto(obj));
+    },
+    loaderAction: value => {
+      dispatch(loaderAction(value));
+    },
+    updateToast: toastObj => {
+      dispatch(updateToast(toastObj));
     },
   };
 }

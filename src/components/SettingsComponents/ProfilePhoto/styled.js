@@ -21,7 +21,9 @@ export const Wrap = styled(Wrapper)`
       display: block;
       border-radius: 50%;
       background: ${props =>
-        props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3'};
+        props.imageUrl
+          ? `url(${props.imageUrl})`
+          : `url(assets/images/profile.png)`};
       background-repeat: no-repeat;
       background-size: cover;
       margin-bottom: 34px;
