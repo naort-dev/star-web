@@ -49,9 +49,10 @@ justify-content: center;
   margin-top: 0;
 }
   .success-button {
-    padding-bottom: 20px;
     @media(max-width: 831px){
-      margin-bottom:0;
+      &:not(:last-child) {
+        margin-bottom:20px;
+      }
     }
     @media(min-width: 832px){
       &:first-child {

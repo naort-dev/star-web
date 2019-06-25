@@ -63,13 +63,13 @@ export const QuesWrapper = styled.section`
   overflow: hidden;
   margin-top: 43px;
   padding: 23px 29px 7px;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
   ${media.webView} {
     margin-top: 17px;
     margin-bottom: 26px;
   }
   @media (max-width: 831px) {
-    margin-top: 12px;
+    margin-top: 8px;
     padding-bottom: 3px;
   }
   .question {

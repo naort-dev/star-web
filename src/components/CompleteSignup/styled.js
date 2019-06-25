@@ -104,7 +104,7 @@ font-size: 24px;
 font-family: 'Gilroy';
 padding-top: 61px;
 @media (max-width: 831px) {
-  padding-top: 71px;
+  padding-top: 65px;
   max-width: 230px;
   margin: 0 auto 10.2px;
   line-height: 28px;
