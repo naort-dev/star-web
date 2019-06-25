@@ -59,11 +59,24 @@ export const updateBookingList = data => ({
 
 export const updateBookingsList = (id, newData) => (dispatch, getState) => {
   const originalList = cloneDeep(getState().bookings.bookingsList.data);
-  const dataIndex = originalList.findIndex(item => item.id === id);
+  const dataIndex = originalList.findIndex(item => item.booking_id === id);
   originalList[dataIndex] = newData;
-  dispatch(bookingsListFetchStart(false, getState().bookings.bookingsList.token));
   dispatch(bookingsListUpdate(originalList));
 };
+
+export const favoriteVideo = (bookingId, videoId) => (dispatch, getState) => {
+  return fetch.post(Api.favoriteVideo, {
+    booking: bookingId,
+    video: videoId,
+  })
+    .then((resp) => {
+      if (resp.data && resp.data.success) {
+        const originalList = cloneDeep(getState().bookings.bookingsList.data);
+        const booking = originalList.find(item => item.booking_id === bookingId);
+        dispatch(updateBookingsList(bookingId, { ...booking, favorite: !booking.favorite }));
+      }
+    })
+}
 
 export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = '', sortParam = '') => (
   dispatch,
