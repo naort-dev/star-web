@@ -6,6 +6,8 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import PrimaryButton from '../PrimaryButton';
 import Dropdown from '../Dropdown';
 import { TextInput } from '../TextField';
+import { contactSupport } from '../../services';
+import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import SupportStyled from './styled';
 
@@ -20,6 +22,27 @@ const SupportModal = (props) => {
     
   const updateSupportOption = (option) => {
     setOption(option);
+  }
+
+  const onSubmit = async () => {
+    props.loaderAction(true);
+    try {
+      await contactSupport(supportOption.value, supportText);
+      props.toggleContactSupport(false)();
+      props.loaderAction(false);
+      props.updateToast({
+        value: true,
+        message: 'Message sent',
+        variant: 'success',
+      })
+    } catch(exception) {
+      props.loaderAction(false);
+      props.updateToast({
+        value: true,
+        message: exception.response.data.error.message,
+        variant: 'error',
+      })
+    }
   }
 
   return (
@@ -53,7 +76,7 @@ const SupportModal = (props) => {
             value={supportText}
             onChange={onTextChange}
           />
-        <PrimaryButton>Submit</PrimaryButton>
+        <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
       </SupportStyled>
     </RequestFlowPopup>
   );
@@ -61,6 +84,8 @@ const SupportModal = (props) => {
 
 SupportModal.propTypes = {
   config: PropTypes.object.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
 }
 
@@ -70,6 +95,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loaderAction: state => dispatch(loaderAction(state)),
   toggleContactSupport: (state, requestId) => () => dispatch(toggleContactSupport(state, requestId)),
 })
 

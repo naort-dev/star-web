@@ -11,7 +11,7 @@ const CompletedStyled = Card.extend`
   @media(min-width: 832px) {
     .favorite-icon {
       display: block;
-      color: #fff;
+      color: ${props => props.isFavorite ? props.theme.orangePink : '#fff'};
       font-size: 28px;
       position: absolute;
       top: 20.2px;

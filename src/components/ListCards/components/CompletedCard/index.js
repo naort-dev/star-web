@@ -35,7 +35,7 @@ const CompletedCard = (props) => {
     }
     return (
       <React.Fragment>
-        <HeadingBold>Birthday</HeadingBold>&nbsp;
+        <HeadingBold>{props.data.occasion}</HeadingBold>&nbsp;
           {requestTypes[props.data.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <HeadingBold>
             { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : props.data.fan }
@@ -57,10 +57,15 @@ const CompletedCard = (props) => {
     }
   }, [props.data.booking_id])
 
+  const onFavoriteClick = (event) => {
+    event.stopPropagation();
+    props.onFavoriteClick(props.data.booking_id, requestVideo.video_id);
+  }
+  
   return (
-    <CompletedStyled className={props.classes.root} onClick={props.onClick}>
-      <span className='favorite-icon'>
-        <FontAwesomeIcon icon={faHeartLight} />
+    <CompletedStyled className={props.classes.root} onClick={props.onClick} isFavorite={props.data.favorite}>
+      <span className='favorite-icon' onClick={onFavoriteClick}>
+        <FontAwesomeIcon icon={props.data.favorite ? faHeart : faHeartLight} />
       </span>
       <CompletedStyled.Container>
         <CompletedStyled.ProfilePic imageUrl={requestVideo.s3_thumbnail_url} />
@@ -108,12 +113,14 @@ const CompletedCard = (props) => {
 CompletedCard.defaultProps = {
   data: {},
   onClick: () => {},
+  onFavoriteClick: () => {},
 }
 
 CompletedCard.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.object,
   onClick: PropTypes.func,
+  onFavoriteClick: PropTypes.func,
 }
 
 export { CompletedCard };

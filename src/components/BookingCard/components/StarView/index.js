@@ -120,7 +120,7 @@ const StarView = (props) => {
                 notCenter
                 scrollTarget='comments-scroll-target'
                 dataList={props.activitiesList.data}
-                noDataText='No records found'
+                noDataText='No comments yet'
                 loading={props.activitiesList.loading}
                 offset={props.activitiesList.offset}
                 fetchData={fetchActivity}
