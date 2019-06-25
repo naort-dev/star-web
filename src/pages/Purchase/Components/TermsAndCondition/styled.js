@@ -19,6 +19,8 @@ export const Layout = styled.section`
     padding-bottom: 20px;
     ${media.mobileScreen} {
       padding: 0 20px 20px;
+      height: calc(100% - 65px);
+      overflow: auto;
     }
     p {
       p {
@@ -50,6 +52,9 @@ export const Layout = styled.section`
     flex: 1 0 auto;
     display: flex;
     margin: 0;
+    ${media.mobileScreen} {
+      padding-top: 20px;
+    }
   }
 
 

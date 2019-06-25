@@ -134,6 +134,9 @@ export const QuestionContainer = styled.section`
     width: 269px;
     transform: translateX(-50%);
   }
+  &:empty {
+    display: none;
+  }
   .quesHead {
     font-family: Gilroy;
     font-size: 18px;
@@ -169,7 +172,7 @@ export const QuestionContainer = styled.section`
   .noSupportBtn {
     position: absolute;
     left: 0;
-    top: 285px;
+    top: 225px;
     ${media.webView} {
       position: static;
       margin-top: 40px;

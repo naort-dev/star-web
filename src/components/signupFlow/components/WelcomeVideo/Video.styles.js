@@ -28,10 +28,13 @@ export const Layout = styled.section`
     font-family: Gilroy-Light;
     color: #fff;
     font-size: 14px;
-    padding-top: 20px;
+    padding-top: 0;
+    padding-bottom: 20px;
     ${media.webView} {
       color: #999;
       font-size: 16px;
+      padding-top: 20px;
+      padding-bottom: 0;
     }
   }
   .skip {
