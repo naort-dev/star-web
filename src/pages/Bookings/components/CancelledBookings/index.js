@@ -78,8 +78,8 @@ const CancelledBookings = (props) => {
       {
         props.bookingsList.highCancel &&
           <EmptyText className='cancel-count-notification'>
-            You have had {props.bookingsList.highCancelCount} within the last 30 days.
-            Make sure you try and complete your bookings to keep your ratings up as well as your satisfaction with the stars. 
+            You have had {props.bookingsList.highCancelCount} cancellations within the last 30 days.
+            Make sure you try and complete your bookings to keep your ratings up as well as your satisfaction with the fans. 
           </EmptyText>
       }
       {

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {connect } from 'react-redux';
 import { PopupHeading } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import PrimaryButton from '../PrimaryButton';
 import Dropdown from '../Dropdown';
 import { TextInput } from '../TextField';
-import { supportOptions } from '../../constants';
+import { contactSupport } from '../../services';
+import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import SupportStyled from './styled';
 
@@ -22,6 +24,27 @@ const SupportModal = (props) => {
     setOption(option);
   }
 
+  const onSubmit = async () => {
+    props.loaderAction(true);
+    try {
+      await contactSupport(supportOption.value, supportText);
+      props.toggleContactSupport(false)();
+      props.loaderAction(false);
+      props.updateToast({
+        value: true,
+        message: 'Message sent',
+        variant: 'success',
+      })
+    } catch(exception) {
+      props.loaderAction(false);
+      props.updateToast({
+        value: true,
+        message: exception.response.data.error.message,
+        variant: 'error',
+      })
+    }
+  }
+
   return (
     <RequestFlowPopup
       classes={{ root: 'alternate-modal-root' }}
@@ -35,7 +58,7 @@ const SupportModal = (props) => {
             rootClass="drop-down"
             selected={supportOption}
             secondary
-            options={supportOptions}
+            options={props.config.supportTopics}
             labelKey="label"
             valueKey="value"
             onChange={updateSupportOption}
@@ -53,10 +76,17 @@ const SupportModal = (props) => {
             value={supportText}
             onChange={onTextChange}
           />
-        <PrimaryButton>Submit</PrimaryButton>
+        <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
       </SupportStyled>
     </RequestFlowPopup>
   );
+}
+
+SupportModal.propTypes = {
+  config: PropTypes.object.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -65,6 +95,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loaderAction: state => dispatch(loaderAction(state)),
   toggleContactSupport: (state, requestId) => () => dispatch(toggleContactSupport(state, requestId)),
 })
 

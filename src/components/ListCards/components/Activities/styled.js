@@ -45,6 +45,7 @@ export const Layout = styled.section`
       ${media.webView} {
         padding-left: 48px;
       }
+
     }
     .sub-content {
       display: block;
@@ -85,13 +86,14 @@ export const Layout = styled.section`
   .button-promote {
     width: 329px;
     height: 55px;
+    font-family: Gilroy-Bold
     ${media.smallScreen} {
       font-size: 16px;
     }
   }
   .button-margin {
-    padding-top: 18px;
-    padding-bottom: 40px;
+    padding-top: 10px;
+    padding-bottom: 20px;
     ${media.webView} {
       display: none;
     }
@@ -102,11 +104,13 @@ export const Layout = styled.section`
   .head2 {
     font-family: Gilroy-Bold;
     font-size: 18px;
+    line-height: 30px;
     color: #5d5d5d;
-    padding-top: 32px;
+    padding-top: 28px;
     padding-bottom: 18px;
     @media (max-width: 831px) {
-      padding-top: 17px;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
   }
   .web-icons {

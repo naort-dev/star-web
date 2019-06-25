@@ -28,6 +28,7 @@ CommentStyled.Comment = styled.span`
   border-radius: 10px;
   max-width: 228px;
   position: relative;
+  min-width: 121px;
   ${props => (props.receive ? `
     border-top-left-radius: 0;
     margin-left: 15.2px;
@@ -41,7 +42,6 @@ CommentStyled.Comment = styled.span`
     color: #3c3c3c;
     display: block;
     line-height: 18px;
-    max-height: 35px;
     overflow: hidden;
     .text-bold {
       font-family: Gilroy-Medium;
@@ -52,6 +52,7 @@ CommentStyled.Comment = styled.span`
     }
     &.reaction {
       display: flex;
+      justify-content: space-between;
     }
     &.tip {
       .text-bold {
@@ -85,7 +86,6 @@ CommentStyled.Comment = styled.span`
   }
   .comment-footer {
     display: flex;
-    width: 100%;
     margin-top: 6px;
     justify-content: space-between;
     align-items: center;
@@ -93,6 +93,16 @@ CommentStyled.Comment = styled.span`
     bottom: 6px;
     left: 15px;
     right: 8px;
+    .more-action-root {
+      width: 10px;
+      height: 10px;
+      .more-action-icon {
+        width: 10px;
+        height: 10px;
+        min-width: auto;
+        border: none;
+      }
+    }
     .time {
       font-family: Gilroy-Regular;
       font-size: 10px;

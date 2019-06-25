@@ -84,9 +84,9 @@ const WelcomeVideo = props => {
   return (
     <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
-      <Heading>Welcome Video - Say Hello!</Heading>
+      <Heading className={`${compSwitch && "welcome-head"}`}>Welcome Video - Say Hello!</Heading>
       <DotsContainer dotsCount={3} selectedDot={3} />
-      <Wrapper>
+      <Wrapper className={`${compSwitch && "video-wrapper"}`}>
         <Scrollbars className="scrollbar">
           {compSwitch ? (
             <Video
@@ -99,12 +99,12 @@ const WelcomeVideo = props => {
               updateToast={props.updateToast}
             />
           ) : (
-            <About
-              continueCallback={continueCallback}
-              skipCallback={props.skipCallback}
-              isDeviceSupported={isDeviceSupported}
-            />
-          )}
+              <About
+                continueCallback={continueCallback}
+                skipCallback={props.skipCallback}
+                isDeviceSupported={isDeviceSupported}
+              />
+            )}
         </Scrollbars>
       </Wrapper>
     </Layout>

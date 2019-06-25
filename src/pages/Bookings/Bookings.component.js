@@ -149,6 +149,7 @@ class Bookings extends React.Component {
                 dropValue={dropValue}
                 filter={filter}
                 sort={sort}
+                favoriteVideo={props.favoriteVideo}
                 toggleBookingModal={props.toggleBookingModal}
                 handleCategoryChange={this.handleCategoryChange}
                 handleFilterOrSort={this.handleFilterOrSort}
@@ -179,6 +180,7 @@ Bookings.propTypes = {
   toggleBookingModal: PropTypes.func.isRequired,
   fetchRecentActivity: PropTypes.func.isRequired,
   recentActivity: PropTypes.object.isRequired,
+  favoriteVideo: PropTypes.func.isRequired,
 };
 
 export default Bookings;

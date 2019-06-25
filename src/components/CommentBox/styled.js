@@ -8,9 +8,22 @@ const BoxStyled = styled.div`
   border-radius: 23px;
   border: 1px solid ${props => props.theme.brownGrey};
   .message-icon {
+    cursor: pointer;
     color: ${props => props.theme.flatBlue};
     font-size: 18.8px;
   }
+`;
+
+BoxStyled.Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+BoxStyled.Reminder = styled.span`
+  color:  #555;
+  font-size: 12px;
+  height: 15px;
+  font-family: Gilroy-Bold;
 `;
 
 BoxStyled.Input = styled.input`

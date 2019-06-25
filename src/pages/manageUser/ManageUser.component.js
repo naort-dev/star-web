@@ -5,12 +5,13 @@ import { Dashboard } from '../dashboard';
 import { Bookings } from '../Bookings';
 import { MyVideos } from '../myVideos';
 import { ManageStarProfile } from '../manageStarProfile';
-import { Settings } from '../Settings';
+import { Settings } from '../starSettings';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import ManageStyled from './styled';
 import { PromoTool } from '../PromotionalTools';
+import { FanSettings } from '../fanSettings';
 
 const ManageUser = props => {
   const [redirect, toggleRedirect] = useState(false);
@@ -61,7 +62,7 @@ const ManageUser = props => {
             <Switch>
               <Route path="/manage/my-videos" component={MyVideos} />
               <Route path="/manage/favorites" render={() => 'favorites'} />
-              <Route path="/manage/profile" render={() => 'profile'} />
+              <Route path="/manage/profile" component={FanSettings} />
             </Switch>
           )}
         </ManageStyled.RightContent>

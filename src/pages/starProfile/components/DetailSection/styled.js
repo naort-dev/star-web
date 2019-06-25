@@ -28,18 +28,20 @@ DetailStyled.StarName = styled.span`
     order: 2;
     padding-top: 0;
     font-family: Gilroy-Regular;
-    font-size: 74px;
-    line-height: 78px;
+    //font-size: 48px !important;
+    //line-height: 54px;
     text-indent: -5px;
   }
   @media(max-width: 831px) {
     padding-bottom: 10px;
     margin-bottom: -3px !important;
     text-align: center;
-    &.mob-big-name {
-      padding-top: 24px;
-      margin-bottom: 23px !important;
-    }
+    font-size: 35px !important;
+    white-space: normal !important;
+    // &.mob-big-name {
+    //   padding-top: 24px;
+    //   margin-bottom: 23px !important;
+    // }
   }
 `;
 
@@ -84,7 +86,7 @@ DetailStyled.Description = styled.span`
     color: ${props => props.theme.flatBlue}
   }
   @media(min-width: 832px) {
-    padding-top: 20px;
+    padding-top: 15px;
     font-size: 16px;
     line-height: 26px;
     height: ${props => (props.showMore ? 'auto' : '122px')};
