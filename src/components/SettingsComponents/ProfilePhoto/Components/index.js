@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CloseButton } from 'styles/CommonStyled';
 import Modal from '../../../Modal/Modal';
 import TakePhoto from '../../../signupFlow/components/SignUpImageUpload/components/takePhoto';
 import ImageCropper from '../../../ImageCropper';
@@ -9,6 +10,8 @@ const ImageModal = props => {
   return (
     <Modal open>
       <Layout>
+        <h2 className="modal-head">Crop your photo</h2>
+        <CloseButton onClick={props.closeCropper} />
         {props.isUpload ? (
           <ImageCropper
             onTakePicture={props.takeNewPicture} // on take new picture:- camera
@@ -19,7 +22,7 @@ const ImageModal = props => {
             cropImage={props.imageUrl}
           />
         ) : (
-          <TakePhoto />
+          <TakePhoto takePicture onPictureCapture={props.takePictureResult} />
         )}
       </Layout>
     </Modal>

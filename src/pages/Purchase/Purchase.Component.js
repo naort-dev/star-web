@@ -213,6 +213,7 @@ class Purchase extends Component {
       importantInfo={this.state.importantInfo}
       infoChange={this.infoChange}
       responseTime={this.props.celebDetails.average_response_time}
+      updateBookingData={this.props.updateBookingData}
     />
   );
 
@@ -441,6 +442,7 @@ class Purchase extends Component {
       occasion: {},
       scriptText: '',
       otherSelected: false,
+      requestId: '',
     });
   };
 

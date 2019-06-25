@@ -11,6 +11,7 @@ import ProfilePhoto from 'components/SettingsComponents/ProfilePhoto';
 import Modal from 'components/Modal/Modal';
 import { useMedia } from 'utils/domUtils';
 import { CloseButton } from 'styles/CommonStyled';
+import { awsImageUpload } from 'services/awsImageUpload';
 import { Layout, ContentWrapper } from './styled';
 import { Links } from './Constants';
 
@@ -122,6 +123,17 @@ const Settings = props => {
       return linkStatus(link);
     });
   };
+  
+  const updateProfilePhoto = image => () => {
+    awsImageUpload(image.croppedFile, 'jpeg').then(resp => {
+      const fileName = {
+        images: [resp],
+        avatar_photo: resp,
+        featured_image: '',
+      };
+      props.updateProfilePhoto(fileName);
+    });
+  };
 
   useEffect(() => {
     if (webView && props.history.location.pathname === '/manage/profile')
@@ -133,10 +145,7 @@ const Settings = props => {
 
   return (
     <Layout showMenu={props.history.location.pathname === '/manage/profile'}>
-      <SubHeader
-        heading={webView ? 'My Account Settings' : 'Account Settings'}
-        onClick={goBack}
-      />
+      <SubHeader heading="My Profile" onClick={goBack} />
       <ContentWrapper>
         <InnerSidebar links={getLinks()}></InnerSidebar>
         <Switch>
@@ -147,7 +156,7 @@ const Settings = props => {
                 <ProfilePhoto
                   {...childProps}
                   {...props}
-                  handleAccountSave={handleAccountSave}
+                  updateProfilePhoto={updateProfilePhoto}
                   mobHead="Photo"
                   webHead="Profile Photo"
                 />,
@@ -232,6 +241,7 @@ Settings.propTypes = {
   dashboardURL: PropTypes.string,
   celbDetails: PropTypes.object.isRequired,
   updateNotificationViewed: PropTypes.func.isRequired,
+  updateProfilePhoto: PropTypes.func.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',

@@ -3,6 +3,7 @@ import { updateUserDetails } from 'store/shared/actions/saveSettings';
 import { changePassword } from 'store/shared/actions/changePassword';
 import { updateNotification } from 'store/shared/actions/updateNotification';
 import { updateNotificationViewed } from 'services/userManagement';
+import { updateProfilePhoto } from 'store/shared/actions/updateProfilePhoto';
 import Settings from './Settings.Component';
 
 const mapStates = state => ({
@@ -25,6 +26,9 @@ function mapDispatch(dispatch) {
     },
     updateNotificationViewed: () => {
       dispatch(updateNotificationViewed());
+    },
+    updateProfilePhoto: obj => {
+      dispatch(updateProfilePhoto(obj));
     },
   };
 }

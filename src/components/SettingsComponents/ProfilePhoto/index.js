@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,13 @@ const ProfilePhoto = props => {
     });
   };
 
-  const takePictureResult = imageResult => {};
+  const takePictureResult = imageResult => {
+    updateData({
+      ...imageData,
+      isUpload: true,
+      imageUrl: imageResult,
+    });
+  };
 
   const getCroppedImage = (file, base64Url) => {
     updateCroppedData({
@@ -54,7 +60,6 @@ const ProfilePhoto = props => {
     if (allowedExtensions.exec(file.target.value)) {
       updateData({
         ...imageData,
-        imageBlob: file.target.files[0],
         isUpload: true,
         openModal: true,
         imageUrl: window.URL.createObjectURL(file.target.files[0]),
@@ -88,7 +93,14 @@ const ProfilePhoto = props => {
             <FontAwesomeIcon icon={faUpload} className="icon upload-picture" />
             Upload picture
           </UploadWrap>
-          <Button className="save-btn">Save</Button>
+          <Button
+            className="save-btn"
+            disabled={!croppedData.croppedUrl}
+            isDisabled={!croppedData.croppedUrl}
+            onClick={() => props.updateProfilePhoto(croppedData)}
+          >
+            Save
+          </Button>
         </section>
         {imageData.openModal && (
           <ImageModal
@@ -98,6 +110,7 @@ const ProfilePhoto = props => {
             newUpload={newUpload} // on upload file:- image
             closeCropper={closeCropper}
             getCroppedImage={getCroppedImage}
+            takePictureResult={takePictureResult}
           />
         )}
       </Wrap>
@@ -108,6 +121,7 @@ const ProfilePhoto = props => {
 ProfilePhoto.propTypes = {
   webHead: PropTypes.string,
   mobHead: PropTypes.string,
+  updateProfilePhoto: PropTypes.func.isRequired,
 };
 
 ProfilePhoto.defaultProps = {
