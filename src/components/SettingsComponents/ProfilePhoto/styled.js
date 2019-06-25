@@ -42,6 +42,9 @@ export const Wrap = styled(Wrapper)`
       }
     }
   }
+  .save-btn {
+    margin-top: 16px;
+  }
 `;
 
 export const UploadWrap = styled.button`

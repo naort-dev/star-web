@@ -30,7 +30,10 @@ const Header = props => {
     },
   ];
   return (
-    <HeaderDiv className="headerGlobal" arrow={props.arrowVisible}>
+    <HeaderDiv
+      className={`headerGlobal ${props.class}`}
+      arrow={props.arrowVisible}
+    >
       <FlexCenter>
         <BackArrow className="arrow" onClick={props.backArrowHandler} white />
         <ProfileIcon>
@@ -56,11 +59,13 @@ Header.propTypes = {
   header: PropTypes.string,
   customHeading: PropTypes.string,
   starImage: PropTypes.string,
+  class: PropTypes.string,
 };
 Header.defaultProps = {
   arrowVisible: false,
   header: '',
   starImage: '',
+  class: '',
 };
 
 export default connect(
