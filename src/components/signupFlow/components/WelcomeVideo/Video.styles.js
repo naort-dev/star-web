@@ -14,7 +14,7 @@ export const Layout = styled.section`
   }
   .mobileBtn {
     position: absolute;
-    top: 562px;
+    top: 526px;
     padding-bottom: 60px;
     display: block;
     ${media.webView} {
@@ -46,15 +46,17 @@ export const Layout = styled.section`
     font-size: 14px;
     cursor: pointer;
     font-family: Gilroy;
+    padding-bottom: 0;
     ${media.webView} {
       display: inline-block;
       padding-top: 15px;
+      padding-bottom: 10px;
     }
   }
   .skipMob {
     display: block;
     position: absolute;
-    top: ${props => (props.error ? '532px' : '635px')};
+    top: ${props => (props.error ? '532px' : '605px')};
     left: 0;
     padding-top: 5px;
     ${media.webView} {
@@ -75,7 +77,6 @@ export const VideoContainer = styled.section`
   @media (max-width: 831px) {
     width: 317px;
     height: 514px;
-    margin-top: 30px;
   }
   .playButton {
     position: absolute;
@@ -153,7 +154,7 @@ export const QuestionContainer = styled.section`
 export const ShowHide = styled.span`
   display: none;
   position: absolute;
-  top: 467px;
+  top: 445px;
   width: 224px;
   text-align: center;
   height: 30px;

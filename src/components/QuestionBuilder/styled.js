@@ -7,6 +7,7 @@ export const QuestionWrapper = styled.section`
   padding-bottom: 17.8px;
   ${media.mobileScreen} {
     max-width: 240px;
+    padding-bottom: 10px;
   }
   svg {
     margin-top: 2px;
