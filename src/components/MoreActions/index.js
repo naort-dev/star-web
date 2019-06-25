@@ -43,8 +43,8 @@ const MoreActions = (props) => {
           }}
         >
           {
-            props.options.map(optionItem => (
-              <MoreStyled.Option onClick={onSelectOption(optionItem)}>{optionItem.label}</MoreStyled.Option>
+            props.options.map((optionItem, index) => (
+              <MoreStyled.Option key={index} onClick={onSelectOption(optionItem)}>{optionItem.label}</MoreStyled.Option>
             ))
           }
         </MoreStyled.Popover>
