@@ -47,6 +47,7 @@ justify-content: center;
 }
 @media(max-width: 831px){
   margin-top: 0;
+  margin-bottom:20px;
 }
   .success-button {
     @media(max-width: 831px){
