@@ -23,7 +23,7 @@ export const requestFetchFailed = error => ({
 });
 
 export const changeBookingList = (requestId, requestStatus) => (dispatch, getState) => {
-  let { data: bookingsList, count, offset, videoStatus } = getState().bookingsList;
+  let { data: bookingsList, count, offset, videoStatus } = getState().bookings.bookingsList;
   if (requestStatus === 5) { // decline bookings
     bookingsList = bookingsList.filter(booking => booking.booking_id !== requestId);
     offset -= 1;
@@ -52,6 +52,11 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
       if (resp.data && resp.data.success) {
         dispatch(requestFetchEnd());
         dispatch(changeBookingList(requestId, requestStatus))
+        dispatch(updateToast({
+          value: true,
+          message: 'Booking declined',
+          variant: 'success',
+        }))
       } else {
         dispatch(requestFetchEnd(requestId, requestStatus));
       }

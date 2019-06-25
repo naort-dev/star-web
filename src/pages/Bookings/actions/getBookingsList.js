@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import { celebOpenStatusList } from '../../../constants/requestStatusList';
 import { updateUnseenCount } from '../../../services';
 import Api from '../../../lib/api';
 import { filterOptions, sortBy } from '../constants';
+import { updateUserDetails } from '../../../store/shared/actions/getUserDetails';
 import { fetch, CancelToken } from '../../../services/fetch';
 
 export const BOOKINGS_LIST = {
@@ -58,11 +59,24 @@ export const updateBookingList = data => ({
 
 export const updateBookingsList = (id, newData) => (dispatch, getState) => {
   const originalList = cloneDeep(getState().bookings.bookingsList.data);
-  const dataIndex = originalList.findIndex(item => item.id === id);
+  const dataIndex = originalList.findIndex(item => item.booking_id === id);
   originalList[dataIndex] = newData;
-  dispatch(bookingsListFetchStart(false, getState().bookings.bookingsList.token));
   dispatch(bookingsListUpdate(originalList));
 };
+
+export const favoriteVideo = (bookingId, videoId) => (dispatch, getState) => {
+  return fetch.post(Api.favoriteVideo, {
+    booking: bookingId,
+    video: videoId,
+  })
+    .then((resp) => {
+      if (resp.data && resp.data.success) {
+        const originalList = cloneDeep(getState().bookings.bookingsList.data);
+        const booking = originalList.find(item => item.booking_id === bookingId);
+        dispatch(updateBookingsList(bookingId, { ...booking, favorite: !booking.favorite }));
+      }
+    })
+}
 
 export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = '', sortParam = '') => (
   dispatch,
@@ -99,8 +113,14 @@ export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = 
     )
     .then(resp => {
       if (resp.data && resp.data.success) {
-        if (celebOpenStatusList.indexOf(videoStatus) >= 0 && unseenBookings) {
+        if (isEqual(videoStatus, celebOpenStatusList) && unseenBookings) {
+          const { settings_userDetails, settings_celebrityDetails } = getState().userDetails;
+          const userData = {
+            userDetails: {...settings_userDetails, unseen_bookings: 0},
+            celbDetails: settings_celebrityDetails,
+          }
           updateUnseenCount();
+          dispatch(updateUserDetails(userData));
         }
         dispatch(bookingsListFetchEnd());
         const { count } = resp.data.data;

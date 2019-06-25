@@ -45,7 +45,7 @@ class Api {
   static changeRequestStatus = 'v1/request/change_request_status/';
   static rating = 'v1/user/fan/celebrity_rating/';
   static requestFeedback = 'v1/request/feedback/';
-  static contactSupport = 'v1/user/contact_support/';
+  static contactSupport = 'v2/user/contact_support/';
   static reportAbuse = 'v1/user/fan/celebrity_abuse/';
   static reactionAbuse = 'v1/request/reaction_abuse/';
   static stripeRegistration = 'v1/payments/getstripeurl/';
@@ -81,6 +81,7 @@ class Api {
   static notificationViewed = 'v2/user/settings_viewed/';
   static updateUnseenCount = 'v1/user/update_unseen_count';
   static getRecentActivity = 'v2/user/recent_activity/';
+  static favoriteVideo = 'v2/request/request_favorites/';
 }
 
 export default Api;
