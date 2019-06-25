@@ -59,7 +59,7 @@ CommentStyled.ListWrapper = styled.div`
   .arrow-list {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     padding-left: 24px;
     .arrow {
       background: url('../assets/images/previcon.svg') no-repeat;
@@ -70,6 +70,7 @@ CommentStyled.ListWrapper = styled.div`
       cursor: pointer;
       &.arrow-1 {
         transform: rotateZ(90deg);
+        margin-bottom: 18px;
       }
       &.arrow-2 {
         transform: rotateZ(-90deg);
