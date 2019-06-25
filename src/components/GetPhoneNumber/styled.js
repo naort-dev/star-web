@@ -109,7 +109,7 @@ Layout.Phonenumber = styled.div`
     padding-bottom: 10px;
     padding-top: 10px;
   }
-  .react-phone-number-input__row {
+  .react-phone-number-input {
     border-bottom: 1px solid #C5D2E0;
     margin: 25px 0;
   }
@@ -120,7 +120,7 @@ Layout.Phonenumber = styled.div`
   }
   .errorElement {
     color: #990000;
-    margin-left: 60px;
+    margin-left: 45px;
     margin-top: 7px;
     font-family: Gilroy;
     font-size: 14px;
