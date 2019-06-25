@@ -1,0 +1,1 @@
+export { ManageStarProfile } from './manageStarProfile.loadable';

@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Layout, Heading, Wrapper } from './styled';
-import DotsContainer from '../../../../components/Dots';
 import About from './About';
 import Video from './Video';
-import { BackArrow } from '../../../../styles/CommonStyled';
-import getAWSCredentials from '../../../../utils/AWSUpload';
-import { locations } from '../../../../constants/locations';
+import { BackArrow } from '../../../../../../styles/CommonStyled';
+import getAWSCredentials from '../../../../../../utils/AWSUpload';
+import { locations } from '../../../../../../constants/locations';
 import {
   loaderAction,
   setVideoUploadedFlag,
   updateMediaStore,
   updateToast,
-} from '../../../../store/shared/actions/commonActions';
-import { audioVideoSupport, isIOSDevice } from '../../../../utils/checkOS';
+} from '../../../../../../store/shared/actions/commonActions';
+import { audioVideoSupport, isIOSDevice } from '../../../../../../utils/checkOS';
+import { updateUserDetails } from '../../../../../../store/shared/actions/saveSettings'; 
 
 const WelcomeVideo = props => {
   const [compSwitch, compSwitchHandler] = useState(
@@ -24,29 +24,24 @@ const WelcomeVideo = props => {
   );
   const [isDeviceSupported, setDeviceSupport] = useState(false);
   useEffect(() => {
-    checkforAudioVideoSupport();
+    // checkforAudioVideoSupport();
     props.updateMediaStore({
-      videoSrc: props.signupDetails.welcomeVideo,
-      recordedTime: props.signupDetails.welcomeVideoLength,
+      videoSrc: props.userDetails.settings_celebrityDetails.profile_video,
+      recordedTime: props.userDetails.settings_celebrityDetails.duration,
     });
-    props.setVideoUploadedFlag(props.signupDetails.videoUploaded);
+    // props.setVideoUploadedFlag(props.signupDetails.videoUploaded);
   }, []);
-  const checkforAudioVideoSupport = async () => {
-    const deviceSupport = await audioVideoSupport('videoinput');
-    console.log(deviceSupport);
-    if (deviceSupport) {
-      setDeviceSupport(true);
-      props.audioVideoSupport(true);
-    } else {
-      props.audioVideoSupport(false);
-    }
-  };
+  // const checkforAudioVideoSupport = async () => {
+  //   const deviceSupport = await audioVideoSupport('videoinput');
+  //   if (deviceSupport) {
+  //     setDeviceSupport(true);
+  //     props.audioVideoSupport(true);
+  //   } else {
+  //     props.audioVideoSupport(false);
+  //   }
+  // };
   const continueCallback = () => {
-    if (!isIOSDevice() && !isDeviceSupported) {
-      props.changeStep(props.currentStep + 2);
-    } else {
       compSwitchHandler(true);
-    }
   };
 
   const backArrowClick = () => {
@@ -66,10 +61,16 @@ const WelcomeVideo = props => {
           axios
             .post(response.url, response.formData)
             .then(() => {
-              props.setProfileVideo(response.filename);
-              props.changeStep(props.currentStep + 2);
+              // props.setProfileVideo(response.filename);
+              const finalUserDetails = {
+                celebrity_details: {
+                  profile_video: response.filename,
+                },
+                user_details: {},
+              };
+              props.updateUserDetails(props.userDetails.settings_userDetails.id, finalUserDetails);
               props.loaderAction(false);
-              props.setVideoUploadedFlag(true);
+              // props.setVideoUploadedFlag(true);
             })
             .catch(() => {
               props.loaderAction(false);
@@ -84,28 +85,25 @@ const WelcomeVideo = props => {
   return (
     <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
-      <Heading className={`${compSwitch && "welcome-head"}`}>Welcome Video - Say Hello!</Heading>
-      <DotsContainer dotsCount={3} selectedDot={3} />
-      <Wrapper className={`${compSwitch && "video-wrapper"}`}>
-        <Scrollbars className="scrollbar">
-          {compSwitch ? (
+      <Heading>Welcome Video</Heading>
+      <Wrapper>
+        {/* <Scrollbars className="scrollbar"> */}
+          {/* {compSwitch ? ( */}
             <Video
-              skipCallback={props.skipCallback}
-              changeStep={props.changeStep}
-              currentStep={props.currentStep}
               uploadVideo={uploadVideo}
               loaderAction={props.loaderAction}
-              setVideoUploadedFlag={props.setVideoUploadedFlag}
+              // setVideoUploadedFlag={props.setVideoUploadedFlag}
               updateToast={props.updateToast}
+              src={props.userDetails.settings_celebrityDetails.profile_video}
             />
-          ) : (
-              <About
-                continueCallback={continueCallback}
-                skipCallback={props.skipCallback}
-                isDeviceSupported={isDeviceSupported}
-              />
-            )}
-        </Scrollbars>
+          {/* ) : (
+            <About
+              continueCallback={continueCallback}
+              isDeviceSupported={isDeviceSupported}
+            />
+          )
+          } */}
+        {/* </Scrollbars> */}
       </Wrapper>
     </Layout>
   );
@@ -113,17 +111,16 @@ const WelcomeVideo = props => {
 
 WelcomeVideo.propTypes = {
   onBack: PropTypes.func.isRequired,
-  skipCallback: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
-  setProfileVideo: PropTypes.func.isRequired,
-  setVideoUploadedFlag: PropTypes.func.isRequired,
+  // setProfileVideo: PropTypes.func.isRequired,
+  // setVideoUploadedFlag: PropTypes.func.isRequired,
   switched: PropTypes.bool,
   updateToast: PropTypes.func.isRequired,
 };
 
 WelcomeVideo.defaultProps = {
   switched: false,
-  // setProfileVideo: () =>{ },
+  updateUserDetails: () =>{ },
 };
 
 function mapDispatchToProps(dispatch) {
@@ -132,9 +129,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(loaderAction(value));
     },
     updateMediaStore: payload => dispatch(updateMediaStore(payload)),
-    setVideoUploadedFlag: value => {
-      dispatch(setVideoUploadedFlag(value));
-    },
+    // setVideoUploadedFlag: value => {
+    //   dispatch(setVideoUploadedFlag(value));
+    // },
+    updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
     updateToast: toastObj => dispatch(updateToast(toastObj)),
   };
 }
