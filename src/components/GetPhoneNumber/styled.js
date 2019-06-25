@@ -109,15 +109,22 @@ Layout.Phonenumber = styled.div`
     padding-bottom: 10px;
     padding-top: 10px;
   }
+  .react-phone-number-input {
+    border-bottom: 1px solid #C5D2E0;
+    margin: 25px 0;
+  }
   .react-phone-number-input__input{
     text-align: center;
     font-family: Gilroy;
+    border-bottom: none;
   }
   .errorElement {
-    color: red;
-    margin-left: 60px;
+    color: #990000;
+    margin-left: 45px;
     margin-top: 7px;
-    font-size: 12px;
+    font-family: Gilroy;
+    font-size: 14px;
+    line-height: 25px;
   }
 `;
 Layout.Image = styled.div`
@@ -146,6 +153,7 @@ Content.Resend = styled.div`
   text-align: center;
   max-width: 410px;
   color: #615195;
+  line-height: 22px;
   cursor: pointer;
 `;
 Content.OTPWrapper = styled.div`
@@ -170,6 +178,12 @@ Content.WrapsInput = styled.div`
     text-align: center;
     color: #8174aa;
     padding: 8px 0 0;
+    -moz-appearance:textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;
 Content.OtpSubTitleWrapper = styled.div`
@@ -179,8 +193,9 @@ Content.OtpSubTitleWrapper = styled.div`
   justify-content: center;
 `;
 Content.Error = styled.p`
-  color: red;
+  color: #990000;
   margin-top: 7px;
   margin-bottom: 2px;
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 25px;  
 `;

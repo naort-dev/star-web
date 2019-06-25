@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { isIOSDevice } from 'utils/checkOS';
 import { Layout, QuesWrapper } from './About.styles';
 import { questionsVideo, suggestions } from './dataModals';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import QuestionBuilder from '../../../../components/QuestionBuilder';
-import ListWithHeading from '../../../../components/ListWithHeading';
+import Button from '../../../../../PrimaryButton';
+import { FlexCenter } from '../../../../../../styles/CommonStyled';
+import QuestionBuilder from '../../../../../QuestionBuilder';
+import ListWithHeading from '../../../../../ListWithHeading';
 
 const About = props => {
   return (
@@ -35,27 +35,17 @@ const About = props => {
           </QuesWrapper>
         </React.Fragment>
       )}
-      <FlexCenter className="button-wrapper">
+      <FlexCenter>
         <Button className="button" onClick={props.continueCallback}>
           Continue
         </Button>
       </FlexCenter>
-      {props.isDeviceSupported && (
-        <span
-          className="skip"
-          onClick={() => props.skipCallback(false)}
-          role="presentation"
-        >
-          Skip
-        </span>
-      )}
     </Layout>
   );
 };
 
 About.propTypes = {
   continueCallback: PropTypes.func.isRequired,
-  skipCallback: PropTypes.func.isRequired,
 };
 
 About.defaultProps = {};

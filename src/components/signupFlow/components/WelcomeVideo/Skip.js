@@ -23,10 +23,10 @@ const Skip = props => {
         </p>
         <FlexCenter className="colAlign">
           <Button className='whiteBtn' onClick={() => props.onBack(true)}>
-            You talked me into it, let me fix my hair
+            You talked me into it,<br/> let me fix my hair
           </Button>
           <Button className='whiteBtn' secondary onClick={skippedVideo}>
-            Skip for now but I will be back!
+            Skip for now<br/> but I will be back!
           </Button>
         </FlexCenter>
       </FlexCenter>

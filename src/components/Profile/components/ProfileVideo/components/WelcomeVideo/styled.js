@@ -3,21 +3,16 @@ import styled from 'styled-components';
 export const Layout = styled.section`
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
   background: #fff;
   .leftArrow {
     position: absolute;
   }
+  @media (max-width: 831px) {
+    background: #f6f6f6;
+  }
   .dots-container {
     @media (max-width: 831px) {
       display: ${props => (props.compSwitch ? 'none' : 'block')};
-    }
-  }
-  .welcome-head {
-    @media (max-width: 831px) {
-      display: none;
     }
   }
 `;
@@ -28,7 +23,7 @@ export const Heading = styled.div`
   font-family: 'Gilroy';
   padding-top: 61px;
   @media (max-width: 831px) {
-    padding-top: 71px;
+    padding-top: 23px;
     max-width: 230px;
     margin: 0 auto 10.2px;
     line-height: 28px;
@@ -38,8 +33,4 @@ export const Heading = styled.div`
 export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
-  &.video-wrapper {
-    height: 95% !important;
-    margin-top: 35px;
-  }
 `;

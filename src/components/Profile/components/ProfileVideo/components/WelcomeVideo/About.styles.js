@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
+import { media } from '../../../../../../styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
@@ -15,10 +15,7 @@ export const Layout = styled.section`
     color: #7c7c7c;
     padding-top: 25px;
     @media (max-width: 831px) {
-      display: none;
-    }
-    @media (min-width: 832px) {
-      padding-bottom: 0;
+      padding-top: 15px;
     }
   }
   .note {
@@ -41,18 +38,16 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
-  .button-wrapper {
-    padding-bottom: 12px;
-  }
   .skip {
-    display: block;
+    display: inline-block;
     width: 100%;
     text-align: center;
+    padding-top: 12px;
     color: #615195;
     cursor: pointer;
     font-family: Gilroy;
     font-size: 14px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -79,7 +74,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy;
+    font-family: Gilroy-Medium;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;
@@ -92,16 +87,10 @@ max-width: 430px;
 margin-top: 20px;
 font-family: Gilroy;
 &.section-1 {
-  @media (min-width: 832px) {
-    margin-top: 62px;
-  }
+  margin-top: 62px;
 }
-
 `;
 Layout.Suggestions = styled.section`
   margin-top: 15px;
   margin-bottom: 95px;
-  @media (max-width: 831px) {
-    margin-bottom: 0;
-  }
 `;
