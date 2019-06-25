@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import MoreActions from '../MoreActions';
 import PrimaryButton from '../PrimaryButton';
 import StarRating from '../StarRating';
 import { getTime } from '../../utils/dataToStringFormatter';
+import { toggleActivityVisibility } from '../../store/shared/actions/getActivities';
 import CommentStyled from './styled';
 
 const CommentItem = (props) => {
@@ -57,6 +59,12 @@ const CommentItem = (props) => {
     return props.commentDetails.user_image_url;
   }
 
+  const onSelectAction = (optionItem) => {
+    if (optionItem.value === 'hide') {
+      props.toggleActivityVisibility(props.activityId);
+    }
+  }
+
   return (
     <CommentStyled>
       <CommentStyled.Container>
@@ -73,7 +81,7 @@ const CommentItem = (props) => {
                     label: 'Hide from public',
                     value: 'hide',
                   }]}
-                  // onSelectOption={onSelectAction}
+                  onSelectOption={onSelectAction}
                 />
             }
           </span>
@@ -92,6 +100,7 @@ CommentItem.defaultProps = {
   disableAction: false,
   onReactionClick: () => {},
   commentDetails: {},
+  activityId: '',
 }
 
 CommentItem.propTypes = {
@@ -100,9 +109,15 @@ CommentItem.propTypes = {
   classes: PropTypes.object,
   user: PropTypes.string,
   time: PropTypes.Date,
+  activityId: PropTypes.string,
   disableAction: PropTypes.bool,
   commentDetails: PropTypes.object,
   onReactionClick: PropTypes.func,
+  toggleActivityVisibility: PropTypes.func.isRequired,
 }
 
-export default CommentItem;
+const mapDispatchToProps = dispatch => ({
+  toggleActivityVisibility: activityId => dispatch(toggleActivityVisibility(activityId)),
+})
+
+export default connect(null, mapDispatchToProps)(CommentItem);

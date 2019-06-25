@@ -82,6 +82,7 @@ class Api {
   static updateUnseenCount = 'v1/user/update_unseen_count';
   static getRecentActivity = 'v2/user/recent_activity/';
   static favoriteVideo = 'v2/request/request_favorites/';
+  static toggleActivityVisibility = 'v2/user/activity_public_visibility/';
 }
 
 export default Api;

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from '../Loader';
 import CommentItem from '../CommentItem';
 import ListingStyled from './styled';
 import { withScroll } from '../../services/withScroll';
@@ -13,6 +12,7 @@ const CommentListing = (props) => {
           <ListingStyled.Content key={index}>
             <CommentItem
               type={data.activity_type}
+              activityId={data.id}
               user={data.activity_from_user}
               time={data.activity_details && data.activity_details.created_date}
               commentDetails={data.activity_details}
@@ -23,10 +23,6 @@ const CommentListing = (props) => {
           </ListingStyled.Content>
         ))
       }
-      {/* {
-        props.loading &&
-          <Loader />
-      } */}
     </ListingStyled>
   );
 };
