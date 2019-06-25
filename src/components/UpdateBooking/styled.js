@@ -16,6 +16,7 @@ const UpdateStyled = Styled.div`
   .drop-down {
     display: block;
     margin: 26.8px;
+    width: 100%;
     @media(min-width: 832px) {
       width: 275px;
     }
