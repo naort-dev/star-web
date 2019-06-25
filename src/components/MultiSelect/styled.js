@@ -64,23 +64,19 @@ const MultiSelectStyled = styled.div`
       font-family: Gilroy-Medium;
       font-size: 14px;
       padding: 5px 5px 5px 0;
-      line-height: 14px;
+      line-height: 15px;
       color: ${props => props.theme.greyishBrown};
     }
     .select__multi-value__remove {
-      font-size: 16.9px;
+      font-size: 16px;
       color: rgb(47, 131, 157);
       cursor: pointer;
-      padding-left: 8px;
+      line-height: 16px;
+      align-items: center;
+      padding-left: 4px;
+      margin-top: -2px
       &:hover {
         background: none;
-      }
-      .fans-want &,
-      .select-category & {
-        font-size: 16px;
-        line-height: 16px;
-        align-items: center;
-        padding-left: 4px;
       }
     }
   }

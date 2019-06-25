@@ -8,6 +8,7 @@ export const ListWrapper = styled.div`
   padding-bottom: 17.8px;
   ${media.mobileScreen} {
     max-width: 240px;
+    padding-bottom: 10px;
   }
   svg {
     margin-top: 2px;

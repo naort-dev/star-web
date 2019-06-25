@@ -671,7 +671,7 @@ ImageUpload.CropperLightButton = styled.button`
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 16px;
   display: flex;
-  flex-direction: ${(props) => (props.isMultiline ? 'column' : 'inherit')}
+  flex-direction: ${(props) => (props.isMultiline ? 'column' : 'row')}
   @media (min-width: 832px) {
     margin-top: 20px;
   }
