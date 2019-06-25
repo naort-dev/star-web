@@ -219,7 +219,7 @@ ListingStyled.ContentSection = styled.div`
     margin-top: 56px;
   }
   @media(min-width: 1280px) {
-    margin-top: 49px;
+    margin-top: 25px;
   }
 `;
 
