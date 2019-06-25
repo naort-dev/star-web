@@ -96,8 +96,8 @@ const QuickComment = (props) => {
                   renderThumbVertical={scrollProps => <div {...scrollProps} className="thumb-vertical"/>}
                 >
                   {
-                    commentGenerator(fanName).map(comment => (
-                      <li className="comment-item" onClick={addComment(comment)}>{comment}</li>
+                    commentGenerator(fanName).map((comment, index) => (
+                      <li className="comment-item" key={index} onClick={addComment(comment)}>{comment}</li>
                     ))
                   }
                 </Scrollbars>

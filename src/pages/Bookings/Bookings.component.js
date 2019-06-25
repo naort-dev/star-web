@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BackArrow } from 'styles/CommonStyled';
+import { BackArrow, EmptyText } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
 import CancelledBookings from './components/CancelledBookings';
 import { options, filterOptions, sortBy } from './constants';
+import { checkIfAnyBooking } from '../../services/request';
 import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {} from '../../styles/CommonStyled';
@@ -47,7 +48,15 @@ class Bookings extends React.Component {
       filter,
       selected: '',
       sort,
+      hasBookings: true,
     };
+  }
+
+  componentDidMount() {
+    checkIfAnyBooking('celebrity_id')
+      .then((hasBookings) => {
+        this.setState({ hasBookings });
+      })
   }
 
   onBackClick = () => {
@@ -112,7 +121,7 @@ class Bookings extends React.Component {
   }
 
   render() {
-    const { dropValue, selected, filter, sort } = this.state;
+    const { dropValue, selected, filter, sort, hasBookings } = this.state;
     const { props } = this;
     return (
       <BookingsStyled>
@@ -120,50 +129,59 @@ class Bookings extends React.Component {
         <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
         <BookingsStyled.Container>
           {
-            dropValue.id === 'all'&&
-              <AllBookings
-                bookingsList={props.bookingsList}
-                recentActivity={props.recentActivity}
-                dropValue={dropValue}
-                config={props.config}
-                handleCategoryChange={this.handleCategoryChange}
-                onOpenClick={this.onOpenClick}
-                setRequestType={this.setRequestType}
-              />
-          }
-          {
-            dropValue.id === 'open' &&
-              <OpenBookings
-                bookingsList={props.bookingsList}
-                config={props.config}
-                dropValue={dropValue}
-                selected={selected}
-                updateSelected={this.setRequest}
-                handleCategoryChange={this.handleCategoryChange}
-              />
-          }
-          {
-            dropValue.id === 'completed' &&
-              <CompletedBookings
-                bookingsList={props.bookingsList}
-                dropValue={dropValue}
-                filter={filter}
-                sort={sort}
-                favoriteVideo={props.favoriteVideo}
-                toggleBookingModal={props.toggleBookingModal}
-                handleCategoryChange={this.handleCategoryChange}
-                handleFilterOrSort={this.handleFilterOrSort}
-              />
-          }
-          {
-            dropValue.id === 'cancelled' &&
-              <CancelledBookings
-                bookingsList={props.bookingsList}
-                config={props.config}
-                dropValue={dropValue}
-                toggleBookingModal={props.toggleBookingModal}
-                handleCategoryChange={this.handleCategoryChange}
-              />
+            hasBookings ?
+             <React.Fragment>
+                {
+                  dropValue.id === 'all'&&
+                    <AllBookings
+                      bookingsList={props.bookingsList}
+                      recentActivity={props.recentActivity}
+                      dropValue={dropValue}
+                      config={props.config}
+                      handleCategoryChange={this.handleCategoryChange}
+                      onOpenClick={this.onOpenClick}
+                      setRequestType={this.setRequestType}
+                    />
+                }
+                {
+                  dropValue.id === 'open' &&
+                    <OpenBookings
+                      bookingsList={props.bookingsList}
+                      config={props.config}
+                      dropValue={dropValue}
+                      selected={selected}
+                      updateSelected={this.setRequest}
+                      handleCategoryChange={this.handleCategoryChange}
+                    />
+                }
+                {
+                  dropValue.id === 'completed' &&
+                    <CompletedBookings
+                      bookingsList={props.bookingsList}
+                      dropValue={dropValue}
+                      filter={filter}
+                      sort={sort}
+                      favoriteVideo={props.favoriteVideo}
+                      toggleBookingModal={props.toggleBookingModal}
+                      handleCategoryChange={this.handleCategoryChange}
+                      handleFilterOrSort={this.handleFilterOrSort}
+                    />
+                }
+                {
+                  dropValue.id === 'cancelled' &&
+                    <CancelledBookings
+                      bookingsList={props.bookingsList}
+                      config={props.config}
+                      dropValue={dropValue}
+                      toggleBookingModal={props.toggleBookingModal}
+                      handleCategoryChange={this.handleCategoryChange}
+                    />
+                }
+              </React.Fragment>
+              :
+                <EmptyText>You currently do not have any bookings.
+                  Visit Promote Yourself to spread the word you are available.
+                </EmptyText>
           }
         </BookingsStyled.Container>
       </BookingsStyled>
