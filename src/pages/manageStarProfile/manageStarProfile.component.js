@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SubHeader from '../../components/SubHeader';
+import Header from '../../components/Header';
 import { Layout, Content } from './styled';
 import { STAR_PROFILE } from './constants';
 import ProgressBar from '../../components/ProgressBar';
 import InnerSidebar from '../../components/InnerSidebar';
-import { NameAndPhotoRoot, ProfileVideoRoot } from '../../components/Profile';
+import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot } from '../../components/Profile';
 import { getMobileOperatingSystem } from '../../utils/checkOS';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { useMedia } from 'utils/domUtils';
@@ -16,6 +17,7 @@ const ManageStarProfile = props => {
   const [redirect, setRedirect] = useState(false);
 
   const isMobile = useMedia('(max-width: 831px)');
+  const isIpad = useMedia('(min-width:832px) and (max-width: 1279px)');
 
   useEffect(() => {
     const urlParts = props.location.pathname.split('/');
@@ -38,6 +40,7 @@ const ManageStarProfile = props => {
     return (<Switch>
       <Route path="/manage/profile/name-photo" component={NameAndPhotoRoot} />
       <Route path="/manage/profile/welcome-video" component={ProfileVideoRoot} />
+      <Route path="/manage/profile/bio" component={BioRoot} />
     </Switch>
     );
   };
@@ -64,9 +67,15 @@ const ManageStarProfile = props => {
             closePopUp={closeSignUp}
             modalView
             smallPopup
+            classes={
+              {
+                root: 'custom-modal',
+              }
+            }
           // setScrollRef={this.setScrollRef}
           // disableClose={this.state.disableClose}
-          >
+          > 
+            {!isIpad && <Header desktopSearch/> }
             {getRoutes()}
           </RequestFlowPopup>
           ) : (

@@ -33,6 +33,7 @@ const WelcomeVideo = props => {
   }, []);
   const checkforAudioVideoSupport = async () => {
     const deviceSupport = await audioVideoSupport('videoinput');
+    console.log(deviceSupport);
     if (deviceSupport) {
       setDeviceSupport(true);
       props.audioVideoSupport(true);

@@ -6,13 +6,13 @@ export const STAR_PROFILE = {
       selectedName: 'name&photo',
       url: '/manage/profile/name-photo',
     },
-    { linkName: 'Welcome Video', selectedName: 'requests', url: '/manage/profile/welcome-video' },
+    { linkName: 'Welcome Video', selectedName: 'welcome video', url: '/manage/profile/welcome-video' },
     {
       linkName: 'Bio',
-      selectedName: 'promotional',
-      url: '/manage/promotional-tools',
+      selectedName: 'bio',
+      url: '/manage/profile/bio',
     },
-    { linkName: 'Industry', selectedName: 'profile', url: '/manage/profile' },
+    { linkName: 'Industry', selectedName: 'profile', url: '/manage/profile/industry' },
     { linkName: 'Tags', selectedName: 'earnings', url: '/manage/earnings' },
     {
       linkName: 'Social handles',

@@ -63,10 +63,10 @@ const WelcomeVideo = props => {
             .then(() => {
               // props.setProfileVideo(response.filename);
               const finalUserDetails = {
-                celebrity_details: {},
-                user_details: {
+                celebrity_details: {
                   profile_video: response.filename,
                 },
+                user_details: {},
               };
               props.updateUserDetails(props.userDetails.settings_userDetails.id, finalUserDetails);
               props.loaderAction(false);

@@ -9,6 +9,7 @@ export const Layout = styled.section`
     padding-top: 9px;
     margin-bottom: 28px;
   }
+  
 `;
 
 Layout.Header = styled.span`
@@ -23,7 +24,7 @@ Layout.Header = styled.span`
   }
 `;
 export const Content = styled.div`
- 
+  
 `;
 
 Content.Description = styled.div`

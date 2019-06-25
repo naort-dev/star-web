@@ -88,7 +88,7 @@ const Video = props => {
         // handle logic if video already uploaded
       } else {
         // action on continue to upload video
-        props.uploadVideo(props.videoSrc);
+        props.uploadVideo(props.videoFile);
       }
     }
   };
@@ -200,6 +200,7 @@ const Video = props => {
 
   const showVideo = () => {
     if ((props.src || props.videoSrc) && !videoRecord) {
+      console.log(props.src);
       return (<VideoRender
       variableWidth
       variableHeight

@@ -7,6 +7,9 @@ export const Layout = styled.section`
   .leftArrow {
     position: absolute;
   }
+  @media (max-width: 831px) {
+    background: #f6f6f6;
+  }
   .dots-container {
     @media (max-width: 831px) {
       display: ${props => (props.compSwitch ? 'none' : 'block')};

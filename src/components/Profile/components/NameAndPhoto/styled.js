@@ -17,7 +17,9 @@ export const Layout = styled.section`
     background-color: #ffffff;
     margin-top: 40px;
   }
-  
+  @media (max-width: 831px) {
+    background: #f6f6f6;
+  }  
 `;
 
 Layout.SubheaderWrap = styled.div`
