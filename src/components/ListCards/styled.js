@@ -5,12 +5,14 @@ export const HeadingBold = styled.span`
   font-family: Gilroy-Bold;
   font-size: 18px;
   color: ${props => props.theme.flatBlue};
+  line-height: 23px;
 `;
 
 export const BoldTextM = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 14px;
   color: #6a6a6a;
+  line-height: 16px;
 `;
 
 export const MediumText = styled.span`

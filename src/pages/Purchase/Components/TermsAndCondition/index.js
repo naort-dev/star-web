@@ -16,15 +16,15 @@ const TermsAndCondition = props => {
   return (
     <Layout className="content-wrapper">
       <div className="termsWrapper">
-        {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />}
+        {/* {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />} */}
         <p>{props.termText}</p>
       </div>
       <FlexBox className="button-wrapper">
         <Button
           className="continue-btn"
           onClick={() => props.submitClick(props.category)}
-          disabled={!props.checked && props.isCheckbox}
-          isDisabled={!props.checked && props.isCheckbox}
+          // disabled={!props.checked && props.isCheckbox}
+          // isDisabled={!props.checked && props.isCheckbox}
         >
           {props.buttonText}
         </Button>
@@ -46,8 +46,8 @@ TermsAndCondition.propTypes = {
 TermsAndCondition.defaultProps = {
   category: 0,
   termText: '',
-  buttonText: "Continue",
-  isCheckbox: true
+  buttonText: 'Continue',
+  isCheckbox: true,
 };
 
 export default TermsAndCondition;
