@@ -14,7 +14,7 @@ export const Layout = styled.section`
   }
   .mobileBtn {
     position: absolute;
-    top: 547px;
+    top: 562px;
     padding-bottom: 60px;
     display: block;
     ${media.webView} {
@@ -51,7 +51,7 @@ export const Layout = styled.section`
   .skipMob {
     display: block;
     position: absolute;
-    top: ${props => (props.error ? '532px' : '620px')};
+    top: ${props => (props.error ? '532px' : '635px')};
     left: 0;
     padding-top: 5px;
     ${media.webView} {
@@ -72,6 +72,7 @@ export const VideoContainer = styled.section`
   @media (max-width: 831px) {
     width: 317px;
     height: 514px;
+    margin-top: 30px;
   }
   .playButton {
     position: absolute;
