@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +11,44 @@ const ProfilePhoto = props => {
   const [imageData, updateData] = useState({
     openModal: false,
     isUpload: false,
-    imageBlob: null,
+    imageUrl: null,
   });
-  const takePicture = () => {};
+
+  const [croppedData, updateCroppedData] = useState({
+    croppedUrl: null,
+    croppedFile: null,
+  });
+  const closeCropper = () => {
+    updateData({
+      ...imageData,
+      openModal: false,
+    });
+  };
+  const takeNewPicture = () => {
+    updateData({
+      ...imageData,
+      isUpload: false,
+      openModal: true,
+    });
+  };
+
+  const takePictureResult = imageResult => {};
+
+  const getCroppedImage = (file, base64Url) => {
+    updateCroppedData({
+      ...croppedData,
+      croppedUrl: base64Url,
+      croppedFile: file,
+    });
+  };
+
+  const newUpload = imageUrl => {
+    updateData({
+      ...imageData,
+      imageUrl,
+    });
+  };
+
   const uploadPicture = file => {
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (allowedExtensions.exec(file.target.value)) {
@@ -22,13 +57,14 @@ const ProfilePhoto = props => {
         imageBlob: file.target.files[0],
         isUpload: true,
         openModal: true,
+        imageUrl: window.URL.createObjectURL(file.target.files[0]),
       });
     }
   };
 
   return (
     <Container>
-      <Wrap>
+      <Wrap imageUrl={croppedData.croppedUrl}>
         <h2
           className="sub-head"
           data-web={props.webHead}
@@ -38,7 +74,7 @@ const ProfilePhoto = props => {
         </h2>
         <section className="content-wrapper">
           <span className="profile-image" />
-          <UploadWrap onClick={takePicture}>
+          <UploadWrap onClick={takeNewPicture}>
             <FontAwesomeIcon icon={faCamera} className="icon take-picture" />
             Take picture
           </UploadWrap>
@@ -54,7 +90,16 @@ const ProfilePhoto = props => {
           </UploadWrap>
           <Button className="save-btn">Save</Button>
         </section>
-        {imageData.openModal && <ImageModal isUpload={imageData.isUpload} />}
+        {imageData.openModal && (
+          <ImageModal
+            isUpload={imageData.isUpload}
+            imageUrl={imageData.imageUrl}
+            takeNewPicture={takeNewPicture} // on take new picture:- camera
+            newUpload={newUpload} // on upload file:- image
+            closeCropper={closeCropper}
+            getCroppedImage={getCroppedImage}
+          />
+        )}
       </Wrap>
     </Container>
   );
