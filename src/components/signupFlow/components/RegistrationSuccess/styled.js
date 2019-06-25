@@ -107,8 +107,8 @@ RegSuccessWrapper.Description = styled.div`
     max-width: 450px;
   }
   @media(max-width: 831px){
-    font-size: 17px;
-    line-height: 24px;
+    font-size: 13px;
+    line-height: 17spx;
     color: #7c7c7c;
     margin: 0 auto;
     max-width: 310px;

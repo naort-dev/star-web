@@ -8,6 +8,7 @@ const NestedSelectStyled = styled.div`
     white-space: pre-line;
     line-height: 25px;
     color: ${props => props.theme.brownGreyTwo};
+    top: -10px;
   }
   .input-label-shrink {
     right: 0;
@@ -15,6 +16,8 @@ const NestedSelectStyled = styled.div`
     transform: none;
     font-size: 13px;
     line-height: 18px;
+    margin-top: 3px;
+      margin-bottom: 10px;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
@@ -90,6 +93,9 @@ const NestedSelectStyled = styled.div`
       padding-left: 34px;
       padding-bottom: 2px;
       background-color: #fff !important;
+      font-family: Gilroy;
+      font-size: 18px;
+      line-height: 38px;
     }
   }
   .select__dropdown-indicator {

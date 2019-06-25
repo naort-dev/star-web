@@ -15,6 +15,11 @@ export const Layout = styled.section`
       display: ${props => (props.compSwitch ? 'none' : 'block')};
     }
   }
+  .welcome-head {
+    @media (max-width: 831px) {
+      display: none;
+    }
+  }
 `;
 export const Heading = styled.div`
   text-align: center;
@@ -33,4 +38,8 @@ export const Heading = styled.div`
 export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
+  &.video-wrapper {
+    height: 95% !important;
+    margin-top: 35px;
+  }
 `;
