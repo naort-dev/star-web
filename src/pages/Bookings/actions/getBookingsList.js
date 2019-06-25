@@ -73,7 +73,7 @@ export const favoriteVideo = (bookingId, videoId) => (dispatch, getState) => {
       if (resp.data && resp.data.success) {
         const originalList = cloneDeep(getState().bookings.bookingsList.data);
         const booking = originalList.find(item => item.booking_id === bookingId);
-        dispatch(updateBookingsList(bookingId, { ...booking, favorite: !booking.favorite }));
+        dispatch(updateBookingsList(bookingId, { ...booking, video_favorite: !booking.video_favorite }));
       }
     })
 }

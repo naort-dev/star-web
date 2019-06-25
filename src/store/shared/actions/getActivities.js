@@ -57,9 +57,9 @@ export const toggleActivityVisibility = (activityId) => (dispatch, getState) => 
 }
 
 export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, getState) => {
-  const { count } = getState().activitiesList;
+  const { count, limit } = getState().activitiesList;
   dispatch(activitiesListFetchStart(refresh));
-  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}`).then((resp) => {
+  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}&offset=${offset}&limit=${limit}`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(activitiesListFetchEnd());
       let list = getState().activitiesList.data;
@@ -67,7 +67,7 @@ export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, ge
       if (refresh) {
         list = resp.data.data.recent_activities;
       } else {
-        list = [...resp.data.data.recent_activities, ...list];
+        list = [...list, ...resp.data.data.recent_activities];
       }
       dispatch(activitiesListFetchSuccess(list, newCount, offset));
     } else {

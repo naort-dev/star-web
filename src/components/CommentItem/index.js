@@ -67,9 +67,14 @@ const CommentItem = (props) => {
 
   return (
     <CommentStyled>
-      <CommentStyled.Container>
+      <CommentStyled.Container receive={props.receive}>
         <CommentStyled.ProfileImage profileImage={getUserImage()} />
-        <CommentStyled.Comment className={props.classes.comment} receive={props.receive}>
+        <CommentStyled.Comment
+          visible={props.type === 'tip' || props.type === 'rating' || props.visible}
+          className={props.classes.comment}
+          receive={props.receive}
+        >
+          { props.type !== 'tip' && props.type !== 'rating' && !props.visible && <span className='hidden-header'>HIDDEN</span> }
           { renderComment() }
           <span className='comment-footer'>
             <span className='time'>{getTime(props.time)}</span>
@@ -101,6 +106,7 @@ CommentItem.defaultProps = {
   onReactionClick: () => {},
   commentDetails: {},
   activityId: '',
+  visible: true,
 }
 
 CommentItem.propTypes = {
@@ -111,6 +117,7 @@ CommentItem.propTypes = {
   time: PropTypes.Date,
   activityId: PropTypes.string,
   disableAction: PropTypes.bool,
+  visible: PropTypes.bool,
   commentDetails: PropTypes.object,
   onReactionClick: PropTypes.func,
   toggleActivityVisibility: PropTypes.func.isRequired,
