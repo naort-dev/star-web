@@ -182,7 +182,8 @@ class Purchase extends Component {
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
             termText={getTerms}
-            buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
+            // buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
+            buttonText="Agree"
             isCheckbox={this.state.category === 2}
           />
         );
@@ -273,6 +274,11 @@ class Purchase extends Component {
             headerText="What kind of video message do you want?"
             arrowVisible={this.state.stepCount !== 1}
             starImage={this.getThumbnail()}
+            class={
+              this.state.stepCount === 2 &&
+              this.state.category === 3 &&
+              'custom-header'
+            }
           />
           <Content className="contentPadding" step={this.state.stepCount}>
             <Scrollbars
