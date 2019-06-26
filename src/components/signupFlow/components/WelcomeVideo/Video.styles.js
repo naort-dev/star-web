@@ -14,7 +14,7 @@ export const Layout = styled.section`
   }
   .mobileBtn {
     position: absolute;
-    top: 547px;
+    top: 526px;
     padding-bottom: 60px;
     display: block;
     ${media.webView} {
@@ -28,10 +28,13 @@ export const Layout = styled.section`
     font-family: Gilroy-Light;
     color: #fff;
     font-size: 14px;
-    padding-top: 20px;
+    padding-top: 0;
+    padding-bottom: 20px;
     ${media.webView} {
       color: #999;
       font-size: 16px;
+      padding-top: 20px;
+      padding-bottom: 0;
     }
   }
   .skip {
@@ -43,15 +46,17 @@ export const Layout = styled.section`
     font-size: 14px;
     cursor: pointer;
     font-family: Gilroy;
+    padding-bottom: 0;
     ${media.webView} {
       display: inline-block;
       padding-top: 15px;
+      padding-bottom: 10px;
     }
   }
   .skipMob {
     display: block;
     position: absolute;
-    top: ${props => (props.error ? '532px' : '620px')};
+    top: ${props => (props.error ? '532px' : '605px')};
     left: 0;
     padding-top: 5px;
     ${media.webView} {
@@ -149,7 +154,7 @@ export const QuestionContainer = styled.section`
 export const ShowHide = styled.span`
   display: none;
   position: absolute;
-  top: 467px;
+  top: 445px;
   width: 224px;
   text-align: center;
   height: 30px;

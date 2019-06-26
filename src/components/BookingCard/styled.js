@@ -37,6 +37,7 @@ BookingStyled.Booking = styled.div`
     right: 0;
     bottom: 0;
     top: 0;
+    z-index: 5;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
@@ -49,6 +50,7 @@ BookingStyled.OrderWrapper = styled.div`
     right: 0;
     bottom: 0;
     top: 0;
+    z-index: 10;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: rotateY(180deg);

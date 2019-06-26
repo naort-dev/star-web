@@ -27,6 +27,14 @@ export const HeaderDiv = styled.section`
     z-index: 1;
   }
 
+  &.custom-header {
+    min-height: 150px;
+  }
+
+  &.custom-header:after {
+    display: none;
+  }
+
   .customHead {
     font-family: Gilroy;
     font-size: 24px;
@@ -34,11 +42,12 @@ export const HeaderDiv = styled.section`
   }
 
   &.headerGlobal {
-    height: 157px;
+    min-height: 157px;
     margin-bottom: 40px;
 
     ${media.mobileScreen} {
-      height: 178px;
+      min-height: 178px;
+      margin-bottom: 20px;
     }
   }
 `;

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BackArrow } from 'styles/CommonStyled';
-import './styles.scss';
+import { SubHeaderWrap } from './styled';
 
 const SubHeader = props => {
   return (
-    <React.Fragment>
+    <SubHeaderWrap headercolor={props.headercolor} size={props.size}>
       <BackArrow className="arrow-head" onClick={props.onClick} />
-      <h1 className="head1">{props.heading}</h1>
-    </React.Fragment>
+      <h1 className="head1" >{props.heading}</h1>
+    </SubHeaderWrap>
   );
 };
 

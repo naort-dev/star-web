@@ -15,7 +15,7 @@ export const Layout = styled.section`
     color: #7c7c7c;
     padding-top: 25px;
     @media (max-width: 831px) {
-      padding-top: 15px;
+      display: none;
     }
     @media (min-width: 832px) {
       padding-bottom: 0;
@@ -63,13 +63,13 @@ export const QuesWrapper = styled.section`
   overflow: hidden;
   margin-top: 43px;
   padding: 23px 29px 7px;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
   ${media.webView} {
     margin-top: 17px;
     margin-bottom: 26px;
   }
   @media (max-width: 831px) {
-    margin-top: 12px;
+    margin-top: 8px;
     padding-bottom: 3px;
   }
   .question {
@@ -92,10 +92,16 @@ max-width: 430px;
 margin-top: 20px;
 font-family: Gilroy;
 &.section-1 {
-  margin-top: 62px;
+  @media (min-width: 832px) {
+    margin-top: 62px;
+  }
 }
+
 `;
 Layout.Suggestions = styled.section`
   margin-top: 15px;
   margin-bottom: 95px;
+  @media (max-width: 831px) {
+    margin-bottom: 0;
+  }
 `;

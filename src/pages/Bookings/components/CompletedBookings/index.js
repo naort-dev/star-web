@@ -81,7 +81,13 @@ const CompletedBookings = (props) => {
           <CompletedStyled.ListSection>
             {
               props.bookingsList.data.map((bookItem) => (
-                <CompletedCard onClick={onCompletedClick(bookItem)} key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+                <CompletedCard
+                  onClick={onCompletedClick(bookItem)}
+                  onFavoriteClick={props.favoriteVideo}
+                  key={bookItem.id}
+                  data={bookItem}
+                  classes={{root: 'list-item'}}
+                />
               ))
             }
           </CompletedStyled.ListSection>
@@ -110,6 +116,7 @@ CompletedBookings.propTypes = {
   sort: PropTypes.object.isRequired,
   filter: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
+  favoriteVideo: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

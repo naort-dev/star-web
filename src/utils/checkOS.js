@@ -50,30 +50,28 @@ export const checkPrerender = () => {
 
 export const audioVideoSupport = type => {
   if (checkMediaRecorderSupport()) {
-    const onlyHas = [];
     return navigator.mediaDevices
       .enumerateDevices()
       .then(devices => {
         let haveSupport = false;
-        let haveAudioSupport = false;
-        devices.forEach(device => {
-          onlyHas.push(device.kind);
+        if (devices) {
           if (type === 'audioinput') {
-            if (device.kind === type) {
+
+            if (devices.find(device => device.kind === "audioinput")) {
               haveSupport = true;
             }
           } else if (type === 'videoinput') {
-            if (device.kind === 'audioinput') {
-              haveAudioSupport = true;
-            }
-            if (device.kind === type && haveAudioSupport) {
+
+            if (devices.find(device => device.kind === "audioinput") && devices.find(device => device.kind === "videoinput")) {
               haveSupport = true;
             }
           }
-        });
+        }
         return haveSupport;
       })
-      .catch(() => false);
+      .catch(() => {
+        return false
+      });
   }
   return new Promise((resolve, reject) => {
     reject(Error(false));

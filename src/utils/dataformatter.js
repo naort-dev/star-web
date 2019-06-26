@@ -35,7 +35,7 @@ export function findCompletedVideo(bookingData) {
     const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
     return finalVideo;
   }
-  return null
+  return {}
 }
 
 export function parseQueryString(queryString) {

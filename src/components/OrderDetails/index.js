@@ -9,6 +9,8 @@ import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
 import ModalHeader from '../ModalHeader';
 import { openStatusList, completedStatusList } from '../../constants/requestStatusList';
+import { hideVideoFromProfile } from '../../services/request';
+import { findCompletedVideo } from '../../utils/dataformatter';
 import BookingTitle from '../BookingTitle';
 import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
@@ -17,8 +19,15 @@ import OrderStyled from './styled';
 const OrderDetails = (props) => {
 
   const { bookingData, starMode } = props;
-  const [requestType, updateRequestType] = useState('');
 
+  const setIntitialCheckBox = () => {
+    if (starMode) {
+      return bookingData.video_visibility
+    }
+    return false;
+  }
+  const [requestType, updateRequestType] = useState('');
+  const [checkBox, setCheckBox] = useState(setIntitialCheckBox());
 
   const renderHeading = () => {
     const requestDetails = bookingData.request_details;
@@ -63,6 +72,13 @@ const OrderDetails = (props) => {
     }
   }, [])
 
+  const onCheckBoxChange = async (check) => {
+    const completedVideo = findCompletedVideo(bookingData);
+    const hideResponse = await hideVideoFromProfile(completedVideo.video_id);
+    console.log(hideResponse)
+    setCheckBox(check);
+  }
+
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
 
@@ -106,7 +122,7 @@ const OrderDetails = (props) => {
         {
           requestType === 'completed' &&
             <OrderStyled.ColumnCenter>
-              <Checkbox />
+              <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
               <span className="check-text ">{ starMode ? 'Hide from profile' : 'Make my video private!' }</span>
             </OrderStyled.ColumnCenter>
         }

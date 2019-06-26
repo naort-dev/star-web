@@ -33,6 +33,7 @@ const WelcomeVideo = props => {
   }, []);
   const checkforAudioVideoSupport = async () => {
     const deviceSupport = await audioVideoSupport('videoinput');
+    console.log(deviceSupport);
     if (deviceSupport) {
       setDeviceSupport(true);
       props.audioVideoSupport(true);
@@ -83,9 +84,9 @@ const WelcomeVideo = props => {
   return (
     <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
-      <Heading>Welcome Video - Say Hello!</Heading>
-      <DotsContainer dotsCount={3} selectedDot={3} />
-      <Wrapper>
+      <Heading className={`${compSwitch && "welcome-head"}`}>Welcome Video - Say Hello!</Heading>
+      <DotsContainer dotsCount={3} selectedDot={3} className="about-head"/>
+      <Wrapper className={`${compSwitch && "video-wrapper"}`}>
         <Scrollbars className="scrollbar">
           {compSwitch ? (
             <Video
@@ -98,12 +99,12 @@ const WelcomeVideo = props => {
               updateToast={props.updateToast}
             />
           ) : (
-            <About
-              continueCallback={continueCallback}
-              skipCallback={props.skipCallback}
-              isDeviceSupported={isDeviceSupported}
-            />
-          )}
+              <About
+                continueCallback={continueCallback}
+                skipCallback={props.skipCallback}
+                isDeviceSupported={isDeviceSupported}
+              />
+            )}
         </Scrollbars>
       </Wrapper>
     </Layout>

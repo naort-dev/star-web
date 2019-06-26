@@ -8,7 +8,9 @@ export const withScroll = (WrappedComponent) => {
 
   const ListStyled = styled.section`
     width: 100%;
-    height: 100%;
+    ${props => (!props.scrollTarget || props.loading) && `
+      height: 100%;    
+    `}
     min-height: 300px;
     position: relative;
     ${props => props.loading && !props.notCenter && !props.customLoader && (`
@@ -117,7 +119,12 @@ export const withScroll = (WrappedComponent) => {
 
     render() {
       return (
-        <ListStyled loading={this.props.loading} notCenter={this.props.notCenter} customLoader={this.props.customLoader}>
+        <ListStyled
+          scrollTarget={this.props.scrollTarget}
+          loading={this.props.loading}
+          notCenter={this.props.notCenter}
+          customLoader={this.props.customLoader}
+        >
           {
             !this.props.dataList.length && this.props.loading && !this.props.customLoader ?
               this.renderLoader()

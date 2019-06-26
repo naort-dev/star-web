@@ -10,12 +10,14 @@ import { faFacebookF, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faMobile } from '@fortawesome/pro-light-svg-icons';
 import Popover from '@material-ui/core/Popover';
+import { getMobileOperatingSystem } from '../../utils/checkOS';
 import PrimaryButton from '../PrimaryButton';
 import ShareStyled from './styled';
 
 const Share = (props) => {
 
-  const shareAnchor = useRef(null);  
+  const shareAnchor = useRef(null);
+  const [isMobile] = useState(getMobileOperatingSystem());  
   const [showShare, toggleShare] = useState(false);
 
   const toggleList = state => () => {
@@ -25,9 +27,9 @@ const Share = (props) => {
   const sendSms = (shareUrl) => () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     if (/android/i.test(userAgent)) {
-      window.open(`sms:1234?body=${shareUrl}`);
+      window.open(`sms:1234?body=${encodeURIComponent(shareUrl)}`);
     } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      window.open(`sms:1234&body=${shareUrl}`);
+      window.open(`sms:1234&body=${encodeURIComponent(shareUrl)}`);
     }
   }
 
@@ -76,12 +78,15 @@ const Share = (props) => {
               <span className='icon-text'>Email</span>
             </EmailShareButton>
           </li>
-          <li className='list-item'>
-            <div className='social-btn' onClick={sendSms(shareUrl)}>
-              <FontAwesomeIcon className='icon' icon={faMobile} />
-              <span className='icon-text'>SMS</span>
-            </div>
-          </li>
+          {
+            isMobile &&
+              <li className='list-item'>
+                <div className='social-btn' onClick={sendSms(shareUrl)}>
+                  <FontAwesomeIcon className='icon' icon={faMobile} />
+                  <span className='icon-text'>SMS</span>
+                </div>
+              </li>
+          }
         </ShareStyled.List>
       </Popover>
     </ShareStyled>

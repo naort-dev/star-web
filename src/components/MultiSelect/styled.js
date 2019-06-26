@@ -56,43 +56,27 @@ const MultiSelectStyled = styled.div`
       background: rgb(255, 255, 255);
       //height: 26.7px;
       margin: 0 5px 5px 0px;
-      padding: 0px 8px 0 12px;
+      padding: 0px 3px 0 15px;
       border-radius: 15px;
-
-      .fans-want &,
-      .select-category & {
-        margin: 12px 5px 5px 0px;
-        padding: 0px 3px 0 15px;
-        border-radius: 15px;
-      }
     }
     .select__multi-value__label {
       padding: 0 4px 0 0;
-      font-family: Gilroy-Regular;
+      font-family: Gilroy-Medium;
       font-size: 14px;
-      line-height: 18px;
+      padding: 5px 5px 5px 0;
+      line-height: 15px;
       color: ${props => props.theme.greyishBrown};
-      .fans-want &,
-      .select-category & {
-        font-family: Gilroy-Medium;
-        font-size: 14px;
-        padding: 3px 5px 3px 0;
-      }
     }
     .select__multi-value__remove {
-      font-size: 16.9px;
+      font-size: 16px;
       color: rgb(47, 131, 157);
       cursor: pointer;
-      padding-left: 8px;
+      line-height: 16px;
+      align-items: center;
+      padding-left: 4px;
+      margin-top: -2px
       &:hover {
         background: none;
-      }
-      .fans-want &,
-      .select-category & {
-        font-size: 16px;
-        line-height: 16px;
-        align-items: center;
-        padding-left: 4px;
       }
     }
   }
@@ -119,8 +103,8 @@ const MultiSelectStyled = styled.div`
       padding: 8px 8.9px;
        & > div {
          height: auto;
-         line-height: 20px !important;
-         font-size: 16px;
+         line-height: 18px !important;
+         padding: 4px 13px 2px !important;
        }
     }
     &:after {
