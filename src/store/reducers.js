@@ -20,7 +20,6 @@ import bookings from '../pages/Bookings/reducers';
 import myVideos from '../pages/myVideos/reducers';
 import groupSupporters from '../pages/starSupporters/reducers';
 import groupListing from '../pages/groupListing/reducers';
-import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
@@ -75,7 +74,6 @@ const appReducer = combineReducers({
   saveSettings,
   stripeRegistration,
   changePassword,
-  earningsList,
   socialMediaData,
   referralDetails,
   commentsList,
