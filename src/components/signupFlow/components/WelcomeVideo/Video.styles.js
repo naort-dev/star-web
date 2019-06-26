@@ -17,6 +17,7 @@ export const Layout = styled.section`
     display: flex;
     order: 3;
     margin-bottom: 5px;
+    margin-top: 12px;
     ${media.webView} {
       display: none;
     }
@@ -58,6 +59,7 @@ export const Layout = styled.section`
     position: relative;
     left: 0;
     padding-top: 5px;
+    padding-bottom: 10px;
     order: 4;
     ${media.webView} {
       display: none;
@@ -78,7 +80,8 @@ export const VideoContainer = styled.section`
     max-width: 317px;
     width: 100%;
     margin: 0 auto;
-    height: calc(100% - 115px);
+    max-height: calc(100% - 116px);
+    height: 514px;
     order: 1;
   }
   .playButton {
@@ -170,9 +173,9 @@ export const ShowHide = styled.span`
   display: flex;
   order: 2; 
   z-index: 5;
-  margin: -48px auto 31px;
+  margin: -48px auto 18px;
   justify-content: center;
-  position: relative;
+  position: relative; 
   ${media.webView} {
     display: none;
   }

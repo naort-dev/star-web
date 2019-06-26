@@ -8,6 +8,9 @@ export const Layout = styled.section`
   ${media.webView} {
     max-width: 423px;
   }
+  @media (max-width: 320px) {
+    padding: 0 15px;
+  }
   .custom {
     border-radius: 5px;
     ul {
