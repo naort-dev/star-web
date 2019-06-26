@@ -1,6 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
+import { updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
-import {ROLES} from '../../../constants/usertype'
+import { ROLES } from '../../../constants/usertype';
 import { fetch } from '../../../services/fetch';
 import { userDetailsFetchSuccess } from '../actions/getUserDetails';
 
@@ -22,19 +23,18 @@ export const registerFetchEnd = () => ({
   type: REGISTER.end,
 });
 
-export const registerFetchSuccess = (data) => {
-  return (
-    {
-      type: REGISTER.success,
-      data,
-    });
+export const registerFetchSuccess = data => {
+  return {
+    type: REGISTER.success,
+    data,
+  };
 };
 export const registerFetchIncorrect = error => ({
   type: REGISTER.incorrect,
   error,
 });
 
-export const registerTempSuccess = (data) => ({
+export const registerTempSuccess = data => ({
   type: REGISTER.updateTempDetails,
   data,
 });
@@ -59,12 +59,12 @@ export const registerUser = (
 ) => (dispatch, getState) => {
   let tempDetails;
   const signupDetails = getState().signupDetails;
-  if(localStorage) {
+  if (localStorage) {
     tempDetails = localStorage.getItem('tempAuthToken');
   }
   dispatch(registerFetchStart());
   let method = 'post';
-  if (!isEmpty(tempDetails)|| !isEmpty(signupDetails.email)) {
+  if (!isEmpty(tempDetails) || !isEmpty(signupDetails.email)) {
     method = 'put';
   }
   let header = {
@@ -73,41 +73,53 @@ export const registerUser = (
     email: UserEmail,
     role: UserRole,
     referral_code: referral,
-  }
-  if(UserRole===ROLES.star) {
-    header = {...header,
-      nick_name: UserNickName
-    }
+  };
+  if (UserRole === ROLES.star) {
+    header = { ...header, nick_name: UserNickName };
   } else {
-    header = {...header,
-      password: UserPassword
-    }
+    header = { ...header, password: UserPassword };
   }
-  return fetch[method](Api.register, header).then((resp) => {
-    if (resp.data && resp.data.success) {
-      const obj = {
-        ...resp.data.data,
-        celebrity_details: {},
-      };
-      if (UserRole === 'R1002') {
-        const tempToken = resp.data.data.user.authentication_token;
-        localStorage.setItem('tempAuthToken', JSON.stringify(tempToken));
-        dispatch(registerTempSuccess(resp.data.data));
-      } else {
-        localStorage.setItem('data', JSON.stringify(resp.data.data));
-        dispatch(registerFetchEnd());
-        dispatch(userDetailsFetchSuccess(obj));
-        dispatch(registerFetchSuccess(obj));
+  return fetch[method](Api.register, header)
+    .then(resp => {
+      dispatch(
+        updateToast({
+          value: true,
+          message: 'Successfully registered',
+          variant: 'success',
+        }),
+      );
+      if (resp.data && resp.data.success) {
+        const obj = {
+          ...resp.data.data,
+          celebrity_details: {},
+        };
+        if (UserRole === 'R1002') {
+          const tempToken = resp.data.data.user.authentication_token;
+          localStorage.setItem('tempAuthToken', JSON.stringify(tempToken));
+          dispatch(registerTempSuccess(resp.data.data));
+        } else {
+          localStorage.setItem('data', JSON.stringify(resp.data.data));
+          dispatch(registerFetchEnd());
+          dispatch(userDetailsFetchSuccess(obj));
+          dispatch(registerFetchSuccess(obj));
+        }
+        return resp;
       }
-      return resp
-    } 
-    dispatch(registerFetchEnd());
-  }).catch((exception) => {
-    dispatch(registerFetchEnd());
-    if (exception.response.status === 400) {
-      dispatch(registerFetchIncorrect(exception.response.data.error.message));
-    } else {
-      dispatch(registerFetchFailed(exception));
-    }
-  });
+      dispatch(registerFetchEnd());
+    })
+    .catch(exception => {
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
+      dispatch(registerFetchEnd());
+      if (exception.response.status === 400) {
+        dispatch(registerFetchIncorrect(exception.response.data.error.message));
+      } else {
+        dispatch(registerFetchFailed(exception));
+      }
+    });
 };
