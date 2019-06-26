@@ -51,17 +51,19 @@ const NestedSelectStyled = styled.div`
       border-radius: 16px;
     }
     .select__multi-value__label {
-      padding-left: 0px;
-      padding-right: 4px;
-      font-family: Gilroy-Regular;
-      font-size: 14px;
+      font-family: Gilroy-Medium;
       color: ${props => props.theme.greyishBrown};
+      font-size: 14px;
+      line-height: 15px;
+      padding: 5px 5px 5px 0;
     }
     .select__multi-value__remove {
-      font-size: 16.9px;
+      font-size: 16px;
       color: rgb(47, 131, 157);
       cursor: pointer;
-      padding-left: 8px;
+      padding-left: 4px;
+      line-height: 16px;
+      margin-top: -2px;
       &:hover {
         background: none;
       }

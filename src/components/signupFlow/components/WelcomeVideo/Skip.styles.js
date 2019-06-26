@@ -14,6 +14,9 @@ export const Container = styled(Layout)`
   .content {
     max-width: 470px;
     margin: 0 auto;
+    @media (max-width: 831px) {
+      padding: 0 15px;
+    }
   }
   .note {
     max-width: 383px;

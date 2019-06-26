@@ -60,7 +60,7 @@ export const Content = styled.section`
     color: #ff6c58;
     padding-bottom: 8px;
     font-size: 26px;
-    // padding-top: 186px;
+    padding-top: 30px;
     ${media.webView} {
       padding-top: 160px;
     }
@@ -111,7 +111,7 @@ Layout.Phonenumber = styled.div`
   }
   .react-phone-number-input {
     border-bottom: 1px solid #C5D2E0;
-    margin: 25px 0;
+    margin: 10px 0;
   }
   .react-phone-number-input__input{
     text-align: center;
@@ -121,7 +121,7 @@ Layout.Phonenumber = styled.div`
   .errorElement {
     color: #990000;
     margin-left: 45px;
-    margin-top: 7px;
+    margin-top: -4px;
     font-family: Gilroy;
     font-size: 14px;
     line-height: 25px;
@@ -146,6 +146,8 @@ Content.OtpSubTitle = styled.div`
   font-size: 15px;
   text-align: center;
   max-width: 410px;
+  line-height: 22px;
+  color: #7c7c7c;
 `;
 Content.Resend = styled.div`
   font-family: Gilroy;
@@ -158,7 +160,7 @@ Content.Resend = styled.div`
 `;
 Content.OTPWrapper = styled.div`
   text-align: center;
-  margin-top: 38px;
+  margin-top: 20px;
   display:flex;
   justify-content: center;
   & .errorElement {
@@ -187,8 +189,8 @@ Content.WrapsInput = styled.div`
   }
 `;
 Content.OtpSubTitleWrapper = styled.div`
-  margin-bottom: 44px;
-  margin-top: 37px;
+  margin-bottom: 25px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 `;
