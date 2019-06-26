@@ -6,10 +6,14 @@ export const Layout = styled.section`
   padding: 0 80px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   ${media.mobileScreen} {
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 0 20px;
     position: relative;
+    max-width: 309px;
+    margin: 0 auto;
   }
   .question {
     font-family: Gilroy-SemiBold;
@@ -96,6 +100,11 @@ export const VideoContainer = styled.section`
   background-color: #e3e3e3;
   align-self: flex-start;
   position: relative;
+  order: 1;
+  ${media.mobileScreen} {
+    max-height: 426px;
+    height: calc(100% - 150px);
+  }
   .playButton {
     position: absolute;
     top: 50%;
@@ -122,7 +131,6 @@ export const QuestionContainer = styled.section`
   align-items: center;
   flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
   ${media.mobileScreen} {
-    position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 15px;
     padding-right: 15px;
@@ -130,9 +138,10 @@ export const QuestionContainer = styled.section`
     bottom: 0;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
-    left: 50%;
     width: 269px;
-    transform: translateX(-50%);
+    order: 2;
+    margin-top: -258px;
+    z-index: 9;
   }
   &:empty {
     display: none;
@@ -182,17 +191,19 @@ export const QuestionContainer = styled.section`
 
 export const ShowHide = styled.span`
   display: block;
-  position: absolute;
-  bottom: 15px;
+  position: relative;
   width: 224px;
   text-align: center;
   height: 30px;
+  order: 2;
   line-height: 30px;
   border-radius: 20px;
   background: #fff;
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
+  margin: -40px auto 10px;
+  z-index: 9;
   ${media.webView} {
     display: none;
   }
@@ -226,12 +237,15 @@ export const WebButtons = styled.section`
   padding-top: 37px;
 `;
 export const MobButtons = styled.section`
-  position: absolute;
-  top: 415px;
+  position: relative;
+  // top: 415px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 40px;
-  padding-top: 30px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  order: 3;
+  width: 269px;
+  align-items: center;
   ${media.webView} {
     display: none;
   }

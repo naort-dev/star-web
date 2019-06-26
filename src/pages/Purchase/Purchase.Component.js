@@ -145,7 +145,7 @@ class Purchase extends Component {
             starsonaRequest={this.props.starsonaRequest}
             starNM={
               this.props.userDetails.nick_name !== '' &&
-              this.props.userDetails.nick_name
+                this.props.userDetails.nick_name
                 ? this.props.userDetails.nick_name
                 : this.props.userDetails.first_name
             }
@@ -281,7 +281,9 @@ class Purchase extends Component {
               'custom-header'
             }
           />
-          <Content className="contentPadding" step={this.state.stepCount}>
+          <Content className={`contentPadding ${this.state.stepCount === 2 &&
+            this.state.category === 3 &&
+            'custom-video'}`} step={this.state.stepCount}>
             <Scrollbars
               renderView={props => (
                 <div {...props} className="scrollRenderView" />
@@ -496,13 +498,13 @@ class Purchase extends Component {
             <Scrollbars>{this.getCustomStep()}</Scrollbars>
           </ModalContainer>
         ) : (
-          <CancelConfirm
-            modalClose={this.modalClose}
-            requestFLowClose={this.clearStore}
-            // eslint-disable-next-line
-            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
-          />
-        )}
+            <CancelConfirm
+              modalClose={this.modalClose}
+              requestFLowClose={this.clearStore}
+              // eslint-disable-next-line
+              starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+            />
+          )}
       </Modal>
     );
   }
@@ -538,7 +540,7 @@ Purchase.propTypes = {
   audioRecordHandler: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
-  fetchOccasionlist: () => {},
+  fetchOccasionlist: () => { },
   OccasionDetails: [],
   videoFile: {},
 };
