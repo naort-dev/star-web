@@ -7,7 +7,7 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLight } from '@fortawesome/pro-light-svg-icons';
-import { numberToCommaFormatter } from '../../../../utils/dataformatter';
+import { numberToCommaFormatter, findCompletedVideo } from '../../../../utils/dataformatter';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { HeadingBold } from '../../styled';
 import ToolTip from '../../../ToolTip';
@@ -53,7 +53,7 @@ const CompletedCard = (props) => {
 
   useEffect(() => {
     if (props.data.booking_id) {
-      setRequestVideo(props.data.request_video.find(videoItem => videoItem.video_status === 1)) // get completed video
+      setRequestVideo(findCompletedVideo(props.data)) // get completed video
     }
   }, [props.data.booking_id])
 
@@ -63,9 +63,9 @@ const CompletedCard = (props) => {
   }
   
   return (
-    <CompletedStyled className={props.classes.root} onClick={props.onClick} isFavorite={props.data.favorite}>
+    <CompletedStyled className={props.classes.root} onClick={props.onClick} isFavorite={props.data.video_favorite}>
       <span className='favorite-icon' onClick={onFavoriteClick}>
-        <FontAwesomeIcon icon={props.data.favorite ? faHeart : faHeartLight} />
+        <FontAwesomeIcon icon={props.data.video_favorite ? faHeart : faHeartLight} />
       </span>
       <CompletedStyled.Container>
         <CompletedStyled.ProfilePic imageUrl={requestVideo.s3_thumbnail_url} />

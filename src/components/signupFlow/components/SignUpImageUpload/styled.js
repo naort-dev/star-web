@@ -145,6 +145,9 @@ UploadContainer.CategoriesWrapper = styled.div`
     white-space: pre-line;
     line-height: 25px;
     top: -10px;
+    @media (max-width: 320px) {
+      font-size: 16px !important;
+    }
     &.input-label-shrink {
       font-size: 13px !important;
       line-height: 18px;
@@ -647,6 +650,9 @@ ImageUpload.CropperLightButton = styled.button`
   @media (max-width: 832px) {
     margin-bottom: ${(props) => (props.isMultiline ? '10px' : '0px')}
   }
+  @media (max-width: 320px) {
+    min-width: 150px;
+  }
   &:hover {
     background-color: #2f839d;
     color: #ededed;
@@ -671,7 +677,7 @@ ImageUpload.CropperLightButton = styled.button`
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 16px;
   display: flex;
-  flex-direction: ${(props) => (props.isMultiline ? 'column' : 'inherit')}
+  flex-direction: ${(props) => (props.isMultiline ? 'column' : 'row')}
   @media (min-width: 832px) {
     margin-top: 20px;
   }

@@ -6,7 +6,7 @@ const CommentStyled = styled.div`
 
 CommentStyled.Container = styled.div`
   display: flex;
-  ${props => props.receive && `
+  ${props => !props.receive && `
     flex-direction: row-reverse;
   `}
 `;
@@ -23,12 +23,19 @@ CommentStyled.ProfileImage = styled.span`
 `;
 CommentStyled.Comment = styled.span`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
-  background-color: #ffffff;
+  background-color: ${props => props.visible ? '#ffffff' : '#f6f6f6'};
   padding: 10px 8px 18px 15px;
   border-radius: 10px;
   max-width: 228px;
   position: relative;
   min-width: 121px;
+  .hidden-header {
+    display: block;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    font-family: Gilroy-Bold;
+  }
   ${props => (props.receive ? `
     border-top-left-radius: 0;
     margin-left: 15.2px;

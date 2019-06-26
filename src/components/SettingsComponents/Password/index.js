@@ -116,31 +116,30 @@ const Password = props => {
         <h2 className="sub-head">{props.webHead}</h2>
         <FormContainer>
           {getInput({
-            placeholder: 'Password',
+            placeholder: props.labels.password,
             state: 'password',
             value: formData.password,
             error: errorObject.passwordErr,
             errorState: 'passwordErr',
-            isShow: true,
+            isShow: props.showPasswd,
           })}
 
           {getInput({
-            placeholder: 'Confirm Password',
+            placeholder: props.labels.confirmPasswd,
             state: 'confirmPasswd',
             value: formData.confirmPasswd,
             error: errorObject.confirmPasswdErr,
             errorState: 'confirmPasswdErr',
           })}
         </FormContainer>
-        {errorObject.passwordSame && (
-          <span className="error-msg">
-            Password and confirm password should be same
-          </span>
-        )}
-        <p className="note">
-          Passwords must be a minimum of 8 characters and include at least one
-          special character like !?@#, etc.
-        </p>
+        {errorObject.passwordSame &&
+          !errorObject.passwordErr &&
+          !errorObject.confirmPasswdErr && (
+            <span className="error-msg">
+              Password and confirm password should be same
+            </span>
+          )}
+        <p className="note">{props.labels.hint}</p>
         <FlexCenter>
           <Button
             className="button"
@@ -148,7 +147,7 @@ const Password = props => {
             isDisabled={!errorObject.formValid}
             onClick={saveChanges}
           >
-            Save
+            {props.labels.buttonLbl}
           </Button>
         </FlexCenter>
       </Wrap>
@@ -159,9 +158,12 @@ const Password = props => {
 Password.propTypes = {
   passwordUpdate: PropTypes.func.isRequired,
   webHead: PropTypes.string,
+  labels: PropTypes.object.isRequired,
+  showPasswd: PropTypes.bool,
 };
 Password.defaultProps = {
   webHead: '',
+  showPasswd: false,
 };
 
 export default Password;

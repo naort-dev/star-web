@@ -84,7 +84,7 @@ const WelcomeVideo = props => {
     <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
       <Heading className={`${compSwitch && "welcome-head"}`}>Welcome Video - Say Hello!</Heading>
-      <DotsContainer dotsCount={3} selectedDot={3} />
+      <DotsContainer dotsCount={3} selectedDot={3} className="about-head"/>
       <Wrapper className={`${compSwitch && "video-wrapper"}`}>
         <Scrollbars className="scrollbar">
           {compSwitch ? (

@@ -2,35 +2,31 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const FillerDiv = styled.div`
-  width:${props => `${props.percentage}%`};
+  width: ${props => `${props.percentage}%`};
   background: ${props => props.theme.orangePink};
   font-family: Gilroy-Light;
   font-size: 16px;
-  color:#fff
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   border-radius: inherit;
-  transition: width .2s ease-in; 
+  transition: width 0.2s ease-in;
 `;
 
 export const ProgressBarDiv = styled.div`
   position: relative;
   background-color: #ededed;
   height: 30px;
-  width: 660px;
+  width: calc(100% - 35px);
   border-radius: 40px;
-  order:1;
-  z-index: 2;
-  ${media.mobileScreen} {
-    width: 273px;
-  }
+  z-index: 1;
 `;
 
 export const ProgressBarStarDiv = styled.div`
-  width:56px;
-  order:2;
+  width: 56px;
+  order: 2;
   padding-left: 28px;
   padding-top: 6px;
   justify-content: center;
@@ -39,13 +35,13 @@ export const ProgressBarStarDiv = styled.div`
   background-color: #c6c6c6;
   height: 30px;
   position: absolute;
-  right: 34%;
-  z-index: 1;
-  ${media.mobileScreen} {
-    right: 13%;
+  right: 0;
+  .message-icon {
+    color: #fff;
   }
 `;
- 
+
 export const ProgressBarWrapper = styled.div`
   display: flex;
+  position: relative;
 `;

@@ -157,9 +157,7 @@ const OpenBookings = props => {
         />
         {!props.bookingsList.loading && props.bookingsList.data.length === 0 && (
           <EmptyText>
-            You currently do not have any recent activity. Visit &nbsp;{' '}
-            <Link to="/manage/promotional-tools">Promote Yourself</Link> &nbsp;
-            to get those fans booking.
+            You currently do not have any open bookings.
           </EmptyText>
         )}
         <OpenStyled.BookingList>

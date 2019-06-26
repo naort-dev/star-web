@@ -9,7 +9,7 @@ export const Wrap = styled(Wrapper)`
   padding-right: 70px;
   width: 100%;
   ${media.webView} {
-    width: 398px;
+    width: 530px;
     padding-left: 0;
     padding-right: 0;
   }
@@ -23,6 +23,9 @@ export const Wrap = styled(Wrapper)`
       p:not(:last-child) {
         margin-bottom: 5px;
       }
+    }
+    ${media.webView} {
+      width: 398px;
     }
   }
   .head-text {

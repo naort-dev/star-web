@@ -5,7 +5,8 @@ import { Form, Wrapper } from '../styled';
 export const FormContainer = styled(Form)``;
 
 export const Wrap = styled(Wrapper)`
-  .note {
+  width: 497px;
+  .note-payment {
     font-size: 16px;
     font-family: Gilroy-Light;
     color: #707070;

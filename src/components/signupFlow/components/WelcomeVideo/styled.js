@@ -15,6 +15,13 @@ export const Layout = styled.section`
       display: ${props => (props.compSwitch ? 'none' : 'block')};
     }
   }
+
+  .dots-container.about-head span {
+    margin-top: 0;
+    @media (min-width: 832px) {
+      margin-top: 15px;
+    }
+  }
   .welcome-head {
     @media (max-width: 831px) {
       display: none;
@@ -28,7 +35,7 @@ export const Heading = styled.div`
   font-family: 'Gilroy';
   padding-top: 61px;
   @media (max-width: 831px) {
-    padding-top: 71px;
+    padding-top: 65px;
     max-width: 230px;
     margin: 0 auto 10.2px;
     line-height: 28px;
@@ -39,7 +46,11 @@ export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
   &.video-wrapper {
-    height: 95% !important;
+    height: calc(100% - 160px) !important;
     margin-top: 35px;
+    @media (max-width: 831px) {
+      margin-top: 70px;
+      height: calc(100% - 70px) !important;
+    }
   }
 `;

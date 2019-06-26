@@ -58,7 +58,7 @@ const AllBookings = props => {
       {props.recentActivity.loading && <Loader />}
       {
         props.recentActivity.activityList.map((activity) => (
-          <LatestCard activity={activity} type={activity.activity_type} starMode />
+          <LatestCard activity={activity} key={activity.id} type={activity.activity_type} starMode />
         ))
       }
       {/* <LatestCard type="reaction" starMode />

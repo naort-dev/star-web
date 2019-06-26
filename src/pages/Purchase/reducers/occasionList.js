@@ -20,6 +20,7 @@ const initalState = {
     occasion: {},
     scriptText: '',
     otherSelected: false,
+    requestId: '',
   },
   formProps: {
     stepCount: 1,

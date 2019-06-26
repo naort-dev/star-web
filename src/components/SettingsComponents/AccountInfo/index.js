@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
+import Tooltip from 'components/ToolTip';
 import { FormContainer, InputLabel } from './styled';
 import { Container, Wrapper } from '../styled';
 
@@ -72,6 +73,13 @@ const AccountInfo = props => {
     });
   };
 
+  const tooltipWrapper = (text, isTooltip, fun) => {
+    if (isTooltip) {
+      return <Tooltip title={text}>{fun()}</Tooltip>;
+    }
+    return fun();
+  };
+
   useEffect(() => {
     validateForm();
   }, [errorObject, formData]);
@@ -101,6 +109,18 @@ const AccountInfo = props => {
       </section>
     );
   };
+
+  const getTooltipInput = () => {
+    return getTextInput({
+      placeholder: props.labels.emailLbl,
+      state: 'email',
+      value: formData.email,
+      error: errorObject.emailErr,
+      errorState: 'emailErr',
+      nativeProps: { readOnly: true },
+    });
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -109,7 +129,6 @@ const AccountInfo = props => {
           data-web={props.webHead}
           data-mob={props.mobHead}
         >
-          {' '}
           {''}
         </h2>
         <FormContainer>
@@ -120,11 +139,11 @@ const AccountInfo = props => {
               Enter valid full name
             </InputLabel>
           ) : (
-            <InputLabel>Use your real name so we can pay you</InputLabel>
+            <InputLabel>{props.labels.nameHead}</InputLabel>
           )}
           <section className="row-wrap">
             {getTextInput({
-              placeholder: 'First Name',
+              placeholder: props.labels.firstNameLbl,
               state: 'firstName',
               value: formData.firstName,
               error: errorObject.firstNameErr,
@@ -132,7 +151,7 @@ const AccountInfo = props => {
               nativeProps: {},
             })}
             {getTextInput({
-              placeholder: 'Last Name',
+              placeholder: props.labels.lastNameLbl,
               state: 'lastName',
               value: formData.lastName,
               error: errorObject.lastNameErr,
@@ -140,15 +159,14 @@ const AccountInfo = props => {
               nativeProps: {},
             })}
           </section>
-          <InputLabel error={errorObject.emailErr}>Email address</InputLabel>
-          {getTextInput({
-            placeholder: 'Email',
-            state: 'email',
-            value: formData.email,
-            error: errorObject.emailErr,
-            errorState: 'emailErr',
-            nativeProps: { readOnly: true },
-          })}
+          <InputLabel error={errorObject.emailErr}>
+            {props.labels.emailHead}
+          </InputLabel>
+          {tooltipWrapper(
+            props.tooltip.emailTooltipText,
+            props.tooltip.emailTooltip,
+            getTooltipInput,
+          )}
         </FormContainer>
         <FlexCenter>
           <Button
@@ -157,7 +175,7 @@ const AccountInfo = props => {
             isDisabled={!errorObject.formValid}
             onClick={saveChanges}
           >
-            Save
+            {props.labels.buttonLbl}
           </Button>
         </FlexCenter>
       </Wrapper>
@@ -170,11 +188,14 @@ AccountInfo.propTypes = {
   handleAccountSave: PropTypes.func.isRequired,
   webHead: PropTypes.string,
   mobHead: PropTypes.string,
+  labels: PropTypes.object.isRequired,
+  tooltip: PropTypes.object,
 };
 
 AccountInfo.defaultProps = {
   webHead: '',
   mobHead: '',
+  tooltip: {},
 };
 
 export default AccountInfo;
