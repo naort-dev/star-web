@@ -12,6 +12,7 @@ import Sidebar from '../../components/Sidebar';
 import ManageStyled from './styled';
 import { PromoTool } from '../PromotionalTools';
 import { FanSettings } from '../fanSettings';
+import { Earnings } from '../earnings';
 
 const ManageUser = props => {
   const [redirect, toggleRedirect] = useState(false);
@@ -54,7 +55,7 @@ const ManageUser = props => {
               <Route path="/manage/my-videos" component={MyVideos} />
               <Route path="/manage/promotional-tools" component={PromoTool} />
               <Route path="/manage/profile/" component={ManageStarProfile} />
-              <Route path="/manage/earnings" render={() => 'earnings'} />
+              <Route path="/manage/earnings" component={Earnings} />
               <Route path="/manage/settings" component={Settings} />
               <Route path="/manage/referral" render={() => 'referral'} />
             </Switch>

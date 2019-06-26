@@ -32,9 +32,6 @@ export const Layout = styled.section`
   }
   .payments {
     color: #2f839d;
-    ${media.webView} {
-      padding-left: 168px;
-    }
     &:before {
       content: attr(data-val);
     }
@@ -80,9 +77,7 @@ export const Layout = styled.section`
     }
   }
   .flex-start {
-    ${media.webView} {
-      justify-content: flex-start;
-    }
+    flex-wrap: wrap;
   }
 `;
 
