@@ -13,10 +13,11 @@ export const Layout = styled.section`
     padding-top: 0;
   }
   .mobileBtn {
-    position: absolute;
-    top: 526px;
-    padding-bottom: 60px;
-    display: block;
+    position: relative;
+    display: flex;
+    order: 3;
+    margin-bottom: 5px;
+    margin-top: 12px;
     ${media.webView} {
       display: none;
     }
@@ -55,10 +56,11 @@ export const Layout = styled.section`
   }
   .skipMob {
     display: block;
-    position: absolute;
-    top: ${props => (props.error ? '532px' : '605px')};
+    position: relative;
     left: 0;
     padding-top: 5px;
+    padding-bottom: 10px;
+    order: 4;
     ${media.webView} {
       display: none;
     }
@@ -75,8 +77,12 @@ export const VideoContainer = styled.section`
   background-color: #555555;
   position: relative;
   @media (max-width: 831px) {
-    width: 317px;
+    max-width: 317px;
+    width: 100%;
+    margin: 0 auto;
+    max-height: calc(100% - 116px);
     height: 514px;
+    order: 1;
   }
   .playButton {
     position: absolute;
@@ -112,16 +118,17 @@ export const QuestionContainer = styled.section`
   padding-left: ${props => (props.error ? '20px' : '33px')};
   ${media.mobileScreen} {
     padding-left: ${props => (props.error ? '20px' : '26px')};
-    position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
-    bottom: 0;
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.47);
     width: 100%;
-    height: 289px;
     padding-top: 27px;
     margin-left: 0;
     padding-right: ${props => (props.error ? '20px' : '0')};
+    order: 2;
+    z-index: 5;
+    padding-bottom: 59px;
+    margin-top: -269px;
   }
   h1 {
     font-family: Gilroy;
@@ -153,8 +160,6 @@ export const QuestionContainer = styled.section`
 
 export const ShowHide = styled.span`
   display: none;
-  position: absolute;
-  top: 445px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -165,14 +170,19 @@ export const ShowHide = styled.span`
   font-family: Gilroy-Bold;
   font-size: 14px;
   cursor: pointer;
-  display: block;
+  display: flex;
+  order: 2; 
+  z-index: 5;
+  margin: -48px auto 18px;
+  justify-content: center;
+  position: relative; 
   ${media.webView} {
     display: none;
   }
   :after,
   :before {
-    position: relative;
-    top: ${props => (props.isShow ? '-3px' : '5px')};
+    position: absolute;
+    top: ${props => (props.isShow ? '6px' : '12px')};
     content: '';
     display: inline-block;
     width: 9px;
@@ -180,8 +190,12 @@ export const ShowHide = styled.span`
     border-right: 1px solid #2f839d;
     border-top: 1px solid #2f839d;
     transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
-    margin-right: 28px;
-    margin-left: 28px;
+  }
+  :after {
+    left: 28px;
+  }
+  :before {
+    right: 28px;
   }
 `;
 
@@ -225,7 +239,13 @@ export const FlexBox = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
+  height: 100%;
   ${media.webView} {
     justify-content: space-between;
+  }
+  ${media.mobileScreen} {
+    flex-direction: column;
+    padding: 0 20px;
+    justify-content: flex-start;
   }
 `;

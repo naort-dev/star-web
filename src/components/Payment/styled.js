@@ -11,7 +11,10 @@ export const Layout = styled.section`
     max-width: 400px;
   }
   .button.payment-btn {
-    margin-top: 25px;
+    margin-top: 15px;
+    ${media.webView} {
+      margin-top: 30px;
+    }
   }
 `;
 
