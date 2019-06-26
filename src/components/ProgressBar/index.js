@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/pro-light-svg-icons';
+import { faStar } from '@fortawesome/pro-solid-svg-icons';
 import {
   ProgressBarDiv,
   FillerDiv,
@@ -11,7 +11,7 @@ import { getMobileOperatingSystem } from '../../utils/checkOS';
 
 const Filler = props => {
   return (
-    <FillerDiv percentage={props.percentage}>
+    <FillerDiv percentage={props.percentage} className="progress-fill">
       {props.percentage}% {!getMobileOperatingSystem() ? `Complete` : ''}
     </FillerDiv>
   );

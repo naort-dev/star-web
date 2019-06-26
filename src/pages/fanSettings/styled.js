@@ -47,6 +47,9 @@ export const Layout = styled.section`
     .progress-wrap {
       max-width: 700px;
       width: 100%;
+      .progress-fill {
+        font-family: Gilroy-Semibold;
+      }
     }
   }
 `;
@@ -79,7 +82,7 @@ export const RightContentWrap = styled.section`
   ${media.largeScreen} {
     order: 2;
   }
-  .note {
+  .note-progress {
     max-width: 80%;
     text-align: center;
     margin: 0 auto;

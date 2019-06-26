@@ -12,4 +12,7 @@ export const Layout = styled.section`
       padding-top: 50px;
     }
   }
+  .crop-wrap {
+    margin-top: 40px;
+  }
 `;

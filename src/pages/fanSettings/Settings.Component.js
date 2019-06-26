@@ -86,19 +86,11 @@ const Settings = props => {
     return component;
   };
 
-  let completed = 1;
+  let completed = 2;
   const linkStatus = link => {
     switch (link.selectedName) {
       case 'profilePhoto':
         if (props.userDetails.avatar_photo.image_url) {
-          const temp = { ...link };
-          temp.completed = true;
-          completed += 1;
-          return temp;
-        }
-        break;
-      case 'Password':
-        if (props.celbDetails.has_password) {
           const temp = { ...link };
           temp.completed = true;
           completed += 1;
@@ -176,7 +168,7 @@ const Settings = props => {
           {props.history.location.pathname === '/manage/profile' ||
             (webView && (
               <React.Fragment>
-                <p className="note">
+                <p className="note-progress">
                   Complete your Starsona profile to maximize your bookings:
                 </p>
                 <section className="progress-bar">
@@ -210,6 +202,11 @@ const Settings = props => {
                     handleAccountSave={handleAccountSave}
                     mobHead="Account Info"
                     webHead="Account Information"
+                    tooltip={{
+                      emailTooltip: true,
+                      emailTooltipText:
+                        'Your email will always be kept private and will not be shared with others.',
+                    }}
                     labels={{
                       firstNameLbl: 'First Name',
                       lastNameLbl: 'Last Name',

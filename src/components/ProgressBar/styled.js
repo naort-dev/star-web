@@ -36,6 +36,9 @@ export const ProgressBarStarDiv = styled.div`
   height: 30px;
   position: absolute;
   right: 0;
+  .message-icon {
+    color: #fff;
+  }
 `;
 
 export const ProgressBarWrapper = styled.div`
