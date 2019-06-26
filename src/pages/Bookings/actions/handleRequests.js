@@ -78,8 +78,6 @@ export const responseVideo = (requestId, fileName, callBack) => (
   getState,
 ) => {
   const { authentication_token: authToken } = getState().session.auth_token;
-  const { status, offset, role } = getState().myVideosList;
-  const { id } = getState().userDetails.settings_userDetails;
   dispatch(requestFetchStart());
   return fetch
     .post(

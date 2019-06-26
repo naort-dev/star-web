@@ -45,7 +45,7 @@ const ActionBar = (props) => {
       {
         showList &&
           <ActionStyled.List innerRef={listRef}>
-            <ToolTip title='Starsona is built on a community of fans – allow others to enjoy this video.'>
+            <ToolTip title='Starsona is built on a community of fans – allow others to enjoy this video.' placement='top'>
               <div>
                 <Share
                   className='action-btn'

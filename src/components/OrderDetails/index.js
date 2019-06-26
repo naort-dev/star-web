@@ -155,7 +155,9 @@ const OrderDetails = (props) => {
                 { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
                 {
                   requestType === 'cancelled' &&
-                    <span className='detail-comment'>{bookingData.comment}</span>
+                    <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
+                      <span className='detail-comment'>{bookingData.comment}</span>
+                    </ToolTip>
                 }
               </span>
             </li>
