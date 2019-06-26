@@ -12,7 +12,7 @@ import { openStatusList, completedStatusList } from '../../../../constants/reque
 import { toggleUpdateBooking, toggleContactSupport, toggleBookingModal } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
 import { findCompletedVideo } from '../../../../utils/dataformatter';
-import { useMedia } from '../../../../utils/domUtils';
+import { useMedia, downloadItem } from '../../../../utils/domUtils';
 import { moreOptions } from './constants';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
 import GeneralStyled from './styled';
@@ -86,7 +86,8 @@ const FanGeneralList = (props) => {
     } else if(option.value === 'contact') {
       props.toggleContactSupport(true);
     } else if(option.value === 'download') {
-      console.log(findCompletedVideo(props.data));
+      const completedVideo = findCompletedVideo(props.data);
+      downloadItem(completedVideo.s3_video_url, props.data.booking_title);
     }
   }
 
@@ -197,11 +198,12 @@ const FanGeneralList = (props) => {
 
 FanGeneralList.defaultProps = {
   expiration: '',
+  onPrimaryClick: () => {},
 }
 
 FanGeneralList.propTypes = {
   data: PropTypes.object.isRequired,
-  onPrimaryClick: PropTypes.func.isRequired,
+  onPrimaryClick: PropTypes.func,
   expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,

@@ -20,7 +20,7 @@ const UpdateBooking = (props) => {
   const [reason, setReason] = useState({});
 
   useEffect(() => {
-    setReasonList(props.config.declineComments.map((reasonItem, index) => {
+    setReasonList(props.config.requestFeedback.map((reasonItem, index) => {
       return ({
         label: reasonItem,
         value: index,
