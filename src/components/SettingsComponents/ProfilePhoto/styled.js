@@ -5,13 +5,9 @@ import { Form, Wrapper } from '../styled';
 export const FormContainer = styled(Form)``;
 
 export const Wrap = styled(Wrapper)`
-  padding-left: 44px;
-  padding-right: 70px;
   width: 100%;
   ${media.webView} {
     width: 398px;
-    padding-left: 0;
-    padding-right: 0;
   }
 
   .content-wrapper {
@@ -25,7 +21,9 @@ export const Wrap = styled(Wrapper)`
       display: block;
       border-radius: 50%;
       background: ${props =>
-        props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3'};
+        props.imageUrl
+          ? `url(${props.imageUrl})`
+          : `url(assets/images/profile.png)`};
       background-repeat: no-repeat;
       background-size: cover;
       margin-bottom: 34px;

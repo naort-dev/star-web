@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { cloneDeep } from 'lodash';
 import { connect } from 'react-redux';
 import { isPlainObject } from 'lodash';
 import Checkbox from 'components/Checkbox';
@@ -101,7 +102,10 @@ class ScriptBuilder extends Component {
     return null;
   };
 
-  readyToPayment = () => {
+  readyToPayment = id => {
+    const temp = cloneDeep(this.props.bookingData);
+    temp.requestId = id;
+    this.props.updateBookingData(temp);
     this.props.loaderAction(false);
     this.props.submitClick();
   };
@@ -139,6 +143,7 @@ class ScriptBuilder extends Component {
             ? this.props.bookingData.specification
             : '',
         is_myself: this.props.bookingData.user === 'Myself',
+        requestId: this.props.bookingData.requestId,
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(
@@ -211,6 +216,7 @@ ScriptBuilder.propTypes = {
   importantInfo: PropTypes.string,
   infoChange: PropTypes.func.isRequired,
   responseTime: PropTypes.string,
+  updateBookingData: PropTypes.func.isRequired,
 };
 
 ScriptBuilder.defaultProps = {

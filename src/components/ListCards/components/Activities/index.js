@@ -45,7 +45,7 @@ const ctaList = [
     heading: 'Update your bio',
     value_main: 'Beef up your bio with some interesting tidbits!',
     value_sub: '',
-    btnTextPrimary: 'Referral program',
+    btnTextPrimary: 'Update',
     btnTextSecondary: '',
     url: '',
   },
