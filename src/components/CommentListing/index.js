@@ -14,6 +14,7 @@ const CommentListing = (props) => {
             <CommentItem
               type={data.activity_type}
               activityId={data.id}
+              disableAction={props.disableAction}
               user={data.activity_from_user}
               time={data.activity_details && data.activity_details.created_date}
               visible={data.public_visibility}
@@ -30,13 +31,15 @@ const CommentListing = (props) => {
 };
 
 CommentListing.defaultProps = {
-  onReactionClick: () => {}
+  onReactionClick: () => {},
+  disableAction: false,
 }
 
 CommentListing.propTypes = {
   dataList: PropTypes.array.isRequired,
   onReactionClick: PropTypes.func,
   userDetails: PropTypes.object.isRequired,
+  disableAction: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

@@ -197,11 +197,12 @@ const FanGeneralList = (props) => {
 
 FanGeneralList.defaultProps = {
   expiration: '',
+  onPrimaryClick: () => {},
 }
 
 FanGeneralList.propTypes = {
   data: PropTypes.object.isRequired,
-  onPrimaryClick: PropTypes.func.isRequired,
+  onPrimaryClick: PropTypes.func,
   expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,

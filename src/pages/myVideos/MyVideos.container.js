@@ -4,7 +4,7 @@ import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
 import MyVideos from './MyVideos.component';
 
 const mapStateToProps = state => ({
-  myVideosList: state.myVideosList,
+  myVideosList: state.myVideos.myVideosList,
   config: state.config.data,
 });
 

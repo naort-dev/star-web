@@ -25,6 +25,9 @@ OrderStyled.Heading = styled.span`
   text-align: center;
   color: ${props => props.theme.flatBlue};
   margin: 30px 0;
+  ${props => !props.starMode && `
+    margin-top: 0;  
+  `}
 `;
 
 OrderStyled.TextButton = styled.span`
@@ -63,7 +66,6 @@ OrderStyled.DetailList = styled.ul`
       color: #565657;
       display: table-cell;
       padding-left: 10px;
-      padding-bottom: 10px;
       line-height: 25px;
       .detail-comment {
         display: block;
@@ -104,7 +106,7 @@ OrderStyled.Details = styled.div`
   align-items: center;
   padding: 0 44px;
   .star-action-btn {
-    display: none;
+    display: ${props => (props.starMode ? 'none' : 'block')};
     @media(min-width: 832px) {
       display: block;
     }

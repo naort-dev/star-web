@@ -75,13 +75,11 @@ const OrderDetails = (props) => {
   const onCheckBoxChange = async (check) => {
     const completedVideo = findCompletedVideo(bookingData);
     const hideResponse = await hideVideoFromProfile(completedVideo.video_id);
-    console.log(hideResponse)
     setCheckBox(check);
   }
 
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
-
   return (
     <WrapperComponent disableClose={!starMode} noPadding={!starMode} closePopUp={props.closeModal}>
       {
@@ -100,7 +98,7 @@ const OrderDetails = (props) => {
               <OrderStyled.HeaderText>
                 {renderHeading()}
               </OrderStyled.HeaderText>
-              <OrderStyled.Heading>
+              <OrderStyled.Heading starMode={starMode}>
                 Order Details
               </OrderStyled.Heading>
             </React.Fragment>
@@ -126,7 +124,7 @@ const OrderDetails = (props) => {
               <span className="check-text ">{ starMode ? 'Hide from profile' : 'Make my video private!' }</span>
             </OrderStyled.ColumnCenter>
         }
-        <OrderStyled.Details>
+        <OrderStyled.Details starMode={props.starMode}>
           <OrderStyled.DetailList>
             <li className='detail-item'>
               <span className='detail-title'>Purchased:</span>
