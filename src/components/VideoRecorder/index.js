@@ -293,8 +293,8 @@ class VideoRecorder extends Component {
     if (!this.state.isIOSDevice) {
       this.props.recordTrigger();
       this.props.playPauseMediaAction();
+      this.setState({ mediaControls: false });
     }
-    this.setState({ mediaControls: false });
   };
 
   render() {
