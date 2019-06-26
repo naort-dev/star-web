@@ -30,6 +30,7 @@ FanViewStyled.VideoWrapper = styled.div`
 FanViewStyled.DetailWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   margin-bottom: 20px;
   .title {
     margin-right: 5px;

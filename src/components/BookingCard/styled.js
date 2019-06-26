@@ -159,7 +159,7 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  height: 342px;
+  height: ${props => (props.starMode ? '342px' : '296px')};
 `;
 
 export default BookingStyled;

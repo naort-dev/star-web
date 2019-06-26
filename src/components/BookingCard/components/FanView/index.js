@@ -11,6 +11,7 @@ import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
 import QuickComment from '../../../QuickComment';
 import MoreActions from '../../../MoreActions';
+import ActionBar from '../../../ActionBar';
 import VideoRender from '../../../VideoRender';
 import BookingStyled from '../../styled';
 import FanViewStyled from './styled';
@@ -118,6 +119,7 @@ const FanView = (props) => {
               <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
               <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
             </span>
+            <ActionBar />
           </FanViewStyled.DetailWrapper>
           <BookingStyled.CommentList starMode={false}>
             <Scrollbars

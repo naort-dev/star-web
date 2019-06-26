@@ -4,6 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
+import ToolTip from '../ToolTip';
 import RequestFlowPopup from '../RequestFlowPopup';
 import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
@@ -121,7 +122,16 @@ const OrderDetails = (props) => {
           requestType === 'completed' &&
             <OrderStyled.ColumnCenter>
               <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
-              <span className="check-text ">{ starMode ? 'Hide from profile' : 'Make my video private!' }</span>
+              <span className="check-text ">
+                {
+                  starMode ?
+                    'Hide from profile'
+                  :
+                    <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
+                      <span>Make my video private!</span>
+                    </ToolTip>
+                }
+              </span>
             </OrderStyled.ColumnCenter>
         }
         <OrderStyled.Details starMode={props.starMode}>
