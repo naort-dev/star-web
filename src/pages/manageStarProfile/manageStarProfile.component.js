@@ -7,7 +7,7 @@ import { Layout, Content } from './styled';
 import { STAR_PROFILE } from './constants';
 import ProgressBar from '../../components/ProgressBar';
 import InnerSidebar from '../../components/InnerSidebar';
-import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot } from '../../components/Profile';
+import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot } from '../../components/Profile';
 import { getMobileOperatingSystem } from '../../utils/checkOS';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { useMedia } from 'utils/domUtils';
@@ -41,6 +41,7 @@ const ManageStarProfile = props => {
       <Route path="/manage/profile/name-photo" component={NameAndPhotoRoot} />
       <Route path="/manage/profile/welcome-video" component={ProfileVideoRoot} />
       <Route path="/manage/profile/bio" component={BioRoot} />
+      <Route path="/manage/profile/industry" component={IndustryRoot} />
     </Switch>
     );
   };
