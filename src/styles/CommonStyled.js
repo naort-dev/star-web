@@ -63,6 +63,8 @@ export const BackArrow = styled.span`
     left: 50px;
     top: 50px;
     padding: 0;
+    width: 14px;
+    height: 28px;
   }
 `;
 
@@ -79,6 +81,7 @@ export const CloseButton = styled.span`
   cursor: pointer;
   padding: 15px;
   ${media.webView} {
+    background-size: 28px 28px;
     width: 28px;
     height: 28px;
     right: 50px;
