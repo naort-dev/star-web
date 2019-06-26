@@ -16,7 +16,7 @@ const Payment = props => {
           {''}
         </h2>
         <p
-          className="note"
+          className="note-payment"
           data-web={props.labels.noteWeb}
           data-mob={props.labels.noteMob}
         >

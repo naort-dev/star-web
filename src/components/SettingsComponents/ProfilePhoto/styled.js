@@ -23,7 +23,7 @@ export const Wrap = styled(Wrapper)`
       background: ${props =>
         props.imageUrl
           ? `url(${props.imageUrl})`
-          : `url(assets/images/profile.png)`};
+          : `url(assets/images/fan-profile-pic.svg)`};
       background-repeat: no-repeat;
       background-size: cover;
       margin-bottom: 34px;

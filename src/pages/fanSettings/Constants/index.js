@@ -15,7 +15,7 @@ export const Links = [
     linkName: 'Password',
     selectedName: 'Password',
     url: '/manage/profile/password',
-    completed: false,
+    completed: true,
   },
   {
     linkName: 'Notification',
