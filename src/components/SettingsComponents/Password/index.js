@@ -132,11 +132,13 @@ const Password = props => {
             errorState: 'confirmPasswdErr',
           })}
         </FormContainer>
-        {errorObject.passwordSame && (
-          <span className="error-msg">
-            Password and confirm password should be same
-          </span>
-        )}
+        {errorObject.passwordSame &&
+          !errorObject.passwordErr &&
+          !errorObject.confirmPasswdErr && (
+            <span className="error-msg">
+              Password and confirm password should be same
+            </span>
+          )}
         <p className="note">{props.labels.hint}</p>
         <FlexCenter>
           <Button
