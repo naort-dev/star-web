@@ -59,7 +59,7 @@ export const Layout = styled.section`
     padding-top: 5px;
     padding-bottom: 22px;
     ${media.webView} {
-      display: none;
+      padding-bottom: 0;
     }
     @media (max-width: 831px) {
       padding-top: 7px;

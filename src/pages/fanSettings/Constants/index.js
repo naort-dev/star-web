@@ -1,12 +1,12 @@
 export const Links = [
   {
-    linkName: 'Profile Photo',
+    linkName: 'Photo',
     selectedName: 'profilePhoto',
     url: '/manage/profile/profile-photo',
-    completed: true,
+    completed: false,
   },
   {
-    linkName: 'Account Info',
+    linkName: 'Account Information',
     selectedName: 'Account',
     url: '/manage/profile/account-info',
     completed: true,
@@ -18,15 +18,15 @@ export const Links = [
     completed: false,
   },
   {
-    linkName: 'Payment account',
-    selectedName: 'Payment',
-    url: '/manage/profile/payment',
-    completed: false,
-  },
-  {
     linkName: 'Notification',
     selectedName: 'Notification',
     url: '/manage/profile/notification',
+    completed: false,
+  },
+  {
+    linkName: 'Referral Payouts',
+    selectedName: 'Payment',
+    url: '/manage/profile/payment',
     completed: false,
   },
 ];

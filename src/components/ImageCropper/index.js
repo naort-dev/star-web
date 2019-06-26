@@ -23,7 +23,11 @@ export default class ImageCropper extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if ((this.state.isMobile !== prevState.isMobile || this.state.cropImage !== prevState.cropImage) && this.cropper) {
+    if (
+      (this.state.isMobile !== prevState.isMobile ||
+        this.state.cropImage !== prevState.cropImage) &&
+      this.cropper
+    ) {
       this.cropper.destroy();
       this.initializeCropper();
     }
@@ -31,7 +35,7 @@ export default class ImageCropper extends React.Component {
 
   componentWillUnmount() {
     if (this.cropper) {
-      this.cropper.destroy()
+      this.cropper.destroy();
     }
     window.removeEventListener('resize', this.resizeCapture);
   }
@@ -40,7 +44,7 @@ export default class ImageCropper extends React.Component {
     this.cropper = new Cropper(this.cropImage.current, {
       aspectRatio: 1,
       viewMode: 1,
-    })
+    });
   };
 
   resizeCapture = () => {
@@ -68,10 +72,10 @@ export default class ImageCropper extends React.Component {
 
   uploadImage = () => {
     this.inputRef.current.click();
-  }
+  };
 
   async onFileChange() {
-    this.setState({ imageError: false })
+    this.setState({ imageError: false });
     const file = document.getElementById('profile').files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById('profile').value)) {
@@ -82,13 +86,13 @@ export default class ImageCropper extends React.Component {
     }
   }
 
-  getExif = (file) => {
+  getExif = file => {
     return new Promise((resolve, reject) => {
-      EXIF.getData(file, function () {
-        const exif = EXIF.getTag(this, "Orientation")
+      EXIF.getData(file, function() {
+        const exif = EXIF.getTag(this, 'Orientation');
         switch (exif) {
           case 3:
-            resolve(3)
+            resolve(3);
             break;
           case 4:
             resolve(4);
@@ -108,10 +112,9 @@ export default class ImageCropper extends React.Component {
           default:
             resolve(9);
         }
-      })
-
-    })
-  }
+      });
+    });
+  };
 
   async getImageData(file) {
     const extension = file.type.split('/')[1];
@@ -130,19 +133,37 @@ export default class ImageCropper extends React.Component {
   render() {
     return (
       <CropperStyled>
-        <CropperStyled.CropperWrapper className="crop-wrap">
-          <img ref={this.cropImage} alt='cropper' style={{maxwidth: '100%'}} src={this.state.cropImage} />
+        <CropperStyled.CropperWrapper className="crop-wrap">
+          <img
+            ref={this.cropImage}
+            alt="cropper"
+            style={{ maxwidth: '100%' }}
+            src={this.state.cropImage}
+          />
         </CropperStyled.CropperWrapper>
         <CropperStyled.ButtonWrapper>
-          <CropperStyled.CropperLightButton onClick={this.props.onTakePicture} className="take-picture">
+          <CropperStyled.CropperLightButton
+            onClick={this.props.onTakePicture}
+            className="take-picture"
+          >
             <FontAwesomeIcon icon={faCamera} />
             <span className="btn-text">Take Picture</span>
           </CropperStyled.CropperLightButton>
           <Button onClick={this.handleCrop} className="button">
-          <span>I like it, continue</span>
+            <span>I like it, continue</span>
           </Button>
-          <CropperStyled.CropperLightButton onClick={this.uploadImage} className="upload-picture">
-            <input className='upload-button' ref={this.inputRef} accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+          <CropperStyled.CropperLightButton
+            onClick={this.uploadImage}
+            className="upload-picture"
+          >
+            <input
+              className="upload-button"
+              ref={this.inputRef}
+              accept=".png, .jpeg, .jpg"
+              id="profile"
+              onChange={() => this.onFileChange()}
+              type="file"
+            />
             <FontAwesomeIcon icon={faUpload} />
             <span className="btn-text">Upload</span>
           </CropperStyled.CropperLightButton>

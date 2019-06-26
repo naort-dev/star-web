@@ -93,6 +93,7 @@ function FormContainer(props) {
       date: null,
       eventName: '',
       validSelf: false,
+      requestId: '',
     };
     setFormData({
       ...FormData,

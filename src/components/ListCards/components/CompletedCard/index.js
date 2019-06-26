@@ -7,7 +7,7 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLight } from '@fortawesome/pro-light-svg-icons';
-import { numberToCommaFormatter } from '../../../../utils/dataformatter';
+import { numberToCommaFormatter, findCompletedVideo } from '../../../../utils/dataformatter';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { HeadingBold } from '../../styled';
 import ToolTip from '../../../ToolTip';
@@ -53,7 +53,7 @@ const CompletedCard = (props) => {
 
   useEffect(() => {
     if (props.data.booking_id) {
-      setRequestVideo(props.data.request_video.find(videoItem => videoItem.video_status === 1)) // get completed video
+      setRequestVideo(findCompletedVideo(props.data)) // get completed video
     }
   }, [props.data.booking_id])
 

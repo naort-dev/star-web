@@ -120,11 +120,11 @@ const AccountInfo = props => {
               Enter valid full name
             </InputLabel>
           ) : (
-            <InputLabel>Use your real name so we can pay you</InputLabel>
+            <InputLabel>{props.labels.nameHead}</InputLabel>
           )}
           <section className="row-wrap">
             {getTextInput({
-              placeholder: 'First Name',
+              placeholder: props.labels.firstNameLbl,
               state: 'firstName',
               value: formData.firstName,
               error: errorObject.firstNameErr,
@@ -132,7 +132,7 @@ const AccountInfo = props => {
               nativeProps: {},
             })}
             {getTextInput({
-              placeholder: 'Last Name',
+              placeholder: props.labels.lastNameLbl,
               state: 'lastName',
               value: formData.lastName,
               error: errorObject.lastNameErr,
@@ -140,9 +140,11 @@ const AccountInfo = props => {
               nativeProps: {},
             })}
           </section>
-          <InputLabel error={errorObject.emailErr}>Email address</InputLabel>
+          <InputLabel error={errorObject.emailErr}>
+            {props.labels.emailHead}
+          </InputLabel>
           {getTextInput({
-            placeholder: 'Email',
+            placeholder: props.labels.emailLbl,
             state: 'email',
             value: formData.email,
             error: errorObject.emailErr,
@@ -157,7 +159,7 @@ const AccountInfo = props => {
             isDisabled={!errorObject.formValid}
             onClick={saveChanges}
           >
-            Save
+            {props.labels.buttonLbl}
           </Button>
         </FlexCenter>
       </Wrapper>
@@ -170,6 +172,7 @@ AccountInfo.propTypes = {
   handleAccountSave: PropTypes.func.isRequired,
   webHead: PropTypes.string,
   mobHead: PropTypes.string,
+  labels: PropTypes.object.isRequired,
 };
 
 AccountInfo.defaultProps = {
