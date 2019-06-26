@@ -47,7 +47,7 @@ justify-content: center;
 }
 @media(max-width: 831px){
   margin-top: 0;
-  margin-bottom:20px;
+  padding-bottom:20px;
 }
   .success-button {
     @media(max-width: 831px){
@@ -110,7 +110,7 @@ RegSuccessWrapper.Description = styled.div`
   }
   @media(max-width: 831px){
     font-size: 13px;
-    line-height: 17spx;
+    line-height: 17px;
     color: #7c7c7c;
     margin: 0 auto;
     max-width: 310px;

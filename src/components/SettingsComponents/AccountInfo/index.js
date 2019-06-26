@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
+import Tooltip from 'components/ToolTip';
 import { FormContainer, InputLabel } from './styled';
 import { Container, Wrapper } from '../styled';
 
@@ -72,6 +73,13 @@ const AccountInfo = props => {
     });
   };
 
+  const tooltipWrapper = (text, isTooltip, fun) => {
+    if (isTooltip) {
+      return <Tooltip title={text}>{fun()}</Tooltip>;
+    }
+    return fun();
+  };
+
   useEffect(() => {
     validateForm();
   }, [errorObject, formData]);
@@ -101,6 +109,18 @@ const AccountInfo = props => {
       </section>
     );
   };
+
+  const getTooltipInput = () => {
+    return getTextInput({
+      placeholder: props.labels.emailLbl,
+      state: 'email',
+      value: formData.email,
+      error: errorObject.emailErr,
+      errorState: 'emailErr',
+      nativeProps: { readOnly: true },
+    });
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -109,7 +129,6 @@ const AccountInfo = props => {
           data-web={props.webHead}
           data-mob={props.mobHead}
         >
-          {' '}
           {''}
         </h2>
         <FormContainer>
@@ -143,14 +162,11 @@ const AccountInfo = props => {
           <InputLabel error={errorObject.emailErr}>
             {props.labels.emailHead}
           </InputLabel>
-          {getTextInput({
-            placeholder: props.labels.emailLbl,
-            state: 'email',
-            value: formData.email,
-            error: errorObject.emailErr,
-            errorState: 'emailErr',
-            nativeProps: { readOnly: true },
-          })}
+          {tooltipWrapper(
+            props.tooltip.emailTooltipText,
+            props.tooltip.emailTooltip,
+            getTooltipInput,
+          )}
         </FormContainer>
         <FlexCenter>
           <Button
@@ -173,11 +189,13 @@ AccountInfo.propTypes = {
   webHead: PropTypes.string,
   mobHead: PropTypes.string,
   labels: PropTypes.object.isRequired,
+  tooltip: PropTypes.object,
 };
 
 AccountInfo.defaultProps = {
   webHead: '',
   mobHead: '',
+  tooltip: {},
 };
 
 export default AccountInfo;

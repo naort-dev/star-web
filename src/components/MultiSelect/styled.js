@@ -104,7 +104,7 @@ const MultiSelectStyled = styled.div`
        & > div {
          height: auto;
          line-height: 18px !important;
-         padding: 4px 13px 2px !important;
+         padding: 3px 13px 2px !important;
        }
     }
     &:after {

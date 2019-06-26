@@ -8,6 +8,9 @@ export const Layout = styled.section`
   ${media.webView} {
     max-width: 480px;
   }
+  @media (max-width: 320px) {
+    padding: 0 15px;
+  }
   .head1 {
     font-family: Gilroy-SemiBold;
     font-size: 24px;

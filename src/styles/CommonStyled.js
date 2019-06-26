@@ -52,18 +52,19 @@ export const BackArrow = styled.span`
       ? `url('../assets/images/previcon-white.svg') no-repeat`
       : `url('../assets/images/previcon.svg') no-repeat`};
   content: '';
-  width: 10px;
-  height: 20px;
-  background-size: contain;
+  background-size: 10px 20px;
   position: absolute;
-  left: 30px;
-  top: 36px;
+  left: 15px;
+  top: 34px;
   cursor: pointer;
+  padding: 15px;
   ${media.webView} {
-    width: 14px;
-    height: 28px;
+    background-size: 14px 28px;
     left: 50px;
     top: 50px;
+    padding: 0;
+    width: 14px;
+    height: 28px;
   }
 `;
 
@@ -73,18 +74,19 @@ export const CloseButton = styled.span`
       ? `url('../assets/images/closeicon-white.svg') no-repeat`
       : `url('../assets/images/closeicon.svg') no-repeat`};
   content: '';
-  width: 20px;
-  height: 20px;
+  background-size: 20px 20px;
   position: absolute;
-  right: 30px;
-  top: 35px;
-  background-size: contain;
+  right: 20px;
+  top: 37px;
   cursor: pointer;
+  padding: 15px;
   ${media.webView} {
+    background-size: 28px 28px;
     width: 28px;
     height: 28px;
     right: 50px;
     top: 50px;
+    padding: 0;
   }
 `;
 
