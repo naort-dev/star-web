@@ -7,6 +7,7 @@ import { findCompletedVideo } from '../../../../utils/dataformatter';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
 import { CloseButton } from '../../../../styles/CommonStyled';
 import CommentBox from '../../../CommentBox';
+import { downloadItem } from '../../../../utils/domUtils';
 import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
 import QuickComment from '../../../QuickComment';
@@ -66,7 +67,8 @@ const FanView = (props) => {
     if(option.value === 'contact') {
       props.toggleContactSupport(true);
     } else if(option.value === 'download') {
-      console.log(findCompletedVideo(props.data));
+      const completedVideo = findCompletedVideo(bookingData);
+      downloadItem(completedVideo.s3_video_url, bookingData.booking_title);
     }
   }
 
@@ -115,9 +117,16 @@ const FanView = (props) => {
         </BookingStyled.LeftSection>
         <BookingStyled.RightSection>
           <FanViewStyled.DetailWrapper>
-            <span>
-              <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
-              <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+            <span className='detail-header'>
+              <span>
+                <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
+                <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+              </span>
+              <MoreActions
+                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                options={moreOptions[requestType]}
+                onSelectOption={onSelectAction}
+              />
             </span>
             <ActionBar />
           </FanViewStyled.DetailWrapper>

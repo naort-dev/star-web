@@ -32,6 +32,12 @@ FanViewStyled.DetailWrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   margin-bottom: 20px;
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
   .title {
     margin-right: 5px;
   }
