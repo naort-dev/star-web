@@ -14,7 +14,7 @@ import { getMobileOperatingSystem } from '../../utils/checkOS';
 import PrimaryButton from '../PrimaryButton';
 import ShareStyled from './styled';
 
-const Share = (props) => {
+const Share = React.forwardRef((props, ref) => {
 
   const shareAnchor = useRef(null);
   const [isMobile] = useState(getMobileOperatingSystem());  
@@ -36,7 +36,7 @@ const Share = (props) => {
   const shareUrl = `https://${props.shareUrl}`;
 
   return (
-    <ShareStyled className={props.classes.root}>
+    <ShareStyled className={props.classes.root} innerRef={ref}>
       <PrimaryButton
         secondary={props.secondary}
         ref={shareAnchor}
@@ -91,7 +91,7 @@ const Share = (props) => {
       </Popover>
     </ShareStyled>
   )
-}
+})
 
 Share.defaultProps = {
   secondary: false,

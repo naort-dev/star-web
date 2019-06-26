@@ -1,24 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Scrollbars from 'react-custom-scrollbars';
-import { numberToCommaFormatter, findCompletedVideo } from '../../../../utils/dataformatter';
+import { moreOptions } from './constants';
+import { findCompletedVideo } from '../../../../utils/dataformatter';
+import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
 import { CloseButton } from '../../../../styles/CommonStyled';
 import CommentBox from '../../../CommentBox';
 import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
 import QuickComment from '../../../QuickComment';
+import MoreActions from '../../../MoreActions';
+import ActionBar from '../../../ActionBar';
 import VideoRender from '../../../VideoRender';
-import Share from '../../../Share';
 import BookingStyled from '../../styled';
-import StarViewStyled from './styled';
+import FanViewStyled from './styled';
 
-const StarView = (props) => {
+const FanView = (props) => {
 
+  const [requestType, updateRequestType] = useState('completed');
   const [videoId, updateVideoId] = useState('');
   const [video, setVideo] = useState('');
   const { bookingData } = props;
-  const { fund_payed_out: fundPayed } = bookingData;
 
   useEffect(() => {
     updateVideoId(findCompletedVideo(bookingData).video_id);
@@ -32,6 +35,13 @@ const StarView = (props) => {
       })
     } else {
       setVideo(findCompletedVideo(bookingData));
+    }
+    if (openStatusList.indexOf(bookingData.request_status) >= 0) {
+      updateRequestType('open');
+    } else if (completedStatusList.indexOf(bookingData.request_status) >= 0) {
+      updateRequestType('completed');
+    } else {
+      updateRequestType('cancelled');
     }
   }, [props.bookingData.id])
 
@@ -52,6 +62,14 @@ const StarView = (props) => {
     props.fetchActivitiesList(props.bookingData.id, offset, refresh);
   }
 
+  const onSelectAction = (option) => {
+    if(option.value === 'contact') {
+      props.toggleContactSupport(true);
+    } else if(option.value === 'download') {
+      console.log(findCompletedVideo(props.data));
+    }
+  }
+
   const submitComment = async (comment) => {
     props.loaderAction(true);
     try {
@@ -66,12 +84,18 @@ const StarView = (props) => {
     }
     props.loaderAction(false);
   }
-
   return (
-    <StarViewStyled>
-      <BookingStyled.Layout starMode>
+    <FanViewStyled>
+      <BookingStyled.Layout starMode={false}>
         <BookingStyled.LeftSection>
-          <StarViewStyled.VideoWrapper closeEnable={video.isReaction}>
+          {
+            <MoreActions
+              classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+              options={moreOptions[requestType]}
+              onSelectOption={onSelectAction}
+            />
+          }
+          <FanViewStyled.VideoWrapper closeEnable={video.isReaction}>
             {
               video.isReaction ? <CloseButton className='close-btn' onClick={onReactionClose} /> : null
             }
@@ -86,32 +110,18 @@ const StarView = (props) => {
               videoSrc={video.s3_video_url}
               cover={video.s3_thumbnail_url}
             />
-          </StarViewStyled.VideoWrapper>
-          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
+          </FanViewStyled.VideoWrapper>
+          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Booking details</BookingStyled.OrderText>
         </BookingStyled.LeftSection>
-        <BookingStyled.RightSection starMode>
-          <StarViewStyled.DetailWrapper>
+        <BookingStyled.RightSection>
+          <FanViewStyled.DetailWrapper>
             <span>
               <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
               <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
             </span>
-            <Share
-              className='action-btn'
-              shareUrl={video.video_url}
-            />
-          </StarViewStyled.DetailWrapper>
-          <StarViewStyled.DetailWrapper>
-              <span>
-                <BookingStyled.title className='title'>Paid:</BookingStyled.title>
-                {
-                  fundPayed && fundPayed.payed_out_amount && fundPayed.payed_out_date ?
-                    <BookingStyled.Description>${ numberToCommaFormatter(fundPayed.payed_out_amount)} on {moment.utc(fundPayed.payed_out_date).format('MMM Do, YYYY') }</BookingStyled.Description>
-                  :
-                    <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)}</BookingStyled.Description>
-                }
-              </span>
-          </StarViewStyled.DetailWrapper>
-          <BookingStyled.CommentList starMode>
+            <ActionBar />
+          </FanViewStyled.DetailWrapper>
+          <BookingStyled.CommentList starMode={false}>
             <Scrollbars
               autoHide
               renderView={scrollProps => <div {...scrollProps} id="comments-scroll-target" />}
@@ -121,6 +131,7 @@ const StarView = (props) => {
                 scrollTarget='comments-scroll-target'
                 dataList={props.activitiesList.data}
                 noDataText='No comments yet'
+                disableAction
                 loading={props.activitiesList.loading}
                 offset={props.activitiesList.offset}
                 fetchData={fetchActivity}
@@ -130,30 +141,31 @@ const StarView = (props) => {
               />
             </Scrollbars>
           </BookingStyled.CommentList>
-          <StarViewStyled.CommentWrapper>
+          <FanViewStyled.CommentWrapper>
             <CommentBox
               maxLength={52}
               classes={{root: 'comment-box'}}
               onSubmit={submitComment}
             />
             <QuickComment bookingId={bookingData.booking_id} fanName={bookingData.fan} videoId={videoId} classes={{root: 'quick-comment'}} />
-          </StarViewStyled.CommentWrapper>
-          <BookingStyled.OrderText starMode onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
+          </FanViewStyled.CommentWrapper>
+          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
-    </StarViewStyled>
+    </FanViewStyled>
   )
 }
 
-StarView.defaultProps = {
+FanView.defaultProps = {
   modalData: {},
   activitiesList: {},
 }
 
-StarView.propTypes = {
+FanView.propTypes = {
   closeModal: PropTypes.func.isRequired,
   bookingData: PropTypes.object.isRequired,
   fetchActivitiesList: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
   toggleDetails: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
@@ -161,4 +173,4 @@ StarView.propTypes = {
   activitiesList: PropTypes.object,
 }
 
-export default StarView;
+export default FanView;
