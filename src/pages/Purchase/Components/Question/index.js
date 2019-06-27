@@ -224,7 +224,7 @@ const Question = props => {
                     <QuestionBuilder questionsList={questions} />
                   </div>
                 )}
-                <WebButtons>
+                <WebButtons className="web-btns">
                   {!stateObject.continueFlg &&
                     getFileUpload(['uploadBtn mobDisplay'])}
                   {getButton(
@@ -243,7 +243,7 @@ const Question = props => {
           </QuestionContainer>
 
           {!stateObject.error && (
-            <MobButtons>
+            <MobButtons className="mob-btns">
               {getButton(
                 false,
                 '',
@@ -251,8 +251,8 @@ const Question = props => {
                 stateObject.buttonLabel,
               )}
               {props.recorded ||
-              isIOSDevice() ||
-              stateObject.buttonLabel === 'Record'
+                isIOSDevice() ||
+                stateObject.buttonLabel === 'Record'
                 ? getFileUpload(['uploadLink'])
                 : getRecordLink()}
             </MobButtons>
@@ -276,18 +276,21 @@ const Question = props => {
       )}
 
       {!isIOSDevice() && (!checkMediaRecorderSupport() || stateObject.error) && (
-        <QuestionContainer isShow error>
-          <p className="note">
-            Your system does not have video recording capability, but you will
+        <React.Fragment>
+          <QuestionContainer isShow error className="no-support">
+            <p className="note">
+              Your system does not have video recording capability, but you will
             need to record a video to ask a question to the Star. <br />
+              <br />
+              You can:
             <br />
-            You can:
-            <br />
-            <br /> Record with our App
+              <br /> Record with our App
             <br /> Use our iOS or Android app to book the star.
           </p>
+          </QuestionContainer>
           {getFileUpload(['uploadBtn noSupportBtn'])}
-        </QuestionContainer>
+        </React.Fragment>
+
       )}
 
       <input

@@ -27,8 +27,9 @@ export const HeaderDiv = styled.section`
     z-index: 1;
   }
 
-  &.custom-header {
+  &.headerGlobal.custom-header {
     min-height: 150px;
+    height: auto;
   }
 
   &.custom-header:after {
