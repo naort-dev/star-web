@@ -13,6 +13,72 @@ const ManageStyled = styled.div`
     margin-top: 162px;
     min-height: calc(100vh - 162px);
   }
+  .head1 {
+    padding-top: 4px;
+    padding-bottom: 32px;
+    @media (min-width: 1280px) {
+      padding-top: 9px;
+      padding-bottom: 25px;
+    }
+    @media (max-width: 831px) {
+      padding-bottom: 17px;
+    }
+  }
+  .popstyle-wrap {
+    margin-top: 4px;
+
+    .popstyle-inner {
+      padding-top: 55px;
+
+      .sub-head {
+        padding-bottom: 37px;
+      }
+      .row-wrap {
+        padding-bottom: 14px;
+      }
+      .common-btn {
+        margin-top: 37px;
+      }
+
+      &.password-update {
+        padding-top: 51px;
+  
+        .sub-head {
+          padding-bottom: 52px;
+        }
+        .inputWrapper {
+          margin-bottom: 40px;
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+        .note {
+          padding-top: 7px;
+        }
+        .common-btn {
+          margin-top: 32px;
+        }
+      }
+
+      &.payment {
+        .sub-head {
+          padding-bottom: 23px;
+        }
+        .note {
+          line-height: 22px;
+        }
+      }
+
+      &.notification {
+        .sub-head {
+          padding-bottom: 35px;
+        }
+        .head-text {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
 `;
 
 ManageStyled.Container = styled.div`

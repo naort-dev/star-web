@@ -38,7 +38,7 @@ SidebarStyled.LinkItem = styled.li`
     }
   }
   a, .log-out {
-    padding: 10px 0 12.35px;
+    padding: 10px 0 7.35px;
     display: flex;
   }
   a {
