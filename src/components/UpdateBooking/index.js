@@ -20,12 +20,16 @@ const UpdateBooking = (props) => {
   const [reason, setReason] = useState({});
 
   useEffect(() => {
-    setReasonList(props.config.requestFeedback.map((reasonItem, index) => {
-      return ({
-        label: reasonItem,
-        value: index,
-      })
-    }))
+    if (props.updateBooking.starMode) {
+      setReasonList(props.config.requestFeedback.map((reasonItem, index) => {
+        return ({
+          label: reasonItem,
+          value: index,
+        })
+      }))
+    } else {
+      setReasonList(props.config.cancelReasons)
+    }
   }, [])
 
   const updateReason = (option) => {
@@ -34,12 +38,12 @@ const UpdateBooking = (props) => {
 
   const onReasonSubmit = () => {
     if (props.updateBooking.starMode) {
-      props.changeBookingStatus(props.updateBooking.requestId, 5, reason.label) // decline a booking
+      props.changeBookingStatus(props.updateBooking.requestId, 5, reason.label || 'Other') // decline a booking
         .then(() => {
           props.toggleUpdateBooking(false)();
         })
     } else {
-      props.changeRequestStatus(props.updateBooking.requestId, 5, reason.label) // cancel a booking
+      props.changeRequestStatus(props.updateBooking.requestId, 5, reason.label || 'Other') // cancel a booking
         .then(() => {
           props.toggleUpdateBooking(false)();
         })
@@ -83,7 +87,7 @@ const UpdateBooking = (props) => {
         <PrimaryButton onClick={onReasonSubmit}>{ starMode ? 'Submit' : 'Cancel Booking' }</PrimaryButton>
         {
           !starMode &&
-            <PrimaryButton className='secondary-btn' secondary onClick={onReasonSubmit}>Continue with booking</PrimaryButton>        
+            <PrimaryButton className='secondary-btn' secondary onClick={props.toggleUpdateBooking(false)}>Continue with booking</PrimaryButton>        
         }
       </UpdateStyled>
     </RequestFlowPopup>

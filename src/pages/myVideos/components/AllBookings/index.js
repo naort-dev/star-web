@@ -8,7 +8,6 @@ import Dropdown from '../../../../components/Dropdown';
 import BookingsStyled from '../../styled';
 
 const AllBookings = props => {
-  console.log(props.recentActivity);
   return (
     <React.Fragment>
       <Dropdown
