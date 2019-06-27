@@ -17,7 +17,7 @@ export const STAR_PROFILE = {
     {
       linkName: 'Social handles',
       selectedName: 'settings',
-      url: '/manage/settings',
+      url: '/manage/profile/social-handles',
     },
     {
       linkName: 'Price & Limits',
@@ -26,5 +26,9 @@ export const STAR_PROFILE = {
         'Do you have contacts that would enjoy Starsona? Help them sign up using your referral code and earn 20% of our commission!',
       url: '/manage/referral',
     },
-  ]
+  ],
+  SOCIAL_HANDLE: {
+    subtitle: 'Adding your social media allows you to quickly promote yourself and increase bookings.',
+    heading: 'Social Handles',
+  }
 };
