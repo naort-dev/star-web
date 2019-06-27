@@ -101,7 +101,6 @@ const OpenBookings = props => {
   };
 
   const nextRequestHandler = selected => {
-    debugger;
     nextClick();
     const temp = props.bookingsList.data.filter(
       item => item.booking_id !== selected,
