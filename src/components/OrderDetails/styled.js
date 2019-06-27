@@ -78,6 +78,7 @@ OrderStyled.ScriptWrapper = styled.div`
   display: block;
   max-width: 520px;
   margin: 0 auto;
+  position: relative;
   .additional-info {
     display: table;
     padding-left: 11px;
@@ -97,6 +98,11 @@ OrderStyled.ScriptWrapper = styled.div`
         padding-left: 10px;
       }
     }
+  }
+  .more-action-root {
+    position: absolute;
+    top: -12px;
+    right: -30px;
   }
 `;
 

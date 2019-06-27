@@ -9,6 +9,7 @@ class Checkbox extends Component {
   componentDidMount() {
     this.setState({ checked: this.props.checked });
   }
+
   componentWillReceiveProps(newProps) {
     if (this.props.checked !== newProps.checked) {
       this.setState({ checked: newProps.checked });

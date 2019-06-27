@@ -13,6 +13,14 @@ export const hideVideoFromProfile = (videoId) => {
     .then(resp => resp.data);
 }
 
+export const makeVideoPrivate = (bookingId, isPrivate) => {
+  return fetch.post(Api.hideVideoFromProfile, {
+    booking: bookingId,
+    public: !isPrivate,
+  })
+    .then(resp => resp.data);
+}
+
 export const checkIfAnyBooking = async (role) => {
   try {
     const response = await fetch.get(`${Api.getUserVideos}?status=all&limit=1&role=${role}`)

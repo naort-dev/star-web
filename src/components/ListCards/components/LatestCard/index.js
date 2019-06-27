@@ -99,11 +99,11 @@ const LatestCard = (props) => {
   }
 
   const onReactionClick = (reactionUrl, reactionThumbnail, reactionType) => {
-    props.toggleBookingModal(true, {...request, id:request.id, reactionUrl, reactionThumbnail, reactionType}, true);
+    props.toggleBookingModal(true, {...request, id:request.id, reactionUrl, reactionThumbnail, reactionType}, props.starMode);
   }
   
   const onViewDetails = () => {
-    props.toggleBookingModal(true, {...request, id:request.id}, true);
+    props.toggleBookingModal(true, {...request, id:request.id}, props.starMode);
   }
 
   const videoId = useMemo(() => findCompletedVideo(request).video_id, [activity.id])
