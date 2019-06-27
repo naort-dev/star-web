@@ -200,7 +200,6 @@ const Video = props => {
 
   const showVideo = () => {
     if ((props.src || props.videoSrc) && !videoRecord) {
-      console.log(props.src);
       return (<VideoRender
       variableWidth
       variableHeight

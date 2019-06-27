@@ -142,9 +142,9 @@ class VideoRecorder extends Component {
         videoElem.srcObject = stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
-          audioBitsPerSecond: 128000,
-          videoBitsPerSecond: 128000,
-          bitsPerSecond: 128000,
+          // audioBitsPerSecond: 128000,
+          // videoBitsPerSecond: 128000,
+          // bitsPerSecond: 128000,
         };
         try {
           this.recordingDate = new Date();
@@ -293,8 +293,8 @@ class VideoRecorder extends Component {
     if (!this.state.isIOSDevice) {
       this.props.recordTrigger();
       this.props.playPauseMediaAction();
+      this.setState({ mediaControls: false });
     }
-    this.setState({ mediaControls: false });
   };
 
   render() {

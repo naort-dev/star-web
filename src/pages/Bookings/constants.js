@@ -1,14 +1,14 @@
 export const options = [{
-  title: 'All',
+  title: 'Overview',
   id: 'all',
 }, {
-  title: 'Open Bookings',
+  title: 'Open bookings',
   id: 'open',
 }, {
-  title: 'Completed Bookings',
+  title: 'Completed bookings',
   id: 'completed',
 }, {
-  title: 'Cancelled Bookings',
+  title: 'Cancelled bookings',
   id: 'cancelled',
 }];
 

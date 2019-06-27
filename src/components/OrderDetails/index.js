@@ -4,6 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
+import ToolTip from '../ToolTip';
 import RequestFlowPopup from '../RequestFlowPopup';
 import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
@@ -75,13 +76,11 @@ const OrderDetails = (props) => {
   const onCheckBoxChange = async (check) => {
     const completedVideo = findCompletedVideo(bookingData);
     const hideResponse = await hideVideoFromProfile(completedVideo.video_id);
-    console.log(hideResponse)
     setCheckBox(check);
   }
 
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
-
   return (
     <WrapperComponent disableClose={!starMode} noPadding={!starMode} closePopUp={props.closeModal}>
       {
@@ -100,7 +99,7 @@ const OrderDetails = (props) => {
               <OrderStyled.HeaderText>
                 {renderHeading()}
               </OrderStyled.HeaderText>
-              <OrderStyled.Heading>
+              <OrderStyled.Heading starMode={starMode}>
                 Order Details
               </OrderStyled.Heading>
             </React.Fragment>
@@ -123,10 +122,19 @@ const OrderDetails = (props) => {
           requestType === 'completed' &&
             <OrderStyled.ColumnCenter>
               <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
-              <span className="check-text ">{ starMode ? 'Hide from profile' : 'Make my video private!' }</span>
+              <span className="check-text ">
+                {
+                  starMode ?
+                    'Hide from profile'
+                  :
+                    <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
+                      <span>Make my video private!</span>
+                    </ToolTip>
+                }
+              </span>
             </OrderStyled.ColumnCenter>
         }
-        <OrderStyled.Details>
+        <OrderStyled.Details starMode={props.starMode}>
           <OrderStyled.DetailList>
             <li className='detail-item'>
               <span className='detail-title'>Purchased:</span>
@@ -147,7 +155,9 @@ const OrderDetails = (props) => {
                 { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
                 {
                   requestType === 'cancelled' &&
-                    <span className='detail-comment'>{bookingData.comment}</span>
+                    <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
+                      <span className='detail-comment'>{bookingData.comment}</span>
+                    </ToolTip>
                 }
               </span>
             </li>

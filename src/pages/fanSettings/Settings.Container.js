@@ -28,8 +28,8 @@ function mapDispatch(dispatch) {
     updateNotificationViewed: () => {
       dispatch(updateNotificationViewed());
     },
-    updateProfilePhoto: obj => {
-      dispatch(updateProfilePhoto(obj));
+    updateProfilePhoto: (obj, showToast) => {
+      dispatch(updateProfilePhoto(obj, showToast));
     },
     loaderAction: value => {
       dispatch(loaderAction(value));

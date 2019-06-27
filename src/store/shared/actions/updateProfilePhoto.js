@@ -41,7 +41,7 @@ export const setProfilePicToState = profilePic => ({
   payload: profilePic,
 });
 
-export const updateProfilePhoto = obj => (dispatch, getState) => {
+export const updateProfilePhoto = (obj, showToast) => (dispatch, getState) => {
   const API_URL = `${Api.updatePhoto}`;
   dispatch(updateProfilePhotoFetchStart());
   dispatch(loaderAction(true));
@@ -55,13 +55,14 @@ export const updateProfilePhoto = obj => (dispatch, getState) => {
           fetchUserDetails(getState().userDetails.settings_userDetails.id),
         );
         dispatch(loaderAction(false));
-        dispatch(
-          updateToast({
-            value: true,
-            message: 'Successfully updated',
-            variant: 'success',
-          }),
-        );
+        if (showToast)
+          dispatch(
+            updateToast({
+              value: true,
+              message: 'Successfully updated',
+              variant: 'success',
+            }),
+          );
         return resp.data.data;
       }
       dispatch(updateProfilePhotoFetchEnd());
@@ -70,13 +71,14 @@ export const updateProfilePhoto = obj => (dispatch, getState) => {
     })
     .catch(exception => {
       dispatch(loaderAction(false));
-      dispatch(
-        updateToast({
-          value: true,
-          message: exception.response.data.error.message,
-          variant: 'error',
-        }),
-      );
+      if (showToast)
+        dispatch(
+          updateToast({
+            value: true,
+            message: exception.response.data.error.message,
+            variant: 'error',
+          }),
+        );
       dispatch(updateProfilePhotoFetchEnd());
       dispatch(updateProfilePhotoFetchFailed(exception));
     });

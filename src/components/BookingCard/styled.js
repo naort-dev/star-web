@@ -4,7 +4,10 @@ const BookingStyled = styled.div`
   @media(min-width: 832px) {
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
-    height: 100%;
+    height: ${props => (props.starMode ? '100%' : 'calc(100% - 214px)')};
+    ${props => !props.starMode && `
+      position: relative;
+    `}
     ${props => props.showDetails && `
       transform: rotateY(180deg);
     `}
@@ -24,14 +27,16 @@ BookingStyled.Heading = styled.span`
   display: block;
   font-family: Gilroy-Regular;
   font-size: 24px;
-  display: block;
+  display: ${props => (props.starMode ? 'block' : 'none')};
   text-align: center;
   color: ${props => props.theme.flatBlue};
   margin: 30px 0;
 `;
 
 BookingStyled.Booking = styled.div`
+  display: ${props => !props.starMode && props.showDetails ? 'none' : 'block'}
   @media(min-width: 832px) {
+    display: block;
     position: absolute;
     left: 0;
     right: 0;
@@ -44,7 +49,9 @@ BookingStyled.Booking = styled.div`
 `;
 
 BookingStyled.OrderWrapper = styled.div`
+  display: ${props => props.starMode || props.showDetails ? 'block' : 'none'}
   @media(min-width: 832px) {
+    display: block;
     position: absolute;
     left: 0;
     right: 0;
@@ -94,7 +101,7 @@ BookingStyled.Layout = styled.div`
   padding-bottom: 10px;
   @media(min-width: 832px) {
     flex-direction: row;
-    padding-top: 55.2px;
+    padding-top: ${props => (props.starMode ? '55.2px' : '0')};
   }
 `;
 
@@ -104,6 +111,11 @@ BookingStyled.LeftSection = styled.div`
   width: 100%;
   align-items: center;
   flex-direction: column;
+  .more-action-root {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
   ${BookingStyled.OrderText} {
     display: none;
   }
@@ -111,6 +123,9 @@ BookingStyled.LeftSection = styled.div`
     justify-content: flex-start;
     width: auto;
     padding-right: 30.8px;
+    .more-action-root {
+      display: none;
+    }
     ${BookingStyled.OrderText} {
       display: block;
     }
@@ -144,7 +159,7 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  height: 342px;
+  height: ${props => (props.starMode ? '342px' : '296px')};
 `;
 
 export default BookingStyled;
