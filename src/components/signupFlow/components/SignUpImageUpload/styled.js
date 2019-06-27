@@ -81,13 +81,19 @@ UploadContainer.Heading = styled.div`
       & ~.upload-wrap {
         padding-top: 58px;
         padding-bottom: 0;
-        margin-bottom: 57px
+        margin-bottom: 57px;
+        @media (min-width: 832px) {
+          margin-bottom: 40px;
+        }
       }
     }
     &.select-category {
       & ~.upload-wrap {
         padding-bottom: 0;
-        margin-bottom: 15px
+        margin-bottom: 15px;
+        @media (min-width: 832px) {
+          margin-bottom: 20px;
+        }
       }
     }
   }
@@ -119,7 +125,8 @@ UploadContainer.CategoriesWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 auto 40px;
+    margin: 0 auto;
+    height: 190px;
 
     &.fans-want {
       padding-bottom: 2px;
@@ -199,6 +206,14 @@ UploadContainer.ButtonWrapper = styled.div`
   padding-bottom: 20px;
   @media (max-width: 831px) {
     margin-top: 20px;
+  }
+  @media (min-width: 832px) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 73px;
+    padding-bottom: 0;
   }
 `;
 
@@ -496,10 +511,10 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   }
 
   &:last-child {
-    margin-left: 22px;
+    margin-left: 10px;
     margin-right: 0;
-    ${media.mobileView} {
-      margin-left: 10px;
+    ${media.webView} {
+      margin-left: 22px;
     }
   }
 `;

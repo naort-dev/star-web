@@ -54,7 +54,7 @@ export const BackArrow = styled.span`
   content: '';
   background-size: 10px 20px;
   position: absolute;
-  left: 15px;
+  left: 20px;
   top: 34px;
   cursor: pointer;
   padding: 15px;
