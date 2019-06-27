@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { isEmpty, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { useMedia } from 'utils/domUtils';
 import {
   recordTrigger,
   updateMediaStore,
@@ -37,6 +37,7 @@ const buttonLabel = {
 };
 
 const OpenBookings = props => {
+  const isDesktop = useMedia('(min-width: 1280px)');
   const clearVideo = () => {
     props.updateMediaStore({
       videoSrc: null,
@@ -100,7 +101,7 @@ const OpenBookings = props => {
     setInitialSelected(true);
   };
 
-  const nextRequestHandler = selected => {
+  const nextRequestHandler = (selected, clicked) => {
     nextClick();
     const temp = props.bookingsList.data.filter(
       item => item.booking_id !== selected,
@@ -108,7 +109,7 @@ const OpenBookings = props => {
     props.updateBookingList(temp);
     clearVideo();
     setUploadSuccess(false);
-    updateCardClicked(true);
+    updateCardClicked(clicked);
   };
 
   useEffect(() => {
@@ -140,12 +141,12 @@ const OpenBookings = props => {
 
   useEffect(() => {
     if (!isEmpty(props.bookingsList.data)) {
-      if (props.hasDeclined) {
-        nextRequestHandler(props.selected);
+      if (props.hasDeclinedFlg) {
+        nextRequestHandler(props.selected, isDesktop);
         props.hasDeclined(false);
       }
     }
-  }, [props.hasDeclined]);
+  }, [props.hasDeclinedFlg]);
 
   useEffect(() => {
     return () => {
@@ -233,7 +234,8 @@ OpenBookings.propTypes = {
   updateBookingList: PropTypes.func.isRequired,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
-  hasDeclined: PropTypes.bool.isRequired,
+  hasDeclinedFlg: PropTypes.bool.isRequired,
+  hasDeclined: PropTypes.func.isRequired,
 };
 
 OpenBookings.defaultProps = {
@@ -276,7 +278,7 @@ export default connect(
     return {
       shouldRecord: state.commonReducer.shouldRecord,
       playPauseMediaFlg: state.commonReducer.playPauseMedia,
-      hasDeclined: state.bookings.requestHandler.hasDeclined,
+      hasDeclinedFlg: state.bookings.requestHandler.hasDeclined,
     };
   },
   mapDispatchToProps,
