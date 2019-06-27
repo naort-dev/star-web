@@ -122,8 +122,8 @@ const AccountInfo = props => {
   };
 
   return (
-    <Container>
-      <Wrapper>
+    <Container className="popstyle-wrap">
+      <Wrapper className="popstyle-inner">
         <h2
           className="sub-head"
           data-web={props.webHead}

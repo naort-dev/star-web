@@ -6,8 +6,8 @@ import { Wrap } from './styled';
 
 const Payment = props => {
   return (
-    <Container>
-      <Wrap>
+    <Container className="popstyle-wrap">
+      <Wrap className="popstyle-inner payment">
         <h2
           className="sub-head"
           data-web={props.webHead}

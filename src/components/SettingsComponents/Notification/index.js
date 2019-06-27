@@ -14,8 +14,8 @@ const Notification = props => {
   }, []);
 
   return (
-    <Container>
-      <Wrap>
+    <Container className="popstyle-wrap">
+      <Wrap className="popstyle-inner notification">
         <h2 className="sub-head">{props.webHead}</h2>
         <section className="terms-container">
           <span className="head-text">Allow the following:</span>
