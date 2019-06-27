@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import SubHeader from 'components/SubHeader';
 import InnerSidebar from 'components/InnerSidebar';
@@ -97,7 +98,7 @@ const Settings = props => {
         break;
 
       case 'Payment':
-        if (props.stripeCard !== '') {
+        if (!isEmpty(props.stripeCard)) {
           const temp = { ...link };
           temp.completed = true;
           return temp;

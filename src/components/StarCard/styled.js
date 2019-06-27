@@ -92,9 +92,20 @@ export const SummaryItem = styled.li`
   .rating {
     width: 50%;
     padding-left: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     ${media.webView} {
       width: 65%;
       padding-left: 0;
+    }
+    .rate {
+      padding-right: 5px;
+    }
+    .no-rate {
+      font-family: Gilroy-Light;
+      color: #ff6c58;
+      font-size: 12px;
     }
   }
   .commenticon {
