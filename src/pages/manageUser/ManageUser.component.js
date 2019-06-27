@@ -47,7 +47,7 @@ const ManageUser = props => {
         >
           <Sidebar links={props.isStar ? starInnerLinks : fanInnerLinks} />
         </ManageStyled.SidebarWrapper>
-        <ManageStyled.RightContent className="praveen">
+        <ManageStyled.RightContent>
           {props.isStar ? (
             <Switch>
               <Route path="/manage/dashboard" component={Dashboard} />
