@@ -17,10 +17,9 @@ import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/Purchase/reducers/occasionList';
 import bookings from '../pages/Bookings/reducers';
-import myVideosList from '../pages/myVideos/reducers/myVideosList';
+import myVideos from '../pages/myVideos/reducers';
 import groupSupporters from '../pages/starSupporters/reducers';
 import groupListing from '../pages/groupListing/reducers';
-import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
@@ -61,7 +60,7 @@ const appReducer = combineReducers({
   favouritesList,
   followCelebrityStatus,
   occasionList,
-  myVideosList,
+  myVideos,
   bookings,
   bookingData,
   otherRelation,
@@ -75,7 +74,6 @@ const appReducer = combineReducers({
   saveSettings,
   stripeRegistration,
   changePassword,
-  earningsList,
   socialMediaData,
   referralDetails,
   commentsList,

@@ -16,57 +16,66 @@ const StarCard = ({ data }) => {
   return (
     <Layout className="customStar-layout">
       <Card className="cardLayout">
-        <FlexBoxSB className="flex-start">
-          <span data-val="Total earnings:" className="earnings headLbl">
-            ${data.total_earnings}
+        <section className="earnings-wrap">
+          <FlexBoxSB className="flex-start">
+            <span data-val="Total earnings:" className="earnings headLbl">
+              ${data.total_earnings}
+            </span>
+            <span data-val="Pending payments:" className="payments headLbl">
+              ${data.pending_payments}
+            </span>
+          </FlexBoxSB>
+          <span className="earningPercentage">
+            Your Earnings: 75%; Starsona: 25%
           </span>
-          <span data-val="Pending payments:" className="payments headLbl">
-            ${data.pending_payments}
-          </span>
-        </FlexBoxSB>
-        <span className="earningPercentage">
-          Your Earnings: 75%; Starsona: 25%
-        </span>
+        </section>
 
-        <Summary>
-          <SummaryItem>
+        <Summary className="summary-wrap">
+          <SummaryItem className="summary-item">
             <span>
               <FontAwesomeIcon icon={faPlay} />
-              <Label>Videos:</Label>
+              <Label className="label">Videos:</Label>
             </span>
-            <Value>{data.total_video_count}</Value>
+            <Value className="value">{data.total_video_count}</Value>
           </SummaryItem>
-          <SummaryItem>
+          <SummaryItem className="summary-item">
             <span>
               <FontAwesomeIcon icon={faComment} className="commenticon" />
-              <Label>Comments:</Label>
+              <Label className="label">Comments:</Label>
             </span>
-            <Value>{data.total_comment_count}</Value>
+            <Value className="value">{data.total_comment_count}</Value>
           </SummaryItem>
-          <SummaryItem>
+          <SummaryItem className="summary-item">
             <span>
               <FontAwesomeIcon icon={faHeart} />
-              <Label>Reaction videos:</Label>
+              <Label className="label">Reaction videos:</Label>
             </span>
-            <Value>{data.total_reaction_video_count}</Value>
+            <Value className="value">{data.total_reaction_video_count}</Value>
           </SummaryItem>
           <SummaryItem className="rating-wrap">
             <span>
               <FontAwesomeIcon icon={faStar} />
               <Label className="rating-label">Rating</Label>
             </span>
-            <Rating
-              className="rating"
-              emptySymbol={
-                <FontAwesomeIcon className="rating-star" icon={faLightStar} />
-              }
-              fullSymbol={
-                <FontAwesomeIcon className="rating-star" icon={faStar} />
-              }
-              fractions={2}
-              initialRating={data.rating}
-              readonly
-            />
+            <span className="rating">
+              <Rating
+                className="rate"
+                emptySymbol={
+                  <FontAwesomeIcon className="rating-star" icon={faLightStar} />
+                }
+                fullSymbol={
+                  <FontAwesomeIcon className="rating-star" icon={faStar} />
+                }
+                fractions={2}
+                initialRating={data.rating}
+                readonly
+              />
+              {data.rating === '0.00' ? (
+                <span className="no-rate">No ratings yet</span>
+              ) : (
+                ''
+              )}
+            </span>
           </SummaryItem>
         </Summary>
       </Card>

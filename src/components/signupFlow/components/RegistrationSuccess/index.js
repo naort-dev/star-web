@@ -17,9 +17,9 @@ const RegistrationSuccess = (props) => {
       if (localStorage) {
         localStorage.removeItem('tempAuthToken');
       }
-      if(props.cookies !== undefined) {
+      if (props.cookies !== undefined) {
         const { cookies } = props;
-      cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
+        cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
       }
     }
   }, [])
@@ -39,25 +39,25 @@ const RegistrationSuccess = (props) => {
               {props.message}
             </RegSuccessWrapper.Label>
             {props.highlight_text ?
-                <RegSuccessWrapper.HighLight>
-                  {props.highlight_text}
-                </RegSuccessWrapper.HighLight> : null}
+              <RegSuccessWrapper.HighLight>
+                {props.highlight_text}
+              </RegSuccessWrapper.HighLight> : null}
             <RegSuccessWrapper.Description>
-              {!props.audioVideoSupport? props.nodevice_description:''}
+              {!props.audioVideoSupport ? props.nodevice_description : ''}
               {props.audioVideoSupport && !props.skipVideo ? props.description : ''}
-              {props.skipVideo ? props.skipvideo_description : '' }
+              {props.skipVideo ? props.skipvideo_description : ''}
             </RegSuccessWrapper.Description>
           </RegSuccessWrapper.Type>
         </RegSuccessWrapper.OptionWrapper>
-        <RegSuccessWrapper.ButtonWrapper>
+        <RegSuccessWrapper.ButtonWrapper className={`${props.signupRole === "fan" ? "signup-fan" : ""}`}>
           <PrimaryButton className='success-button' onClick={props.primaryButtonClick} >
-            {props.primary_button}              
+            {props.primary_button}
           </PrimaryButton>
           {(props.audioVideoSupport && !props.skipVideo) ? (
             <PrimaryButton className='success-button' secondary={props.secondary} onClick={props.secondaryButtonClick}>
-              {props.secondary_button}             
+              {props.secondary_button}
             </PrimaryButton>
-          ): ''
+          ) : ''
           }
         </RegSuccessWrapper.ButtonWrapper>
       </RegSuccessWrapper.ComponentWrapper>

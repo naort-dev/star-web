@@ -23,7 +23,7 @@ export const Layout = styled.section`
     height: 202px;
     ${media.webView} {
       width: 260px;
-      height: 267px;
+      height: 225px;
     }
   }
   .successScroll {

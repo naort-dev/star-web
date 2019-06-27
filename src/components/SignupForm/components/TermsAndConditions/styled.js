@@ -16,8 +16,8 @@ const TermsConditionsWrapper = styled.div`
     overflow: auto;
 
     @media(min-width:832px){
-      height: 439px !important;
-      margin-bottom: 22px;
+      height: 447px !important;
+      margin-bottom: 15px;
       margin-top: 4px;
       max-width: 590px;
     }

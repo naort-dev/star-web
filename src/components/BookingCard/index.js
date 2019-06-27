@@ -6,6 +6,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
 import { requestTypes } from '../../constants/requestTypes';
 import StarView from './components/StarView';
+import FanView from './components/FanView';
 import BookingTitle from '../BookingTitle';
 import ModalHeader from '../ModalHeader';
 
@@ -13,7 +14,7 @@ import Loader from '../Loader';
 import { getRequestDetails } from '../../services/request';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList } from '../../store/shared/actions/getActivities'
-import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
+import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
 const BookingCard = (props) => {
@@ -104,10 +105,10 @@ const BookingCard = (props) => {
                   </BookingStyled.HeaderText>
                 </React.Fragment>
             }
-            <BookingStyled showDetails={showDetails}>
-              <BookingStyled.Booking>
+            <BookingStyled showDetails={showDetails} starMode={starMode}>
+              <BookingStyled.Booking showDetails={showDetails} starMode={starMode}>
                 {
-                  starMode &&
+                  starMode ?
                     <StarView
                       bookingData={requestData}
                       fetchActivitiesList={props.fetchActivitiesList}
@@ -118,10 +119,22 @@ const BookingCard = (props) => {
                       toggleDetails={setDetails}
                       closeModal={closeModal}
                     />
+                  :
+                    <FanView
+                      bookingData={requestData}
+                      fetchActivitiesList={props.fetchActivitiesList}
+                      toggleContactSupport={props.toggleContactSupport}
+                      loaderAction={props.loaderAction}
+                      updateToast={props.updateToast}
+                      activitiesList={props.activitiesList}
+                      modalData={props.bookingModal.data}
+                      toggleDetails={setDetails}
+                      closeModal={closeModal}
+                    />
                 }              
               </BookingStyled.Booking>
-              <BookingStyled.OrderWrapper>
-                <BookingStyled.Heading>
+              <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
+                <BookingStyled.Heading starMode={starMode}>
                   Order Details
                 </BookingStyled.Heading>
                 <OrderDetails
@@ -143,6 +156,7 @@ BookingCard.propTypes = {
   toggleBookingModal: PropTypes.func.isRequired,
   bookingModal: PropTypes.object.isRequired,
   fetchActivitiesList: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
   activitiesList: PropTypes.object.isRequired,
@@ -155,6 +169,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
+  toggleContactSupport: state => dispatch(toggleContactSupport(state)),
   fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh)),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),

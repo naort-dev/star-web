@@ -54,7 +54,7 @@ export const updateBookingList = data => ({
 });
 
 export const updateMyVideosList = (id, newData) => (dispatch, getState) => {
-  const originalList = cloneDeep(getState().myVideosList.data);
+  const originalList = cloneDeep(getState().myVideos.myVideosList.data);
   const dataIndex = originalList.findIndex(item => item.id === id);
   originalList[dataIndex] = newData;
   dispatch(myVideosListFetchStart(false, getState().myVideosList.token));
@@ -65,11 +65,11 @@ export const fetchMyVideosList = (offset, refresh, requestStatus) => (
   dispatch,
   getState,
 ) => {
-  const { status, limit } = getState().myVideosList;
+  const { status, limit } = getState().myVideos.myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
   const source = CancelToken.source();
-  if (typeof getState().myVideosList.token !== typeof undefined) {
-    getState().myVideosList.token.cancel(
+  if (typeof getState().myVideos.myVideosList.token !== typeof undefined) {
+    getState().myVideos.myVideosList.token.cancel(
       'Operation canceled due to new request.',
     );
   }

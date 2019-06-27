@@ -42,8 +42,15 @@ const processConfig = (config) => {
       value: topic,
     })
   }): [];
+  const cancelReasons  = config.cancel_booking_reasons ? config.cancel_booking_reasons.cancel_booking_reasons.map((reason) => {
+    return ({
+      label: reason,
+      value: reason,
+    })
+  }): [];
   newConfig.tipAmounts = tips;
   newConfig.supportTopics = supportTopics;
+  newConfig.cancelReasons = cancelReasons;
   newConfig.requestFeedback = requestFeedback;
   newConfig.declineComments = declineComments;
   return newConfig;
