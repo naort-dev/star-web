@@ -103,8 +103,8 @@ export const Content = styled.section`
 `;
 
 Layout.Phonenumber = styled.div`
-  padding-bottom: 44px;
-  padding-top: 43px;
+padding-bottom: 38px;
+padding-top: 39px;
   @media (max-width: 831px) {
     padding-bottom: 10px;
     padding-top: 10px;
@@ -115,8 +115,29 @@ Layout.Phonenumber = styled.div`
   }
   .react-phone-number-input__input{
     text-align: center;
-    font-family: Gilroy;
     border-bottom: none;
+    color: #8174aa;
+    font-family: Gilroy-Medium;
+    font-size: 22px;
+    line-height: 25px;
+    padding: 6px 0 5px;
+    &::-webkit-input-placeholder {
+      font-size: 18px;
+    }
+    &:-moz-input-placeholder {
+      font-size: 18px;
+    }
+    &::-moz-input-placeholder {
+      font-size: 18px;
+    }
+    &:-ms-input-placeholder {
+      font-size: 18px;
+    }
+  }
+  .react-phone-number-input__icon {
+    width: 32px;
+    height: 22px;
+    border: none;
   }
   .errorElement {
     color: #990000;

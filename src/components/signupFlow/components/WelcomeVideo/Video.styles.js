@@ -7,6 +7,7 @@ export const Layout = styled.section`
   padding-top: 49px;
   ${media.webView} {
     max-width: 570px;
+    padding-top: 0;
   }
   margin: 0 auto;
   @media (max-width: 831px) {
@@ -96,15 +97,12 @@ export const VideoContainer = styled.section`
     color: #2f839d;
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    bottom: 25px;
     transform: translateX(-50%);
     height: 60px;
     font-size: 18px;
     line-height: 60px;
     padding: 0;
-    @media(max-width: 831px) {
-      bottom: 25px;
-    }
   }
   .videoElm {
     width: 100%;
@@ -144,7 +142,7 @@ export const QuestionContainer = styled.section`
     width: auto;
     ${media.webView} {
       display: block;
-      margin-top: 34px;
+      margin-top: 25px;
       height: 60px;
       padding: 0;
     }
@@ -221,6 +219,7 @@ export const TimeSpan = styled.span`
   font-family: Gilroy;
   color: #555555;
   padding-bottom: 38px;
+  padding-top: 2px;
   display: none;
   ${media.webView} {
     display: flex;

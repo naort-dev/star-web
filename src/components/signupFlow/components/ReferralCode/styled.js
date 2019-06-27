@@ -86,6 +86,14 @@ ReferralCodeWrapper.ButtonWrapper = styled.div`
   text-align:center;
   margin-top: 85px;
   padding-bottom: 20px;
+  @media(min-width: 832px){
+    position: absolute;
+    bottom: 73px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding-bottom: 0;
+  }
 `;
 
 export default ReferralCodeWrapper;

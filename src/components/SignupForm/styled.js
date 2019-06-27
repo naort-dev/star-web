@@ -419,10 +419,45 @@ LoginContainer.WrapsInput = styled.div`
     padding: 6px 0 5px;
 
     &::-webkit-input-placeholder { font-size: 18px;}
-      &:-moz-placeholder { font-size: 18px;}
-      &::-moz-placeholder {  font-size: 18px;}
-      &:-ms-input-placeholder { font-size: 18px;}
+    &:-moz-placeholder { font-size: 18px;}
+    &::-moz-placeholder {  font-size: 18px;}
+    &:-ms-input-placeholder { font-size: 18px;}
+
+    &.input-label-email {
+      &::-webkit-input-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &:-moz-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &::-moz-placeholder {
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &:-ms-input-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
     }
+  }
     // &.input-label-first-name {
     //   &::-webkit-input-placeholder { font-size: 18px;}
     //   &:-moz-placeholder { font-size: 18px;}
@@ -441,13 +476,6 @@ LoginContainer.WrapsInput = styled.div`
     //   &::-moz-placeholder {  font-size: 17px;}
     //   &:-ms-input-placeholder { font-size: 17px;}
     // }
-    // &.input-label-email {
-    //   &::-webkit-input-placeholder { font-size: 16px;}
-    //   &:-moz-placeholder { font-size: 16px;}
-    //   &::-moz-placeholder {  font-size: 16px;}
-    //   &:-ms-input-placeholder { font-size: 16px;}
-    // }
-  }
   input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }
   input:-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 18- */
   input::-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 19+ */
