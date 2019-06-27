@@ -101,13 +101,6 @@ export const registerUser = (
       dispatch(registerFetchEnd());
     })
     .catch(exception => {
-      dispatch(
-        updateToast({
-          value: true,
-          message: exception.response.data.error.message,
-          variant: 'error',
-        }),
-      );
       dispatch(registerFetchEnd());
       if (exception.response.status === 400) {
         dispatch(registerFetchIncorrect(exception.response.data.error.message));
