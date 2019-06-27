@@ -33,6 +33,7 @@ const OpenBookings = props => {
               props.bookingsList.data.map((bookItem) => (
                 <FanGeneralList
                   expiration={props.config.request_expiration_days}
+                  onUpdateData={props.updateMyVideosList}
                   key={bookItem.id}
                   data={bookItem}
                   classes={{root: 'list-item'}}
@@ -51,6 +52,7 @@ OpenBookings.propTypes = {
   handleCategoryChange: PropTypes.func.isRequired,
   dropValue: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  updateMyVideosList: PropTypes.func.isRequired,
 };
 
 export default OpenBookings

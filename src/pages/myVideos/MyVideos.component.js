@@ -99,6 +99,7 @@ class MyVideos extends React.Component {
               dropValue={dropValue}
               config={props.config}
               recentActivity={props.recentActivity}
+              updateMyVideosList={props.updateMyVideosList}
               handleCategoryChange={this.handleCategoryChange}
               onOpenClick={this.onOpenClick}
               setRequestType={this.setRequestType}
@@ -110,6 +111,7 @@ class MyVideos extends React.Component {
               bookingsList={props.myVideosList}
               config={props.config}
               dropValue={dropValue}
+              updateMyVideosList={props.updateMyVideosList}
               selected={selected}
               updateSelected={this.setRequest}
               handleCategoryChange={this.handleCategoryChange}
@@ -146,6 +148,7 @@ MyVideos.propTypes = {
   fetchMyVideosList: PropTypes.func.isRequired,
   fetchRecentActivity: PropTypes.func.isRequired,
   recentActivity: PropTypes.object.isRequired,
+  updateMyVideosList: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
 };

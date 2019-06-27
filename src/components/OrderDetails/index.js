@@ -86,17 +86,19 @@ const OrderDetails = (props) => {
 
   const onCheckBoxChange = async (check) => {
     let hideResponse;
+    const prevCheck = checkBox;
+    setCheckBox(check);
     try {
       if (starMode) {
         const completedVideo = findCompletedVideo(bookingData);
         hideResponse = await hideVideoFromProfile(completedVideo.video_id);
       } else {
         hideResponse = await makeVideoPrivate(bookingData.booking_id, check);
-        console.log(hideResponse)
+        props.onCheckboxChange(!check)
       }
-      setCheckBox(check);
     }
     catch(e) {
+      setCheckBox(prevCheck);
       props.updateToast({
         value: true,
         message: 'Something went wrong',
@@ -105,10 +107,16 @@ const OrderDetails = (props) => {
     }
   }
 
+  const modalProps = props.isModal ? {
+    disableClose: !starMode,
+    noPadding: !starMode,
+    closePopUp: props.closeModal,
+  } : {}
+
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
   return (
-    <WrapperComponent disableClose={!starMode} noPadding={!starMode} closePopUp={props.closeModal}>
+    <WrapperComponent {...modalProps}>
       {
         !starMode && props.isModal &&
           <ModalHeader
@@ -223,6 +231,8 @@ OrderDetails.defaultProps = {
   disableHeader: false,
   disableFooter: false,
   isModal: false,
+  starMode: false,
+  onCheckboxChange: () => {},
   onPrimaryClick: () => {},
 }
 
@@ -232,14 +242,16 @@ OrderDetails.propTypes = {
   onPrimaryClick: PropTypes.func,
   disableHeader: PropTypes.bool,
   toggleUpdateBooking: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
-  starMode: PropTypes.bool.isRequired,
+  starMode: PropTypes.bool,
   disableFooter: PropTypes.bool,
+  onCheckboxChange: PropTypes.func,
   isModal: PropTypes.bool,
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode)),
+  toggleUpdateBooking: (state, requestId, mode, requestData) => dispatch(toggleUpdateBooking(state, requestId, mode, requestData)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
 })

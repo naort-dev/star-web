@@ -14,7 +14,7 @@ export const hideVideoFromProfile = (videoId) => {
 }
 
 export const makeVideoPrivate = (bookingId, isPrivate) => {
-  return fetch.post(Api.hideVideoFromProfile, {
+  return fetch.post(Api.videoPublicity, {
     booking: bookingId,
     public: !isPrivate,
   })

@@ -44,7 +44,7 @@ const AllBookings = props => {
       {
         props.recentActivity.activityList.map((activity) => {
           return activity.activity_type === 'video' ?
-            <FanGeneralList key={activity.id} data={activity.request} classes={{root: 'list-item'}} />
+            <FanGeneralList onUpdateData={props.updateMyVideosList} key={activity.id} data={activity.request} classes={{root: 'list-item'}} />
           :
             <LatestCard activity={activity} key={activity.id} type={activity.activity_type} />
         })
@@ -61,6 +61,7 @@ AllBookings.propTypes = {
   config: PropTypes.object.isRequired,
   recentActivity: PropTypes.object.isRequired,
   setRequestType: PropTypes.func.isRequired,
+  updateMyVideosList: PropTypes.func.isRequired,
 };
 
 export default AllBookings;
