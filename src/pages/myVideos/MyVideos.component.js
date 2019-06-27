@@ -27,6 +27,7 @@ class MyVideos extends React.Component {
       };
       this.fetchList('open');
     }
+    props.fetchRecentActivity();
     this.state = {
       dropValue,
       selected: '',
@@ -97,6 +98,7 @@ class MyVideos extends React.Component {
               bookingsList={props.myVideosList}
               dropValue={dropValue}
               config={props.config}
+              recentActivity={props.recentActivity}
               handleCategoryChange={this.handleCategoryChange}
               onOpenClick={this.onOpenClick}
               setRequestType={this.setRequestType}
@@ -142,6 +144,8 @@ MyVideos.propTypes = {
   location: PropTypes.object.isRequired,
   myVideosList: PropTypes.object.isRequired,
   fetchMyVideosList: PropTypes.func.isRequired,
+  fetchRecentActivity: PropTypes.func.isRequired,
+  recentActivity: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
 };

@@ -131,9 +131,12 @@ const LatestCard = (props) => {
             classes={{ comment: 'comment-section' }}
             receive
           />
-          <span className='divider'>
-            <QuickComment fanName={activity.activity_from_user} once videoId={videoId} classes={{root: 'quick-comment-root'}} />
-          </span>
+          {
+            props.starMode &&
+              <span className='divider'>
+                <QuickComment fanName={activity.activity_from_user} once videoId={videoId} classes={{root: 'quick-comment-root'}} />
+              </span>
+          }
           <span className='action-text' onClick={onViewDetails}>
             View details
           </span>
