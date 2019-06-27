@@ -44,6 +44,7 @@ export const Layout = styled.section`
   .middle-section {
     max-width: 580px;
     margin: 0 auto;
+    position: relative;
     ${media.smallScreen} {
       width: 310px;
     }
@@ -57,6 +58,9 @@ export const Layout = styled.section`
     ${media.largeScreen} {
       max-width: 100%;
       width: 100%;
+    }
+    .custom-loader {
+      position: absolute;
     }
   }
 `;

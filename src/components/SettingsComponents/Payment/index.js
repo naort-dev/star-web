@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { FlexCenter } from 'styles/CommonStyled';
 import { Container } from '../styled';
 import { Wrap } from './styled';
@@ -23,7 +24,7 @@ const Payment = props => {
           {props.note}
         </p>
         <FlexCenter>
-          {props.stripeCard === '' ? (
+          {isEmpty(props.stripeCard) ? (
             <a
               className="button"
               href={props.stripeUrl}

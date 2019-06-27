@@ -276,9 +276,9 @@ class Purchase extends Component {
             arrowVisible={this.state.stepCount !== 1}
             starImage={this.getThumbnail()}
             class={
-              this.state.stepCount === 2 &&
-              this.state.category === 3 &&
-              'custom-header'
+              this.state.stepCount === 2 && this.state.category === 3
+                ? 'custom-header'
+                : ''
             }
           />
           <Content className="contentPadding" step={this.state.stepCount}>

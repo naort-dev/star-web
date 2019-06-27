@@ -15,8 +15,10 @@ SidebarStyled.LinkList = styled.ul`
 `;
 
 SidebarStyled.LinkItem = styled.li`
-  font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
-  color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
+  font-family: ${props =>
+    props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+  color: ${props =>
+    props.selected ? props.theme.flatBlue : props.theme.brownGrey};
   font-size: 16px;
   // line-height: 1.69;
   border-bottom: 1px solid #e2e2e2;
@@ -43,6 +45,7 @@ SidebarStyled.LinkItem = styled.li`
   .link-item {
     display: inline-block;
     padding-left: 18px;
+    width: 100%;
   }
   .tick-circle {
     font-size: 24px;
