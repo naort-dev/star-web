@@ -264,13 +264,13 @@ const Question = props => {
     return stateObject.qusList;
   };
 
-  const onSelectAction = (option) => {
+  const onSelectAction = option => {
     if (option.value === 'decline') {
       props.toggleUpdateBooking(true, props.bookedItem.booking_id, true);
-    } else if(option.value === 'contact') {
+    } else if (option.value === 'contact') {
       props.toggleContactSupport(true);
     }
-  }
+  };
 
   const playAudio = audioFile => () => {
     if (playing) {
@@ -343,11 +343,11 @@ const Question = props => {
   };
 
   const closeSuccess = () => {
-    props.nextRequestHandler();
+    props.nextRequestHandler(props.requestId);
   };
 
   const nextRequest = () => {
-    props.nextRequestHandler();
+    props.nextRequestHandler(props.requestId);
   };
 
   const nextClick = () => {
@@ -449,17 +449,23 @@ const Question = props => {
                 >
                   {!stateObject.error && (
                     <React.Fragment>
-                      <div className='question-wrapper'>
+                      <div className="question-wrapper">
                         <h1 className="quesHead">What you should say...</h1>
                         <MoreActions
-                          classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-                          options={[{
-                            label: 'Contact support',
-                            value: 'contact',
-                          }, {
-                            label: 'Decline booking',
-                            value: 'decline',
-                          }]}
+                          classes={{
+                            root: 'more-action-root',
+                            icon: 'more-action-icon',
+                          }}
+                          options={[
+                            {
+                              label: 'Contact support',
+                              value: 'contact',
+                            },
+                            {
+                              label: 'Decline booking',
+                              value: 'decline',
+                            },
+                          ]}
                           onSelectOption={onSelectAction}
                         />
                         <QuestionBuilder questionsList={getQuestionList()} />

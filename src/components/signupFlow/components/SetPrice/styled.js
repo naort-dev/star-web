@@ -27,7 +27,7 @@ SetPriceWrapper.OptionWrapper = styled.div`
 `;
 SetPriceWrapper.HeaderText = styled.div`
   font-size: 34px;
-  line-height: 0.88;
+  line-height: 30px;
   text-align: center;
   color: #ff6c58;
   padding-bottom: 10px;
@@ -62,6 +62,14 @@ SetPriceWrapper.ButtonWrapper = styled.div`
     padding-top: ${props => (props.confirmation ? '87px' : '0')};
   }
   padding-bottom: 20px;
+  @media(min-width:832px){
+    position: absolute;
+    bottom: 73px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding-bottom: 0;
+  }
 `;
 
 SetPriceWrapper.WrapsInput = styled.div`
@@ -125,7 +133,7 @@ SetPriceWrapper.Image = styled.div`
 SetPriceWrapper.Label = styled.div`
   font-family: Gilroy-Light;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 18px;
   text-align: left;
   color: #999999;
   width: 400px;
@@ -142,7 +150,7 @@ SetPriceWrapper.Label = styled.div`
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 22px;
   letter-spacing: normal;
   text-align: center;
   color: ${props => props.error ? '#f44336': '#555555'};
@@ -158,7 +166,7 @@ SetPriceWrapper.Block = styled.div ``;
 SetPriceWrapper.HighLight = styled.span`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 1.79;
+  line-height: 25px;
   text-align: center;
   color: #2f839d;
   margin-top: 40px;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import SubHeader from 'components/SubHeader';
 import InnerSidebar from 'components/InnerSidebar';
@@ -90,7 +91,10 @@ const Settings = props => {
   const linkStatus = link => {
     switch (link.selectedName) {
       case 'profilePhoto':
-        if (props.userDetails.avatar_photo.image_url) {
+        if (
+          props.userDetails.avatar_photo &&
+          props.userDetails.avatar_photo.image_url
+        ) {
           const temp = { ...link };
           temp.completed = true;
           completed += 1;
@@ -99,7 +103,7 @@ const Settings = props => {
         break;
 
       case 'Payment':
-        if (props.stripeCard !== '') {
+        if (!isEmpty(props.stripeCard)) {
           const temp = { ...link };
           temp.completed = true;
           completed += 1;
@@ -187,7 +191,10 @@ const Settings = props => {
                     updateProfilePhoto={updateProfilePhoto}
                     mobHead="Photo"
                     webHead="Profile Photo"
-                    profImg={props.userDetails.avatar_photo.image_url}
+                    profImg={
+                      props.userDetails.avatar_photo &&
+                      props.userDetails.avatar_photo.image_url
+                    }
                   />,
                 )
               }

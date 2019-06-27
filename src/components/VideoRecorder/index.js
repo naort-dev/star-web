@@ -72,8 +72,8 @@ class VideoRecorder extends Component {
         this.recordedBlobs = [];
       }
     }
-
     if (this.props.videoSrc !== prevProps.videoSrc) {
+      this.closeStream();
       this.initialLoad();
     }
   }
@@ -97,7 +97,7 @@ class VideoRecorder extends Component {
             id="fileUpload"
             className="hidden"
             accept="video/*"
-            onChange={this.props.uploadHandler}
+            onChange={this.props.uploadHandler(this.state.isIOSDevice)}
           />
           Upload different video
         </label>

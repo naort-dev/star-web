@@ -44,6 +44,10 @@ align-items: center;
 justify-content: center;
 @media(min-width: 832px){
   flex-direction: row;
+
+  &.signup-fan {
+    margin-top: 50px;
+  }
 }
 @media(max-width: 831px){
   margin-top: 0;
@@ -80,7 +84,7 @@ RegSuccessWrapper.Image = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 274px;
+  height: 225px;
   margin-bottom: 0;
   @media(max-width: 831px){
     background-size: 207px auto;

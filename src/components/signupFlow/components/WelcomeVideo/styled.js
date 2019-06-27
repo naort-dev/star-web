@@ -46,8 +46,8 @@ export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
   &.video-wrapper {
-    height: calc(100% - 160px) !important;
-    margin-top: 35px;
+    height: calc(100% - 175px) !important;
+    margin-top: 50px;
     @media (max-width: 831px) {
       margin-top: 70px;
       height: calc(100% - 70px) !important;
