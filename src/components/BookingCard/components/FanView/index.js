@@ -128,7 +128,10 @@ const FanView = (props) => {
                 onSelectOption={onSelectAction}
               />
             </span>
-            <ActionBar />
+            <ActionBar
+              disableRating={bookingData.has_rating}
+              disableReaction={bookingData.has_reaction}
+            />
           </FanViewStyled.DetailWrapper>
           <BookingStyled.CommentList starMode={false}>
             <Scrollbars

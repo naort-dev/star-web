@@ -81,6 +81,7 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
     })
     .catch(exception => {
       dispatch(requestFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(requestFetchFailed(exception));
       dispatch(
         updateToast({

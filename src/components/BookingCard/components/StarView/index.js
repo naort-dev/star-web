@@ -97,6 +97,8 @@ const StarView = (props) => {
             </span>
             <Share
               className='action-btn'
+              title={`Check out this video from ${bookingData.celebrity} !`}
+              body={`Watch this personalized video from ${bookingData.celebrity}`}    
               shareUrl={video.video_url}
             />
           </StarViewStyled.DetailWrapper>

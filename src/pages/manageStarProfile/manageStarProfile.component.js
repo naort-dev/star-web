@@ -3,11 +3,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SubHeader from '../../components/SubHeader';
 import Header from '../../components/Header';
-import { Layout, Content } from './styled';
+import { Layout, Content, ProgressBarWrapper } from './styled';
 import { STAR_PROFILE } from './constants';
 import ProgressBar from '../../components/ProgressBar';
 import InnerSidebar from '../../components/InnerSidebar';
-import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot } from '../../components/Profile';
+import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot, SocialHandlesRoot } from '../../components/Profile';
 import { getMobileOperatingSystem } from '../../utils/checkOS';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { useMedia } from 'utils/domUtils';
@@ -42,6 +42,7 @@ const ManageStarProfile = props => {
       <Route path="/manage/profile/welcome-video" component={ProfileVideoRoot} />
       <Route path="/manage/profile/bio" component={BioRoot} />
       <Route path="/manage/profile/industry" component={IndustryRoot} />
+      <Route path="/manage/profile/social-handles" render={() =><SocialHandlesRoot subTitle={STAR_PROFILE.SOCIAL_HANDLE.subtitle} heading={STAR_PROFILE.SOCIAL_HANDLE.heading}/>} />
     </Switch>
     );
   };
@@ -57,7 +58,9 @@ const ManageStarProfile = props => {
         <Content.Description>
           {STAR_PROFILE.DESCRIPTION}
         </Content.Description>
-        <ProgressBar percentage={25} />
+        <ProgressBarWrapper>
+         <ProgressBar percentage={25} />
+        </ProgressBarWrapper>
       </Content.CommonContent>
       <Content.InnerWrapper>
         <Content.SidebarWrapper>
