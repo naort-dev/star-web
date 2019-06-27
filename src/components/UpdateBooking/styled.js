@@ -5,6 +5,9 @@ const UpdateStyled = Styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .heading {
+    margin-bottom: 26.8px;
+  }
   ${props => !props.starMode && `
     padding: 40px 30px;
   `}
@@ -15,7 +18,7 @@ const UpdateStyled = Styled.div`
 
   .drop-down {
     display: block;
-    margin: 26.8px;
+    margin-bottom: 26.8px;
     width: 100%;
     @media(min-width: 832px) {
       width: 275px;

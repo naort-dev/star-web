@@ -35,6 +35,8 @@ const Share = React.forwardRef((props, ref) => {
 
   const shareUrl = `https://${props.shareUrl}`;
 
+  const { title, body } = props;
+
   return (
     <ShareStyled className={props.classes.root} innerRef={ref}>
       <PrimaryButton
@@ -61,7 +63,7 @@ const Share = React.forwardRef((props, ref) => {
       >
         <ShareStyled.List>
           <li className='list-item'>
-            <FacebookShareButton className='social-btn' quote='Show me the Google!' url={shareUrl}>
+            <FacebookShareButton className='social-btn' quote={title} url={shareUrl}>
               <FontAwesomeIcon className='icon' icon={faFacebookF} />
               <span className='icon-text'>Facebook</span>
             </FacebookShareButton>
@@ -73,7 +75,7 @@ const Share = React.forwardRef((props, ref) => {
             </TwitterShareButton>
           </li>
           <li className='list-item'>
-            <EmailShareButton className='social-btn' url={shareUrl}>
+            <EmailShareButton className='social-btn' url={shareUrl} body={body ? `${body}\n\n${shareUrl}` : shareUrl}>
               <FontAwesomeIcon className='icon' icon={faEnvelope} />
               <span className='icon-text'>Email</span>
             </EmailShareButton>
@@ -96,7 +98,9 @@ const Share = React.forwardRef((props, ref) => {
 Share.defaultProps = {
   secondary: false,
   classes: {},
-  buttonText: 'Share This'
+  buttonText: 'Share This',
+  title: '',
+  body: undefined,
 };
 
 Share.propTypes = {
@@ -104,6 +108,8 @@ Share.propTypes = {
   secondary: PropTypes.bool,
   classes: PropTypes.object,
   buttonText: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
 }
 
 export default Share;

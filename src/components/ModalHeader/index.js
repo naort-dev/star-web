@@ -54,7 +54,7 @@ const Header = props => {
 
 Header.propTypes = {
   arrowVisible: PropTypes.bool,
-  backArrowHandler: PropTypes.func.isRequired,
+  backArrowHandler: PropTypes.func,
   closeHandler: PropTypes.func.isRequired,
   header: PropTypes.string,
   customHeading: PropTypes.string,
@@ -66,6 +66,7 @@ Header.defaultProps = {
   header: '',
   starImage: '',
   class: '',
+  backArrowHandler: () => {}
 };
 
 export default connect(
