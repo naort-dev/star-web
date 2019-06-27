@@ -69,5 +69,15 @@ Content.RightContent = Content.Visiblity.extend`
 @media(min-width: 832px) {
   flex: auto;
   padding-left: 50px;
+  height: 639px;
 }
 `
+export const ProgressBarWrapper = styled.div`
+  width:100%;
+  display: flex;
+  justify-content: flex-end;
+  .progress-wrap{
+    max-width: 677px;
+    width: 100%;
+  }
+`; 
