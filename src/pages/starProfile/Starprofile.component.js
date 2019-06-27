@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { isEmpty } from 'lodash';
-// import { Redirect } from 'react-router-dom';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 // import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
-// import Popup from '../../components/Popup';
-// import { getStarsonaVideo } from '../../services';
-// import { requestTypes } from '../../constants/requestTypes';
-// import { fetch } from '../../services/fetch';
-// import { checkPrerender } from '../../utils/checkOS';
 import StarProfileStyled from './styled';
-// import { setMetaTags } from '../../utils/setMetaTags';
-// import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
-// import ShareView from '../../components/ShareView';
+import { setMetaTags } from '../../utils/setMetaTags';
+import { getStarName } from '../../utils/dataToStringFormatter';
 import CallToAction from './components/CallToAction';
 import DetailSection from './components/DetailSection';
 import ListingSection from './components/ListingSection';
@@ -114,12 +106,12 @@ const StarProfile = (props) => {
               />
               : null
           } */}
-          {/* <Helmet
-            title={fullName}
+          <Helmet
+            title={getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)}
             meta={[...setMetaTags(
-              fullName,
+              getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name),
               props.userDetails.avatar_photo ? props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
-              `Get your personalized video from ${fullName}`,
+              `Get your personalized video from ${getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)}`,
             ),
             { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
             { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${props.match.params.id.toLowerCase()}` },
@@ -128,7 +120,7 @@ const StarProfile = (props) => {
             { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${props.match.params.id.toLowerCase()}` },
             { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
             ]}
-          /> */}
+          />
           </StarProfileStyled.Container>
       }
   </StarProfileStyled>
