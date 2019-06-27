@@ -17,15 +17,15 @@ const ManageStyled = styled.div`
     padding-top: 4px;
     padding-bottom: 32px;
     @media (min-width: 1280px) {
-      padding-top: 9px;
-      padding-bottom: 25px;
+      padding-top: 9px !important;
+      padding-bottom: 22px !important;
     }
     @media (max-width: 831px) {
       padding-bottom: 17px;
     }
   }
   .popstyle-wrap {
-    margin-top: 4px;
+    margin-top: 8px;
 
     .popstyle-inner {
       padding-top: 55px;

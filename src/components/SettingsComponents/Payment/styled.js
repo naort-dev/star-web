@@ -13,6 +13,7 @@ export const Wrap = styled(Wrapper)`
     width: 256px;
     margin: 0 auto;
     text-align: center;
+    line-height: 22px;
     &:before {
       content: attr(data-mob);
       ${media.webView} {
