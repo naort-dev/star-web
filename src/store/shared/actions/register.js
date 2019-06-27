@@ -81,13 +81,6 @@ export const registerUser = (
   }
   return fetch[method](Api.register, header)
     .then(resp => {
-      dispatch(
-        updateToast({
-          value: true,
-          message: 'Successfully registered',
-          variant: 'success',
-        }),
-      );
       if (resp.data && resp.data.success) {
         const obj = {
           ...resp.data.data,
