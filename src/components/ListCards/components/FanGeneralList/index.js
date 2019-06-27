@@ -21,6 +21,7 @@ const FanGeneralList = (props) => {
 
   const [requestType, updateRequestType] = useState('');
   const [requestSelected, setRequest] = useState(null);
+  const [completedVideo, setCompletedVideo] = useState({});
   const isDesktop = useMedia('(min-width: 1280px)');
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const FanGeneralList = (props) => {
     } else {
       updateRequestType('cancelled');
     }
+    setCompletedVideo(findCompletedVideo(props.data));
   }, [])
 
   const renderDescription = () => {
@@ -86,7 +88,6 @@ const FanGeneralList = (props) => {
     } else if(option.value === 'contact') {
       props.toggleContactSupport(true);
     } else if(option.value === 'download') {
-      const completedVideo = findCompletedVideo(props.data);
       downloadItem(completedVideo.s3_video_url, props.data.booking_title);
     }
   }
@@ -169,7 +170,9 @@ const FanGeneralList = (props) => {
                           classes={{
                             button: 'action-button share',
                           }}
-                          shareUrl={''}
+                          title={`Check out this video from ${props.data.celebrity} !`}
+                          body={`Watch this personalized video from ${props.data.celebrity}`}            
+                          shareUrl={completedVideo.video_url}
                         />                  
                         <PrimaryButton className="action-button" onClick={openVideo}>View video</PrimaryButton>
                       </React.Fragment>
@@ -177,11 +180,6 @@ const FanGeneralList = (props) => {
                 </React.Fragment>
             }
           </GeneralStyled.Details>
-          {/* {
-            props.isOpen ?
-              <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>Respond Now</PrimaryButton>
-            : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
-          } */}
           {
             (((requestType === 'open' || requestType === 'cancelled') && isDesktop) || requestType === 'completed')  &&
               <MoreActions
