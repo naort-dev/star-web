@@ -287,8 +287,8 @@ const Question = props => {
               <br /> Record with our App
             <br /> Use our iOS or Android app to book the star.
           </p>
+            {getFileUpload(['uploadBtn noSupportBtn'])}
           </QuestionContainer>
-          {getFileUpload(['uploadBtn noSupportBtn'])}
         </React.Fragment>
 
       )}

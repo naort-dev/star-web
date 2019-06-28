@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 97%;
+  height: calc(100% - 15px);
   max-width: 318px;
   margin: 0 auto;
   ${media.webView} {
@@ -24,6 +24,9 @@ export const Layout = styled.section`
   .continue-button {
     height: 60px;
     margin-bottom: 25px;
+    ${media.webView} {
+      margin-bottom: 60px;
+    }
   }
   .cus-drop {
     width: 100%;

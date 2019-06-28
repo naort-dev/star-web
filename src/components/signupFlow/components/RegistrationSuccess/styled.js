@@ -90,6 +90,14 @@ RegSuccessWrapper.Image = styled.div`
     background-size: 207px auto;
     height: 210px;
   }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    height: 273px;
+  }
+  &.success-fan {
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      height: 225px;
+    }
+  }
 `;
 RegSuccessWrapper.Label = styled.div`
   font-family: Gilroy;

@@ -23,19 +23,19 @@ const About = props => {
           </Layout.Suggestions>
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          <h1 className="head1">About your welcome video</h1>
-          <p className="note">
-            This proves to us that you are who you say you are &amp; gives fans
-            a preview of what a video will look like from you
+          <React.Fragment>
+            <h1 className="head1">About your welcome video</h1>
+            <p className="note">
+              This proves to us that you are who you say you are &amp; gives fans
+              a preview of what a video will look like from you
           </p>
-          <QuesWrapper>
-            <h1 className="queHead">What you should say...</h1>
-            <QuestionBuilder questionsList={questionsVideo()} />
-          </QuesWrapper>
-        </React.Fragment>
-      )}
-      <FlexCenter className="button-wrapper">
+            <QuesWrapper>
+              <h1 className="queHead">What you should say...</h1>
+              <QuestionBuilder questionsList={questionsVideo()} />
+            </QuesWrapper>
+          </React.Fragment>
+        )}
+      <FlexCenter className={`button-wrapper ${!props.isDeviceSupported ? "no-support-btn-abt" : ""}`}>
         <Button className="button" onClick={props.continueCallback}>
           Continue
         </Button>

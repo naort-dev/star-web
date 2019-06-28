@@ -5,7 +5,7 @@ import { FlexBoxSB } from '../../styles/CommonStyled';
 
 export const Content = styled.section`
   position: relative;
-  height: calc(100% - 197px);
+  height: calc(100% - 205px);
   ${media.mobileScreen} {
     height: calc(100% - 218px);
   }

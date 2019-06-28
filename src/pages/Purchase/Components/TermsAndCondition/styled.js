@@ -4,7 +4,7 @@ import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
-  height: 97%;
+  height: calc(100% - 15px);
   max-width: calc(100% - 80px);
   margin: 0 auto;
   padding-top: 10px;

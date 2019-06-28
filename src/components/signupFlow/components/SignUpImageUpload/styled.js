@@ -97,6 +97,18 @@ UploadContainer.Heading = styled.div`
       }
     }
   }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    &.fans-want {
+      & ~.upload-wrap {
+        margin-bottom: 20px;
+      }
+    }
+    // &.select-category {
+    //   & ~.upload-wrap {
+    //     margin-bottom: 20px;
+    //   }
+    // }
+  }
   @media (max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
@@ -214,6 +226,9 @@ UploadContainer.ButtonWrapper = styled.div`
     margin: auto;
     bottom: 73px;
     padding-bottom: 0;
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    bottom: 23px;
   }
 `;
 
