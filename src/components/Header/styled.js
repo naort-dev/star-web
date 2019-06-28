@@ -164,6 +164,9 @@ HeaderSection.ProfileButton = styled.button`
   background-size: cover;
   background-color: white;
   cursor: pointer;
+  @media(min-width: 832px) {
+    display: inline-block;
+  }
 `;
 
 
@@ -183,6 +186,14 @@ HeaderSection.ProfileWrapper = styled.span`
   display: flex;
   align-items: center;
   cursor: pointer;
+  .notification-count {
+    display: flex;
+    line-height: 14px;
+    padding: 8px 10px 5px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  }
 `;
 
 

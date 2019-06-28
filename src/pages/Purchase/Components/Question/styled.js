@@ -6,7 +6,7 @@ export const Layout = styled.section`
   padding: 0 80px;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   ${media.mobileScreen} {
     align-items: flex-start;
     justify-content: flex-start;
@@ -14,6 +14,8 @@ export const Layout = styled.section`
     position: relative;
     max-width: 309px;
     margin: 0 auto;
+    flex-direction: column;
+    height: 100%;
   }
   .question {
     font-family: Gilroy-SemiBold;
@@ -130,6 +132,7 @@ export const QuestionContainer = styled.section`
   display: flex;
   align-items: center;
   flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
+  order: 2;
   ${media.mobileScreen} {
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 15px;

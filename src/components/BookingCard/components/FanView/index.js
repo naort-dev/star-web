@@ -10,7 +10,6 @@ import CommentBox from '../../../CommentBox';
 import { downloadItem } from '../../../../utils/domUtils';
 import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
-import QuickComment from '../../../QuickComment';
 import MoreActions from '../../../MoreActions';
 import ActionBar from '../../../ActionBar';
 import VideoRender from '../../../VideoRender';
@@ -20,11 +19,13 @@ import FanViewStyled from './styled';
 const FanView = (props) => {
 
   const [requestType, updateRequestType] = useState('completed');
+  const [finalVideo, setFinalVideo] = useState('');
   const [videoId, updateVideoId] = useState('');
   const [video, setVideo] = useState('');
   const { bookingData } = props;
 
   useEffect(() => {
+    setFinalVideo(findCompletedVideo(bookingData));
     updateVideoId(findCompletedVideo(bookingData).video_id);
     props.fetchActivitiesList(bookingData.booking_id, 0, true);
     if (props.modalData.reactionUrl) {
@@ -47,7 +48,7 @@ const FanView = (props) => {
   }, [props.bookingData.id])
 
   const onReactionClose = () => {
-    setVideo(findCompletedVideo(bookingData));
+    setVideo(finalVideo);
   }
 
   const onReactionClick = (fileUrl, thumbnail, type) => {
@@ -107,6 +108,7 @@ const FanView = (props) => {
               }}
               variableWidth
               variableHeight
+              autoPlay
               type={video.type}
               noBorder
               videoSrc={video.s3_video_url}
@@ -128,7 +130,11 @@ const FanView = (props) => {
                 onSelectOption={onSelectAction}
               />
             </span>
-            <ActionBar />
+            <ActionBar
+              disableRating={bookingData.has_rating}
+              disableReaction={bookingData.has_reaction}
+              onTipping={props.onTipping}
+            />
           </FanViewStyled.DetailWrapper>
           <BookingStyled.CommentList starMode={false}>
             <Scrollbars
@@ -156,7 +162,6 @@ const FanView = (props) => {
               classes={{root: 'comment-box'}}
               onSubmit={submitComment}
             />
-            <QuickComment bookingId={bookingData.booking_id} fanName={bookingData.fan} videoId={videoId} classes={{root: 'quick-comment'}} />
           </FanViewStyled.CommentWrapper>
           <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
         </BookingStyled.RightSection>
@@ -168,6 +173,7 @@ const FanView = (props) => {
 FanView.defaultProps = {
   modalData: {},
   activitiesList: {},
+  onTipping: () => {},
 }
 
 FanView.propTypes = {
@@ -180,6 +186,7 @@ FanView.propTypes = {
   updateToast: PropTypes.func.isRequired,
   modalData: PropTypes.object,
   activitiesList: PropTypes.object,
+  onTipping: PropTypes.func,
 }
 
 export default FanView;

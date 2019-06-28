@@ -9,11 +9,14 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import Checkbox from '../Checkbox';
 import PrimaryButton from '../PrimaryButton';
 import ModalHeader from '../ModalHeader';
+import MoreActions from '../MoreActions';
+import { moreOptions } from './constants';
+import { updateToast } from '../../store/shared/actions/commonActions';
 import { openStatusList, completedStatusList } from '../../constants/requestStatusList';
-import { hideVideoFromProfile } from '../../services/request';
+import { hideVideoFromProfile, makeVideoPrivate } from '../../services/request';
 import { findCompletedVideo } from '../../utils/dataformatter';
 import BookingTitle from '../BookingTitle';
-import { toggleUpdateBooking } from '../../store/shared/actions/toggleModals';
+import { toggleUpdateBooking, toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
@@ -25,7 +28,7 @@ const OrderDetails = (props) => {
     if (starMode) {
       return bookingData.video_visibility
     }
-    return false;
+    return !bookingData.public_request;
   }
   const [requestType, updateRequestType] = useState('');
   const [checkBox, setCheckBox] = useState(setIntitialCheckBox());
@@ -50,10 +53,10 @@ const OrderDetails = (props) => {
         <strong>{bookingData.occasion}</strong>&nbsp;
           {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : bookingData.fan }
+            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : bookingData.fan }
           </strong>
           {
-            requestDetails && !requestDetails.is_myself ?
+            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ?
               <React.Fragment>
                 &nbsp;from <strong>{requestDetails.stargramto}</strong>
               </React.Fragment>
@@ -73,16 +76,47 @@ const OrderDetails = (props) => {
     }
   }, [])
 
-  const onCheckBoxChange = async (check) => {
-    const completedVideo = findCompletedVideo(bookingData);
-    const hideResponse = await hideVideoFromProfile(completedVideo.video_id);
-    setCheckBox(check);
+  const onSelectAction = (option) => {
+    if (option.value === 'cancel') {
+      props.toggleUpdateBooking(true, bookingData.booking_id, false, bookingData);
+    } else if(option.value === 'contact') {
+      props.toggleContactSupport(true);
+    }
   }
+
+  const onCheckBoxChange = async (check) => {
+    let hideResponse;
+    const prevCheck = checkBox;
+    setCheckBox(check);
+    try {
+      if (starMode) {
+        const completedVideo = findCompletedVideo(bookingData);
+        hideResponse = await hideVideoFromProfile(completedVideo.video_id);
+      } else {
+        hideResponse = await makeVideoPrivate(bookingData.booking_id, check);
+        props.onCheckboxChange(!check)
+      }
+    }
+    catch(e) {
+      setCheckBox(prevCheck);
+      props.updateToast({
+        value: true,
+        message: 'Something went wrong',
+        variant: 'error',
+      })
+    }
+  }
+
+  const modalProps = props.isModal ? {
+    disableClose: !starMode,
+    noPadding: !starMode,
+    closePopUp: props.closeModal,
+  } : {}
 
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
   return (
-    <WrapperComponent disableClose={!starMode} noPadding={!starMode} closePopUp={props.closeModal}>
+    <WrapperComponent {...modalProps}>
       {
         !starMode && props.isModal &&
           <ModalHeader
@@ -117,9 +151,17 @@ const OrderDetails = (props) => {
               }
             </span>
           </span>
+          {
+            !starMode && (requestType === 'open' || requestType === 'cancelled') &&
+              <MoreActions
+                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                options={moreOptions[requestType]}
+                onSelectOption={onSelectAction}
+              />
+          }
         </OrderStyled.ScriptWrapper>
         {
-          requestType === 'completed' &&
+          requestType !== 'cancelled' &&
             <OrderStyled.ColumnCenter>
               <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
               <span className="check-text ">
@@ -189,6 +231,8 @@ OrderDetails.defaultProps = {
   disableHeader: false,
   disableFooter: false,
   isModal: false,
+  starMode: false,
+  onCheckboxChange: () => {},
   onPrimaryClick: () => {},
 }
 
@@ -198,13 +242,18 @@ OrderDetails.propTypes = {
   onPrimaryClick: PropTypes.func,
   disableHeader: PropTypes.bool,
   toggleUpdateBooking: PropTypes.func.isRequired,
-  starMode: PropTypes.bool.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  starMode: PropTypes.bool,
   disableFooter: PropTypes.bool,
+  onCheckboxChange: PropTypes.func,
   isModal: PropTypes.bool,
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode))
+  toggleUpdateBooking: (state, requestId, mode, requestData) => dispatch(toggleUpdateBooking(state, requestId, mode, requestData)),
+  toggleContactSupport: state => dispatch(toggleContactSupport(state)),
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
 })
 
 export default connect(null, mapDispatchToProps)(OrderDetails);

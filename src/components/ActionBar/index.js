@@ -58,7 +58,7 @@ const ActionBar = (props) => {
                 <ReactionUpload />
               </div>
             </ToolTip>
-            <Tipping />
+            <Tipping onTipping={props.onTipping} />
             <div className='rating-wrapper'>
               <span className='action-title'>
                 Add a rating
@@ -75,12 +75,14 @@ ActionBar.defaultProps = {
   placeholder: 'Show some love for this video',
   disableRating: false,
   disableReaction: false,
+  onTipping: () => {},
 }
 
 ActionBar.propTypes = {
   placeholder: PropTypes.string,
   disableRating: PropTypes.bool,
   disableReaction: PropTypes.bool,
+  onTipping: PropTypes.func,
 }
 
 export default ActionBar;

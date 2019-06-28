@@ -204,8 +204,9 @@ export const createCharge = (
     });
 };
 
-export const tipPayment = (bookingId, amount, tokenId) => dispatch => {
+export const tipPayment = (bookingId, amount, tokenId, callBack) => dispatch => {
   dispatch(paymentFetchStart());
+  dispatch(loaderAction(true));
   return fetch
     .post(Api.tipPayment, {
       booking: bookingId,
@@ -216,11 +217,15 @@ export const tipPayment = (bookingId, amount, tokenId) => dispatch => {
       if (resp.data && resp.data.success) {
         dispatch(paymentFetchEnd());
         dispatch(setPaymentStatus(resp.data.success));
+        dispatch(loaderAction(false));
+        if (callBack) callBack();
       } else {
         dispatch(paymentFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch(exception => {
+      dispatch(loaderAction(false));
       dispatch(paymentFetchEnd());
       dispatch(paymentFetchFailed(exception.response.data.error));
       dispatch(
@@ -290,7 +295,7 @@ export const starsonaRequest = (
   if (bookingData.type !== 3) {
     formData.append('occasion', bookingData.selectedValue);
   }
-  formData.append('public_request', publicStatus);
+  formData.append('public_request', bookingData.public_request);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
   if (bookingData.from_audio_file) {

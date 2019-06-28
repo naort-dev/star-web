@@ -69,6 +69,10 @@ SetPriceWrapper.ButtonWrapper = styled.div`
     left: 0;
     right: 0;
     padding-bottom: 0;
+    pading-top: 0
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    bottom: 24px;
   }
 `;
 

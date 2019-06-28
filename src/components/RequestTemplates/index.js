@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AutoComplete from 'components/Autosuggest';
+import { useMedia } from 'utils/domUtils';
 import { Templates, FlexBox } from './styled';
 import {
-  getMobileOperatingSystem,
   checkMediaRecorderSupport,
   audioVideoSupport,
 } from '../../utils/checkOS';
@@ -21,7 +21,7 @@ function RequestTemplates(
   updateUserToMyself,
   occasion,
 ) {
-  const isMobile = getMobileOperatingSystem();
+  const isMobile = useMedia('(max-width: 831px)');
 
   const checkDeviceSupport = async () => {
     const supportAudio = await audioVideoSupport('audioinput');
