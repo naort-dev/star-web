@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,6 +10,7 @@ import Share from '../../../Share';
 import OrderDetails from '../../../OrderDetails';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
+import { updateMyVideosList } from '../../../../pages/myVideos/actions/getMyVideosList';
 import { toggleUpdateBooking, toggleContactSupport, toggleBookingModal } from '../../../../store/shared/actions/toggleModals';
 import { getTime } from '../../../../utils/dataToStringFormatter';
 import { findCompletedVideo } from '../../../../utils/dataformatter';
@@ -21,6 +23,7 @@ const FanGeneralList = (props) => {
 
   const [requestType, updateRequestType] = useState('');
   const [requestSelected, setRequest] = useState(null);
+  const [completedVideo, setCompletedVideo] = useState({});
   const isDesktop = useMedia('(min-width: 1280px)');
 
   useEffect(() => {
@@ -31,6 +34,7 @@ const FanGeneralList = (props) => {
     } else {
       updateRequestType('cancelled');
     }
+    setCompletedVideo(findCompletedVideo(props.data));
   }, [])
 
   const renderDescription = () => {
@@ -76,6 +80,12 @@ const FanGeneralList = (props) => {
     );
   };
 
+  const onPrivacyChange = (isPublic) => {
+    const newRequestData = cloneDeep(props.data);
+    newRequestData.public_request = isPublic;
+    props.onUpdateData(newRequestData.id, newRequestData);
+  }
+
   const openVideo = () => {
     props.toggleBookingModal(true, {...props.data, id: props.data.booking_id}, false);
   }
@@ -86,7 +96,6 @@ const FanGeneralList = (props) => {
     } else if(option.value === 'contact') {
       props.toggleContactSupport(true);
     } else if(option.value === 'download') {
-      const completedVideo = findCompletedVideo(props.data);
       downloadItem(completedVideo.s3_video_url, props.data.booking_title);
     }
   }
@@ -94,10 +103,11 @@ const FanGeneralList = (props) => {
   return (
     <Card>
       {
-        requestSelected &&
+        requestSelected && !props.isCancelActive && !props.isSupportActive &&
           <OrderDetails
             isModal
             closeModal={selectRequest(null)}
+            onCheckboxChange={onPrivacyChange}
             bookingData={requestSelected}
           />
       }
@@ -169,7 +179,9 @@ const FanGeneralList = (props) => {
                           classes={{
                             button: 'action-button share',
                           }}
-                          shareUrl={''}
+                          title={`Check out this video from ${props.data.celebrity} !`}
+                          body={`Watch this personalized video from ${props.data.celebrity}`}            
+                          shareUrl={completedVideo.video_url}
                         />                  
                         <PrimaryButton className="action-button" onClick={openVideo}>View video</PrimaryButton>
                       </React.Fragment>
@@ -177,11 +189,6 @@ const FanGeneralList = (props) => {
                 </React.Fragment>
             }
           </GeneralStyled.Details>
-          {/* {
-            props.isOpen ?
-              <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>Respond Now</PrimaryButton>
-            : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
-          } */}
           {
             (((requestType === 'open' || requestType === 'cancelled') && isDesktop) || requestType === 'completed')  &&
               <MoreActions
@@ -199,6 +206,7 @@ const FanGeneralList = (props) => {
 FanGeneralList.defaultProps = {
   expiration: '',
   onPrimaryClick: () => {},
+  onUpdateData: () => {},
 }
 
 FanGeneralList.propTypes = {
@@ -207,16 +215,25 @@ FanGeneralList.propTypes = {
   expiration: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
+  onUpdateData: PropTypes.func,
   toggleBookingModal: PropTypes.func.isRequired,
+  isSupportActive: PropTypes.bool.isRequired,
+  isCancelActive: PropTypes.bool.isRequired,
 }
+
+const mapStateToProps = state => ({
+  isSupportActive: state.modals.supportModal,
+  isCancelActive: state.modals.updateBookingModal.active,
+})
 
 const mapDispatchToProps = dispatch => ({
   toggleUpdateBooking: (state, requestId, mode, requestData) => dispatch(toggleUpdateBooking(state, requestId, mode, requestData)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
   toggleBookingModal: (state, bookingData, starMode) =>
   dispatch(toggleBookingModal(state, bookingData, starMode)),
+  updateMyVideosList: (id, newData) => dispatch(updateMyVideosList(id, newData)),
 })
 
-const FanGeneralListComponent = connect(null, mapDispatchToProps)(FanGeneralList)
+const FanGeneralListComponent = connect(mapStateToProps, mapDispatchToProps)(FanGeneralList)
 
 export { FanGeneralListComponent as FanGeneralList };

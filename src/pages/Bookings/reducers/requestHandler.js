@@ -6,6 +6,7 @@ const initialState = {
     has: false,
     message: '',
   },
+  hasDeclined: false,
 };
 
 export default (state = { ...initialState }, action) => {
@@ -30,6 +31,11 @@ export default (state = { ...initialState }, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case REQUESTS.hasDeclined:
+      return {
+        ...state,
+        hasDeclined: action.value,
       };
 
     default:

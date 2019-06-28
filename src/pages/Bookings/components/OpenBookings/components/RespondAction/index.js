@@ -15,6 +15,7 @@ import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
+import { useMedia } from 'utils/domUtils';
 import {
   Layout,
   VideoContainer,
@@ -28,6 +29,7 @@ import {
 import SuccessScreen from './Success';
 
 const Question = props => {
+  const isDesktop = useMedia('(min-width: 1280px)');
   const questions = [
     {
       key: 'que1',
@@ -264,13 +266,13 @@ const Question = props => {
     return stateObject.qusList;
   };
 
-  const onSelectAction = (option) => {
+  const onSelectAction = option => {
     if (option.value === 'decline') {
       props.toggleUpdateBooking(true, props.bookedItem.booking_id, true);
-    } else if(option.value === 'contact') {
+    } else if (option.value === 'contact') {
       props.toggleContactSupport(true);
     }
-  }
+  };
 
   const playAudio = audioFile => () => {
     if (playing) {
@@ -343,11 +345,11 @@ const Question = props => {
   };
 
   const closeSuccess = () => {
-    props.nextRequestHandler();
+    props.nextRequestHandler(props.requestId, isDesktop);
   };
 
   const nextRequest = () => {
-    props.nextRequestHandler();
+    props.nextRequestHandler(props.requestId, true);
   };
 
   const nextClick = () => {
@@ -449,17 +451,23 @@ const Question = props => {
                 >
                   {!stateObject.error && (
                     <React.Fragment>
-                      <div className='question-wrapper'>
+                      <div className="question-wrapper">
                         <h1 className="quesHead">What you should say...</h1>
                         <MoreActions
-                          classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-                          options={[{
-                            label: 'Contact support',
-                            value: 'contact',
-                          }, {
-                            label: 'Decline booking',
-                            value: 'decline',
-                          }]}
+                          classes={{
+                            root: 'more-action-root',
+                            icon: 'more-action-icon',
+                          }}
+                          options={[
+                            {
+                              label: 'Contact support',
+                              value: 'contact',
+                            },
+                            {
+                              label: 'Decline booking',
+                              value: 'decline',
+                            },
+                          ]}
                           onSelectOption={onSelectAction}
                         />
                         <QuestionBuilder questionsList={getQuestionList()} />
@@ -535,7 +543,7 @@ const Question = props => {
 
             {!isIOSDevice() &&
               (!checkMediaRecorderSupport() || stateObject.error) && (
-                <QuestionContainer isShow error>
+                <QuestionContainer isShow error className="error-msg">
                   <p className="note">
                     Your system does not have video recording capability, but
                     you will need to record a video to ask a question to the

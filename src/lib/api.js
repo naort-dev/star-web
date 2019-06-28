@@ -84,6 +84,7 @@ class Api {
   static favoriteVideo = 'v2/request/request_favorites/';
   static toggleActivityVisibility = 'v2/user/activity_public_visibility/';
   static hideVideoFromProfile = 'v2/request/video_hide_from_public/';
+  static videoPublicity = 'v2/request/make_booking_private/';
 }
 
 export default Api;

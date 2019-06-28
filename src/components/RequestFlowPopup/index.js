@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { times, random } from 'lodash';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import PopupStyled from './styled';
 import { CloseButton } from '../../styles/CommonStyled';
 
@@ -17,9 +18,11 @@ class RequestFlowPopup extends React.Component {
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
+    disableBodyScroll(null);
   }
 
   componentWillUnmount() {
+    enableBodyScroll();
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -30,7 +33,7 @@ class RequestFlowPopup extends React.Component {
     if (this.props.onMounted) {
       this.props.onMounted();
     }
-  }
+  };
 
   handleResize = () => {
     const { fullScreen } = this.state;
@@ -92,11 +95,11 @@ class RequestFlowPopup extends React.Component {
 RequestFlowPopup.defaultProps = {
   classes: {},
   modalView: false,
-}
+};
 
 RequestFlowPopup.propTypes = {
   classes: PropTypes.object,
   modalView: PropTypes.bool,
-}
+};
 
-export default RequestFlowPopup
+export default RequestFlowPopup;

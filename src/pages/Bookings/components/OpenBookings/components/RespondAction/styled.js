@@ -156,6 +156,9 @@ export const Layout = styled.section`
       margin-top: 40px;
     }
   }
+  .error-msg {
+    max-width: 225px;
+  }
 `;
 
 export const VideoContainer = styled.section`

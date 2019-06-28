@@ -57,18 +57,25 @@ const StarCard = ({ data }) => {
               <FontAwesomeIcon icon={faStar} />
               <Label className="rating-label">Rating</Label>
             </span>
-            <Rating
-              className="rating"
-              emptySymbol={
-                <FontAwesomeIcon className="rating-star" icon={faLightStar} />
-              }
-              fullSymbol={
-                <FontAwesomeIcon className="rating-star" icon={faStar} />
-              }
-              fractions={2}
-              initialRating={data.rating}
-              readonly
-            />
+            <span className="rating">
+              <Rating
+                className="rate"
+                emptySymbol={
+                  <FontAwesomeIcon className="rating-star" icon={faLightStar} />
+                }
+                fullSymbol={
+                  <FontAwesomeIcon className="rating-star" icon={faStar} />
+                }
+                fractions={2}
+                initialRating={data.rating}
+                readonly
+              />
+              {data.rating === '0.00' ? (
+                <span className="no-rate">No ratings yet</span>
+              ) : (
+                ''
+              )}
+            </span>
           </SummaryItem>
         </Summary>
       </Card>

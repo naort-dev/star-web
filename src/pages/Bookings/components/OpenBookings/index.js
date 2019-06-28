@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { isEmpty, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { useMedia } from 'utils/domUtils';
 import {
   recordTrigger,
   updateMediaStore,
@@ -19,8 +19,11 @@ import { CompactCard } from '../../../../components/ListCards';
 import RespondAction from './components/RespondAction';
 import { options } from '../../constants';
 import OpenStyled from './styled';
-import { toggleUpdateBooking, toggleContactSupport } from '../../../../store/shared/actions/toggleModals';
-import { responseVideo } from '../../actions/handleRequests';
+import {
+  toggleUpdateBooking,
+  toggleContactSupport,
+} from '../../../../store/shared/actions/toggleModals';
+import { responseVideo, hasDeclined } from '../../actions/handleRequests';
 import { updateBookingList } from '../../actions/getBookingsList';
 
 const buttonLabel = {
@@ -34,7 +37,7 @@ const buttonLabel = {
 };
 
 const OpenBookings = props => {
-  
+  const isDesktop = useMedia('(min-width: 1280px)');
   const clearVideo = () => {
     props.updateMediaStore({
       videoSrc: null,
@@ -98,15 +101,15 @@ const OpenBookings = props => {
     setInitialSelected(true);
   };
 
-  const nextRequestHandler = () => {
+  const nextRequestHandler = (selected, clicked) => {
     nextClick();
     const temp = props.bookingsList.data.filter(
-      item => item.booking_id !== props.selected,
+      item => item.booking_id !== selected,
     );
     props.updateBookingList(temp);
     clearVideo();
     setUploadSuccess(false);
-    updateCardClicked(true);
+    updateCardClicked(clicked);
   };
 
   useEffect(() => {
@@ -137,6 +140,15 @@ const OpenBookings = props => {
   }, [props.selected, props.bookingsList.data]);
 
   useEffect(() => {
+    if (!isEmpty(props.bookingsList.data)) {
+      if (props.hasDeclinedFlg) {
+        nextRequestHandler(props.selected, isDesktop);
+        props.hasDeclined(false);
+      }
+    }
+  }, [props.hasDeclinedFlg]);
+
+  useEffect(() => {
     return () => {
       clearVideo();
     };
@@ -155,11 +167,10 @@ const OpenBookings = props => {
           onChange={props.handleCategoryChange}
           placeHolder="Select a booking type"
         />
-        {!props.bookingsList.loading && props.bookingsList.data.length === 0 && (
-          <EmptyText>
-            You currently do not have any open bookings.
-          </EmptyText>
-        )}
+        {!props.bookingsList.loading &&
+          props.bookingsList.data.length === 0 && (
+            <EmptyText>You currently do not have any open bookings.</EmptyText>
+          )}
         <OpenStyled.BookingList>
           <Scrollbars autoHide>
             {props.bookingsList.data.map(bookItem => (
@@ -223,6 +234,8 @@ OpenBookings.propTypes = {
   updateBookingList: PropTypes.func.isRequired,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
+  hasDeclinedFlg: PropTypes.bool.isRequired,
+  hasDeclined: PropTypes.func.isRequired,
 };
 
 OpenBookings.defaultProps = {
@@ -252,8 +265,12 @@ function mapDispatchToProps(dispatch) {
     updateBookingList: data => {
       dispatch(updateBookingList(data));
     },
-    toggleUpdateBooking: (state, requestId, mode) => dispatch(toggleUpdateBooking(state, requestId, mode)),
+    toggleUpdateBooking: (state, requestId, mode) =>
+      dispatch(toggleUpdateBooking(state, requestId, mode)),
     toggleContactSupport: state => dispatch(toggleContactSupport(state)),
+    hasDeclined: value => {
+      dispatch(hasDeclined(value));
+    },
   };
 }
 export default connect(
@@ -261,6 +278,7 @@ export default connect(
     return {
       shouldRecord: state.commonReducer.shouldRecord,
       playPauseMediaFlg: state.commonReducer.playPauseMedia,
+      hasDeclinedFlg: state.bookings.requestHandler.hasDeclined,
     };
   },
   mapDispatchToProps,

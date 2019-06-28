@@ -22,17 +22,17 @@ export const requestFetchFailed = error => ({
   error,
 });
 
-export const changeRequestStatus = (requestId, requestStatus) => (dispatch, getState) => {
-  let { data: bookingsList, count, offset, videoStatus } = getState().bookingsList;
-  if (requestStatus === 5) { // decline bookings
-    bookingsList = bookingsList.filter(booking => booking.booking_id !== requestId);
+export const changeRequestList = (requestId, requestStatus) => (dispatch, getState) => {
+  let { data: myVideosList, count, offset, videoStatus } = getState().myVideos.myVideosList;
+  if (requestStatus === 5) { // cancel requests
+    myVideosList = myVideosList.filter(booking => booking.booking_id !== requestId);
     offset -= 1;
     count -= 1;
   }
-  dispatch(myVideosListFetchSuccess(bookingsList, offset, count, videoStatus));
+  dispatch(myVideosListFetchSuccess(myVideosList, offset, count, videoStatus));
 }
 
-export const changeBookingStatus = (requestId, requestStatus, comment) => (
+export const changeRequestStatus = (requestId, requestStatus, comment) => (
   dispatch,
   getState,
 ) => {
@@ -51,7 +51,7 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
       dispatch(loaderAction(false));
       if (resp.data && resp.data.success) {
         dispatch(requestFetchEnd());
-        dispatch(changeRequestStatus(requestId, requestStatus))
+        dispatch(changeRequestList(requestId, requestStatus))
       } else {
         dispatch(requestFetchEnd(requestId, requestStatus));
       }
@@ -59,6 +59,7 @@ export const changeBookingStatus = (requestId, requestStatus, comment) => (
     })
     .catch(exception => {
       dispatch(requestFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(requestFetchFailed(exception));
       dispatch(updateToast({
         value: true,

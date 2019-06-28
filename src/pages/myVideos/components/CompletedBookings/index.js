@@ -36,7 +36,13 @@ const CompletedBookings = (props) => {
           <CompletedStyled.ListSection>
             {
               props.bookingsList.data.map((bookItem) => (
-                <FanGeneralList onClick={onCompletedClick(bookItem)} key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+                <FanGeneralList
+                  onUpdateData={props.updateMyVideosList}
+                  onClick={onCompletedClick(bookItem)}
+                  key={bookItem.id}
+                  data={bookItem}
+                  classes={{root: 'list-item'}}
+                />
               ))
             }
           </CompletedStyled.ListSection>
@@ -51,6 +57,7 @@ CompletedBookings.propTypes = {
   bookingsList: PropTypes.object.isRequired,
   fetchMyVideosList: PropTypes.func.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
+  updateMyVideosList: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
