@@ -295,7 +295,7 @@ export const starsonaRequest = (
   if (bookingData.type !== 3) {
     formData.append('occasion', bookingData.selectedValue);
   }
-  formData.append('public_request', publicStatus);
+  formData.append('public_request', bookingData.public_request);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
   if (bookingData.from_audio_file) {
