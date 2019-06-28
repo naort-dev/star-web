@@ -44,7 +44,7 @@ export const updateUserDetails = data => ({
   data,
 });
 
-const parseUserDetails = userData => {
+export const parseUserDetails = userData => {
   const finalUserData = cloneDeep(userData);
   let stageName = '';
   let avatarPhoto = null;

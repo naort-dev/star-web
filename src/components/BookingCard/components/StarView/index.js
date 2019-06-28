@@ -16,11 +16,13 @@ import StarViewStyled from './styled';
 const StarView = (props) => {
 
   const [videoId, updateVideoId] = useState('');
+  const [finalVideo, setFinalVideo] = useState('');
   const [video, setVideo] = useState('');
   const { bookingData } = props;
   const { fund_payed_out: fundPayed } = bookingData;
 
   useEffect(() => {
+    setFinalVideo(findCompletedVideo(bookingData));
     updateVideoId(findCompletedVideo(bookingData).video_id);
     props.fetchActivitiesList(bookingData.booking_id, 0, true);
     if (props.modalData.reactionUrl) {
@@ -36,7 +38,7 @@ const StarView = (props) => {
   }, [props.bookingData.id])
 
   const onReactionClose = () => {
-    setVideo(findCompletedVideo(bookingData));
+    setVideo(finalVideo);
   }
 
   const onReactionClick = (fileUrl, thumbnail, type) => {
@@ -81,6 +83,7 @@ const StarView = (props) => {
               }}
               variableWidth
               variableHeight
+              autoPlay
               type={video.type}
               noBorder
               videoSrc={video.s3_video_url}
@@ -99,7 +102,7 @@ const StarView = (props) => {
               className='action-btn'
               title={`Check out this video from ${bookingData.celebrity} !`}
               body={`Watch this personalized video from ${bookingData.celebrity}`}    
-              shareUrl={video.video_url}
+              shareUrl={finalVideo.video_url || ''}
             />
           </StarViewStyled.DetailWrapper>
           <StarViewStyled.DetailWrapper>

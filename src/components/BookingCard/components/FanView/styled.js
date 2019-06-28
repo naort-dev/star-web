@@ -52,7 +52,7 @@ FanViewStyled.CommentWrapper = styled.div`
     height: 100%;
   }
   .comment-box {
-    width: calc(100% - 60px);
+    width: 100%;
   }
   .quick-comment {
     border: 1px solid ${props => props.theme.brownGrey};
