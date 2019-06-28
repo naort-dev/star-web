@@ -47,22 +47,28 @@ const BookingCard = (props) => {
     setPaymentDetails(null);
   }
 
-  const onTipping = (tipValue) => {
-    setPaymentDetails({
-      celebDetails: {
-        rate: tipValue,
-        charity: requestData.charity,
-      },
-      userDetails: {
-        avatar_photo: requestData.avatar_photo,
-        first_name: requestData.celebrity,
-        last_name: '',
-      },
-      type: 'Tip',
-      tipRequestId: requestData.booking_id,
-      paymentSuccessCallBack: resetPaymentDetails,
-      loaderAction: props.loaderAction,
-    })
+  const onFanCompleteAction = (type, data) => {
+    const newRequestData = { ...requestData }
+    if (type === 'tip') {
+      setPaymentDetails({
+        celebDetails: {
+          rate: data,
+          charity: requestData.charity,
+        },
+        userDetails: {
+          avatar_photo: requestData.avatar_photo,
+          first_name: requestData.celebrity,
+          last_name: '',
+        },
+        type: 'Tip',
+        tipRequestId: requestData.booking_id,
+        paymentSuccessCallBack: resetPaymentDetails,
+        loaderAction: props.loaderAction,
+      })
+    } else if (type === 'rating') {
+      newRequestData.has_rating = true;
+      setRequestData(newRequestData)
+    }
   }
 
   const renderHeading = () => {
@@ -165,7 +171,7 @@ const BookingCard = (props) => {
                       toggleContactSupport={props.toggleContactSupport}
                       loaderAction={props.loaderAction}
                       updateToast={props.updateToast}
-                      onTipping={onTipping}
+                      onCompleteAction={onFanCompleteAction}
                       activitiesList={props.activitiesList}
                       modalData={props.bookingModal.data}
                       toggleDetails={setDetails}

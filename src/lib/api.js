@@ -44,7 +44,7 @@ class Api {
     `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'v1/request/change_request_status/';
   static rating = 'v1/user/fan/celebrity_rating/';
-  static requestFeedback = 'v1/request/feedback/';
+  static requestFeedback = 'v2/request/feedback/';
   static contactSupport = 'v2/user/contact_support/';
   static reportAbuse = 'v1/user/fan/celebrity_abuse/';
   static reactionAbuse = 'v1/request/reaction_abuse/';
