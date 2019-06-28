@@ -52,5 +52,8 @@ export const Wrapper = styled.section`
       margin-top: 70px;
       height: calc(100% - 70px) !important;
     }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      margin-top: 45px;
+    }
   }
 `;

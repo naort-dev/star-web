@@ -30,6 +30,7 @@ const RegistrationSuccess = (props) => {
         <RegSuccessWrapper.OptionWrapper>
           <RegSuccessWrapper.Type>
             <RegSuccessWrapper.Image
+              className={`${props.signupRole === "fan" ? "success-fan" : ""}`}
               imageUrl={props.image_url}>
             </RegSuccessWrapper.Image>
             <RegSuccessWrapper.HeaderText>

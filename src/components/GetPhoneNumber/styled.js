@@ -62,7 +62,10 @@ export const Content = styled.section`
     font-size: 26px;
     padding-top: 30px;
     ${media.webView} {
-      padding-top: 160px;
+      padding-bottom: 160px;
+    }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      padding-bottom: 176px;
     }
   }
   .orderSuccess {
@@ -105,6 +108,9 @@ export const Content = styled.section`
 Layout.Phonenumber = styled.div`
 padding-bottom: 38px;
 padding-top: 39px;
+@media screen and (min-width: 832px) and (max-height: 720px) {
+  padding-top: 23px;
+}
   @media (max-width: 831px) {
     padding-bottom: 10px;
     padding-top: 10px;
@@ -160,7 +166,17 @@ Layout.Image = styled.div`
   margin-bottom: 0;
 `;
 Layout.ButtonWrapper = styled.div`
-
+  @media(min-width: 832px){
+    position: absolute;
+    bottom: 73px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding-bottom: 0;
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    bottom: 24px
+  }
 `;
 Content.OtpSubTitle = styled.div`
   font-family: Gilroy;

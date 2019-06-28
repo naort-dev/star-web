@@ -27,10 +27,13 @@ PopupStyled.Dialog = styled(Dialog)`
     max-width: 100%;
     @media (min-width: 832px) {
       //max-height: calc(100% - 30px);
-      max-height: calc(100% - 50px);
+      max-height: 700px;
       border-radius: 20px;
       height: auto;
       width: auto;
+    }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      max-height: 650px;
     }
   }
 `;

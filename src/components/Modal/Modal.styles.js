@@ -9,6 +9,9 @@ export const DialogStyled = styled(Dialog)`
     max-width: 100%;
     border-radius: 20px;
     max-height: 700px;
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      max-height: 650px;
+    }
     ${media.mobileScreen} {
       position: absolute;
       top: 0;
