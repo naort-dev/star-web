@@ -22,6 +22,10 @@ const TermsConditionsWrapper = styled.div`
       max-width: 590px;
     }
 
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      height: 446px !important;
+    }
+
     p {
       p:not(:last-child) {
         margin-bottom: 5px;
@@ -65,6 +69,9 @@ TermsConditionsWrapper.ButtonWrapper = styled.div`
   padding-bottom: 30px;
   @media(max-width:831px){
     padding-bottom: 10px;
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    padding-bottom: 0;
   }
 `;
 

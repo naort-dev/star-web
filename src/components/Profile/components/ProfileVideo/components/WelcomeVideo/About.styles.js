@@ -49,6 +49,19 @@ export const Layout = styled.section`
     font-size: 14px;
     margin-bottom: 20px;
   }
+  .button {
+    ${media.webView} {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      bottom: 73px;
+      padding-bottom: 0;
+    }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      bottom: 23px;
+    }
+  }
 `;
 
 export const QuesWrapper = styled.section`
@@ -93,4 +106,7 @@ font-family: Gilroy;
 Layout.Suggestions = styled.section`
   margin-top: 15px;
   margin-bottom: 95px;
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    margin-bottom: 80px;
+  }
 `;
