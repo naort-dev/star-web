@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { faFacebookF, faInstagram, faYoutube, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -44,7 +43,7 @@ const SocialHandles = props => {
   }
   return(
     <Layout>
-      <BackArrow className="leftArrow" />
+      <BackArrow className="leftArrow" onClick={props.goBack}/>
       <Heading>{ props.heading }</Heading>
       <Content>
         <Content.SubTitle>

@@ -7,7 +7,7 @@ import { Layout, Content, ProgressBarWrapper } from './styled';
 import { STAR_PROFILE } from './constants';
 import ProgressBar from '../../components/ProgressBar';
 import InnerSidebar from '../../components/InnerSidebar';
-import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot, SocialHandlesRoot } from '../../components/Profile';
+import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot, SocialHandlesRoot, SetPriceAndCharityRoot } from '../../components/Profile';
 import { getMobileOperatingSystem } from '../../utils/checkOS';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { useMedia } from 'utils/domUtils';
@@ -15,6 +15,7 @@ import { useMedia } from 'utils/domUtils';
 const ManageStarProfile = props => {
   const [currentPage, setcurrentPage] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const [redirecttoProfile, setredirecttoProfile] = useState(false);
 
   const isMobile = useMedia('(max-width: 831px)');
   const isIpad = useMedia('(min-width:832px) and (max-width: 1279px)');
@@ -25,6 +26,7 @@ const ManageStarProfile = props => {
   }, []);
   
   useEffect(() => {
+    console.log(isMobile);
     if (!isMobile && props.location.pathname === '/manage/profile') {
       setRedirect(true);
     } else {
@@ -33,22 +35,29 @@ const ManageStarProfile = props => {
   }, [isMobile]);
 
   const goBack = () => { };
-  const closeSignUp = () => {
-
+  const closeProfileModal = () => {
+    // props.toggleProfileModal(false);
+    // setcurrentPage('profile');
+    setredirecttoProfile(true);
+    
   };
   const getRoutes = () => {
     return (<Switch>
-      <Route path="/manage/profile/name-photo" component={NameAndPhotoRoot} />
-      <Route path="/manage/profile/welcome-video" component={ProfileVideoRoot} />
-      <Route path="/manage/profile/bio" component={BioRoot} />
-      <Route path="/manage/profile/industry" component={IndustryRoot} />
-      <Route path="/manage/profile/social-handles" render={() =><SocialHandlesRoot subTitle={STAR_PROFILE.SOCIAL_HANDLE.subtitle} heading={STAR_PROFILE.SOCIAL_HANDLE.heading}/>} />
+      <Route path="/manage/profile/name-photo" render={() =><NameAndPhotoRoot goBack={closeProfileModal}/>} />
+      <Route path="/manage/profile/welcome-video" render={() =><ProfileVideoRoot goBack={closeProfileModal}/>} />
+      <Route path="/manage/profile/bio" render={() =><BioRoot goBack={closeProfileModal}/>} />
+      <Route path="/manage/profile/industry" render={() =><IndustryRoot goBack={closeProfileModal} />} />
+      <Route path="/manage/profile/social-handles" render={() =><SocialHandlesRoot subTitle={STAR_PROFILE.SOCIAL_HANDLE.subtitle} heading={STAR_PROFILE.SOCIAL_HANDLE.heading } goBack={closeProfileModal}/>} />
+      <Route path="/manage/profile/price-limits" component={SetPriceAndCharityRoot} />
     </Switch>
     );
   };
 
   if (redirect) {
     return <Redirect to="/manage/profile/name-photo" />;
+  }
+  if(redirecttoProfile) {
+    return <Redirect to="/manage/profile" />;
   }
   return (
     <Layout>
@@ -68,7 +77,7 @@ const ManageStarProfile = props => {
         </Content.SidebarWrapper>
         {
           isMobile  && currentPage!== 'profile' ? (<RequestFlowPopup
-            closePopUp={closeSignUp}
+            closePopUp={closeProfileModal}
             modalView
             smallPopup
             classes={
