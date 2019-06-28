@@ -5,6 +5,15 @@ export const HeaderDiv = styled.section`
   height: 160px;
   ${media.mobileScreen} {
     height: 178px;
+
+    &.headerGlobal.custom-header {
+      min-height: 150px;
+      height: auto;
+    }
+  
+    &.custom-header:after {
+      display: none;
+    }
   }
   background: #ff6c58;
   padding: 12px 40px 0;
@@ -27,14 +36,7 @@ export const HeaderDiv = styled.section`
     z-index: 1;
   }
 
-  &.headerGlobal.custom-header {
-    min-height: 150px;
-    height: auto;
-  }
-
-  &.custom-header:after {
-    display: none;
-  }
+  
 
   .customHead {
     font-family: Gilroy;
@@ -44,7 +46,7 @@ export const HeaderDiv = styled.section`
 
   &.headerGlobal {
     min-height: 157px;
-    margin-bottom: 40px;
+    margin-bottom: 45px;
 
     ${media.mobileScreen} {
       min-height: 178px;
