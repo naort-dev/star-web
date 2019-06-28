@@ -330,8 +330,8 @@ class Purchase extends Component {
   };
 
   successButtonHandler = () => {
-    this.props.history.push('/browse-stars');
     this.clearStore();
+    this.props.history.push('/browse-stars');
   };
 
   scriptSubmit = () => {
