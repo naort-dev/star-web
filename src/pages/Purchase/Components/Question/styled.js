@@ -107,7 +107,7 @@ export const VideoContainer = styled.section`
   order: 1;
   ${media.mobileScreen} {
     max-height: 426px;
-    height: calc(100% - 150px);
+    height: calc(100% - 305px);
   }
   ${media.webView} {
     height: 426px;
