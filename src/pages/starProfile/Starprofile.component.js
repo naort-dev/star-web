@@ -90,6 +90,7 @@ const StarProfile = (props) => {
                       <ListingSection
                         userDetails={props.userDetails}
                         fetchCelebVideosList={props.fetchCelebVideosList}
+                        toggleBookingModal={props.toggleBookingModal}
                         fetchCelebReactionsList={props.fetchCelebReactionsList}
                         reactionsList={props.reactionsList}
                         videosList={props.videosList}
@@ -144,6 +145,7 @@ StarProfile.propTypes = {
   updateFavouritesQueue: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   videosList: PropTypes.object.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
   reactionsList: PropTypes.object.isRequired,
 }
 
