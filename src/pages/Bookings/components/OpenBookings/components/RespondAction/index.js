@@ -15,6 +15,7 @@ import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
+import { useMedia } from 'utils/domUtils';
 import {
   Layout,
   VideoContainer,
@@ -28,6 +29,7 @@ import {
 import SuccessScreen from './Success';
 
 const Question = props => {
+  const isDesktop = useMedia('(min-width: 1280px)');
   const questions = [
     {
       key: 'que1',
@@ -343,11 +345,11 @@ const Question = props => {
   };
 
   const closeSuccess = () => {
-    props.nextRequestHandler(props.requestId);
+    props.nextRequestHandler(props.requestId, isDesktop);
   };
 
   const nextRequest = () => {
-    props.nextRequestHandler(props.requestId);
+    props.nextRequestHandler(props.requestId, true);
   };
 
   const nextClick = () => {
@@ -541,7 +543,7 @@ const Question = props => {
 
             {!isIOSDevice() &&
               (!checkMediaRecorderSupport() || stateObject.error) && (
-                <QuestionContainer isShow error>
+                <QuestionContainer isShow error className="error-msg">
                   <p className="note">
                     Your system does not have video recording capability, but
                     you will need to record a video to ask a question to the
