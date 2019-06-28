@@ -9,8 +9,8 @@ export const Layout = styled.section`
   padding-right: 31px;
   display: flex;
   flex-direction: column;
-  .subheader{
-    color: ${(props)=>props.theme.orangePink};
+  .subheader {
+    color: ${props => props.theme.orangePink};
     fontsize: 24px;
   }
   @media (min-width: 832px) {
@@ -20,34 +20,43 @@ export const Layout = styled.section`
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-  }  
-  .cropper-Wrapper{
-   max-width: 700px;
   }
-  .arrow-head{
-    top:35px;
+  .cropper-Wrapper {
+    max-width: 700px;
+  }
+  .arrow-head {
+    top: 35px;
   }
 `;
 
 Layout.SubheaderWrap = styled.div`
   order: 1;
-  color: ${(props)=>props.theme.orangePink};
+  color: ${props => props.theme.orangePink};
   fontsize: 24px;
 `;
 
 Layout.InputWrap = styled.div`
-  order:2;
+  order: 2;
   @media (min-width: 832px) {
     order: 3;
+  }
+  .name-text {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-family: Gilroy;
+    font-size: 12px;
+    color: #555;
+  }
+  input {
+    text-align: center;
   }
 `;
 
 Layout.ButtonWrapper = styled.div`
-  order:4
+  order: 4;
 `;
 /* styles for profile image */
-
-
 
 const UploadContainer = styled.div`
   background-color: white;
@@ -61,7 +70,6 @@ const UploadContainer = styled.div`
     padding-bottom: 0;
   }
 `;
-
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -106,7 +114,7 @@ UploadContainer.ProfileUploadWrap = styled.div`
   @media (min-width: 832px) {
     order: 2;
   }
-  .profileupload{
+  .profileupload {
     height: inherit !important;
   }
 `;
@@ -117,4 +125,3 @@ const ErrorMessage = styled.div`
 `;
 
 export { UploadContainer, ImageUpload, ErrorMessage };
-
