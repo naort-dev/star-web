@@ -14,7 +14,8 @@ export const Layout = styled.section`
     max-width: 309px;
     margin: 0 auto;
     flex-direction: column;
-    height: 100%;
+    height: calc(100% - 170px);
+    overflow: auto;
   }
   .question {
     font-family: Gilroy-SemiBold;
@@ -107,7 +108,8 @@ export const VideoContainer = styled.section`
   order: 1;
   ${media.mobileScreen} {
     max-height: 426px;
-    height: calc(100% - 305px);
+    height: calc(100% - 150px);
+    min-height: 280px;
   }
   ${media.webView} {
     height: 426px;
