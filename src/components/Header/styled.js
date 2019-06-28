@@ -170,7 +170,7 @@ HeaderSection.ProfileButton = styled.button`
 HeaderSection.ProfileName = styled.span`
   display: none;
   @media(min-width: 832px) {
-    display: block;
+    display: ${props => (props.hide ? 'none' : 'block')};
     margin-left: 18px;
     font-family: Gilroy-Medium;
     font-size: 16px;
@@ -183,6 +183,17 @@ HeaderSection.ProfileWrapper = styled.span`
   display: flex;
   align-items: center;
   cursor: pointer;
+  .notification-count {
+    display: flex;
+    line-height: 14px;
+    padding: 8px 10px 5px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    @media(min-width: 832px) {
+      margin-top: 10px;
+    }
+  }
 `;
 
 
