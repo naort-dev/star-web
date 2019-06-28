@@ -22,6 +22,10 @@ export const Layout = styled.section`
       height: calc(100% - 65px);
       overflow: auto;
     }
+    ${media.webView} {
+      height: calc(100% - 115px);
+      overflow: auto;
+    }
     p {
       p {
         font-size: 12px;
@@ -37,6 +41,9 @@ export const Layout = styled.section`
     height: 60px;
     margin-bottom: 25px;
     align-self: flex-end;
+    ${media.webView} {
+      margin-bottom: 40px;
+    }
   }
   &.content-wrapper {
     display: flex;
