@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import validator from 'validator';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import Button from '../PrimaryButton';
 import { TextInput } from '../TextField';
 import { FlexCenter, BackArrow, CloseButton } from '../../styles/CommonStyled';
-import { Layout, Content } from './styled';
+import { Layout, Content, FloatLabel } from './styled';
 import { generateOtp, validateOtp } from '../../services/otpGenerate';
 
 const GetPhoneNumber = props => {
@@ -165,9 +166,7 @@ const GetPhoneNumber = props => {
   const submitOTPForm = () => {
     if (validateFields()) {
       const accountDetails = {
-        phone: `${phoneNoState.phNo1}${phoneNoState.phNo2}${
-          phoneNoState.phNo3
-        }${phoneNoState.phNo4}`,
+        phone: `${phoneNoState.phNo1}${phoneNoState.phNo2}${phoneNoState.phNo3}${phoneNoState.phNo4}`,
       };
       validateOtp(
         phoneNoState.phoneNumberOriginal,
@@ -317,20 +316,24 @@ const GetPhoneNumber = props => {
             {props.title2 && <h1 className="orderSuccess">{props.title2}</h1>}
             <p className="note">{props.description}</p>
             <Layout.Phonenumber>
-              <PhoneInput
-                country="US"
-                placeholder="Phone Number"
-                ref={phoneRef}
-                value={phoneNoState.value}
-                onCountryChange={countryChange}
-                onChange={number =>
-                  setPhoneNoState({
-                    ...phoneNoState,
-                    value: number,
-                    phoneNumberVerify: 'Verify',
-                  })
-                }
-              />
+              <FloatLabel valid={!isEmpty(phoneNoState.value)}>
+                <PhoneInput
+                  id="for-phno"
+                  country="US"
+                  placeholder=""
+                  ref={phoneRef}
+                  value={phoneNoState.value}
+                  onCountryChange={countryChange}
+                  onChange={number =>
+                    setPhoneNoState({
+                      ...phoneNoState,
+                      value: number,
+                      phoneNumberVerify: 'Verify',
+                    })
+                  }
+                />
+                <label htmlFor="for-phno">Phone Number</label>
+              </FloatLabel>
               <div className="errorElement">
                 {phoneNoState.value !== '' &&
                 phoneNoState.value !== undefined &&

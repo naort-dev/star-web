@@ -103,36 +103,15 @@ export const Content = styled.section`
 `;
 
 Layout.Phonenumber = styled.div`
-padding-bottom: 38px;
-padding-top: 39px;
+  padding-bottom: 38px;
+  padding-top: 39px;
   @media (max-width: 831px) {
     padding-bottom: 10px;
     padding-top: 10px;
   }
   .react-phone-number-input {
-    border-bottom: 1px solid #C5D2E0;
-    margin: 10px 0;
-  }
-  .react-phone-number-input__input{
-    text-align: center;
-    border-bottom: none;
-    color: #8174aa;
-    font-family: Gilroy-Medium;
-    font-size: 22px;
-    line-height: 25px;
-    padding: 6px 0 5px;
-    &::-webkit-input-placeholder {
-      font-size: 18px;
-    }
-    &:-moz-input-placeholder {
-      font-size: 18px;
-    }
-    &::-moz-input-placeholder {
-      font-size: 18px;
-    }
-    &:-ms-input-placeholder {
-      font-size: 18px;
-    }
+    border-bottom: 1px solid #c5d2e0;
+    margin-bottom: 10px;
   }
   .react-phone-number-input__icon {
     width: 32px;
@@ -141,7 +120,7 @@ padding-top: 39px;
   }
   .errorElement {
     color: #990000;
-    margin-left: 45px;
+    /* margin-left: 45px; */
     margin-top: -4px;
     font-family: Gilroy;
     font-size: 14px;
@@ -159,9 +138,7 @@ Layout.Image = styled.div`
   width: 200px;
   margin-bottom: 0;
 `;
-Layout.ButtonWrapper = styled.div`
-
-`;
+Layout.ButtonWrapper = styled.div``;
 Content.OtpSubTitle = styled.div`
   font-family: Gilroy;
   font-size: 15px;
@@ -182,7 +159,7 @@ Content.Resend = styled.div`
 Content.OTPWrapper = styled.div`
   text-align: center;
   margin-top: 20px;
-  display:flex;
+  display: flex;
   justify-content: center;
   & .errorElement {
     color: red;
@@ -193,7 +170,7 @@ Content.OTPWrapper = styled.div`
 `;
 
 Content.WrapsInput = styled.div`
-  width:40px;
+  width: 40px;
   padding-right: 8px;
   input {
     font-family: Gilroy;
@@ -201,7 +178,7 @@ Content.WrapsInput = styled.div`
     text-align: center;
     color: #8174aa;
     padding: 8px 0 0;
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -220,5 +197,122 @@ Content.Error = styled.p`
   margin-top: 7px;
   margin-bottom: 2px;
   font-size: 14px;
-  line-height: 25px;  
+  line-height: 25px;
+`;
+
+export const FloatLabel = styled.section`
+  position: relative;
+  .react-phone-number-input {
+    padding-top: 18px;
+  }
+  input {
+    position: relative;
+    display: block;
+    width: 100%;
+    border: none;
+    padding-right: 40px;
+    font-family: Gilroy-Medium;
+    font-size: 22px;
+    color: #8174aa !important;
+    text-align: center;
+    background-color: transparent;
+    margin: 0px auto;
+    height: 32px;
+    outline: none !important;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  ::-webkit-input-placeholder {
+    text-align: right;
+    color: #ddd;
+    font-size: 13px;
+    font-weight: 200;
+  }
+  :-moz-placeholder {
+    text-align: right;
+    color: #ddd;
+    font-size: 13px;
+    font-weight: 200;
+  }
+  ::-moz-placeholder {
+    text-align: right;
+    color: #ddd;
+    font-size: 13px;
+    font-weight: 200;
+  }
+  :-ms-input-placeholder {
+    text-align: right;
+    color: #ddd;
+    font-size: 13px;
+    font-weight: 200;
+  }
+
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+    height: 52px;
+    line-height: 72px;
+    font-family: Gilroy-Medium;
+    font-size: 18px;
+    font-weight: 200;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0px auto;
+    cursor: text;
+    transition: all 0.15s ease-in-out;
+  }
+  input:hover,
+  input:focus {
+    border-color: #8174aa;
+  }
+  input:focus {
+    background-position: left bottom;
+    background-size: 100% 1px;
+  }
+
+  .react-phone-number-input--focus {
+    border-color: #8174aa !important;
+    border-width: 2px;
+    outline: none !important;
+    background-color: transparent;
+    background: -webkit-linear-gradient(bottom, #8174aa 50%, #8174aa 50%);
+    background: linear-gradient(to top, #8174aa 50%, #8174aa 50%);
+    background-position: left bottom;
+    background-size: 0 1px;
+    background-repeat: no-repeat;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .react-phone-number-input--focus + label {
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+  }
+  ${props =>
+    props.valid &&
+    `label {
+    height: 20px;
+    line-height: 20px;
+    font-size: 11px;
+  }`}
+
+  input:focus ::-webkit-input-placeholder {
+    color: transparent;
+    font-size: 0;
+  }
+  input:focus :-moz-placeholder {
+    color: transparent;
+    font-size: 0;
+  }
+  input:focus ::-moz-placeholder {
+    color: transparent;
+    font-size: 0;
+  }
+  input:focus :-ms-input-placeholder {
+    color: transparent;
+    font-size: 0;
+  }
 `;
