@@ -9,7 +9,7 @@ export const Layout = styled.section`
     max-width: 423px;
   }
   @media (max-width: 320px) {
-    padding: 0 30px 0 15px;
+    padding: 0 15px;
   }
   .custom {
     border-radius: 5px;

@@ -44,6 +44,9 @@ export const HeaderText = styled.h3`
   font-family: Gilroy-SemiBold;
   font-size: 20px;
   color: #2f839d;
+  ${media.mobileScreen} {
+    margin-bottom: 3px;
+  }
   span {
     display: inline-block;
   }
