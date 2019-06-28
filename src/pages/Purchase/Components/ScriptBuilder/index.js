@@ -123,7 +123,7 @@ class ScriptBuilder extends Component {
           id: this.props.userDetails.id,
         },
         selectedValue: this.props.bookingData.occasion.key,
-        public_request: this.props.checked,
+        public_request: !this.props.checked,
         from_audio_file: this.getAudioFile('from'),
         to_audio_file: this.getAudioFile('for'),
         type: this.props.category,
