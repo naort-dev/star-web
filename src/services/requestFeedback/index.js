@@ -1,14 +1,26 @@
 import Api from '../../lib/api';
 import { fetch } from '../../services/fetch';
 
-export const requestFeedback = (files, booking, comments, reason, fanRate) => {
-  return (fetch.post(Api.requestFeedback, {
-    files,
-    booking,
-    comments,
-    reason,
-    fan_rate: fanRate,
-  }).then(resp => resp.data.success)
+export const sendFeedback = (type, bookingId, data) => {
+  let requestData = { booking: bookingId };
+  if (type === 'rating') {
+    requestData = {
+      ...requestData,
+      type: 'rating',
+      fan_rate: data.rating,
+      comments: '',
+      reason: '',
+    };
+  } else {
+    requestData = {
+      ...requestData,
+      type: 'reaction',
+      file_type: data.fileType,
+      reaction_file: data.fileName,
+    };
+  }
+  return (fetch.post(Api.requestFeedback, requestData)
+    .then(resp => resp.data.success)
   );
 };
 
