@@ -163,6 +163,7 @@ const Industry = props => {
             <BackArrow onClick={onBack} />
             <CloseButton onClick={onBack} />
             <UploadContainer.DesktopView>
+              <Heading>Browse Categories</Heading>
               <UploadContainer.BrowseCategoryContainer>
                 {browserCategoryList()}
                 {showSubCategoryList()}
