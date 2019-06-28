@@ -26,7 +26,7 @@ const Bio = props => {
   }
   return(
     <Layout>
-      <BackArrow className="leftArrow" />
+      <BackArrow className="leftArrow" onClick={props.goBack}/>
       <Heading>Profile Bio</Heading>
       <Wrapper>
         <TextInput

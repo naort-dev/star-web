@@ -14,7 +14,7 @@ const ProfileVideo = props => {
   //   // this.setState({ profile_video: fileName });
   // }
   const onBack = () => {
-    
+    props.goBack();
   };
   return(
     <WelcomeVideo

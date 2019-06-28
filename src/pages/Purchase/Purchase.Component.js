@@ -7,7 +7,7 @@ import { getStarName } from 'utils/dataToStringFormatter';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import Header from 'components/ModalHeader';
-import { termsAnnouncement } from 'constants';
+import SuccessScreen from 'components/SuccessScreen';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -17,7 +17,6 @@ import FormContainer from './Components/FormContainer';
 import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
-import SuccessScreen from './Components/SuccessScreen';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
@@ -145,7 +144,7 @@ class Purchase extends Component {
             starsonaRequest={this.props.starsonaRequest}
             starNM={
               this.props.userDetails.nick_name !== '' &&
-                this.props.userDetails.nick_name
+              this.props.userDetails.nick_name
                 ? this.props.userDetails.nick_name
                 : this.props.userDetails.first_name
             }
@@ -239,6 +238,20 @@ class Purchase extends Component {
     />
   );
 
+  getSuccessScreen = () => (
+    <SuccessScreen
+      closeHandler={this.clearStore}
+      title="High Five!"
+      successMsg="Your order is complete!"
+      note="Now sit back, relax, and get ready to hear from your star. You’ll be
+      notified when your video is complete. Don’t forget! — if your video
+      is a surprise for someone else, record their reaction to share with
+      us and the Star! We all love seeing fan reactions."
+      btnLabel="Browse Stars"
+      buttonHandler={this.successButtonHandler}
+    />
+  );
+
   getCustomStep = () => {
     if (this.state.stepCount === 4) {
       if (this.state.category === 1 || this.state.category === 3) {
@@ -246,11 +259,11 @@ class Purchase extends Component {
       }
     } else if (this.state.stepCount === 5) {
       if (this.state.category === 1 || this.state.category === 3) {
-        return <SuccessScreen closeHandler={this.clearStore} />;
+        return this.getSuccessScreen();
       }
       return this.getPaymentScreen();
     } else if (this.state.stepCount === 6) {
-      return <SuccessScreen closeHandler={this.clearStore} />;
+      return this.getSuccessScreen();
     }
     return <React.Fragment />;
   };
@@ -281,9 +294,12 @@ class Purchase extends Component {
                 : ''
             }
           />
-          <Content className={`contentPadding ${this.state.stepCount === 2 &&
-            this.state.category === 3 &&
-            'custom-video'}`} step={this.state.stepCount}>
+          <Content
+            className={`contentPadding ${this.state.stepCount === 2 &&
+              this.state.category === 3 &&
+              'custom-video'}`}
+            step={this.state.stepCount}
+          >
             <Scrollbars
               renderView={props => (
                 <div {...props} className="scrollRenderView" />
@@ -311,6 +327,11 @@ class Purchase extends Component {
     });
     this.clearMediaStore();
     this.props.setVideoUploadedFlag(false);
+  };
+
+  successButtonHandler = () => {
+    this.clearStore();
+    this.props.history.push('/browse-stars');
   };
 
   scriptSubmit = () => {
@@ -391,6 +412,7 @@ class Purchase extends Component {
             date: '',
             type: 3,
             fileName: response.filename,
+            public_request: true,
           };
           axios
             .post(response.url, response.formData)
@@ -498,13 +520,13 @@ class Purchase extends Component {
             <Scrollbars>{this.getCustomStep()}</Scrollbars>
           </ModalContainer>
         ) : (
-            <CancelConfirm
-              modalClose={this.modalClose}
-              requestFLowClose={this.clearStore}
-              // eslint-disable-next-line
-              starNM={nick_name !== '' && nick_name ? nick_name : first_name}
-            />
-          )}
+          <CancelConfirm
+            modalClose={this.modalClose}
+            requestFLowClose={this.clearStore}
+            // eslint-disable-next-line
+            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+          />
+        )}
       </Modal>
     );
   }
@@ -538,9 +560,10 @@ Purchase.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
   audioRecordHandler: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 Purchase.defaultProps = {
-  fetchOccasionlist: () => { },
+  fetchOccasionlist: () => {},
   OccasionDetails: [],
   videoFile: {},
 };

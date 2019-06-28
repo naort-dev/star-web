@@ -82,8 +82,6 @@ class NameAndPhoto extends React.Component {
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
   };
 
-  goBack = () => {};
-
   handleFieldChange = (fieldType, fieldValue) => {
     this.setState({
       [fieldType]: fieldValue,
@@ -107,7 +105,7 @@ class NameAndPhoto extends React.Component {
     return (
       <Layout>
         <Layout.SubheaderWrap>
-          <SubHeader className="subheader" size='24px' headercolor='orangePink' heading="Profile Name & Photo" onClick={this.goBack} />
+          <SubHeader className="subheader" size='24px' headercolor='orangePink' heading="Profile Name & Photo" onClick={this.props.goBack} />
         </Layout.SubheaderWrap>
         <Layout.InputWrap>
           <TextInput

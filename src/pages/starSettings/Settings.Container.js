@@ -9,7 +9,7 @@ const mapStates = state => ({
   userDetails: state.userDetails.settings_userDetails,
   celbDetails: state.userDetails.settings_celebrityDetails,
   stripeCard: state.stripeRegistration.cardDetails,
-  stripeUrl: state.stripeRegistration.dashboardURL,
+  stripeUrl: state.stripeRegistration.stripeURL,
   dashboardURL: state.stripeRegistration.dashboardURL,
 });
 function mapDispatch(dispatch) {
