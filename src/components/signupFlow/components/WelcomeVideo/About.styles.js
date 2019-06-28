@@ -23,6 +23,9 @@ export const Layout = styled.section`
     @media (min-width: 832px) {
       padding-bottom: 0;
     }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      display: none;
+    }
   }
   .note {
     font-family: Gilroy;
@@ -37,6 +40,9 @@ export const Layout = styled.section`
       max-width: 315px;
       line-height: 19px;
     }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      padding-top: 34px;
+    }
   }
   .questionWrapper {
     max-width: 239px;
@@ -46,6 +52,20 @@ export const Layout = styled.section`
   }
   .button-wrapper {
     padding-bottom: 12px;
+
+    &.no-support-btn-abt {
+      ${media.webView} {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 73px;
+        padding-bottom: 0;
+      }
+      @media screen and (min-width: 832px) and (max-height: 720px) {
+        bottom: 0;
+      }
+    }
   }
   .skip {
     display: block;
@@ -56,6 +76,9 @@ export const Layout = styled.section`
     font-family: Gilroy;
     font-size: 14px;
     padding-bottom: 20px;
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      padding-bottom: 0;
+    }
   }
 `;
 
@@ -106,5 +129,8 @@ Layout.Suggestions = styled.section`
   margin-bottom: 95px;
   @media (max-width: 831px) {
     margin-bottom: 0;
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    margin-bottom: 80px;
   }
 `;

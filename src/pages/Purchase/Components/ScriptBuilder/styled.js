@@ -3,7 +3,7 @@ import { FlexCenter } from 'styles/CommonStyled';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 97%;
+  height: 100%;
   padding: 0;
   margin: 0 auto;
   p {
@@ -20,6 +20,10 @@ export const Layout = styled.section`
   button {
     margin-top: 5px;
     margin-bottom: 25px;
+    ${media.webView} {
+      margin-top: 0;
+      margin-bottom: 60px;
+    }
   }
   .script {
     color:#2f839d;

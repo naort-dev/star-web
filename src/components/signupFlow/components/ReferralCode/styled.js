@@ -94,6 +94,9 @@ ReferralCodeWrapper.ButtonWrapper = styled.div`
     right: 0;
     padding-bottom: 0;
   }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    bottom: 24px
+  }
 `;
 
 export default ReferralCodeWrapper;
