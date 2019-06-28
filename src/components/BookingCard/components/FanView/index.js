@@ -131,9 +131,10 @@ const FanView = (props) => {
               />
             </span>
             <ActionBar
+              bookingId={bookingData.booking_id}
               disableRating={bookingData.has_rating}
               disableReaction={bookingData.has_reaction}
-              onTipping={props.onTipping}
+              onAction={props.onCompleteAction}
             />
           </FanViewStyled.DetailWrapper>
           <BookingStyled.CommentList starMode={false}>
@@ -173,7 +174,7 @@ const FanView = (props) => {
 FanView.defaultProps = {
   modalData: {},
   activitiesList: {},
-  onTipping: () => {},
+  onCompleteAction: () => {},
 }
 
 FanView.propTypes = {
@@ -186,7 +187,7 @@ FanView.propTypes = {
   updateToast: PropTypes.func.isRequired,
   modalData: PropTypes.object,
   activitiesList: PropTypes.object,
-  onTipping: PropTypes.func,
+  onCompleteAction: PropTypes.func,
 }
 
 export default FanView;
