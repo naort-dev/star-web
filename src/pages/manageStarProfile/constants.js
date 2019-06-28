@@ -22,9 +22,7 @@ export const STAR_PROFILE = {
     {
       linkName: 'Price & Limits',
       selectedName: 'referral',
-      tooltip:
-        'Do you have contacts that would enjoy Starsona? Help them sign up using your referral code and earn 20% of our commission!',
-      url: '/manage/referral',
+      url: '/manage/profile/price-limits',
     },
   ],
   SOCIAL_HANDLE: {

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { faUserCircle } from '@fortawesome/pro-regular-svg-icons';
 import { connect } from 'react-redux';
+import { NotificationCount } from '../../styles/CommonStyled';
 import HeaderSection from './styled';
 import CategorySection from './components/CategorySection';
 import SecondaryButton from '../SecondaryButton';
@@ -128,16 +129,18 @@ class Header extends React.Component {
                 <HeaderSection.ProfileWrapper onClick={this.handleProfileClick}>
                   {this.props.userValue.settings_userDetails.avatarPhoto ? (
                     <HeaderSection.ProfileButton
+                      hide={this.props.userValue.settings_userDetails.unseen_bookings}
                       profileUrl={
                         this.props.userValue.settings_userDetails.avatarPhoto
                       }
                     />
                   ) : (
-                    <HeaderSection.SignInButtonMobile noHide>
+                    <HeaderSection.SignInButtonMobile visible={false} noHide={!this.props.userValue.settings_userDetails.unseen_bookings}>
                       <FontAwesomeIcon icon={faUserCircle} />
                     </HeaderSection.SignInButtonMobile>
                   )}
                   <HeaderSection.ProfileName
+                    hide={this.props.userValue.settings_userDetails.unseen_bookings}
                     profilePhoto={
                       this.props.userValue.settings_userDetails.avatarPhoto
                     }
@@ -149,6 +152,13 @@ class Header extends React.Component {
                         userDetails.last_name,
                       )}
                   </HeaderSection.ProfileName>
+                  {
+                    this.props.userValue.settings_userDetails.unseen_bookings ?
+                      <NotificationCount className="notification-count">
+                        {this.props.userValue.settings_userDetails.unseen_bookings}
+                      </NotificationCount>
+                    : null               
+                  }
                 </HeaderSection.ProfileWrapper>
                 {/* {
                     this.state.profileDropdown &&

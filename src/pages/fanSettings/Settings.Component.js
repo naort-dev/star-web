@@ -266,21 +266,21 @@ const Settings = props => {
                       noteWeb: '',
                       noteMob: '',
                     }}
-                    note={
-                      <span>
-                        Set up your payment account so when your Star contacts
-                        start creating videos Starsona can pay you for your
-                        referrals.{' '}
-                        <span
-                          className="click-here"
-                          onClick={clickHere}
-                          role="presentation"
-                        >
-                          Click here{' '}
-                        </span>
-                        for more information.
-                      </span>
-                    }
+                    // note={
+                    //   <span>
+                    //     Set up your payment account so when your Star contacts
+                    //     start creating videos Starsona can pay you for your
+                    //     referrals.{' '}
+                    //     <span
+                    //       className="click-here"
+                    //       onClick={clickHere}
+                    //       role="presentation"
+                    //     >
+                    //       Click here{' '}
+                    //     </span>
+                    //     for more information.
+                    //   </span>
+                    // }
                   />,
                 )
               }

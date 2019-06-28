@@ -4,7 +4,6 @@ export const Layout = styled.section`
   width: 100%;
   height: 100%;
   background: #fff;
-  position: relative;
   .leftArrow {
     position: absolute;
   }
@@ -96,4 +95,74 @@ Content.InputLabel = styled.div`
   color: #555555;
   text-align: left;
   color: ${(props)=>props.theme.greyishBrown}
+`;
+export const SetPriceWrapper = styled.div`
+`;
+SetPriceWrapper.Description = styled.div`
+  font-family: Gilroy;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: normal;
+  text-align: center;
+  color: ${props => props.error ? '#f44336': '#555555'};
+  margin-bottom: 13px;
+  @media(max-width:831px) {
+    max-width: 178px;
+    margin: 0 auto 18px;
+    color: ${props => props.error ? '#f44336': '#797979'};
+  }
+`;
+SetPriceWrapper.WrapsInput = styled.div`
+  width:100%;
+  padding-bottom: 5px;
+  input {
+    font-family: Gilroy;
+    font-size: 28px;
+    text-align: center;
+    color: #8174aa;
+    width: 400px;
+    padding: 1px 0 5px;
+    @media (max-width: 831px) {
+      padding: 1px 0 2px;
+      font-size: 38px;
+    }
+  }
+  .adornment {
+    position: relative;
+    left: 38%;
+    p {
+    color: rgb(129, 116, 170);
+    font-family: Gilroy;
+    font-size: 24px;
+    margin-top: 8px;
+    }
+  }
+  input:focus::-webkit-input-placeholder { color:transparent; }
+  input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+  input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+  input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
+  @media(min-width:832px){
+    width:100%;
+  }
+  @media(min-width:1025px){
+    width:700px;
+  }
+
+`;
+SetPriceWrapper.Label = styled.div`
+  font-family: Gilroy-Light;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: left;
+  color: #999999;
+  width: 400px;
+  margin: 0 auto;
+  max-width: 100%;
+  @media(max-width:831px) {
+    text-align: center;
+  }
+
+  b {
+    font-family: Gilroy-Medium;
+  }
 `;

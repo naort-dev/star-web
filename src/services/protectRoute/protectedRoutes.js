@@ -25,6 +25,7 @@ export const starRoutes = [
   '/manage/profile/bio',
   '/manage/profile/industry',
   '/manage/profile/social-handles',
+  '/manage/profile/price-limits',
   '/manage/settings/account-info',
   '/manage/settings/password',
   '/manage/settings/payment',

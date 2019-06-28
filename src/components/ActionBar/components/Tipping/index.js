@@ -15,6 +15,11 @@ const Tipping = (props) => {
     toggleCustomTip(state);
   }
 
+  const onTipClick = (tipValue) => () => {
+    changeCustomTipState(false)();
+    props.onTipping(tipValue);
+  }
+
   const onTipChange = (event) => {
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     if (pattern.test(event.target.value) || event.target.value === '') {
@@ -30,7 +35,7 @@ const Tipping = (props) => {
       <ul className='tipping-list'>
         {
           props.tipAmounts.map((tipValue, index) => (
-            <li className='tipping-item' key={index}>${tipValue}</li>
+            <li className='tipping-item' key={index} onClick={onTipClick(tipValue)}>${tipValue}</li>
           ))
         }
         <li className='tipping-item' onClick={changeCustomTipState(true)}>Custom</li>
@@ -52,15 +57,20 @@ const Tipping = (props) => {
                 onChange={onTipChange}
               />
             </div>
-            <SecondaryButton>Submit</SecondaryButton>
+            <SecondaryButton onClick={onTipClick(tip)}>Submit</SecondaryButton>
           </TippingStyled.CustomTipWrapper>
       }
     </TippingStyled>
   )
 }
 
+Tipping.defaultProps = {
+  onTipping: () => {},
+}
+
 Tipping.propTypes = {
   tipAmounts: PropTypes.array.isRequired,
+  onTipping: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
