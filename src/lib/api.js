@@ -85,6 +85,7 @@ class Api {
   static toggleActivityVisibility = 'v2/user/activity_public_visibility/';
   static hideVideoFromProfile = 'v2/request/video_hide_from_public/';
   static videoPublicity = 'v2/request/make_booking_private/';
+  static reactionComplete = 'v2/request/reaction_process/';
 }
 
 export default Api;

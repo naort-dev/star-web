@@ -12,7 +12,6 @@ export const sendFeedback = (type, bookingId, data) => {
       reason: '',
     };
   } else {
-    console.log(data)
     requestData = {
       ...requestData,
       type: 'reaction',

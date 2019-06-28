@@ -9,7 +9,7 @@ import Tipping from './components/Tipping';
 import Share from '../Share';
 import { sendFeedback } from '../../services/requestFeedback';
 import { awsKeys } from '../../constants';
-import { postReactionMedia } from '../../services/postReaction';
+import { postReactionMedia, onReactionComplete } from '../../services/postReaction';
 import { loaderAction, updateToast } from '../../store/shared/actions/commonActions';
 import ToolTip from '../ToolTip';
 import StarRating from '../StarRating';
@@ -53,21 +53,25 @@ const ActionBar = (props) => {
               reaction: false,
             })
             let uploadProgess;
-            axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
-              uploadProgess = (progressEvent.loaded / progressEvent.total) * 100;
-              if (uploadProgess === 100) {
-                window.onbeforeunload = function () { }
-              } else {
-                window.onbeforeunload = (event) => {
-                  event.preventDefault();
-                  event.returnValue = '';
-                  const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-                  if (isChrome) {
-                    getReactionFile()
-                  }
-                };
-              }
-            }})
+            const fileUpload = () => {
+              axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
+                uploadProgess = (progressEvent.loaded / progressEvent.total) * 100;
+                if (uploadProgess === 100) {
+                  onReactionComplete();
+                  window.onbeforeunload = function () { }
+                } else {
+                  window.onbeforeunload = (event) => {
+                    event.preventDefault();
+                    event.returnValue = '';
+                    const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                    if (isChrome) {
+                      fileUpload();
+                    }
+                  };
+                }
+              }})
+            }
+            fileUpload();
             props.updateToast({
               value: true,
               message: 'Reaction file will be uploaded shortly',

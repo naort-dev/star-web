@@ -23,3 +23,8 @@ export function postReactionMedia(key, file, extension, fileType) {
     //   return response.filename;
     // })
 }
+
+export const onReactionComplete = () => {
+  return fetch.post(Api.reactionComplete)
+  .then(resp => resp.data.success)
+}
