@@ -23,11 +23,8 @@ export const Layout = styled.section`
       overflow: auto;
     }
     ${media.webView} {
-      height: calc(100% - 130px);
-      overflow: auto;
-    }
-    @media screen and (min-width: 832px) and (max-height: 720px) {
       height: calc(100% - 115px);
+      overflow: auto;
     }
     p {
       p {
@@ -45,9 +42,6 @@ export const Layout = styled.section`
     margin-bottom: 25px;
     align-self: flex-end;
     ${media.webView} {
-      margin-bottom: 60px;
-    }
-    @media screen and (min-width: 832px) and (max-height: 720px) {
       margin-bottom: 40px;
     }
   }
