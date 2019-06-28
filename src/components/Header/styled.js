@@ -164,13 +164,16 @@ HeaderSection.ProfileButton = styled.button`
   background-size: cover;
   background-color: white;
   cursor: pointer;
+  @media(min-width: 832px) {
+    display: inline-block;
+  }
 `;
 
 
 HeaderSection.ProfileName = styled.span`
   display: none;
   @media(min-width: 832px) {
-    display: ${props => (props.hide ? 'none' : 'block')};
+    display: block;
     margin-left: 18px;
     font-family: Gilroy-Medium;
     font-size: 16px;
@@ -190,9 +193,6 @@ HeaderSection.ProfileWrapper = styled.span`
     justify-content: center;
     align-items: center;
     margin-left: 10px;
-    @media(min-width: 832px) {
-      margin-top: 10px;
-    }
   }
 `;
 
