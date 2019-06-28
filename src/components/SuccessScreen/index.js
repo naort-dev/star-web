@@ -7,11 +7,6 @@ import { FlexCenter, CloseButton } from 'styles/CommonStyled';
 import { Layout, Content } from './styled';
 
 const SuccessScreen = props => {
-  const closeRequestFlow = () => {
-    props.history.push('/browse-stars');
-    props.closeHandler();
-  };
-
   return (
     <Layout className="content-wrapper">
       <CloseButton onClick={props.closeHandler} className="closeBtn" />
