@@ -48,7 +48,7 @@ const WelcomeVideo = props => {
     if (compSwitch) {
       compSwitchHandler(false);
     } else {
-      props.onBack(false);
+      props.onBack();
     }
   };
 

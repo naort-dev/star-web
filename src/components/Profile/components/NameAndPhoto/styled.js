@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
+  position: relative;
   width: 100%;
   height: 100%;
   padding-left: 40px;
@@ -20,6 +21,12 @@ export const Layout = styled.section`
   @media (max-width: 831px) {
     background: #f6f6f6;
   }  
+  .cropper-Wrapper{
+   max-width: 700px;
+  }
+  .arrow-head{
+    top:35px;
+  }
 `;
 
 Layout.SubheaderWrap = styled.div`
