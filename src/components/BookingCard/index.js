@@ -12,6 +12,7 @@ import BookingTitle from '../BookingTitle';
 import ModalHeader from '../ModalHeader';
 
 import Loader from '../Loader';
+import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList } from '../../store/shared/actions/getActivities'
@@ -22,6 +23,7 @@ const BookingCard = (props) => {
 
   const [showDetails, toggleDetails] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
+  const [showPaymentSuccess, togglePaymentSuccess] = useState(false);
   const [requestData, setRequestData] = useState(null);
 
   const closeModal = () => {
@@ -47,6 +49,11 @@ const BookingCard = (props) => {
     setPaymentDetails(null);
   }
 
+  const changePaymentSuccess = (state) => () => {
+    resetPaymentDetails();
+    togglePaymentSuccess(state);
+  }
+
   const onFanCompleteAction = (type, data) => {
     const newRequestData = { ...requestData }
     if (type === 'tip') {
@@ -62,7 +69,7 @@ const BookingCard = (props) => {
         },
         type: 'Tip',
         tipRequestId: requestData.booking_id,
-        paymentSuccessCallBack: resetPaymentDetails,
+        paymentSuccessCallBack: changePaymentSuccess(true),
         loaderAction: props.loaderAction,
       })
     } else if (type === 'rating') {
@@ -106,7 +113,26 @@ const BookingCard = (props) => {
 
   const { starMode } = props.bookingModal;
 
-  if (paymentDetails) {
+  if (showPaymentSuccess) {
+    return (
+      <RequestFlowPopup
+        noPadding
+        disableClose
+        closePopUp={changePaymentSuccess(false)}
+      >
+        <SuccessScreen
+          title= 'High Five!'
+          successMsg= 'Thanks for your tip!'
+          note= 'Don’t forget to download your video and share it on social so your friends can see your shoutout!'
+          btnLabel= 'Back to Video'
+          closeHandler={changePaymentSuccess(false)}
+          buttonHandler={changePaymentSuccess(false)}
+        />
+      </RequestFlowPopup>
+    )
+  }
+
+  else if (paymentDetails) {
     return (
       <RequestFlowPopup
         noPadding
