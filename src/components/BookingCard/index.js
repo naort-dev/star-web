@@ -6,6 +6,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
 import { requestTypes } from '../../constants/requestTypes';
 import StarView from './components/StarView';
+import Payment from '../Payment';
 import FanView from './components/FanView';
 import BookingTitle from '../BookingTitle';
 import ModalHeader from '../ModalHeader';
@@ -20,6 +21,7 @@ import BookingStyled from './styled';
 const BookingCard = (props) => {
 
   const [showDetails, toggleDetails] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState(null);
   const [requestData, setRequestData] = useState(null);
 
   const closeModal = () => {
@@ -41,6 +43,27 @@ const BookingCard = (props) => {
     }
   }, [props.bookingModal.requestId]);
 
+  const resetPaymentDetails = () => {
+    setPaymentDetails(null);
+  }
+
+  const onTipping = (tipValue) => {
+    setPaymentDetails({
+      celebDetails: {
+        rate: tipValue,
+        charity: requestData.charity,
+      },
+      userDetails: {
+        avatar_photo: requestData.avatar_photo,
+        first_name: requestData.celebrity,
+        last_name: '',
+      },
+      type: 'Tip',
+      tipRequestId: requestData.booking_id,
+      paymentSuccessCallBack: resetPaymentDetails,
+      loaderAction: props.loaderAction,
+    })
+  }
 
   const renderHeading = () => {
     const requestDetails = requestData.request_details;
@@ -62,10 +85,10 @@ const BookingCard = (props) => {
         <strong>{requestData.occasion}</strong>&nbsp;
           {requestTypes[requestData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
+            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
           </strong>
           {
-            requestDetails && !requestDetails.is_myself ?
+            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ?
               <React.Fragment>
                 &nbsp;from <strong>{requestDetails.stargramto}</strong>
               </React.Fragment>
@@ -76,6 +99,22 @@ const BookingCard = (props) => {
   }
 
   const { starMode } = props.bookingModal;
+
+  if (paymentDetails) {
+    return (
+      <RequestFlowPopup
+        noPadding
+        disableClose
+        closePopUp={resetPaymentDetails}
+      >
+        <Payment
+          {...paymentDetails}
+          closeHandler={resetPaymentDetails}
+          backArrowHandler={resetPaymentDetails}
+        />
+      </RequestFlowPopup>
+    )
+  }
 
   return (
     <RequestFlowPopup
@@ -126,6 +165,7 @@ const BookingCard = (props) => {
                       toggleContactSupport={props.toggleContactSupport}
                       loaderAction={props.loaderAction}
                       updateToast={props.updateToast}
+                      onTipping={onTipping}
                       activitiesList={props.activitiesList}
                       modalData={props.bookingModal.data}
                       toggleDetails={setDetails}

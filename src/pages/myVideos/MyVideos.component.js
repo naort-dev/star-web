@@ -122,6 +122,7 @@ class MyVideos extends React.Component {
             <CompletedBookings
               bookingsList={props.myVideosList}
               dropValue={dropValue}
+              updateMyVideosList={props.updateMyVideosList}
               toggleBookingModal={props.toggleBookingModal}
               handleCategoryChange={this.handleCategoryChange}
             />
