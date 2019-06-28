@@ -1,7 +1,7 @@
 import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails, userDetailsFetchSuccess } from './getUserDetails';
+import { userDetailsFetchSuccess, parseUserDetails } from './getUserDetails';
 
 export const UPDATE_USER_DETAILS = {
   start: 'fetch_start/update_user_details',
@@ -54,6 +54,7 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
       if (resp.data && resp.data.success) {
         dispatch(updateUserDetailsFetchEnd());
         dispatch(updateUserDetailsFetchSuccess(resp.data.data));
+        dispatch(userDetailsFetchSuccess(resp.data.data));
       } else {
         dispatch(updateUserDetailsFetchEnd());
         dispatch(updateUserDetailsFetchFailed('404'));

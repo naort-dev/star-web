@@ -7,6 +7,7 @@ import { Layout, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import {
   createCharge,
+  tipPayment,
   fetchSourceList,
   modifySourceList,
 } from '../../store/shared/actions/processPayments';
@@ -41,12 +42,21 @@ const Payment = props => {
   };
 
   const handleBooking = source => {
-    props.createCharge(
-      props.request.id,
-      props.celebDetails.rate,
-      source.source.id,
-      paymentSuccess,
-    );
+    if (props.tipRequestId) {
+      props.tipPayment(
+        props.tipRequestId,
+        props.celebDetails.rate,
+        source.source.id,
+        paymentSuccess,
+      );
+    } else{
+      props.createCharge(
+        props.request.id,
+        props.celebDetails.rate,
+        source.source.id,
+        paymentSuccess,
+      );
+    }
   };
 
   return (
@@ -99,14 +109,17 @@ Payment.propTypes = {
   modifySourceList: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateCustomerId: PropTypes.func.isRequired,
+  tipPayment: PropTypes.func.isRequired,
   celebDetails: PropTypes.object,
   userDetails: PropTypes.object,
   type: PropTypes.string.isRequired,
+  tipRequestId: PropTypes.string,
 };
 Payment.defaultProps = {
   celebDetails: {},
   userDetails: {},
   request: PropTypes.object,
+  tipRequestId: '',
 };
 
 const mapStateToProps = state => ({
@@ -118,6 +131,9 @@ function mapDispatchToProps(dispatch) {
   return {
     createCharge: (starsonaId, amount, tokenId, callBack) => {
       dispatch(createCharge(starsonaId, amount, tokenId, callBack));
+    },
+    tipPayment: (starsonaId, amount, tokenId, callBack) => {
+      dispatch(tipPayment(starsonaId, amount, tokenId, callBack));
     },
     fetchSourceList: () => {
       dispatch(fetchSourceList());
