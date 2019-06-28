@@ -5,6 +5,7 @@ export const Layout = styled.section`
   width: 100%;
   height: 100%;
   background: #fff;
+  position: relative;
   .leftArrow {
     position: absolute;
   }

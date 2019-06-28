@@ -22,7 +22,7 @@ const Industry = props => {
   const saveIndustry = () => {
     const finalUserDetails = {
       celebrity_details: {
-        profession_details: selectedProfessions,
+        profession: selectedProfessions.map(profession => profession.id),
       },
       user_details: {},
     };
@@ -223,7 +223,7 @@ const Industry = props => {
 
   return(
     <Layout>
-      <BackArrow className="leftArrow" />
+      <BackArrow className="leftArrow" onClick={props.goBack}/>
       <Heading>Industry</Heading>
       <Wrapper>
       {renderContent()}
