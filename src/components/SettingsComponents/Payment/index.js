@@ -28,7 +28,6 @@ const Payment = props => {
             <a
               className="button"
               href={props.stripeUrl}
-              target="_blank"
               rel="noopener noreferrer"
               data-web={props.labels.btnWeb}
               data-mob={props.labels.btnMob}
