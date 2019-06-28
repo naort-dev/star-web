@@ -69,6 +69,7 @@ SetPriceWrapper.ButtonWrapper = styled.div`
     left: 0;
     right: 0;
     padding-bottom: 0;
+    pading-top: 0
   }
 `;
 
