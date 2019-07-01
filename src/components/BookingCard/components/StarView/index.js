@@ -129,6 +129,7 @@ const StarView = (props) => {
                 scrollTarget='comments-scroll-target'
                 dataList={props.activitiesList.data}
                 noDataText='No comments yet'
+                celebrityId={bookingData.celebrity_id}
                 loading={props.activitiesList.loading}
                 offset={props.activitiesList.offset}
                 fetchData={fetchActivity}

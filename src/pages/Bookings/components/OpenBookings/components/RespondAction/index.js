@@ -289,7 +289,7 @@ const Question = props => {
     const getToolTip = audioFile => {
       if (!isEmpty(audioFile))
         return (
-          <ToolTip title="Click to hear how to pronounce  the name.">
+          <ToolTip title="Click to hear how to pronounce the name.">
             <Speaker icon={faMicrophone} onClick={playAudio(audioFile)} />
           </ToolTip>
         );
