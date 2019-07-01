@@ -1,4 +1,5 @@
 import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
+import cloneDeep from 'lodash/cloneDeep';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { userDetailsFetchSuccess, parseUserDetails } from './getUserDetails';
@@ -54,7 +55,20 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
       if (resp.data && resp.data.success) {
         dispatch(updateUserDetailsFetchEnd());
         dispatch(updateUserDetailsFetchSuccess(resp.data.data));
-        dispatch(userDetailsFetchSuccess(resp.data.data));
+        const newDetails = resp.data.data;
+        const currentUserDetails = cloneDeep(getState().userDetails.settings_userDetails);
+        const currentCelebDetails = cloneDeep(getState().userDetails.settings_celebrity_details);
+        const finalDetails = {
+          user: {
+            ...currentUserDetails,
+            ...newDetails.user,
+          },
+          celebrity_details: {
+            ...currentCelebDetails,
+            ...newDetails.celebrity_details,
+          }
+        }
+        dispatch(userDetailsFetchSuccess(parseUserDetails(finalDetails)));
       } else {
         dispatch(updateUserDetailsFetchEnd());
         dispatch(updateUserDetailsFetchFailed('404'));

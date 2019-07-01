@@ -22,7 +22,7 @@ const ActionBar = (props) => {
     reaction: !props.disableReaction,
     rating: !props.disableRating,
   })
-  const [showList, toggleList] = useState(false);
+  const [showList, toggleList] = useState(props.initialSelection);
 
   const toggleListState = (state) => () => {
     toggleList(state);

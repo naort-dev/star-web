@@ -75,7 +75,7 @@ export const fetchMyVideosList = (offset, refresh, requestStatus) => (
   dispatch(myVideosListFetchStart(refresh, source));
   return fetch
     .get(
-      `${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=fan_id`,
+      `${Api.getUserVideos}?status=${videoStatus}&role=fan_id`,
       {
         cancelToken: source.token,
       },

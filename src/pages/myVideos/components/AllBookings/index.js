@@ -29,7 +29,7 @@ const AllBookings = props => {
           You currently do not have any recent activity.
         </EmptyText>
       )}
-      {props.bookingsList.data.slice(0, 2).map(bookItem => (
+      {props.bookingsList.data.map(bookItem => (
         <FanGeneralList
           expiration={props.config.request_expiration_days}
           onPrimaryClick={props.onOpenClick(bookItem.booking_id)}
