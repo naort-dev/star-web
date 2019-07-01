@@ -235,6 +235,7 @@ class Purchase extends Component {
       celebDetails={this.props.celebDetails}
       userDetails={this.props.userDetails}
       type={this.getType()}
+      editHandler={this.editHandler}
     />
   );
 
@@ -327,6 +328,12 @@ class Purchase extends Component {
     });
     this.clearMediaStore();
     this.props.setVideoUploadedFlag(false);
+  };
+
+  editHandler = () => {
+    this.setState({
+      stepCount: 1,
+    });
   };
 
   successButtonHandler = () => {
