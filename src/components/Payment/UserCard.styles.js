@@ -58,6 +58,9 @@ export const TopSection = styled.section`
     font-size: 14px;
     color: #2f839d;
     cursor: pointer;
+    ${media.webView} {
+      padding-top: 6px;
+    }
   }
   .profile-wrapper {
     align-items: center;
