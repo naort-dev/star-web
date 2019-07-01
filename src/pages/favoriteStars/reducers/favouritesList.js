@@ -6,6 +6,7 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 20,
+  followLoaded: false,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -30,6 +31,7 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: action.list,
         count: action.count,
+        followLoaded: true,
       };
 
     case FAVOURITES_LIST.failed:
@@ -38,6 +40,12 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case FAVOURITES_LIST.resetLoaded:
+      return {
+        ...state,
+        followLoaded: false,
+      }
+    
     case FAVOURITES_LIST.updateFollow:
       return {
         ...state,
