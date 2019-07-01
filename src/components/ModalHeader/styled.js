@@ -4,7 +4,9 @@ import { media } from 'styles/mediaQueries';
 export const HeaderDiv = styled.section`
   height: 160px;
   ${media.mobileScreen} {
-    height: 178px;
+    //height: 178px;
+    height: auto;
+    padding-bottom: 15px;
 
     &.headerGlobal.custom-header {
       min-height: 150px;
@@ -50,7 +52,8 @@ export const HeaderDiv = styled.section`
     margin-bottom: 45px;
 
     ${media.mobileScreen} {
-      min-height: 178px;
+      //min-height: 178px;
+      min-height: auto;
       margin-bottom: 20px;
     }
   }

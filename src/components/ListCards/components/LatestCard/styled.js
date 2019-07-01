@@ -85,6 +85,10 @@ const StarStyled = CardContainer.extend`
     .description-wrapper {
       .heading {
         margin-bottom: 15px;
+
+        & + span {
+          margin-bottom: 15px;
+        }
       }
     }
   }

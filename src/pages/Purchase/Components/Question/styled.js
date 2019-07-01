@@ -52,6 +52,9 @@ export const Layout = styled.section`
     text-align: center;
     padding-top: 20px;
     cursor: pointer;
+    ${media.mobileScreen} {
+      padding-bottom: 15px;
+    }
   }
   .hidden {
     display: none;
@@ -256,7 +259,6 @@ export const MobButtons = styled.section`
   // top: 415px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 15px;
   padding-top: 15px;
   order: 3;
   width: 269px;
