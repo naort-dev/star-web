@@ -19,6 +19,7 @@ export const MediumText = styled.span`
   font-family: Gilroy-Regular;
   font-size: 18px;
   color: ${props => props.theme.flatBlue};
+  line-height: 30px;
 `;
 
 export const FlexBox = styled(FlexBoxSB)`
@@ -36,6 +37,7 @@ export const LeftContent = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 90.7px;
 `;
 
 export const CardContainer = FlexBox.extend`
