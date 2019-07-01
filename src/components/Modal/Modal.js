@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+// import PropTypes from 'prop-types';
+// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { DialogStyled } from './Modal.styles';
 
 class Modal extends Component {
   componentDidMount() {
-    disableBodyScroll(null);
+    // disableBodyScroll(null);
   }
 
   componentWillUnmount() {
-    enableBodyScroll();
+    // enableBodyScroll();
   }
 
   render() {

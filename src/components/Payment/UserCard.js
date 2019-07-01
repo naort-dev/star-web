@@ -50,7 +50,7 @@ const UserCard = props => {
     <Layout>
       <UserCardWrapper>
         <TopSection>
-          <FlexBoxSB className="profile-wrapper">
+          <FlexBoxSB>
             <FlexBoxSB className="profile-wrapper">
               <span className="profileIcon">
                 <img
@@ -66,6 +66,15 @@ const UserCard = props => {
                 <span className="bookingType">{props.type}</span>
               </span>
             </FlexBoxSB>
+            {props.editHandler && (
+              <span
+                className="edit"
+                onClick={props.editHandler}
+                role="presentation"
+              >
+                EDIT
+              </span>
+            )}
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
@@ -101,38 +110,38 @@ const UserCard = props => {
           />
         </Elements>
       ) : (
-          <React.Fragment>
-            <span className="selectCard centerAlign">Select Card</span>
-            {Object.keys(props.CardList).length > 0 && (
-              <CardList
-                Cards={props.CardList}
-                getCardSelected={getCardSelected}
-                deleteCard={props.modifySourceList}
-                updateCustomerId={props.updateCustomerId}
-                loaderAction={props.loaderAction}
-                selectedCardIndex={selectedCardIndex}
-              />
-            )}
-            <span
-              className="newCard centerAlign"
-              onClick={newPay(true)}
-              role="presentation"
-            >
-              Pay Using New Card
+        <React.Fragment>
+          <span className="selectCard centerAlign">Select Card</span>
+          {Object.keys(props.CardList).length > 0 && (
+            <CardList
+              Cards={props.CardList}
+              getCardSelected={getCardSelected}
+              deleteCard={props.modifySourceList}
+              updateCustomerId={props.updateCustomerId}
+              loaderAction={props.loaderAction}
+              selectedCardIndex={selectedCardIndex}
+            />
+          )}
+          <span
+            className="newCard centerAlign"
+            onClick={newPay(true)}
+            role="presentation"
+          >
+            Pay Using New Card
           </span>
 
-            <FlexCenter>
-              <Button
-                className="button"
-                onClick={payWithExistingCrd}
-                disabled={selectedCard === null}
-                isDisabled={selectedCard === null}
-              >
-                Pay ${props.celebDetails.rate}
-              </Button>
-            </FlexCenter>
-          </React.Fragment>
-        )}
+          <FlexCenter>
+            <Button
+              className="button"
+              onClick={payWithExistingCrd}
+              disabled={selectedCard === null}
+              isDisabled={selectedCard === null}
+            >
+              Pay ${props.celebDetails.rate}
+            </Button>
+          </FlexCenter>
+        </React.Fragment>
+      )}
       <FlexCenter>
         <img
           alt="stripe logo"
@@ -154,9 +163,11 @@ UserCard.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
+  editHandler: PropTypes.func,
 };
 UserCard.defaultProps = {
   isNewCard: false,
+  editHandler: () => {},
 };
 
 export default UserCard;

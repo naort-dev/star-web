@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { times, random } from 'lodash';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import PopupStyled from './styled';
 import { CloseButton } from '../../styles/CommonStyled';
 
@@ -18,11 +18,11 @@ class RequestFlowPopup extends React.Component {
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
-    disableBodyScroll(null);
+    // disableBodyScroll(null);
   }
 
   componentWillUnmount() {
-    enableBodyScroll();
+    // enableBodyScroll();
     window.removeEventListener('resize', this.handleResize);
   }
 
