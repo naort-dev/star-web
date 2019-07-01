@@ -4,7 +4,7 @@ import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
 import { celebDetailstFetchFollowUpdate } from '../../../pages/starProfile/actions/getCelebDetails';
-import { updateFavouriteList } from '../../../pages/favourites/actions/getFavouritesList';
+import { updateFavouriteList } from '../../../pages/favoriteStars/actions/getFavouritesList';
 
 export const FOLLOW_CELEBRITY = {
   followFailed: 'failed/FOLLOW_CELEBRITY',
@@ -43,10 +43,11 @@ export const followCelebrity = (celebrityId, follow, cancelUpdate) => (dispatch,
           },
         };
         dispatch(celebDetailstFetchFollowUpdate(obj));
-        // dispatch(updateCelebDetailsFollow(follow));
       }
-      // dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
-      // dispatch(updateFavouriteList(celebrityId, follow));
+      const { followLoaded } = getState().favouritesList;
+      if (followLoaded) {
+        dispatch(updateFavouriteList(celebrityId, follow));
+      }
     }
   }).catch((exception) => {
     dispatch(followCelebrityFailed(exception));

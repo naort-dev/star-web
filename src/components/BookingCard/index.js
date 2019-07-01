@@ -141,6 +141,7 @@ const BookingCard = (props) => {
       >
         <Payment
           {...paymentDetails}
+          editHandler={resetPaymentDetails}
           closeHandler={resetPaymentDetails}
           backArrowHandler={resetPaymentDetails}
         />
