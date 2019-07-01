@@ -43,10 +43,21 @@ export const favouritesListFetchFailed = error => ({
 
 export const updateFavouriteList = (celebrityId, follow) => (dispatch, getState) => {
   const newFavList = getState().favouritesList.data.filter((celeb) => {
-    return celeb.id !== celebrityId;
+    return celeb.user_id !== celebrityId;
   });
   const newCount = getState().favouritesList.count - 1;
   dispatch(favouritesListUpdateFollow(newFavList, newCount));
+};
+
+export const favoriteStar = (celebrityId, follow) => (dispatch) => {
+  return fetch.post(Api.followCelebrity, {
+    celebrity: celebrityId,
+    follow,
+  }).then(() => {
+      dispatch(updateFavouriteList(celebrityId, follow));
+  }).catch((exception) => {
+    // dispatch(followCelebrityFailed(exception));
+  });
 };
 
 export const fetchFavouritesList = (offset, refresh) => (dispatch, getState) => {

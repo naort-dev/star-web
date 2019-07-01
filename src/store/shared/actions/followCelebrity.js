@@ -4,7 +4,7 @@ import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
 import { celebDetailstFetchFollowUpdate } from '../../../pages/starProfile/actions/getCelebDetails';
-import { updateFavouriteList } from '../../../pages/favourites/actions/getFavouritesList';
+// import { updateFavouriteList } from '../../../pages/favourites/actions/getFavouritesList';
 
 export const FOLLOW_CELEBRITY = {
   followFailed: 'failed/FOLLOW_CELEBRITY',

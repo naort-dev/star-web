@@ -7,6 +7,18 @@ const AvatarContainer = styled.section`
   flex-direction: column;
   width: 100%;
   max-width: 100px;
+  .btn-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+    .action-btn {
+      width: 137px;
+      height: 39px;
+      min-width: auto;
+      min-height: auto;
+    }
+  }
   &.featured {
     max-width: 140px;
   }
@@ -62,6 +74,17 @@ AvatarContainer.Avatar = styled.span`
   background-position: center center;
   background-size: cover;
   position: relative;
+  .close-btn {
+    position: absolute;
+    right: 0;
+    color: ${props => props.theme.flatBlue};
+    font-size: 19px;
+    bottom: -7px;
+    @media(min-width: 832px) {
+      font-size: 24px;
+      bottom: 0;
+    }
+  }
   @media(min-width: 832px) {
     width: 200px;
     height: 200px;

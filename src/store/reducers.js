@@ -14,7 +14,7 @@ import groupTypes from './shared/reducers/groupTypes';
 import suggestionsList from './shared/reducers/suggestionsList';
 import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
-import favouritesList from '../pages/favourites/reducers/favouritesList';
+import favouritesList from '../pages/favoriteStars/reducers/favouritesList';
 import occasionList from '../pages/Purchase/reducers/occasionList';
 import bookings from '../pages/Bookings/reducers';
 import myVideos from '../pages/myVideos/reducers';
