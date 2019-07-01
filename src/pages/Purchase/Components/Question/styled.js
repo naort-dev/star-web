@@ -108,7 +108,7 @@ export const VideoContainer = styled.section`
   ${media.mobileScreen} {
     max-height: 426px;
     height: calc(100% - 150px);
-    min-height: 280px;
+    min-height: 305px;
   }
   ${media.webView} {
     height: 426px;
@@ -152,7 +152,7 @@ export const QuestionContainer = styled.section`
     background: rgba(0, 0, 0, 0.47);
     width: 269px;
     order: 2;
-    margin-top: -258px;
+    margin-top: -280px;
     z-index: 9;
   }
   &:empty {
