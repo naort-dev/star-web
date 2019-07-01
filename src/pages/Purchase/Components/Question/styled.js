@@ -14,8 +14,7 @@ export const Layout = styled.section`
     max-width: 309px;
     margin: 0 auto;
     flex-direction: column;
-    height: calc(100% - 170px);
-    overflow: auto;
+    height: 100%;
   }
   .question {
     font-family: Gilroy-SemiBold;
