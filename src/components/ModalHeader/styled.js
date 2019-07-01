@@ -9,6 +9,7 @@ export const HeaderDiv = styled.section`
     &.headerGlobal.custom-header {
       min-height: 150px;
       height: auto;
+      padding-bottom: 10px;
     }
   
     &.custom-header:after {
@@ -64,7 +65,7 @@ export const HeaderText = styled.section`
   padding-top: 17px;
 
   ${media.mobileScreen} {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-Light;
   }
 `;
 
