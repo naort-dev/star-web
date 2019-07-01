@@ -10,7 +10,7 @@ const FavoriteStars = (props) => {
   };
 
   const onUnFavoriteStar = (star) => {
-    props.favoriteStar(star.user_id, false);
+    props.favoriteStar(star.id, false);
   }
 
   const onStarPurchase = async (star) => {
@@ -20,6 +20,9 @@ const FavoriteStars = (props) => {
 
   useEffect(() => {
     props.fetchFavouritesList(0, true);
+    return () => {
+      props.favouritesListResetLoaded();
+    }
   }, [])
 
   return (
@@ -50,6 +53,9 @@ FavoriteStars.propTypes = {
   fetchFavouritesList: PropTypes.func.isRequired,
   favouritesList: PropTypes.object.isRequired,
   favoriteStar: PropTypes.func.isRequired,
+  fetchStarDetails: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
+  favouritesListResetLoaded: PropTypes.func.isRequired,
 }
 
 export default FavoriteStars;
