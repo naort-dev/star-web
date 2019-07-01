@@ -146,6 +146,9 @@ export const TextAreaWrapper = styled.section`
   ${media.realMobile} {
     padding: 0;
   }
+  ${media.mobileScreen} {
+    height: auto;
+  }
   margin: 10px 0;
   ${media.realMobile} {
     margin: 10px 20px 0;

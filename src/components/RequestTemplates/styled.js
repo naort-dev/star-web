@@ -159,7 +159,7 @@ Templates.InputArea = styled.textarea`
   }
 `;
 Templates.ErrorMsg = styled.div`
-  color: red;
+  color: #ff6c58;
   font-size: 11px;
   margin-top: 4px;
   font-family: 'Avenir-light';

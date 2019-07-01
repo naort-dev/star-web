@@ -19,8 +19,11 @@ export const Layout = styled.section`
 `;
 
 export const SubHeader = styled.section`
-  padding: 50px 57px 0;
+  padding: 36px 57px 0;
   position: relative;
+  ${media.webView} {
+    padding: 50px 57px 0;
+  }
   .svg-inline--fa {
     font-size: 50px;
     color: #707070;
