@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Checkbox from 'components/Checkbox';
 import Button from 'components/PrimaryButton';
 import { Layout, FlexBox } from './styled';
@@ -15,10 +16,15 @@ const TermsAndCondition = props => {
 
   return (
     <Layout className="content-wrapper">
-      <div className="termsWrapper">
+      <Scrollbars
+      className="termsWrapper"
+       renderView={scrollProps => <div {...scrollProps} id="terms-scroll" />}
+      > 
+      <div>
         {/* {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />} */}
         <p>{props.termText}</p>
       </div>
+      </Scrollbars>
       <FlexBox className="button-wrapper">
         <Button
           className="continue-btn"
