@@ -9,6 +9,11 @@ export const Content = styled.section`
   ${media.mobileScreen} {
     height: calc(100% - 178px);
   }
+  &.custom-video{
+    ${media.mobileScreen} {
+      height: calc(100% - 158px);
+    }
+  }
   .scrollRenderView {
     overflow: auto !important;
     height: 100%;
