@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from "lodash"
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/PrimaryButton';
@@ -87,7 +88,7 @@ function FormContainer(props) {
       user: 'someoneElse',
       enableAudioRecorder: false,
       hostName: '',
-      userName: '',
+      userName: props.first_name,
       relationshipValue: '',
       specification: '',
       date: null,
@@ -113,6 +114,7 @@ function FormContainer(props) {
     props.clearAudio();
     props.audioRecordHandler({ recording: false, playing: false });
   };
+
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
       props.submitClick();
@@ -191,11 +193,11 @@ function FormContainer(props) {
   useEffect(() => {
     validationTypeCheck();
   }, [
-      FormData.hostName,
-      FormData.specification,
-      FormData.templateType,
-      props.pageCount,
-    ]);
+    FormData.hostName,
+    FormData.specification,
+    FormData.templateType,
+    props.pageCount,
+  ]);
 
   const getScript = value => {
     updateScriptText(value);
@@ -203,7 +205,10 @@ function FormContainer(props) {
   };
 
   return (
-    <Layout className={`content-wrapper ${isEmpty(bookingData.occasion) && "occasion-wrapper"}`}>
+    <Layout
+      className={`content-wrapper ${isEmpty(bookingData.occasion) &&
+        'occasion-wrapper'}`}
+    >
       <FlexCenter className="dropdown-wrapper">
         <Dropdown
           options={optionsList}
@@ -263,6 +268,7 @@ export default connect(
   state => ({
     bookingData: state.occasionList.bookingData,
     user_name: state.userDetails.settings_userDetails.stageName,
+    first_name: state.userDetails.settings_userDetails.first_name,
   }),
   null,
 )(FormContainer);

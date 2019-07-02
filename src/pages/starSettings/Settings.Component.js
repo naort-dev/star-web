@@ -173,8 +173,8 @@ const Settings = props => {
                   webHead="Update Password"
                   showPasswd
                   labels={{
-                    password: 'First Name',
-                    confirmPasswd: 'Last Name',
+                    password: 'Password',
+                    confirmPasswd: 'Confirm Password',
                     hint:
                       'Passwords must be a minimum of 8 characters and include at least one special character like !?@#',
                     buttonLbl: 'Save',

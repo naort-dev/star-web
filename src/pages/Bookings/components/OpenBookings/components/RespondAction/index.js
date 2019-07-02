@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -307,9 +308,12 @@ const Question = props => {
     };
 
     const getHeaderText = occasion => {
-      // eslint-disable-next-line
       const { to_audio_file, from_audio_file } = props.bookedItem;
-      const { stargramfrom, stargramto } = props.bookedItem.request_details;
+      const { stargramfrom, is_myself } = props.bookedItem.request_details;
+      let { stargramto } = props.bookedItem.request_details;
+      if (is_myself) {
+        stargramto = props.bookedItem.fan;
+      }
       return (
         <React.Fragment>
           Record a{' '}

@@ -44,8 +44,8 @@ function RequestTemplates(
     forSelf,
     fullWidth,
     maxLength,
+    fileName,
   }) => {
-    const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
       <Templates.InputWrapper fullWidth={fullWidth}>
         <TextInput
@@ -75,8 +75,8 @@ function RequestTemplates(
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
                 <AudioRecorder
-                  key={targetNM}
-                  target={targetNM}
+                  key={fileName}
+                  target={fileName}
                   audioRecorder={audioRecorder}
                   saveAudioRecording={(target, audio) =>
                     saveAudioRecording(target, audio)
@@ -146,6 +146,7 @@ function RequestTemplates(
     forSelf,
     fullWidth,
     maxLength,
+    fileName,
   ) => {
     return {
       placeholder,
@@ -156,6 +157,7 @@ function RequestTemplates(
       forSelf,
       fullWidth,
       maxLength,
+      fileName,
     };
   };
   const getVideoFor = (state, fullWidth) => {
@@ -167,6 +169,8 @@ function RequestTemplates(
         state,
         true,
         fullWidth,
+        '',
+        'for',
       ),
     );
   };
@@ -179,12 +183,29 @@ function RequestTemplates(
         state,
         false,
         fullWidth,
+        '',
+        'from',
       ),
     );
   };
-  const getSpecification = (placeholder, state, fullWidth, isAudio) => {
+  const getSpecification = (
+    placeholder,
+    state,
+    fullWidth,
+    isAudio,
+    fileName,
+  ) => {
     return getTextInput(
-      getFiledProps(placeholder, isAudio, false, state, false, fullWidth),
+      getFiledProps(
+        placeholder,
+        isAudio,
+        false,
+        state,
+        false,
+        fullWidth,
+        '',
+        fileName,
+      ),
     );
   };
   const getRelationship = fullWidth => {
@@ -263,6 +284,7 @@ function RequestTemplates(
                     'specification',
                     false,
                     false,
+                    'honor',
                   )}
                 </React.Fragment>
               ) : (
@@ -273,6 +295,7 @@ function RequestTemplates(
                     'specification',
                     true,
                     false,
+                    'honor',
                   )}
                 </React.Fragment>
               )}
@@ -293,6 +316,7 @@ function RequestTemplates(
                 'specification',
                 false,
                 false,
+                'honor',
               )}
             </FlexBox>
           );
@@ -307,6 +331,7 @@ function RequestTemplates(
                 'specification',
                 false,
                 false,
+                'honor',
               )}
             </FlexBox>
           );
@@ -383,7 +408,16 @@ function RequestTemplates(
                   {getVideoFrom('userName')}
                   {getRelationship()}
                   {getTextInput(
-                    getFiledProps('For what', false, false, 'specification'),
+                    getFiledProps(
+                      'For what',
+                      false,
+                      false,
+                      'specification',
+                      false,
+                      false,
+                      '',
+                      '',
+                    ),
                   )}
                 </React.Fragment>
               ) : (
@@ -397,6 +431,8 @@ function RequestTemplates(
                       'specification',
                       true,
                       true,
+                      '',
+                      '',
                     ),
                   )}
                 </React.Fragment>
@@ -414,7 +450,15 @@ function RequestTemplates(
             <FlexBox>
               {getRelationship()}
               {getTextInput(
-                getFiledProps('For what', false, false, 'specification'),
+                getFiledProps(
+                  'For what',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  '',
+                  '',
+                ),
               )}
             </FlexBox>
           );
@@ -425,7 +469,15 @@ function RequestTemplates(
             <FlexBox>
               {getVideoFor('hostName')}
               {getTextInput(
-                getFiledProps('For what', false, false, 'specification'),
+                getFiledProps(
+                  'For what',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  '',
+                  '',
+                ),
               )}
             </FlexBox>
           );
@@ -441,7 +493,15 @@ function RequestTemplates(
                 {getVideoFrom('userName')}
                 {getRelationship()}
                 {getTextInput(
-                  getFiledProps('From where', false, false, 'specification'),
+                  getFiledProps(
+                    'From where',
+                    false,
+                    false,
+                    'specification',
+                    false,
+                    '',
+                    '',
+                  ),
                 )}
               </FlexBox>
             );
@@ -453,7 +513,15 @@ function RequestTemplates(
               <FlexBox>
                 {getVideoFor('hostName')}
                 {getTextInput(
-                  getFiledProps('From where', false, false, 'specification'),
+                  getFiledProps(
+                    'From where',
+                    false,
+                    false,
+                    'specification',
+                    false,
+                    '',
+                    '',
+                  ),
                 )}
                 {getDate(true)}
               </FlexBox>
@@ -470,7 +538,15 @@ function RequestTemplates(
             <FlexBox>
               {getRelationship()}
               {getTextInput(
-                getFiledProps('From where', false, false, 'specification'),
+                getFiledProps(
+                  'From where',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  '',
+                  '',
+                ),
               )}
             </FlexBox>
           );
@@ -483,7 +559,15 @@ function RequestTemplates(
             <FlexBox>
               {getVideoFor('hostName')}
               {getTextInput(
-                getFiledProps('From where', false, false, 'specification'),
+                getFiledProps(
+                  'From where',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  '',
+                  '',
+                ),
               )}
               {getDate(true)}
             </FlexBox>
@@ -504,6 +588,7 @@ function RequestTemplates(
                   false,
                   true,
                   52,
+                  '',
                 ),
               )}
               {getTextInput(
@@ -512,6 +597,10 @@ function RequestTemplates(
                   true,
                   false,
                   'hostName',
+                  false,
+                  false,
+                  '',
+                  'host',
                 ),
               )}
               {getDatePicker(
@@ -537,6 +626,7 @@ function RequestTemplates(
                   false,
                   true,
                   52,
+                  '',
                 ),
               )}
               {getTextInput(
@@ -545,6 +635,10 @@ function RequestTemplates(
                   true,
                   false,
                   'hostName',
+                  false,
+                  false,
+                  '',
+                  'host',
                 ),
               )}
             </FlexBox>
@@ -572,11 +666,13 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's the guest of honor?",
-                  false,
+                  true,
                   false,
                   'specification',
                   false,
                   true,
+                  '',
+                  'honor',
                 ),
               )}
               {getTextInput(
@@ -585,6 +681,10 @@ function RequestTemplates(
                   true,
                   false,
                   'hostName',
+                  false,
+                  false,
+                  '',
+                  'host',
                 ),
               )}
               {getDatePicker(
@@ -604,9 +704,13 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's the guest of honor?",
-                  false,
+                  true,
                   false,
                   'specification',
+                  false,
+                  false,
+                  '',
+                  'honor',
                 ),
               )}
               {getTextInput(
@@ -615,6 +719,10 @@ function RequestTemplates(
                   true,
                   false,
                   'hostName',
+                  false,
+                  false,
+                  '',
+                  'host',
                 ),
               )}
             </FlexBox>
