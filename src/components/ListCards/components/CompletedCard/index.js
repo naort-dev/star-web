@@ -41,7 +41,7 @@ const CompletedCard = (props) => {
             { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : props.data.fan }
           </HeadingBold>
           {
-            requestDetails && !requestDetails.is_myself ?
+            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself && requestDetails.stargramfrom !== '' ?
               <React.Fragment>
                 &nbsp;from <HeadingBold>{requestDetails.stargramfrom}</HeadingBold>
               </React.Fragment>
