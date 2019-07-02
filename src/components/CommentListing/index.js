@@ -10,7 +10,7 @@ const CommentListing = (props) => {
     <ListingStyled>
       {
         props.dataList.map((data) => (
-          <ListingStyled.Content key={data.id} sentComment={props.userDetails.id === data.user_id}>
+          <ListingStyled.Content key={data.id} sentComment={props.celebrityId !== data.user_id}>
             <CommentItem
               type={data.activity_type}
               activityId={data.id}
@@ -21,7 +21,7 @@ const CommentListing = (props) => {
               commentDetails={data.activity_details}
               onReactionClick={props.onReactionClick}
               classes={{ comment: 'comment-section' }}
-              receive={props.userDetails.id !== data.user_id}
+              receive={props.celebrityId === data.user_id}
             />
           </ListingStyled.Content>
         ))
@@ -33,6 +33,7 @@ const CommentListing = (props) => {
 CommentListing.defaultProps = {
   onReactionClick: () => {},
   disableAction: false,
+  celebrityId: '',
 }
 
 CommentListing.propTypes = {
@@ -40,6 +41,7 @@ CommentListing.propTypes = {
   onReactionClick: PropTypes.func,
   userDetails: PropTypes.object.isRequired,
   disableAction: PropTypes.bool,
+  celebrityId: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

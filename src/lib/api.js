@@ -32,7 +32,7 @@ class Api {
   static forgotPassword = 'v1/user/forgotpassword/';
   static resetPassword = 'v1/user/resetpassword/';
   static getAWSVideo = 'v1/user/get_signed_url/?key=';
-  static modifyUserDetails = 'v1/user/user_details';
+  static modifyUserDetails = 'v2/user/user_details';
   static modifySocialLinks = 'v1/user/social_links/';
   static updateGroupAccount = 'v1/user/group_account/';
   static updateNotification = 'v1/user/notification_settings/';

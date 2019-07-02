@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import PrimaryButton from '../PrimaryButton';
+import ToolTip from '../ToolTip';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { toggleQuickView } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater, getStarName } from '../../utils/dataToStringFormatter';
@@ -103,7 +104,9 @@ const StarAvatar = ({ star, type, ...props }) => {
         </AvatarContainer.ControlWrapper>
         {
           props.favoriteView &&
-            <FontAwesomeIcon className='close-btn' icon={faTimes} onClick={onCloseClick(star)} />
+            <ToolTip title='Remove this Star from your favorites list'>
+              <FontAwesomeIcon className='close-btn' icon={faTimes} onClick={onCloseClick(star)} />
+            </ToolTip>
         }
       </WrapperComponent>
       <AvatarContainer.Content className={type} to={`/${star.user_id}`}>
