@@ -19,13 +19,15 @@ class RequestFlowPopup extends React.Component {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
     // disableBodyScroll(null);
+    document.body.style.position = "fixed";
   }
 
   componentWillUnmount() {
     // enableBodyScroll();
     window.removeEventListener('resize', this.handleResize);
+    document.body.style.position = "relative";
   }
-
+ 
   onModalMount = () => {
     if (this.props.setScrollRef) {
       this.props.setScrollRef(this.popupContent.current);

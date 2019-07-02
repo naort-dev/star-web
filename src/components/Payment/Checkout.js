@@ -35,15 +35,15 @@ class Checkout extends React.Component {
     this.styles = {
       base: {
         fontSize: '18px',
-        color: '#aaaaaa',
+        color: 'rgb(97, 81, 149)',
         textAlign: 'center',
         fontFamily: 'Gilroy',
         '::placeholder': {
-          color: '#aaaaaa',
+          color: '#b7b7b7',
         },
       },
       invalid: {
-        color: 'red',
+        color: 'rgb(255, 108, 88)',
       },
     };
   }
