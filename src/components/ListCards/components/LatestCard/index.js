@@ -91,7 +91,7 @@ const LatestCard = (props) => {
       )
     }
     return (
-      <MediumText>
+      <MediumText className='card-description'>
         <HeadingBold>{request.occasion}</HeadingBold> announcement 
         for <HeadingBold>{request.fan}</HeadingBold>
       </MediumText>

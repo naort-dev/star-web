@@ -118,6 +118,9 @@ StarStyled.UserImage = LeftContent.extend`
 StarStyled.CommentContainer = FlexBoxSB.extend`
   margin-top: 12.2px;
   justify-content: flex-start;
+  @media(max-width: 831px) {
+    align-items: center;
+  }
   .action-text {
     font-family: Gilroy-Medium;
     font-size: 14px;
@@ -134,6 +137,9 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     min-height: 73px;
     width: 209px;
     overflow: hidden;
+    @media(max-width: 831px) {
+      min-height: auto;
+    }
   }
   .divider {
     width: 0;
