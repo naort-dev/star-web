@@ -283,7 +283,7 @@ function RequestTemplates(
                     "Who's the guest of honor?",
                     'specification',
                     false,
-                    false,
+                    true,
                     'honor',
                   )}
                 </React.Fragment>
@@ -294,7 +294,7 @@ function RequestTemplates(
                     "Who's the guest of honor?",
                     'specification',
                     true,
-                    false,
+                    true,
                     'honor',
                   )}
                 </React.Fragment>
@@ -315,7 +315,7 @@ function RequestTemplates(
                 "Who's the guest of honor?",
                 'specification',
                 false,
-                false,
+                true,
                 'honor',
               )}
             </FlexBox>
@@ -330,7 +330,7 @@ function RequestTemplates(
                 "Who's the guest of honor?",
                 'specification',
                 false,
-                false,
+                true,
                 'honor',
               )}
             </FlexBox>
