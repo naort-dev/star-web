@@ -21,7 +21,7 @@ export const Layout = styled.section`
     display: inline-block;
     background-size: contain;
     width: 196px;
-    height: 141px;
+    height: 138px;
     ${media.webView} {
       width: 260px;
       height: 225px;
@@ -72,7 +72,7 @@ export const Content = styled.section`
     line-height: 39px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     ${media.webView} {
       font-size: 34px;
       padding-bottom: 24px;

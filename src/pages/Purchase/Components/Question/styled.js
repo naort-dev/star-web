@@ -160,7 +160,7 @@ export const QuestionContainer = styled.section`
     margin-top: -280px;
     z-index: 9;
     position: absolute;
-    bottom: 151px;
+    bottom: 150px;
   }
   &:empty {
     display: none;
