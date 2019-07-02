@@ -6,10 +6,12 @@ import { DialogStyled } from './Modal.styles';
 class Modal extends Component {
   componentDidMount() {
     // disableBodyScroll(null);
+    document.body.style.position = "fixed";
   }
 
   componentWillUnmount() {
     // enableBodyScroll();
+    document.body.style.position = "relative";
   }
 
   render() {

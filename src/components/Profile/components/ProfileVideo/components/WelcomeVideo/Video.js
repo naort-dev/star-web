@@ -118,7 +118,6 @@ const Video = props => {
   };
 
   const renderTime = () => {
-    // console.log(videoTag);
     if (props.recordState) {
       return recordingTime;
     } else if(props.src && videoTag.current){

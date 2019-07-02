@@ -7,13 +7,24 @@ export const Content = styled.section`
   position: relative;
   height: calc(100% - 205px);
   ${media.mobileScreen} {
-    height: calc(100% - 198px);
+    height: calc(100% - 178px);
   }
-  &.custom-video {
-    height: calc(100% - 170px);
+  &.custom-video{
+    ${media.mobileScreen} {
+      height: calc(100% - 158px);
+    }
   }
   .scrollRenderView {
     overflow: auto !important;
+    height: 100%;
+  }
+  .audio-wrap:last-child{
+    .pronounce-wrap  {
+      @media (max-width: 831px) {
+        margin-bottom: -25px;
+        margin-top: -20px;
+      }
+    }
   }
 `;
 
