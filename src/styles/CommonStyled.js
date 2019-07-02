@@ -36,11 +36,11 @@ export const Loading = styled.section`
   position: fixed;
   justify-content: center;
   display: flex;
-  z-index: 99999999;
+  z-index: 9999;
   width: 100%;
   flex-direction: column;
   background: #bdbcbc;
-  opacity: 0.5;
+  opacity: 0.8;
   min-height: 100%;
   top: 0;
   left: 0;

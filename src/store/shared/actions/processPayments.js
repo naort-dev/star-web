@@ -204,7 +204,12 @@ export const createCharge = (
     });
 };
 
-export const tipPayment = (bookingId, amount, tokenId, callBack) => dispatch => {
+export const tipPayment = (
+  bookingId,
+  amount,
+  tokenId,
+  callBack,
+) => dispatch => {
   dispatch(paymentFetchStart());
   dispatch(loaderAction(true));
   return fetch
@@ -304,6 +309,14 @@ export const starsonaRequest = (
   if (bookingData.to_audio_file) {
     formData.append('to_audio_file', bookingData.to_audio_file);
   }
+
+  if (bookingData.host_audio_file) {
+    formData.append('host_audio_file', bookingData.host_audio_file);
+  }
+  if (bookingData.honor_audio_file) {
+    formData.append('honor_audio_file', bookingData.honor_audio_file);
+  }
+
   if (bookingData.remove_audios) {
     formData.append('remove_audios', bookingData.remove_audios);
   }

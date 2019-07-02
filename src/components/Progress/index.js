@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import { Progress, Loading } from 'styles/CommonStyled';
 
 const LoaderProgress = props => {
+  const getLoader = () => {
+    if (props.progress.loader) {
+      return <Progress variant="static" value={props.progress.value} />;
+    }
+    return <Progress />;
+  };
   return (
     <React.Fragment>
-      {props.loader && (
-        <Loading>
-          <Progress />
-        </Loading>
+      {(props.loader || props.progress.loader) && (
+        <Loading>{getLoader()}</Loading>
       )}
     </React.Fragment>
   );
@@ -17,10 +21,12 @@ const LoaderProgress = props => {
 
 LoaderProgress.propTypes = {
   loader: PropTypes.bool.isRequired,
+  progress: PropTypes.object.isRequired,
 };
 
 const mapState = state => ({
   loader: state.commonReducer.loader,
+  progress: state.commonReducer.progress,
 });
 
 export default connect(
