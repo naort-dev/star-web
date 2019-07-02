@@ -17,10 +17,11 @@ export const Layout = styled.section`
   }
   .successImg {
     background: url(assets/images/art_highfive.svg) no-repeat;
+    background-position: center;
     display: inline-block;
     background-size: contain;
     width: 196px;
-    height: 202px;
+    height: 141px;
     ${media.webView} {
       width: 260px;
       height: 225px;
@@ -55,6 +56,7 @@ export const Content = styled.section`
   ${media.mobileScreen} {
     padding-right: 15px;
     padding-left: 15px;
+    max-width: 340px;
   }
   .highFive {
     color: #ff6c58;

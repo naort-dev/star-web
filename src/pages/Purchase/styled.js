@@ -14,6 +14,15 @@ export const Content = styled.section`
   }
   .scrollRenderView {
     overflow: auto !important;
+    height: 100%;
+  }
+  .audio-wrap:last-child{
+    .pronounce-wrap  {
+      @media (max-width: 831px) {
+        margin-bottom: -25px;
+        margin-top: -20px;
+      }
+    }
   }
 `;
 

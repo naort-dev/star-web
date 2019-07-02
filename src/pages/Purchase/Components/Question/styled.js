@@ -15,6 +15,8 @@ export const Layout = styled.section`
     margin: 0 auto;
     flex-direction: column;
     height: 100%;
+    min-height: 454px;
+    max-height: 575px;
   }
   .question {
     font-family: Gilroy-SemiBold;
@@ -157,6 +159,8 @@ export const QuestionContainer = styled.section`
     order: 2;
     margin-top: -280px;
     z-index: 9;
+    position: absolute;
+    bottom: 151px;
   }
   &:empty {
     display: none;
@@ -217,7 +221,7 @@ export const ShowHide = styled.span`
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
-  margin: -40px auto 10px;
+  margin: -47px auto 15px;
   z-index: 9;
   ${media.webView} {
     display: none;
@@ -265,5 +269,9 @@ export const MobButtons = styled.section`
   align-items: center;
   ${media.webView} {
     display: none;
+  }
+  ${media.mobileScreen} {
+    padding-bottom: 15px;
+    height: 125px;
   }
 `;

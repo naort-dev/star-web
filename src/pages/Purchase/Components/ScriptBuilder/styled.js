@@ -39,6 +39,10 @@ export const Layout = styled.section`
     display: flex;
     flex-direction: column;
 
+    @media (max-width: 831px) {
+      display: block;
+    }
+
     @media (min-width: 832px) {
       padding-right: 15px;
     }
