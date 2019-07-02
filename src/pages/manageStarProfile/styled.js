@@ -70,6 +70,7 @@ Content.RightContent = Content.Visiblity.extend`
   flex: auto;
   padding-left: 50px;
   height: 639px;
+  width: 700px;
 }
 `
 export const ProgressBarWrapper = styled.div`

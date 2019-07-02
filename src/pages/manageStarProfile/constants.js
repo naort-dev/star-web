@@ -12,21 +12,27 @@ export const STAR_PROFILE = {
       selectedName: 'bio',
       url: '/manage/profile/bio',
     },
-    { linkName: 'Industry', selectedName: 'profile', url: '/manage/profile/industry' },
-    { linkName: 'Tags', selectedName: 'earnings', url: '/manage/earnings' },
+    { linkName: 'Industry', selectedName: 'industry', url: '/manage/profile/industry' },
+    { linkName: 'Tags', selectedName: 'tags', url: '/manage/earnings' },
     {
       linkName: 'Social handles',
-      selectedName: 'settings',
+      selectedName: 'social',
       url: '/manage/profile/social-handles',
     },
     {
       linkName: 'Price & Limits',
-      selectedName: 'referral',
+      selectedName: 'pricelimit',
       url: '/manage/profile/price-limits',
     },
   ],
   SOCIAL_HANDLE: {
     subtitle: 'Adding your social media allows you to quickly promote yourself and increase bookings.',
     heading: 'Social Handles',
+  },
+  PRICE_AND_LIMITS: {
+    confirmDescription: 'Pick a price that is worth it to you, and still within the range of your fans.',
+    description: 'How much should your fans pay for you to create a video?',
+    title: 'Set your price and limits',
+    confirmationTitle: 'Are you sure?',
   }
 };

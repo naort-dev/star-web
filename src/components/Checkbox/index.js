@@ -29,6 +29,7 @@ class Checkbox extends Component {
           type="checkbox"
           checked={this.state.checked}
           onChange={this.handleChange}
+          disabled={this.props.disabled ? this.props.disabled : false}
         />
         <span className="checkmark" />
       </CheckboxWrapper>
