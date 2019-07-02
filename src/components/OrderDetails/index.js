@@ -184,7 +184,9 @@ const OrderDetails = (props) => {
             </li>
             <li className='detail-item'>
               <span className='detail-title'>Paid:</span>
-              <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
+              <ToolTip title={requestType === 'open' ? 'This amount was reserved on your card but will not be charged until your video is completed.' : ''}>
+                <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
+              </ToolTip>
             </li>
             <li className='detail-item'>
               <span className='detail-title'>Recorded:</span>

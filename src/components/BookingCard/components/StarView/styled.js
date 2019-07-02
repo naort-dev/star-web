@@ -11,7 +11,7 @@ StarViewStyled.VideoWrapper = styled.div`
   padding-top: ${props => (props.closeEnable ? '36px' : '')};
   .close-btn {
     top: 0;
-    right: 0;
+    left: 0;
   }
   .player-icon-wrap {
     top: 50%;

@@ -98,12 +98,15 @@ const StarView = (props) => {
               <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
               <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
             </span>
-            <Share
-              className='action-btn'
-              title={`Check out this video from ${bookingData.celebrity} !`}
-              body={`Watch this personalized video from ${bookingData.celebrity}`}    
-              shareUrl={finalVideo.video_url || ''}
-            />
+            {
+              bookingData.public_request &&
+                <Share
+                  className='action-btn'
+                  title={`Check out this video from ${bookingData.celebrity} !`}
+                  body={`Watch this personalized video from ${bookingData.celebrity}`}    
+                  shareUrl={finalVideo.video_url || ''}
+                />
+            }
           </StarViewStyled.DetailWrapper>
           <StarViewStyled.DetailWrapper>
               <span>
@@ -126,6 +129,7 @@ const StarView = (props) => {
                 scrollTarget='comments-scroll-target'
                 dataList={props.activitiesList.data}
                 noDataText='No comments yet'
+                celebrityId={bookingData.celebrity_id}
                 loading={props.activitiesList.loading}
                 offset={props.activitiesList.offset}
                 fetchData={fetchActivity}

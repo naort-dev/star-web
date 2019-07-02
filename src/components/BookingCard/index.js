@@ -54,6 +54,10 @@ const BookingCard = (props) => {
     togglePaymentSuccess(state);
   }
 
+  const updateRequestData = (newData) => {
+    setRequestData(newData)
+  }
+
   const onFanCompleteAction = (type, data) => {
     const newRequestData = { ...requestData }
     if (type === 'tip') {
@@ -101,9 +105,9 @@ const BookingCard = (props) => {
             { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
           </strong>
           {
-            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ?
+            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself && requestDetails.stargramfrom !== '' ?
               <React.Fragment>
-                &nbsp;from <strong>{requestDetails.stargramto}</strong>
+                &nbsp;from <strong>{requestDetails.stargramfrom}</strong>
               </React.Fragment>
             : null
           }
@@ -196,6 +200,7 @@ const BookingCard = (props) => {
                       bookingData={requestData}
                       fetchActivitiesList={props.fetchActivitiesList}
                       toggleContactSupport={props.toggleContactSupport}
+                      updateRequestData={updateRequestData}
                       loaderAction={props.loaderAction}
                       updateToast={props.updateToast}
                       onCompleteAction={onFanCompleteAction}
