@@ -20,6 +20,9 @@ export const MediumText = styled.span`
   font-size: 18px;
   color: ${props => props.theme.flatBlue};
   line-height: 30px;
+  @media (max-width: 831px) {
+    line-height: 23px;
+  }
 `;
 
 export const FlexBox = styled(FlexBoxSB)`

@@ -298,7 +298,9 @@ class Purchase extends Component {
           <Content
             className={`contentPadding ${this.state.stepCount === 2 &&
               this.state.category === 3 &&
-              'custom-video'}`}
+              'custom-video'} ${this.state.stepCount === 3 &&
+                (this.state.category === 2 || this.state.category === 3) &&
+                'custom-terms'}`}
             step={this.state.stepCount}
           >
             <Scrollbars
