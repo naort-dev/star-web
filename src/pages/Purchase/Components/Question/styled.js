@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 426px;
   padding: 0 80px;
   display: flex;
   align-items: center;
@@ -53,6 +52,9 @@ export const Layout = styled.section`
     text-align: center;
     padding-top: 20px;
     cursor: pointer;
+    ${media.mobileScreen} {
+      padding-bottom: 15px;
+    }
   }
   .hidden {
     display: none;
@@ -92,6 +94,9 @@ export const Layout = styled.section`
   }
   .questionWrapper:last-child {
     padding-bottom: 35px;
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      padding-bottom: 56px;
+    }
   }
 `;
 
@@ -106,6 +111,13 @@ export const VideoContainer = styled.section`
   ${media.mobileScreen} {
     max-height: 426px;
     height: calc(100% - 150px);
+    min-height: 305px;
+  }
+  ${media.webView} {
+    height: 426px;
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    height: 386px;
   }
   .playButton {
     position: absolute;
@@ -143,7 +155,7 @@ export const QuestionContainer = styled.section`
     background: rgba(0, 0, 0, 0.47);
     width: 269px;
     order: 2;
-    margin-top: -258px;
+    margin-top: -280px;
     z-index: 9;
   }
   &:empty {
@@ -238,13 +250,15 @@ export const PlayButton = styled.section`
 `;
 export const WebButtons = styled.section`
   padding-top: 37px;
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    padding-top: 0;
+  }
 `;
 export const MobButtons = styled.section`
   position: relative;
   // top: 415px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 15px;
   padding-top: 15px;
   order: 3;
   width: 269px;

@@ -36,6 +36,10 @@ class AudioRecorder extends React.Component {
     this.audio.addEventListener('ended', this.onAudioEnded);
   }
 
+  componentWillUnmount() {
+    this.stopRecording();
+  }
+
   onAudioEnded() {
     this.setState({ play: false });
     this.props.audioRecordHandler({ recording: false, playing: false });

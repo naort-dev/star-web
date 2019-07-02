@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import fitty from 'fitty';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
+import PrimaryButton from '../PrimaryButton';
+import ToolTip from '../ToolTip';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { toggleQuickView } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater, getStarName } from '../../utils/dataToStringFormatter';
@@ -70,6 +73,16 @@ const StarAvatar = ({ star, type, ...props }) => {
     }
   }
 
+  const onCloseClick = (starItem) => (event) => {
+    event.stopPropagation();
+    props.onCloseClick(starItem);
+  }
+
+  const onPrimaryBtnClick = (event) => {
+    event.stopPropagation();
+    props.onPrimaryBtnClick(star);
+  }
+
   const getWrapperComponent = () => {
     if (type === 'featured') {
       return AvatarContainer.BigAvatar;
@@ -89,8 +102,14 @@ const StarAvatar = ({ star, type, ...props }) => {
             <FontAwesomeIcon icon={faPlay} />
           </AvatarContainer.ControlButton>
         </AvatarContainer.ControlWrapper>
+        {
+          props.favoriteView &&
+            <ToolTip title='Remove this Star from your favorites list'>
+              <FontAwesomeIcon className='close-btn' icon={faTimes} onClick={onCloseClick(star)} />
+            </ToolTip>
+        }
       </WrapperComponent>
-      <AvatarContainer.Content className={type} to={`${star.user_id}`}>
+      <AvatarContainer.Content className={type} to={`/${star.user_id}`}>
         <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)} className="profession">
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
@@ -109,6 +128,12 @@ const StarAvatar = ({ star, type, ...props }) => {
           }
         </AvatarContainer.StarDescription>
       </AvatarContainer.Content>
+      {
+        props.favoriteView &&
+          <span className='btn-wrapper'>
+            <PrimaryButton className='action-btn' onClick={onPrimaryBtnClick}>Book</PrimaryButton>
+          </span>
+      }
     </AvatarContainer>
   );
 };
@@ -116,6 +141,9 @@ const StarAvatar = ({ star, type, ...props }) => {
 StarAvatar.defaultProps = {
   type: '',
   star: {},
+  onCloseClick: () => {},
+  onPrimaryBtnClick: () => {},
+  favoriteView: false,
 };
 
 StarAvatar.propTypes = {
@@ -123,6 +151,9 @@ StarAvatar.propTypes = {
   type: PropTypes.string,
   toggleQuickView: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  favoriteView: PropTypes.bool,
+  onCloseClick: PropTypes.func,
+  onPrimaryBtnClick: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({

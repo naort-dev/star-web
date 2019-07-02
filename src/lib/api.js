@@ -32,7 +32,7 @@ class Api {
   static forgotPassword = 'v1/user/forgotpassword/';
   static resetPassword = 'v1/user/resetpassword/';
   static getAWSVideo = 'v1/user/get_signed_url/?key=';
-  static modifyUserDetails = 'v1/user/user_details';
+  static modifyUserDetails = 'v2/user/user_details';
   static modifySocialLinks = 'v1/user/social_links/';
   static updateGroupAccount = 'v1/user/group_account/';
   static updateNotification = 'v1/user/notification_settings/';
@@ -44,7 +44,7 @@ class Api {
     `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'v1/request/change_request_status/';
   static rating = 'v1/user/fan/celebrity_rating/';
-  static requestFeedback = 'v1/request/feedback/';
+  static requestFeedback = 'v2/request/feedback/';
   static contactSupport = 'v2/user/contact_support/';
   static reportAbuse = 'v1/user/fan/celebrity_abuse/';
   static reactionAbuse = 'v1/request/reaction_abuse/';
@@ -85,6 +85,7 @@ class Api {
   static toggleActivityVisibility = 'v2/user/activity_public_visibility/';
   static hideVideoFromProfile = 'v2/request/video_hide_from_public/';
   static videoPublicity = 'v2/request/make_booking_private/';
+  static reactionComplete = 'v2/request/reaction_process/';
 }
 
 export default Api;

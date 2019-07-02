@@ -4,11 +4,14 @@ import { media } from 'styles/mediaQueries';
 export const HeaderDiv = styled.section`
   height: 160px;
   ${media.mobileScreen} {
-    height: 178px;
+    //height: 178px;
+    height: auto;
+    padding-bottom: 15px;
 
     &.headerGlobal.custom-header {
       min-height: 150px;
       height: auto;
+      padding-bottom: 10px;
     }
   
     &.custom-header:after {
@@ -49,7 +52,8 @@ export const HeaderDiv = styled.section`
     margin-bottom: 45px;
 
     ${media.mobileScreen} {
-      min-height: 178px;
+      //min-height: 178px;
+      min-height: auto;
       margin-bottom: 20px;
     }
   }
@@ -64,7 +68,7 @@ export const HeaderText = styled.section`
   padding-top: 17px;
 
   ${media.mobileScreen} {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-Light;
   }
 `;
 

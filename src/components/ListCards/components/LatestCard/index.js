@@ -92,7 +92,7 @@ const LatestCard = (props) => {
     }
     return (
       <MediumText>
-        <HeadingBold>{request.occasion}</HeadingBold> announcement <br />
+        <HeadingBold>{request.occasion}</HeadingBold> announcement 
         for <HeadingBold>{request.fan}</HeadingBold>
       </MediumText>
     )

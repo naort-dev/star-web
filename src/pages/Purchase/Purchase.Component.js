@@ -235,6 +235,7 @@ class Purchase extends Component {
       celebDetails={this.props.celebDetails}
       userDetails={this.props.userDetails}
       type={this.getType()}
+      editHandler={this.editHandler}
     />
   );
 
@@ -327,6 +328,12 @@ class Purchase extends Component {
     });
     this.clearMediaStore();
     this.props.setVideoUploadedFlag(false);
+  };
+
+  editHandler = () => {
+    this.setState({
+      stepCount: 1,
+    });
   };
 
   successButtonHandler = () => {
@@ -560,12 +567,13 @@ Purchase.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
   audioRecordHandler: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
   OccasionDetails: [],
   videoFile: {},
+  history: {},
 };
 
 export default connect(

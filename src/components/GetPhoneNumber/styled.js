@@ -113,7 +113,7 @@ Layout.Phonenumber = styled.div`
   }
   @media (max-width: 831px) {
     padding-bottom: 10px;
-    padding-top: 10px;
+    padding-top: 20px;
   }
   .react-phone-number-input {
     border-bottom: 1px solid #c5d2e0;
@@ -273,11 +273,10 @@ export const FloatLabel = styled.section`
     width: 100%;
     height: 52px;
     line-height: 72px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy;
     font-size: 18px;
-    font-weight: 200;
     background: transparent;
-    color: rgba(0, 0, 0, 0.6);
+    color: #aaa;
     margin: 0px auto;
     cursor: text;
     transition: all 0.15s ease-in-out;
@@ -305,16 +304,16 @@ export const FloatLabel = styled.section`
   }
 
   .react-phone-number-input--focus + label {
-    height: 20px;
-    line-height: 20px;
-    font-size: 11px;
+    line-height: 15px;
+    font-size: 13px;
+    margin-top: -5px;
   }
   ${props =>
     props.valid &&
     `label {
-    height: 20px;
-    line-height: 20px;
-    font-size: 11px;
+      line-height: 15px;
+      font-size: 13px;
+      margin-top: -5px; 
   }`}
 
   input:focus ::-webkit-input-placeholder {

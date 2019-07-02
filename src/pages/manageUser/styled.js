@@ -95,6 +95,7 @@ ManageStyled.Container = styled.div`
     max-width: 1246px;
     padding: 47px 36px 50px;
     padding-right: 10px;
+    padding-left: 0;
   }
 `;
 

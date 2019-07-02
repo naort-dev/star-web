@@ -11,6 +11,12 @@ export const Layout = styled.section`
     text-align: center;
     font-family: Gilroy;
     color: #4b4b4b;
+    @media (min-width: 832px) {
+      max-width: 400px;
+    }
+    @media screen and (min-width: 832px) and (max-height: 720px) {
+      max-width: 100%;
+    }
     .bluetext {
       color: #2f839d;
       font-weight: 700;
@@ -33,11 +39,22 @@ export const Layout = styled.section`
     display: flex;
     flex-direction: column;
 
+    @media (min-width: 832px) {
+      padding-right: 15px;
+    }
+
     & > section:first-child {
       max-width: 100%;
       width: 100%;
       padding: 0 20px;
       margin: 0 auto 15px;
+      @media (min-width: 832px) {
+        width: 520px;
+      }
+      @media screen and (min-width: 832px) and (max-height: 720px) {
+        width: 100%;
+      }
+
       & > section:nth-child(2) {
         width: 100%;
         max-width: 100%;
@@ -51,6 +68,12 @@ export const Layout = styled.section`
 
         p {
           max-width: 100%;
+          @media screen and (min-width: 832px) and (max-height: 720px) {
+            width: 100%;
+          }
+          ${media.webView} {
+            max-width: 100%;
+          }
         }
       }
     }
@@ -58,6 +81,7 @@ export const Layout = styled.section`
       padding: 0 20px;
       ${media.webView} {
         padding: 0 40px;
+        margin: 5px 0 5px;
       }
     }
   }
@@ -101,7 +125,8 @@ export const FlexBoxCenter = styled(FlexCenter)`
     padding: 15px 90px 5px;
 
     ${media.mobileScreen} {
-      padding: 15px 70px 5px
+      padding: 15px 15px 5px;
+      margin: 0 auto;
     }
 
     label {
@@ -121,6 +146,9 @@ export const TextAreaWrapper = styled.section`
   ${media.realMobile} {
     padding: 0;
   }
+  ${media.mobileScreen} {
+    height: auto;
+  }
   margin: 10px 0;
   ${media.realMobile} {
     margin: 10px 20px 0;
@@ -130,7 +158,7 @@ export const TextAreaWrapper = styled.section`
     border-radius: 10px;
     border: solid 1px #e0e0e0;
     background: none;
-    resize: both;
+    resize: none;
     padding: 15px;
     max-width: 425px;
     font-family: Gilroy;
@@ -139,6 +167,12 @@ export const TextAreaWrapper = styled.section`
     line-height: 18px;
     @media (max-width: 831px) {
       padding: 10px;
+    }
+    @media (max-width: 832px) and (min-width: 442px) {
+      min-height: 80px;
+    }
+    @media (max-width: 441px) {
+      min-height: 96px;
     }
     :focus {
       outline: none;

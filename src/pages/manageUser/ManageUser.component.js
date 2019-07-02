@@ -5,6 +5,7 @@ import { Dashboard } from '../dashboard';
 import { Bookings } from '../Bookings';
 import { MyVideos } from '../myVideos';
 import { ManageStarProfile } from '../manageStarProfile';
+import { FavoriteStars } from '../favoriteStars';
 import { Settings } from '../starSettings';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
@@ -53,6 +54,7 @@ const ManageUser = props => {
               <Route path="/manage/dashboard" component={Dashboard} />
               <Route path="/manage/bookings" component={Bookings} />
               <Route path="/manage/my-videos" component={MyVideos} />
+              <Route path="/manage/favorites" component={FavoriteStars} />
               <Route path="/manage/promotional-tools" component={PromoTool} />
               <Route path="/manage/profile/" component={ManageStarProfile} />
               <Route path="/manage/earnings" component={Earnings} />

@@ -47,10 +47,14 @@ export const Content = styled.section`
   margin: 0 auto;
   text-align: center;
   font-family: Gilroy;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   ${media.webView} {
     max-width: 100%;
-    padding: 0 75px;;
+    padding: 0 75px;
+  }
+  ${media.mobileScreen} {
+    padding-right: 15px;
+    padding-left: 15px;
   }
   .highFive {
     color: #ff6c58;
@@ -66,9 +70,10 @@ export const Content = styled.section`
     line-height: 39px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 24px;
+    padding-bottom: 15px;
     ${media.webView} {
       font-size: 34px;
+      padding-bottom: 24px;
     }
   }
   .note {
@@ -76,10 +81,16 @@ export const Content = styled.section`
     font-size: 16px;
     line-height: 24px;
     padding-bottom: 28px;
+    ${media.mobileScreen} {
+      padding-bottom: 10px;
+    }
   }
   .browseBtn {
     width: 300px;
     height: 60px;
     margin: 0 auto 25px !important;
+    ${media.mobileScreen} {
+      margin: 0 auto !important;
+    }
   }
 `;

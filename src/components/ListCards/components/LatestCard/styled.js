@@ -62,6 +62,7 @@ const StarStyled = CardContainer.extend`
     padding-top: 18px;
     .description-wrapper {
       padding-left: 19.3px;
+      padding-right: 19.3px;
       .heading {
         display: flex;
         align-items: center;
@@ -84,6 +85,10 @@ const StarStyled = CardContainer.extend`
     .description-wrapper {
       .heading {
         margin-bottom: 15px;
+
+        & + span {
+          margin-bottom: 15px;
+        }
       }
     }
   }
@@ -152,6 +157,7 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
   @media(min-width: 832px) {
     margin-top: 0;
     align-items: center;
+    flex: 0 0 30%;
     .comment-section {
       width: 224px;
     }

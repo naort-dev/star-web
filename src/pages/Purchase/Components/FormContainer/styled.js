@@ -46,6 +46,10 @@ export const Layout = styled.section`
     display: flex;
     flex-direction: column;
 
+    ${media.webView} {
+      padding-right: 15px;
+    }
+
     .react-datepicker__day--keyboard-selected,
     .react-datepicker__day--keyboard-selected:hover {
       background-color: #FF6C58;

@@ -43,7 +43,7 @@ const CompletedCard = (props) => {
           {
             requestDetails && !requestDetails.is_myself ?
               <React.Fragment>
-                &nbsp;from <HeadingBold>{requestDetails.stargramto}</HeadingBold>
+                &nbsp;from <HeadingBold>{requestDetails.stargramfrom}</HeadingBold>
               </React.Fragment>
             : null
           }

@@ -7,6 +7,7 @@ import { findCompletedVideo } from '../../../../utils/dataformatter';
 import { openStatusList, completedStatusList } from '../../../../constants/requestStatusList';
 import { CloseButton } from '../../../../styles/CommonStyled';
 import CommentBox from '../../../CommentBox';
+import { setVideoViewStatus } from '../../../../services/requestFeedback';
 import { downloadItem } from '../../../../utils/domUtils';
 import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
@@ -25,8 +26,10 @@ const FanView = (props) => {
   const { bookingData } = props;
 
   useEffect(() => {
-    setFinalVideo(findCompletedVideo(bookingData));
-    updateVideoId(findCompletedVideo(bookingData).video_id);
+    const completedVideo = findCompletedVideo(bookingData);
+    setFinalVideo(completedVideo);
+    updateVideoId(completedVideo.video_id);
+    setVideoViewStatus(completedVideo.video_id);
     props.fetchActivitiesList(bookingData.booking_id, 0, true);
     if (props.modalData.reactionUrl) {
       setVideo({
@@ -78,6 +81,9 @@ const FanView = (props) => {
     try {
       await addVideoComment(videoId, comment);
       props.fetchActivitiesList(bookingData.booking_id, 0, true);
+      const newRequestData = { ...bookingData };
+      newRequestData.has_comment = true;
+      props.updateRequestData(newRequestData)
     } catch(exception) {
       props.updateToast({
         value: true,
@@ -130,11 +136,16 @@ const FanView = (props) => {
                 onSelectOption={onSelectAction}
               />
             </span>
-            <ActionBar
-              disableRating={bookingData.has_rating}
-              disableReaction={bookingData.has_reaction}
-              onTipping={props.onTipping}
-            />
+            {
+              video &&
+                <ActionBar
+                  initialSelection={!video.read_status}
+                  bookingId={bookingData.booking_id}
+                  disableRating={bookingData.has_rating}
+                  disableReaction={bookingData.has_reaction}
+                  onAction={props.onCompleteAction}
+                />
+            }
           </FanViewStyled.DetailWrapper>
           <BookingStyled.CommentList starMode={false}>
             <Scrollbars
@@ -147,6 +158,7 @@ const FanView = (props) => {
                 dataList={props.activitiesList.data}
                 noDataText='No comments yet'
                 disableAction
+                celebrityId={bookingData.celebrity_id}
                 loading={props.activitiesList.loading}
                 offset={props.activitiesList.offset}
                 fetchData={fetchActivity}
@@ -156,13 +168,16 @@ const FanView = (props) => {
               />
             </Scrollbars>
           </BookingStyled.CommentList>
-          <FanViewStyled.CommentWrapper>
-            <CommentBox
-              maxLength={52}
-              classes={{root: 'comment-box'}}
-              onSubmit={submitComment}
-            />
-          </FanViewStyled.CommentWrapper>
+          {
+            !bookingData.has_comment &&
+              <FanViewStyled.CommentWrapper>
+                <CommentBox
+                  maxLength={52}
+                  classes={{root: 'comment-box'}}
+                  onSubmit={submitComment}
+                />
+              </FanViewStyled.CommentWrapper>
+          }
           <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
@@ -173,7 +188,7 @@ const FanView = (props) => {
 FanView.defaultProps = {
   modalData: {},
   activitiesList: {},
-  onTipping: () => {},
+  onCompleteAction: () => {},
 }
 
 FanView.propTypes = {
@@ -186,7 +201,8 @@ FanView.propTypes = {
   updateToast: PropTypes.func.isRequired,
   modalData: PropTypes.object,
   activitiesList: PropTypes.object,
-  onTipping: PropTypes.func,
+  onCompleteAction: PropTypes.func,
+  updateRequestData: PropTypes.func.isRequired,
 }
 
 export default FanView;

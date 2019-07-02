@@ -59,7 +59,7 @@ export const Layout = styled.section`
         left: 0;
         right: 0;
         margin: auto;
-        bottom: 73px;
+        bottom: 51px;
         padding-bottom: 0;
       }
       @media screen and (min-width: 832px) and (max-height: 720px) {
