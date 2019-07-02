@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 
 import SubHeader from '../../components/SubHeader';
 import Header from '../../components/Header';
@@ -36,6 +37,68 @@ const ManageStarProfile = props => {
   const closeProfileModal = () => {
     setredirecttoProfile(true);
   };
+
+  const linkStatus = link => {
+    const celebrityDetails = props.userDetails.settings_celebrityDetails;
+    const userDetails = props.userDetails.settings_userDetails;
+    const temp = { ...link };
+    switch (link.selectedName) {
+      case 'name&photo':
+        if (userDetails.avatar_photo.thumbnail_url) {
+          temp.completed = true;
+          return temp;
+        }
+        break;
+
+      case 'welcome video':
+        if (celebrityDetails.profile_video) {
+          temp.completed = true;
+          return temp;
+        }
+        break;
+      case 'bio':
+        if (celebrityDetails.description.length > 19) {
+          temp.completed = true;
+          return temp;
+        }
+        break;
+        case 'industry':
+        if (!isEmpty(celebrityDetails.profession_details)) {
+          temp.completed = true;
+          return temp;
+        }
+        break;
+        case 'tags':
+        if (celebrityDetails.profile_video) {
+          temp.completed = true;
+          return temp;
+        }
+        break;
+        case 'social':
+          userDetails.social_links.filter(sociallink => {
+           const linkValue = sociallink.social_link_value.split('.com/');
+           if(!isEmpty(linkValue[1])) {
+            temp.completed = true;
+           }
+          });
+        return temp;
+        break;
+        case 'pricelimit':
+          temp.completed = true;
+          return temp;
+        break;
+      default:
+        return link;
+    }
+    return link;
+  };
+
+  const getLinks = (links) => {
+    return links.map(link => {
+      return linkStatus(link);
+    });
+  };
+
   const getRoutes = () => {
     return (<Switch>
       <Route path="/manage/profile/name-photo" render={() =><NameAndPhotoRoot goBack={closeProfileModal}/>} />
@@ -53,6 +116,13 @@ const ManageStarProfile = props => {
     );
   };
 
+  const getPercentage = () => {
+    const completedArray = getLinks(STAR_PROFILE.INNER_LINKS);
+    const completedCount = completedArray.filter(link => link.completed === true).length;
+    const percentage = Math.round(completedCount * (100/7));
+    return percentage;
+  }
+
   if (redirect) {
     return <Redirect to="/manage/profile/name-photo" />;
   }
@@ -67,12 +137,12 @@ const ManageStarProfile = props => {
           {STAR_PROFILE.DESCRIPTION}
         </Content.Description>
         <ProgressBarWrapper>
-         <ProgressBar percentage={25} />
+         <ProgressBar percentage={getPercentage()} />
         </ProgressBarWrapper>
       </Content.CommonContent>
       <Content.InnerWrapper>
         <Content.SidebarWrapper>
-          <InnerSidebar links={STAR_PROFILE.INNER_LINKS} />
+          <InnerSidebar links={getLinks(STAR_PROFILE.INNER_LINKS)} />
         </Content.SidebarWrapper>
         {
           isMobile  && currentPage!== 'profile' ? (<RequestFlowPopup
