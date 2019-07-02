@@ -39,7 +39,7 @@ const UpdateBooking = (props) => {
 
   const onReasonSubmit = () => {
     if (props.updateBooking.starMode) {
-      props.changeBookingStatus(props.updateBooking.requestId, 5, reason.label || 'Other') // decline a booking
+      props.changeBookingStatus(props.updateBooking.requestId, 5, `Star cancellation: ${reason.label}` || 'Star cancellation: Other') // decline a booking
         .then(() => {
           props.toggleUpdateBooking(false)();
         })

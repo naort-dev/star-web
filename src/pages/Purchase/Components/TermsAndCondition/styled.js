@@ -10,6 +10,7 @@ export const Layout = styled.section`
   padding-top: 10px;
   ${media.mobileScreen} {
     max-width: 100%;
+    height: 100%;
   }
   .termsWrapper {
     display: flex;
@@ -19,11 +20,11 @@ export const Layout = styled.section`
     padding-bottom: 20px;
     ${media.mobileScreen} {
       padding: 0 20px 20px;
-      height: calc(100% - 65px);
+      height: calc(100% - 88px) !important;
       overflow: auto;
     }
     ${media.webView} {
-      height: calc(100% - 115px);
+      height: calc(100% - 115px) !important;
       overflow: auto;
     }
     p {
@@ -37,9 +38,16 @@ export const Layout = styled.section`
       }
     }
   }
+  #terms-scroll > div {
+    padding-right: 15px;
+    ${media.mobileScreen} {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
   .continue-btn {
     height: 60px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     align-self: flex-end;
     ${media.webView} {
       margin-bottom: 40px;
@@ -60,7 +68,7 @@ export const Layout = styled.section`
     display: flex;
     margin: 0;
     ${media.mobileScreen} {
-      padding-top: 20px;
+      padding-top: 10px;
     }
   }
 

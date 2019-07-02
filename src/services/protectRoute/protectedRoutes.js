@@ -2,11 +2,11 @@ export const commonAuthRoutes = [
   '/manage',
   '/manage/profile',
   '/manage/my-videos',
+  '/manage/favorites',
 ];
 
 export const fanRoutes = [
   '/manage/refer-star',
-  '/manage/favorites',
   '/manage/profile/account-info',
   '/manage/profile/password',
   '/manage/profile/payment',

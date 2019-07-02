@@ -28,6 +28,13 @@ export const starInnerLinks = [
   { linkName: 'Bookings', selectedName: 'requests', url: '/manage/bookings' },
   { linkName: 'My videos', selectedName: 'myVideos', url: '/manage/my-videos' },
   {
+    linkName: 'Favorite stars',
+    selectedName: 'favorites',
+    tooltip:
+      'Save your favorites and make it easy when booking a personalized shout-out.',
+    url: '/manage/favorites',
+  },
+  {
     linkName: 'Promotional Tools',
     selectedName: 'promotional',
     url: '/manage/promotional-tools',

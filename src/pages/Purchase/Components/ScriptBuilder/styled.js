@@ -125,7 +125,8 @@ export const FlexBoxCenter = styled(FlexCenter)`
     padding: 15px 90px 5px;
 
     ${media.mobileScreen} {
-      padding: 15px 70px 5px
+      padding: 15px 15px 5px;
+      margin: 0 auto;
     }
 
     label {
@@ -145,6 +146,9 @@ export const TextAreaWrapper = styled.section`
   ${media.realMobile} {
     padding: 0;
   }
+  ${media.mobileScreen} {
+    height: auto;
+  }
   margin: 10px 0;
   ${media.realMobile} {
     margin: 10px 20px 0;
@@ -163,6 +167,12 @@ export const TextAreaWrapper = styled.section`
     line-height: 18px;
     @media (max-width: 831px) {
       padding: 10px;
+    }
+    @media (max-width: 832px) and (min-width: 442px) {
+      min-height: 80px;
+    }
+    @media (max-width: 441px) {
+      min-height: 96px;
     }
     :focus {
       outline: none;

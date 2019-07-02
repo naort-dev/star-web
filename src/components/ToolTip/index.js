@@ -65,7 +65,7 @@ const ToolTip = (props) => {
   if (props.title === '') {
     return props.children;
   }
-
+  
   return (
     <Tooltip
       {...props}

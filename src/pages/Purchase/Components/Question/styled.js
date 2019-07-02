@@ -14,8 +14,7 @@ export const Layout = styled.section`
     max-width: 309px;
     margin: 0 auto;
     flex-direction: column;
-    height: calc(100% - 170px);
-    overflow: auto;
+    height: 100%;
   }
   .question {
     font-family: Gilroy-SemiBold;
@@ -53,6 +52,9 @@ export const Layout = styled.section`
     text-align: center;
     padding-top: 20px;
     cursor: pointer;
+    ${media.mobileScreen} {
+      padding-bottom: 15px;
+    }
   }
   .hidden {
     display: none;
@@ -109,7 +111,7 @@ export const VideoContainer = styled.section`
   ${media.mobileScreen} {
     max-height: 426px;
     height: calc(100% - 150px);
-    min-height: 280px;
+    min-height: 305px;
   }
   ${media.webView} {
     height: 426px;
@@ -153,7 +155,7 @@ export const QuestionContainer = styled.section`
     background: rgba(0, 0, 0, 0.47);
     width: 269px;
     order: 2;
-    margin-top: -258px;
+    margin-top: -280px;
     z-index: 9;
   }
   &:empty {
@@ -257,7 +259,6 @@ export const MobButtons = styled.section`
   // top: 415px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 15px;
   padding-top: 15px;
   order: 3;
   width: 269px;
