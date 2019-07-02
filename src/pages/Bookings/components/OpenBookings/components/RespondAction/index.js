@@ -493,12 +493,12 @@ const Question = props => {
                         {!stateObject.continueFlg
                           ? getFileUpload(['uploadBtn mobDisplay web-link'])
                           : getLinkButtons('web-link uploadBtn')}
-                        {getButton(
+                        {/* {getButton(
                           true,
                           'next-btn',
                           nextClick,
                           props.buttonLabel.next.label,
-                        )}
+                        )} */}
                         {stateObject.continueFlg && getLinkButtons('')}
                       </WebButtons>
                     </React.Fragment>
@@ -516,12 +516,12 @@ const Question = props => {
                     {!stateObject.continueFlg
                       ? getFileUpload(['uploadBtn web-link'])
                       : getLinkButtons('web-link .uploadBtn')}
-                    {getButton(
+                    {/* {getButton(
                       true,
                       'next-btn',
                       nextClick,
                       props.buttonLabel.next.label,
-                    )}
+                    )} */}
                     {stateObject.continueFlg && getLinkButtons()}
                   </MobButtons>
                 )}
