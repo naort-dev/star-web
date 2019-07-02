@@ -39,7 +39,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update price',
     btnTextSecondary: '',
-    url: '',
+    url: '//manage/profile/price-limits',
   },
   {
     heading: 'Update your bio',
@@ -47,7 +47,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update',
     btnTextSecondary: '',
-    url: '',
+    url: '/manage/profile/bio',
   },
   {
     heading: 'Referral program',
@@ -64,7 +64,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update video',
     btnTextSecondary: '',
-    url: '',
+    url: '/manage/profile/welcome-videoI',
   },
 ];
 
@@ -138,7 +138,7 @@ const ActivityCard = props => {
           value_sub: '',
           btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
-          url: '',
+          url: '/manage/bookings',
         },
       });
     }
@@ -158,7 +158,7 @@ const ActivityCard = props => {
           value_sub: '',
           btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
-          url: '',
+          url: '/manage/bookings',
         },
       });
     }
