@@ -55,7 +55,7 @@ export const BackArrow = styled.span`
   background-size: 10px 20px;
   position: absolute;
   left: 20px;
-  top: 34px;
+  top: 38px;
   cursor: pointer;
   padding: 15px;
   ${media.webView} {

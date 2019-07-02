@@ -47,7 +47,7 @@ function RequestTemplates(
   }) => {
     const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
-      <Templates.InputWrapper fullWidth={fullWidth}>
+      <Templates.InputWrapper fullWidth={fullWidth} className="audio-wrap">
         <TextInput
           label={placeholder}
           value={value}

@@ -209,6 +209,7 @@ class AudioRecorder extends React.Component {
 
     return (
       <AudioRecorderDiv
+      className="pronounce-wrap"
         recorded={
           this.props.audioRecorder.recorded[target] &&
           this.props.audioRecorder.recorded[target].recordedUrl
