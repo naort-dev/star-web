@@ -12,6 +12,11 @@ export const Layout = styled.section`
     max-width: 100%;
     height: 100%;
   }
+  .contentPadding {
+    ${media.mobileScreen} {
+      height: calc(100% - 178px)
+    }
+  }
   .termsWrapper {
     display: flex;
     font-family: Gilroy;

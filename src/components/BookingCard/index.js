@@ -105,7 +105,7 @@ const BookingCard = (props) => {
             { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
           </strong>
           {
-            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ?
+            requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself && requestDetails.stargramfrom !== '' ?
               <React.Fragment>
                 &nbsp;from <strong>{requestDetails.stargramfrom}</strong>
               </React.Fragment>

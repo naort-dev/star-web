@@ -16,6 +16,11 @@ export const Layout = styled.section`
   ${media.mobileScreen} {
     padding: 0 20px;
     max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 350px;
     .icon {
       &.image-1 {
         width: 84px;
@@ -36,7 +41,7 @@ export const ContentWrapper = styled.section`
   padding-bottom: 27px;
   cursor: pointer;
   ${media.mobileScreen} {
-    padding-bottom: 35px;
+    padding-bottom: 10px;
   }
 `;
 

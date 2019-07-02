@@ -5,8 +5,7 @@ const Templates = styled.div`
   @media (min-width: 768px) {
     padding: 0px 0px;
   }
-  @media (min-width: 1025px) {
-  }
+  
 `;
 Templates.InputWrapper = styled.div`
   display: flex;
