@@ -16,13 +16,21 @@ const Tipping = (props) => {
   }
 
   const onTipClick = (tipValue) => () => {
-    changeCustomTipState(false)();
-    props.onTipping(tipValue);
+    if (tipValue) {
+      changeCustomTipState(false)();
+      props.onTipping(tipValue);
+    }
+  }
+
+  const onKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      onTipClick(event.target.value)();
+    }
   }
 
   const onTipChange = (event) => {
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
-    if (pattern.test(event.target.value) || event.target.value === '') {
+    if (event.target.value !== "0" && (pattern.test(event.target.value) || event.target.value === '')) {
       setTip(event.target.value);
     }
   }
@@ -54,6 +62,7 @@ const Tipping = (props) => {
                   }
                 }}
                 value={tip}
+                onKeyDown={onKeyDown}
                 onChange={onTipChange}
               />
             </div>

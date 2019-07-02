@@ -42,42 +42,32 @@ const ActionBar = (props) => {
     const fileType = reactionFile.fileType === 'image' ? 1 : 2; // image = 1 video = 2
     props.loaderAction(true);
     postReactionMedia(awsKeys.reactions, reactionFile.fileData, reactionFile.extension, reactionFile.fileType)
-      .then(async (resp) => {
+      .then((resp) => {
         try {
-          const response = await sendFeedback('reaction', props.bookingId, {fileType, fileName: resp.fileName});
-          props.loaderAction(false);
-          if (response) {
-            onAction('reaction', reactionFile);
-            setActionStates({
-              ...actionStates,
-              reaction: false,
-            })
             let uploadProgess;
             const fileUpload = () => {
-              axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
+              axios.post(resp.url, resp.formData, { onUploadProgress: async (progressEvent) => {
                 uploadProgess = (progressEvent.loaded / progressEvent.total) * 100;
                 if (uploadProgess === 100) {
-                  onReactionComplete();
-                  window.onbeforeunload = function () { }
-                } else {
-                  window.onbeforeunload = (event) => {
-                    event.preventDefault();
-                    event.returnValue = '';
-                    const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-                    if (isChrome) {
-                      fileUpload();
-                    }
-                  };
+                  const response = await sendFeedback('reaction', props.bookingId, {fileType, fileName: resp.fileName});
+                  props.loaderAction(false);
+                  if (response) {
+                    onAction('reaction', reactionFile);
+                    onReactionComplete();
+                    setActionStates({
+                      ...actionStates,
+                      reaction: false,
+                    })
+                    props.updateToast({
+                      value: true,
+                      message: 'Reaction file uploaded',
+                      variant: 'success',
+                    })
+                  }
                 }
               }})
             }
-            fileUpload();
-            props.updateToast({
-              value: true,
-              message: 'Reaction file will be uploaded shortly',
-              variant: 'success',
-            })
-          }
+          fileUpload();
         }
         catch(e) {
           props.loaderAction(false);

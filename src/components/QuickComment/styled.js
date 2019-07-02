@@ -1,5 +1,10 @@
-import styled from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import Popover from '@material-ui/core/Popover';
+/* eslint-disable */
+injectGlobal`
+.tooltip-disable {
+  display: none;
+}`
 
 const CommentStyled = styled.span`
   width: 40px;
