@@ -567,12 +567,13 @@ Purchase.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
   audioRecordHandler: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
   OccasionDetails: [],
   videoFile: {},
+  history: {},
 };
 
 export default connect(
