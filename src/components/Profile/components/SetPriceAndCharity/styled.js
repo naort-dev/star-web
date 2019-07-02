@@ -3,9 +3,15 @@ import styled from 'styled-components';
 export const Layout = styled.section`
   width: 100%;
   height: 100%;
+  padding-left: 151px;
+  padding-right: 149px;
   background: #fff;
   .leftArrow {
     position: absolute;
+  }
+  .save-button{
+    min-height: 40px;
+    max-width: 200px;
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
@@ -35,16 +41,11 @@ export const Heading = styled.div`
 
 export const Content = styled.section`
   width: 100%;
-  height: calc(100% - 146px) !important;
+  // height: calc(100% - 146px) !important;
   display:flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  .socialmedia-icon{
-    color: #cccccc;
-    width: 35.7px;
-    height: 29px;
-  }
   @media (max-width: 831px) {
     height: max-content;
     padding-left:35px;
@@ -96,6 +97,16 @@ Content.InputLabel = styled.div`
   text-align: left;
   color: ${(props)=>props.theme.greyishBrown}
 `;
+Content.CharityCheckbox = styled.div`
+  display: flex;
+  margin-bottom: 38px;
+  margin-top: 62px;
+`;
+Content.ModifyDetails = styled.div`
+  font-family: Gilroy;
+  font-size: 14px;
+  color: #2f839d;
+`;
 export const SetPriceWrapper = styled.div`
 `;
 SetPriceWrapper.Description = styled.div`
@@ -120,7 +131,7 @@ SetPriceWrapper.WrapsInput = styled.div`
     font-size: 28px;
     text-align: center;
     color: #8174aa;
-    width: 400px;
+    width: 377px;
     padding: 1px 0 5px;
     @media (max-width: 831px) {
       padding: 1px 0 2px;
@@ -143,9 +154,6 @@ SetPriceWrapper.WrapsInput = styled.div`
   input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:832px){
     width:100%;
-  }
-  @media(min-width:1025px){
-    width:700px;
   }
 
 `;

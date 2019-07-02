@@ -28,5 +28,11 @@ export const STAR_PROFILE = {
   SOCIAL_HANDLE: {
     subtitle: 'Adding your social media allows you to quickly promote yourself and increase bookings.',
     heading: 'Social Handles',
+  },
+  PRICE_AND_LIMITS: {
+    confirmDescription: 'Pick a price that is worth it to you, and still within the range of your fans.',
+    description: 'How much should your fans pay for you to create a video?',
+    title: 'Set your price and limits',
+    confirmationTitle: 'Are you sure?',
   }
 };

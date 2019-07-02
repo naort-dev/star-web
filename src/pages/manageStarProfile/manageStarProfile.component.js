@@ -26,7 +26,6 @@ const ManageStarProfile = props => {
   }, []);
   
   useEffect(() => {
-    console.log(isMobile);
     if (!isMobile && props.location.pathname === '/manage/profile') {
       setRedirect(true);
     } else {
@@ -34,12 +33,8 @@ const ManageStarProfile = props => {
     }
   }, [isMobile]);
 
-  const goBack = () => { };
   const closeProfileModal = () => {
-    // props.toggleProfileModal(false);
-    // setcurrentPage('profile');
     setredirecttoProfile(true);
-    
   };
   const getRoutes = () => {
     return (<Switch>
@@ -48,7 +43,12 @@ const ManageStarProfile = props => {
       <Route path="/manage/profile/bio" render={() =><BioRoot goBack={closeProfileModal}/>} />
       <Route path="/manage/profile/industry" render={() =><IndustryRoot goBack={closeProfileModal} />} />
       <Route path="/manage/profile/social-handles" render={() =><SocialHandlesRoot subTitle={STAR_PROFILE.SOCIAL_HANDLE.subtitle} heading={STAR_PROFILE.SOCIAL_HANDLE.heading } goBack={closeProfileModal}/>} />
-      <Route path="/manage/profile/price-limits" component={SetPriceAndCharityRoot} />
+      <Route path="/manage/profile/price-limits" render={() =><SetPriceAndCharityRoot goBack={closeProfileModal} 
+        confirmDescription={STAR_PROFILE.PRICE_AND_LIMITS.confirmDescription}
+        description={STAR_PROFILE.PRICE_AND_LIMITS.description}
+        confirmationTitle={STAR_PROFILE.PRICE_AND_LIMITS.confirmationTitle}
+        title={STAR_PROFILE.PRICE_AND_LIMITS.title}/>}
+      />
     </Switch>
     );
   };
@@ -61,8 +61,7 @@ const ManageStarProfile = props => {
   }
   return (
     <Layout>
-      {/* <SubHeader heading="My Profile" className="align-header" onClick={goBack} /> */}
-      <Layout.Header className="top-heading">My Bookings</Layout.Header>
+      <Layout.Header className="top-heading">My Profile</Layout.Header>
       <Content.CommonContent>
         <Content.Description>
           {STAR_PROFILE.DESCRIPTION}
