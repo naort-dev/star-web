@@ -64,7 +64,7 @@ const ManageUser = props => {
           ) : (
             <Switch>
               <Route path="/manage/my-videos" component={MyVideos} />
-              <Route path="/manage/favorites" render={() => 'favorites'} />
+              <Route path="/manage/favorites" component={FavoriteStars} />
               <Route path="/manage/profile" component={FanSettings} />
             </Switch>
           )}
