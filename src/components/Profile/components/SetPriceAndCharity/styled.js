@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const Layout = styled.section`
   width: 100%;
   height: 100%;
-  padding-left: 151px;
-  padding-right: 149px;
   background: #fff;
   .leftArrow {
     position: absolute;
@@ -15,9 +13,13 @@ export const Layout = styled.section`
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    padding-left: 35px;
+    padding-right: 32px;
   }
   @media(min-width: 832px) {
     height: 100%;
+    padding-left: 151px;
+    padding-right: 149px;
   }
 `;
 
@@ -46,10 +48,10 @@ export const Content = styled.section`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding-top: 37.8px;
   @media (max-width: 831px) {
     height: max-content;
-    padding-left:35px;
-    padding-right:31px;
+    padding-top: 43px;
   } 
 `;
 
@@ -118,7 +120,8 @@ SetPriceWrapper.Description = styled.div`
   color: ${props => props.error ? '#f44336': '#555555'};
   margin-bottom: 13px;
   @media(max-width:831px) {
-    max-width: 178px;
+    width: 239.7px;
+    height: 41px;
     margin: 0 auto 18px;
     color: ${props => props.error ? '#f44336': '#797979'};
   }
@@ -135,7 +138,8 @@ SetPriceWrapper.WrapsInput = styled.div`
     padding: 1px 0 5px;
     @media (max-width: 831px) {
       padding: 1px 0 2px;
-      font-size: 38px;
+      font-size: 24px;
+      width: 100%;
     }
   }
   .adornment {
@@ -164,7 +168,7 @@ SetPriceWrapper.Label = styled.div`
   text-align: left;
   color: #999999;
   width: 400px;
-  margin: 0 auto;
+  margin-bottom: 20px;
   max-width: 100%;
   @media(max-width:831px) {
     text-align: center;
