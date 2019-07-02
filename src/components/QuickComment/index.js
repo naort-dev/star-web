@@ -60,7 +60,13 @@ const QuickComment = (props) => {
 
   const { fanName } = props;
   return (
-    <ToolTip title={disable ? "You have sent a comment!" : ''} placement="top" >
+    <ToolTip
+      title={disable ? "You have sent a comment!" : 'Click to send a quick comment back to the fan. View details to write your own responses.'}
+      classes={{
+        toolTip: showList && 'tooltip-disable',
+      }}
+      placement="top"
+    >
       <CommentStyled showList={showList} className={props.classes.root}>
         <CommentStyled.CommentIcon disable={disable} showList={showList} innerRef={anchorEl} onClick={openList}>
           <LightningIcon className='icon-image' />
