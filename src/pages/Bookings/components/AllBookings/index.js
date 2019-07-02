@@ -61,9 +61,6 @@ const AllBookings = props => {
           <LatestCard activity={activity} key={activity.id} type={activity.activity_type} starMode />
         ))
       }
-      {/* <LatestCard type="reaction" starMode />
-      <LatestCard type="tip" starMode />
-      <LatestCard type="rating" starMode /> */}
     </React.Fragment>
   );
 };

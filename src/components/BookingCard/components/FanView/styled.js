@@ -32,6 +32,9 @@ FanViewStyled.DetailWrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   margin-bottom: 20px;
+  .more-action-root {
+    display: none;
+  }
   .detail-header {
     display: flex;
     justify-content: space-between;
@@ -40,6 +43,11 @@ FanViewStyled.DetailWrapper = styled.div`
   }
   .title {
     margin-right: 5px;
+  }
+  @media(min-width: 832px) {
+    .more-action-root {
+      display: block;
+    }
   }
 `;
 
