@@ -3,11 +3,25 @@ import { TOGGLE_MODALS } from '../actions/toggleModals';
 const initialState = {
   loginModal: false,
   signUpModal: false,
-  referModal: false,
+  quickViewModal: {
+    active: false,
+    data: null,
+  },
   requestFlow: false,
   signUpDetails: null,
   requestFlowDetails: null,
-  requestPopup: false,
+  bookingModal: {
+    requestId: null,
+    active: false,
+    data: null,
+    starMode: false,
+  },
+  updateBookingModal: {
+    active: false,
+    requestId: null,
+    requestData: {},
+  },
+  supportModal: false,
   popUp: false,
 };
 
@@ -34,12 +48,14 @@ export default (state = { ...initialState }, action) => {
         },
       };
 
-    case TOGGLE_MODALS.toggleRefer:
+    case TOGGLE_MODALS.toggleQuickView:
       return {
         ...state,
-        referModal: action.state,
-        loginModal: false,
-        signUpModal: false,
+        quickViewModal: {
+          ...state.quickViewModal,
+          active: action.state,
+          data: action.modalData,
+        },
       };
 
     case TOGGLE_MODALS.toggleRequestFlow:
@@ -66,11 +82,35 @@ export default (state = { ...initialState }, action) => {
         requestFlowDetails: null,
       };
 
-    case TOGGLE_MODALS.toggleRequestPopup:
+    case TOGGLE_MODALS.toggleUpdateBooking:
       return {
         ...state,
-        requestPopup: action.state,
+        updateBookingModal: {
+          ...state.updateBookingModal,
+          active: action.state,
+          requestId: action.requestId,
+          starMode: action.starMode,
+          requestData: action.requestData,
+        },
       };
+
+    case TOGGLE_MODALS.toggleBookingModal:
+      return {
+        ...state,
+        bookingModal: {
+          ...state.bookingModal,
+          active: action.state,
+          data: action.state ? action.bookingData : null,
+          requestId: action.bookingData && action.bookingData.id,
+          starMode: action.starMode,
+        },
+      };
+
+      case TOGGLE_MODALS.toggleContactSupport:
+        return {
+          ...state,
+          supportModal: action.state,
+        };
 
     case TOGGLE_MODALS.togglePopup:
       return {

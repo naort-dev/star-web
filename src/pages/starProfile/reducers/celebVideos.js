@@ -38,6 +38,7 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: [...state.data, ...action.list],
         count: action.count,
+        limit: action.newLimit,
       };
 
     case CELEB_VIDEOS_LIST.failed:

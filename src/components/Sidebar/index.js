@@ -1,273 +1,95 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import Tooltip from '../ToolTip';
+import { NotificationCount } from '../../styles/CommonStyled';
+import { logOutUser } from '../../store/shared/actions/login';
 import { SidebarStyled } from './styled';
-import { Footer } from '../Footer';
-import { updateCategory } from '../../pages/landing/actions/updateFilters';
 
-class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      
-    };
-  }
+const noImageTooltip = 'Add your picture in the profile section.';
 
-  selectCategory = (label, id, category) => {
-    if (label === 'featured') this.setState({ showSubCategory: false });
-    if (this.props.history && this.props.history.location.pathname !== '/') {
-      this.props.history.push('/');
+const Sidebar = props => {
+  const logOut = () => {
+    props.history.push('/');
+    props.logOut();
+  };
+
+  const renderLinkItem = link => {
+    if (link.tooltip) {
+      return (
+        <Tooltip title={link.tooltip} key={link.selectedName}>
+          <SidebarStyled.LinkItem
+            selected={props.location.pathname.includes(link.url)}
+          >
+            <Link to={link.url}>{link.linkName}</Link>
+          </SidebarStyled.LinkItem>
+        </Tooltip>
+      );
     }
-    if (this.props.selectedCategory === id && category === 'Stars') {
-      this.setState({ showSubCategory: !this.state.showSubCategory});
-      return;
-    }
-    if (category === 'Stars') {
-      this.setState({ showSubCategory: true });
-    }
-
-    if (window.outerWidth<=1024) {
-      if (label === 'featured') this.props.toggleMenu();
-    }
-    this.props.updateCategory(label, id, category);
-    if (this.props.updateMainCategory) {
-      this.props.updateMainCategory(label, id, category);
-    }
-  }
-
-  selectSubCategory = (label, value) => {
-    const selectedList = this.props.selectedSubCategories ? this.props.selectedSubCategories : {};
-    if (selectedList.hasOwnProperty(value)) {
-      delete selectedList[value];
-    } else {
-      selectedList[value] = label;
-    }
-    this.props.updateSelectedSubCategory(selectedList);
-  }
-
-  renderCategoryList = () => (
-    this.props.list.professions.map(item => (
-      <SidebarStyled.ListItem
-        key={item.id}
-      >
-        <SidebarStyled.CategoryTitle
-          selected={this.props.selectedCategory === item.id ? true : false}
-          onClick={() => this.selectCategory(item.title, item.id, 'Stars')}
-        >
-          {item.title}
-        </SidebarStyled.CategoryTitle>
-        {
-          (this.props.selectedCategory === item.id && this.state.showSubCategory) ?
-            <SidebarStyled.SubCategoryList>
-              <SidebarStyled.SubCategoryListItem
-                selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
-                onClick={() => this.props.updateSelectedSubCategory({})}
-              >
-                All
-              </SidebarStyled.SubCategoryListItem>
-              {
-                item.child.map(subCategory => (
-                  <SidebarStyled.SubCategoryListItem
-                    key={subCategory.id}
-                    selected={this.props.selectedSubCategories && this.props.selectedSubCategories.hasOwnProperty(subCategory.id)}
-                    onClick={() => this.selectSubCategory(subCategory.title, subCategory.id)}
-                  >
-                    {subCategory.title}
-                  </SidebarStyled.SubCategoryListItem>
-                ))
-              }
-            </SidebarStyled.SubCategoryList>
-          : null
-        }
-      </SidebarStyled.ListItem>
-    ))
-  )
-
-  renderGroupCategoryList = () => (
-    this.props.groupCategory.map(item => (
-      <SidebarStyled.ListItem
-        key={item.id}
-      >
-        <SidebarStyled.CategoryTitle
-          selected={this.props.selectedCategory === item.id ? true : false}
-          onClick={() => this.selectCategory(item.group_name, item.id, 'Group')}
-        >
-          {item.group_name}
-        </SidebarStyled.CategoryTitle>
-      </SidebarStyled.ListItem>
-    ))
-  )
-
-  renderInnerPageLinks = () => {
     return (
-      <SidebarStyled.FilterWrapper>
-        <SidebarStyled.Filter>
-          <SidebarStyled.ListWrapper>
-            {
-              this.props.innerLinks && this.props.innerLinks.map((element, index) => (
-                <SidebarStyled.InnerListItem key={index}>
-                  <SidebarStyled.InnerCategoryTitle
-                    selected={this.props.selectedCategory === element.selectedName}
-                  >
-                    <Link to={element.url}>
-                      <SidebarStyled.LinkElement>
-                        {element.linkName}
-                        {
-                          element.selectedName === 'requests' && this.props.userDetails.settings_celebrityDetails.pending_requests_count ?
-                            <SidebarStyled.InnerListItemCount>
-                              {
-                                this.props.userDetails.settings_celebrityDetails.pending_requests_count
-                              }
-                            </SidebarStyled.InnerListItemCount>
-                          : null
-                        }
-                        {
-                          element.selectedName === 'myVideos' && this.props.userDetails.settings_userDetails.completed_fan_unseen_count ?
-                            <SidebarStyled.InnerListItemCount>
-                              {
-                                this.props.userDetails.settings_userDetails.completed_fan_unseen_count
-                              }
-                            </SidebarStyled.InnerListItemCount>
-                          : null
-                        }
-                        {
-                          (element.selectedName === 'mygroups' || element.selectedName === 'supporters') && this.props.userDetails.settings_userDetails.group_notification_count ?
-                            <SidebarStyled.InnerListItemCount>
-                              {
-                                this.props.userDetails.settings_userDetails.group_notification_count
-                              }
-                            </SidebarStyled.InnerListItemCount>
-                          : null
-                        }
-                      </SidebarStyled.LinkElement>
-                    </Link>
-                  </SidebarStyled.InnerCategoryTitle>
-                </SidebarStyled.InnerListItem>
-              ))
-            }
-          </SidebarStyled.ListWrapper>
-        </SidebarStyled.Filter>
-      </SidebarStyled.FilterWrapper>
+      <SidebarStyled.LinkItem
+        key={link.selectedName}
+        selected={props.location.pathname.includes(link.url)}
+      >
+        <Link to={link.url}>
+          {link.linkName}
+          {link.selectedName === 'requests' &&
+            props.userDetails.unseen_bookings > 0 && (
+              <NotificationCount className="notification-count">
+                {props.userDetails.unseen_bookings}
+              </NotificationCount>
+            )}
+          {link.selectedName === 'myVideos' &&
+            props.userDetails.completed_fan_unseen_count > 0 && (
+              <NotificationCount className="notification-count">
+                {props.userDetails.completed_fan_unseen_count}
+              </NotificationCount>
+            )}
+        </Link>
+      </SidebarStyled.LinkItem>
     );
-  }
+  };
 
-  render() {    
-    return (
-      <SidebarStyled menuActive={this.props.menuActive}>
-        {
-          !this.props.noCategory ?
-            <React.Fragment>
-              <section>
-                <SidebarStyled.FilterWrapper>
-                  {
-                    this.props.isStar ?
-                      <SidebarStyled.Filter>
-                        <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
-                        <SidebarStyled.Separator />
-                        <SidebarStyled.ListWrapper>
-                          <SidebarStyled.ListItem>
-                            <SidebarStyled.CategoryTitle
-                              selected={this.props.selectedCategory === 'requests'}
-                            >
-                              <Link to="/user/bookings">
-                                <SidebarStyled.LinkElement>
-                                  Requests
-                                  {
-                                    this.props.userDetails.settings_celebrityDetails.pending_requests_count ?
-                                      <SidebarStyled.InnerListItemCount>
-                                        {
-                                          this.props.userDetails.settings_celebrityDetails.pending_requests_count
-                                        }
-                                      </SidebarStyled.InnerListItemCount>
-                                    : null
-                                  }
-                                </SidebarStyled.LinkElement>
-                              </Link>
-                            </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem>
-                          <SidebarStyled.ListItem>
-                            <SidebarStyled.CategoryTitle
-                              selected={this.props.selectedCategory === 'earnings'}
-                            >
-                              <Link to="/user/earnings">Earnings</Link>
-                            </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem>
-                          <SidebarStyled.ListItem>
-                            <SidebarStyled.CategoryTitle>
-                              <Link to="/settings">Settings</Link>
-                            </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem>
-                          <SidebarStyled.ListItem>
-                            <SidebarStyled.CategoryTitle>
-                              <Link to="/user/my-groups">
-                                <SidebarStyled.LinkElement>
-                                  My groups
-                                  {
-                                    this.props.userDetails.settings_userDetails.group_notification_count ?
-                                      <SidebarStyled.InnerListItemCount>
-                                        {
-                                          this.props.userDetails.settings_userDetails.group_notification_count
-                                        }
-                                      </SidebarStyled.InnerListItemCount>
-                                    : null
-                                  }
-                                </SidebarStyled.LinkElement>
-                              </Link>
-                            </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem>
-                        </SidebarStyled.ListWrapper>
-                      </SidebarStyled.Filter>
-                    : null
-                  }
-                  <SidebarStyled.Filter>
-                    <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
-                    <SidebarStyled.Separator />
-                    <SidebarStyled.ListWrapper>
-                      <SidebarStyled.ListItem>
-                        <SidebarStyled.CategoryTitle
-                          selected={this.props.selectedCategory === '' ? true : false}
-                          onClick={() => this.selectCategory('featured', '', 'Stars')}
-                        >
-                          Featured
-                        </SidebarStyled.CategoryTitle>
-                      </SidebarStyled.ListItem>
-                      {
-                        this.renderCategoryList()
-                      }
-                    </SidebarStyled.ListWrapper>
-                  </SidebarStyled.Filter>
-                  {
-                    this.props.groupCategory.length > 0 &&
-                    <SidebarStyled.Filter>
-                      <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
-                      <SidebarStyled.Separator />
-                      <SidebarStyled.ListWrapper>
-                        {
-                          this.renderGroupCategoryList()
-                        }
-                      </SidebarStyled.ListWrapper>
-                    </SidebarStyled.Filter>
-                  }
-                </SidebarStyled.FilterWrapper>
-              </section>
-              <Footer isLoggedIn={this.props.isLoggedIn}/>
-              <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
-            </React.Fragment>
-          : this.renderInnerPageLinks()
-        }
-      </SidebarStyled>
-    );
-  }
-}
-const mapStateToProps = state => ({
-  isLoggedIn: state.session.isLoggedIn,
-  userDetails: state.userDetails,
-  groupCategory: state.groupTypesListing.data,
-  isStar: state.userDetails.isStar,
-});
+  return (
+    <SidebarStyled>
+      {props.userDetails.avatarPhoto ? (
+        <SidebarStyled.AvatarImage imageUrl={props.userDetails.avatarPhoto} />
+      ) : (
+        <Tooltip title={noImageTooltip}>
+          <SidebarStyled.AvatarImage imageUrl={props.userDetails.avatarPhoto} />
+        </Tooltip>
+      )}
+      <SidebarStyled.LinkList>
+        {props.links.map(link => renderLinkItem(link))}
+        <SidebarStyled.LinkItem onClick={logOut}>
+          <span className="log-out">Log Out</span>
+        </SidebarStyled.LinkItem>
+      </SidebarStyled.LinkList>
+    </SidebarStyled>
+  );
+};
+
+Sidebar.propTypes = {
+  userDetails: PropTypes.object.isRequired,
+  links: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  logOut: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
-  updateCategory: (label, value, category) => dispatch(updateCategory(label, value, category)),
+  logOut: () => dispatch(logOutUser()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Sidebar));
+const mapStateToProps = state => ({
+  userDetails: state.userDetails.settings_userDetails,
+  celebDetails: state.userDetails.settings_celebrityDetails,
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Sidebar),
+);

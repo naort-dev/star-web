@@ -1,6 +1,6 @@
 import { fetch } from '../services/fetch';
 
-export default function getAWSCredentials(url, auth_token, file) {
+export default function getAWSCredentials(url, file) {
   return fetch(url)
     .then(async (response) => {
       let filename = response.data.data.fields.key.split('/');

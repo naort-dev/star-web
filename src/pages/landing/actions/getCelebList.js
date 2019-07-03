@@ -133,14 +133,14 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
   }
   let API_URL;
   if (category.label === 'featured')  {
-    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=popularity`;
   } else {
-    const subCategoryList = filters[category.value];
-    const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
+    const subCategoryList = filters.category.selected;
+    const professsion = subCategoryList && subCategoryList.length ? subCategoryList.map(cat => cat.id).toString() : category.value;
     if (selectedCategory === 'Group') {
       API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&group_type=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     } else {
-      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion === 0 ? '' : professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     }
   }
   return fetch.get(API_URL, options).then((resp) => {

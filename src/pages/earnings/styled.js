@@ -1,185 +1,105 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
+import { Card } from 'styles/CommonStyled';
 
-const EarningStyled = styled.div`
-  margin-top: 60px;
-  height: calc(100vh - 60px);
-  background-color: #f8f8f8;
-  @media(min-width: 1920px) {
-    margin-top: 72px;
-    height: calc(100vh - 72px);
+export const Layout = styled.section`
+  width: 100%;
+  height: 100%;
+  padding-left: 19px;
+  padding-right: 19px;
+  ${media.webView} {
+    padding-left: 0;
+    padding-right: 0;
   }
-`;
+  ${media.smallScreen} {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @media (max-width: 831px) {
+    padding-top: 20px;
+  }
+  .top-heading {
+    padding-top: 9px;
+  }
+  .arrow {
+    ${media.webView} {
+      display: none;
+    }
+  }
+  .head1 {
+    padding-top: 4px;
+    padding-bottom: 32px;
+    color: #888888;
+    font-weight: normal;
+    ${media.webView} {
+      text-align: left;
+      padding-top: 9px;
+      padding-bottom: 25px;
+    }
+    @media (max-width: 831px) {
+      padding-bottom: 17px;
+    }
+  }
 
-EarningStyled.sectionWrapper = styled.div`
-  max-width: 1920px;
-  height:100%;
-`;
-
-EarningStyled.mainSection = styled.section`
-  height: calc(100% - 64px);
-  @media(min-width: 1025px) {
-    height: calc(100% - 50px);
-    #column-layout-scrollable-target {
-      padding-right: 50px;
+  .middle-section {
+    max-width: 580px;
+    margin: 0 auto;
+    position: relative;
+    ${media.smallScreen} {
+      width: 310px;
+    }
+    @media (min-width: 832px) {
+      width: 560px;
+      flex: 1 1 auto;
+    }
+    @media (min-width: 1280px) {
+      width: 567px;
+    }
+    ${media.largeScreen} {
+      max-width: 100%;
+      width: 100%;
+    }
+    .custom-loader {
+      position: absolute;
     }
   }
 `;
 
-EarningStyled.Overview = styled.ul`
-  width: 100%;
-  background-color: #FFF;
-  justify-content: space-between;
-  padding: 16px;
-  display: none;
-  @media(min-width: 768px) {
-    display: flex;
+export const Wrapper = styled.section`
+  .cardLayout {
+    ${media.largeScreen} {
+      display: flex;
+      padding: 30px 50px 38px 62px;
+      .summary-wrap {
+        width: 100%;
+        margin-left: 105px;
+        border-left: 1px solid #d9d9d9;
+        padding-left: 48px;
+        padding-top: 0;
+        .rating-wrap {
+          padding-bottom: 0;
+          .rating {
+            width: 50%;
+            .rating-star {
+              font-size: 25px;
+            }
+          }
+        }
+        .value {
+          width: 50%;
+          padding-left: 32px;
+        }
+      }
+      .payments {
+      }
+      .flex-start {
+        display: flex;
+        justify-content: space-between;
+        min-width: 400px;
+      }
+      .earnings-wrap {
+        padding-top: 10px;
+      }
+    }
   }
 `;
-
-EarningStyled.OverviewAmount = styled.span`
-  display: block;
-  border-bottom: 1px solid #333333;
-  font-size: 16px;
-  font-family: 'Avenir-Bold';
-  padding-bottom: 8px;
-`;
-
-EarningStyled.OverViewText = styled.span`
-  display: block;
-  font-family: 'Avenir-Bold';
-  font-size: 14px;
-  margin-top: 10px;
-`;
-
-EarningStyled.OverViewSubText = styled.span`
-  display: block;
-  font-family: 'Avenir-Light';
-  font-size: 12px;
-  margin-top: 10px;
-`;
-
-EarningStyled.OverviewItem = styled.li`
-  text-align: center;
-  width: calc((100% / 3) - 10px);
-`;
-
-EarningStyled.loaderWrapper = styled.div`
-  height: calc(100% - 95px);
-  padding: 20px 16px;
-  @media(min-width: 1025px) {
-    height: calc(100% - 79px);
-    padding: 0px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 32px;
-  }
-`;
-
-EarningStyled.OverviewMobile = styled.ul`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-  padding-top: 30px;
-  flex-direction: column;
-  background-color: #FFF;
-  @media(min-width: 768px) {
-    display: none;
-  }
-`;
-
-EarningStyled.mobileOverviewContainer = styled.div`
-display: flex;
-width: 100%;
-margin-top: 16px;
-`;
-
-EarningStyled.OverviewMobileItem = styled.li`
-min-width: 50%;
-font-family: 'Avenir-Regular';
-font-size: ${props => `${props.size}px`};
-display: flex;
-flex-direction: column;
-`;
-EarningStyled.OverViewTextMobile = styled.span`
-color: ${props => props.headingColor};
-margin-bottom: 0.1em;
-`;
-
-EarningStyled.EarningsListStyled = styled.div`
-  width: 100%;
-  height: 100%;
-  font-family: 'Avenir-Medium';
-  font-size: 14px;
-  background-color: #FFF;
-`;
-
-const FlexStyles = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-`;
-
-EarningStyled.Header = FlexStyles.extend`
-  border-top: 1px solid #CCCCCC;
-  border-bottom: 1px solid #CCCCCC;
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-  }
-`;
-
-EarningStyled.ContentWrapper = styled.div`
-height: calc(100% - 55px);
-`;
-
-EarningStyled.ListItem = styled.li`
-  width: calc(100% / 3);
-  word-break: break-word;
-  padding-right: 20px;
-  color: ${props => (props.amount ? '#FF6C58' : '#333333')};
-  font-family: ${props => (props.light ? 'Avenir-Light' : 'Avenir-Medium')};
-  display: ${props => (props.tabletView || props.desktopView ? 'none' : 'block')};
-  @media (min-width: 768px) {
-    width: ${props => (props.large ? '20%' : 'calc(60% / 3)')};
-    display: ${props => (props.desktopView ? 'none' : 'block')};
-  }
-  @media (min-width: 1025px) {
-    display: block;
-    width: ${props => (props.large ? '20%' : 'calc(60% / 4)')};
-  }
-`;
-
-EarningStyled.ListDescription = EarningStyled.ListItem.extend `
-  @media (min-width: 768px) {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-`;
-
-EarningStyled.heading = styled.h1`
-  font-family: 'Avenir-Regular';
-  font-size: 24px;
-  margin-top: 20px;
-`;
-
-EarningStyled.AllEarningsWrapper = styled.div`
-  background-color: #fff;
-`;
-
-EarningStyled.errorMessage = styled.span`
-  font-size: 14px;
-  display: flex;
-  margin-top: 27px;
-  justify-content: center;
-  font-weight: 600;
-`;
-
-EarningStyled.MoreButton = styled.span`
-  color: #FF6C58;
-  float: right;
-`;
-export default EarningStyled;

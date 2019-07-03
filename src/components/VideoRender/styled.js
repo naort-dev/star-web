@@ -1,11 +1,51 @@
 import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
-  right:0;
-  cursor: pointer;
- 
- 
+  width: ${props => (props.variableWidth ? '100%' : 'auto')};
+  height: ${props => (props.variableHeight ? '100%' : 'auto')};
 `;
+
+VideoRenderDiv.Container = styled.div`
+  display: inline-block;
+  border-radius: 38px;
+  box-shadow: 0 3px 56px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  padding: ${props => !props.noBorder && '19px'};
+  width: ${props => (props.variableWidth ? '100%' : '197px')};
+  height: ${props => (props.variableHeight ? '100%' : '300px')};
+  max-height: 417px;
+  @media(min-width: 375px) {
+    width: ${props => (props.variableWidth ? '100%' : '274px')};
+    height: ${props => (props.variableHeight ? '100%' : '417px')};
+    max-height: 600px;
+  }
+`;
+
+VideoRenderDiv.CustomText = styled.span`
+  display: none;
+  @media(min-width: 832px) {
+    font-family: Gilroy-Regular;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    width: 100%;
+    margin-top: 14.7px;
+    line-height: 26px;
+    text-align: center;
+  }
+`;
+
+VideoRenderDiv.Content = styled.div`
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  position: relative;
+`;
+
 VideoRenderDiv.ImageSection = styled.div`
   right:0;
   position:relative;
@@ -55,6 +95,18 @@ VideoRenderDiv.ProfileImage = styled.span`
     height: 48px;
   }
 `;
+
+VideoRenderDiv.ReactionImage = styled.span`
+  background-image: ${props => props.imageUrl && 'url('+props.imageUrl+')'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  border-radius: 38px;
+  display: block;
+  height: 100%;
+  width: 100%;
+`;
+
 VideoRenderDiv.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40b.png' );
   background-repeat:no-repeat;

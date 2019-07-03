@@ -1,165 +1,174 @@
 import React from 'react';
-import Cropper, { makeAspectCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
-import Popup from '../Popup';
+import EXIF from 'exif-js';
+import Cropper from 'cropperjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
+import 'cropperjs/dist/cropper.css';
+import Button from 'components/PrimaryButton';
 import CropperStyled from './styled';
 
 export default class ImageCropper extends React.Component {
-  state = {
-    cropValues: {
-      x: 10,
-      y: 10,
-      aspect: this.props.aspectRatio,
-    },
-    cropImage: null,
+  constructor(props) {
+    super(props);
+    this.state = { isMobile: false, cropImage: props.cropImage };
+    this.cropImage = React.createRef();
+    this.cropper = null;
+    this.inputRef = React.createRef();
   }
 
-  componentWillMount() {
-    this.convertBeforeCrop(this.props.cropImage);
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeCapture);
+    this.resizeCapture();
+    this.initializeCropper();
   }
 
-  setCropImage = (image) => {
-    this.image = image;
-    const crop = makeAspectCrop({
-      x: 0,
-      y: 20,
-      aspect: this.props.aspectRatio,
-      width: image.width,
-    }, image.width / image.height);
-    const pixelCrop = {
-      x: Math.round(image.naturalWidth * (crop.x / 100)),
-      y: Math.round(image.naturalHeight * (crop.y / 100)),
-      width: Math.round(image.naturalWidth * (crop.width / 100)),
-      height: Math.round(image.naturalHeight * (crop.height / 100))
-    };
-    this.setState({
-      cropValues: crop,
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      (this.state.isMobile !== prevState.isMobile ||
+        this.state.cropImage !== prevState.cropImage) &&
+      this.cropper
+    ) {
+      this.cropper.destroy();
+      this.initializeCropper();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.cropper) {
+      this.cropper.destroy();
+    }
+    window.removeEventListener('resize', this.resizeCapture);
+  }
+
+  initializeCropper = () => {
+    this.cropper = new Cropper(this.cropImage.current, {
+      aspectRatio: 1,
+      viewMode: 1,
     });
-    this.onCropChange(crop, pixelCrop);
-  }
+  };
+
+  resizeCapture = () => {
+    if (
+      document.body.getBoundingClientRect().width <= 832 ||
+      window.innerWidth <= 832
+    ) {
+      this.setState({ isMobile: true });
+    } else {
+      this.setState({ isMobile: false });
+    }
+  };
 
   handleCrop = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = this.pixelCrop.width;
-    canvas.height = this.pixelCrop.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(
-      this.image,
-      this.pixelCrop.x,
-      this.pixelCrop.y,
-      this.pixelCrop.width,
-      this.pixelCrop.height,
-      0,
-      0,
-      this.pixelCrop.width,
-      this.pixelCrop.height,
-    );
-    const base64Image = canvas.toDataURL('image/jpeg');
-    canvas.toBlob(file => {
+    const cropperCanvas = this.cropper.getCroppedCanvas({
+      width: 1024,
+      height: 1024,
+    });
+    const base64Image = cropperCanvas.toDataURL('image/jpeg');
+    cropperCanvas.toBlob(file => {
       this.props.afterCrop(file, base64Image);
       this.props.closeCropper();
     }, 'image/jpeg');
-    
+  };
+
+  uploadImage = () => {
+    this.inputRef.current.click();
+  };
+
+  async onFileChange() {
+    this.setState({ imageError: false });
+    const file = document.getElementById('profile').files[0];
+    const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
+    if (!allowedExtensions.exec(document.getElementById('profile').value)) {
+      this.setState({ imageError: { extensionError: true } });
+    } else if (file) {
+      this.setState({ imageLoading: true });
+      await this.getImageData(file);
+    }
   }
 
-  onCropChange = (cropValues, pixelCrop) => {
-    this.pixelCrop = pixelCrop;
-    this.setState({ cropValues: { ...cropValues, aspect: this.props.aspectRatio } });
-  }
+  getExif = file => {
+    return new Promise((resolve, reject) => {
+      EXIF.getData(file, function() {
+        const exif = EXIF.getTag(this, 'Orientation');
+        switch (exif) {
+          case 3:
+            resolve(3);
+            break;
+          case 4:
+            resolve(4);
+            break;
+          case 5:
+            resolve(5);
+            break;
+          case 6:
+            resolve(6);
+            break;
+          case 7:
+            resolve(7);
+            break;
+          case 8:
+            resolve(8);
+            break;
+          default:
+            resolve(9);
+        }
+      });
+    });
+  };
 
-
-  convertBeforeCrop = (imageURL) => {
-    const image = new Image();
-    image.onload = function () {
-      let imageRatio = image.width/image.height;
-      const height = image.height > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : image.height;
-      const width = height*imageRatio;
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = width;
-      canvas.height = height;
-      switch (this.props.exifData) {
-        case 2:
-          ctx.translate(height, 0);
-          ctx.scale(-1, 1);
-          break;
-
-        case 3:
-          ctx.translate(width, height);
-          ctx.rotate(180 * Math.PI / 180);
-          break;
-
-        case 4:
-          ctx.translate(0, height);
-          ctx.scale(1, -1);
-          break;
-
-        case 5:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(90 * Math.PI / 180);
-          ctx.scale(1, -1);
-          break;
-
-        case 6:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(90 * Math.PI / 180);
-          ctx.translate(0, -height);
-          break;
-
-        case 7:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(-90 * Math.PI / 180);
-          ctx.translate(-width, height);
-          ctx.scale(1, -1);
-          break;
-
-        case 8:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.translate(0, width);
-          ctx.rotate(-90 * Math.PI / 180);
-          break;
-      }
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        width,
-        height,
-      );
-      const base64Image = canvas.toDataURL('image/jpeg');
-      this.setState({ cropImage: base64Image })
-    }.bind(this);
-    image.src = imageURL;
+  async getImageData(file) {
+    const extension = file.type.split('/')[1];
+    const reader = new FileReader();
+    const exif = await this.getExif(file);
+    this.currentExif = exif;
+    reader.onload = () => {
+      this.setState({ cropImage: reader.result });
+      this.props.onUploadComplete(reader.result, exif, extension);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   }
 
   render() {
     return (
-      <Popup
-        modalView
-        disableBackground
-        closePopUp={() => this.props.closeCropper()}
-      >
-        <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>
-          {
-            this.state.cropImage &&
-              <Cropper
-                src={this.state.cropImage}
-                crop={this.state.cropValues}
-                keepSelection
-                onImageLoaded={this.setCropImage}
-                onChange={this.onCropChange}
-              />
-          }
-          <CropperStyled.ButtonWrapper>
-            <CropperStyled.CropperButton onClick={this.handleCrop}>Select</CropperStyled.CropperButton>
-            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperCancel>
-          </CropperStyled.ButtonWrapper>
-        </CropperStyled>
-      </Popup>
-    )
+      <CropperStyled>
+        <CropperStyled.CropperWrapper className="crop-wrap">
+          <img
+            ref={this.cropImage}
+            alt="cropper"
+            style={{ maxwidth: '100%' }}
+            src={this.state.cropImage}
+          />
+        </CropperStyled.CropperWrapper>
+        <CropperStyled.ButtonWrapper>
+          <CropperStyled.CropperLightButton
+            onClick={this.props.onTakePicture}
+            className="take-picture"
+          >
+            <FontAwesomeIcon icon={faCamera} />
+            <span className="btn-text">Take Picture</span>
+          </CropperStyled.CropperLightButton>
+          <Button onClick={this.handleCrop} className="button">
+            <span>I like it, continue</span>
+          </Button>
+          <CropperStyled.CropperLightButton
+            onClick={this.uploadImage}
+            className="upload-picture"
+          >
+            <input
+              className="upload-button"
+              ref={this.inputRef}
+              accept=".png, .jpeg, .jpg"
+              id="profile"
+              onChange={() => this.onFileChange()}
+              type="file"
+            />
+            <FontAwesomeIcon icon={faUpload} />
+            <span className="btn-text">Upload</span>
+          </CropperStyled.CropperLightButton>
+        </CropperStyled.ButtonWrapper>
+      </CropperStyled>
+    );
   }
 }

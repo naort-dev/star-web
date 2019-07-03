@@ -3,6 +3,7 @@ import { PROFESSION_LIST } from '../actions/getProfessions';
 const initalState = {
   professions: [],
   allProfessions: [],
+  subcategories: [],
   loading: false,
 };
 
@@ -32,6 +33,13 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: false,
         allProfessions: action.data.professions,
+      };
+    
+    case PROFESSION_LIST.subcategorySuccess:
+      return {
+        ...state,
+        loading: false,
+        subcategories: action.data.professions,
       };
 
     case PROFESSION_LIST.failed:

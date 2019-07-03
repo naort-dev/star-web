@@ -1,5 +1,7 @@
-
+import isEmpty from 'lodash/isEmpty';
+import { updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
+import { ROLES } from '../../../constants/usertype';
 import { fetch } from '../../../services/fetch';
 import { userDetailsFetchSuccess } from '../actions/getUserDetails';
 
@@ -8,7 +10,9 @@ export const REGISTER = {
   end: 'session/ON_LOGIN_END',
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
+  updateTempDetails: 'session/ON_TEMP_LOGIN',
   incorrect: 'session/ON_LOGIN_INCORRECT',
+  clearErrors: 'session/ON_REGISTER_CLEAR',
 };
 
 export const registerFetchStart = () => ({
@@ -19,16 +23,24 @@ export const registerFetchEnd = () => ({
   type: REGISTER.end,
 });
 
-export const registerFetchSuccess = (data) => {
-  return (
-    {
-      type: REGISTER.success,
-      data,
-    });
+export const registerFetchSuccess = data => {
+  return {
+    type: REGISTER.success,
+    data,
+  };
 };
 export const registerFetchIncorrect = error => ({
   type: REGISTER.incorrect,
   error,
+});
+
+export const registerTempSuccess = data => ({
+  type: REGISTER.updateTempDetails,
+  data,
+});
+
+export const clearRegisterErrors = () => ({
+  type: REGISTER.clearErrors,
 });
 
 export const registerFetchFailed = error => ({
@@ -41,39 +53,59 @@ export const registerUser = (
   UserLastName,
   UserEmail,
   UserPassword,
+  UserNickName,
   UserRole,
   referral,
 ) => (dispatch, getState) => {
+  let tempDetails;
+  const signupDetails = getState().signupDetails;
+  if (localStorage) {
+    tempDetails = localStorage.getItem('tempAuthToken');
+  }
   dispatch(registerFetchStart());
-  return fetch.post(Api.register, {
+  let method = 'post';
+  if (!isEmpty(tempDetails) || !isEmpty(signupDetails.email)) {
+    method = 'put';
+  }
+  let header = {
     first_name: UserFirstName,
     last_name: UserLastName,
     email: UserEmail,
-    password: UserPassword,
     role: UserRole,
     referral_code: referral,
-
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      const obj = {
-        ...resp.data.data,
-        celebrity_details: {},
-      };
-      localStorage.setItem('data', JSON.stringify(resp.data.data));
+  };
+  if (UserRole === ROLES.star) {
+    header = { ...header, nick_name: UserNickName };
+  } else {
+    header = { ...header, password: UserPassword };
+  }
+  return fetch[method](Api.register, header)
+    .then(resp => {
+      if (resp.data && resp.data.success) {
+        const obj = {
+          ...resp.data.data,
+          celebrity_details: {},
+        };
+        if (UserRole === 'R1002') {
+          const tempToken = resp.data.data.user.authentication_token;
+          localStorage.setItem('tempAuthToken', JSON.stringify(tempToken));
+          dispatch(registerTempSuccess(resp.data.data));
+        } else {
+          localStorage.setItem('data', JSON.stringify(resp.data.data));
+          dispatch(registerFetchEnd());
+          dispatch(userDetailsFetchSuccess(obj));
+          dispatch(registerFetchSuccess(obj));
+        }
+        return resp;
+      }
       dispatch(registerFetchEnd());
-      dispatch(userDetailsFetchSuccess(obj));
-      dispatch(registerFetchSuccess(obj));
-
-      return resp
-    } else {
+    })
+    .catch(exception => {
       dispatch(registerFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(registerFetchEnd());
-    if (exception.response.status === 400) {
-      dispatch(registerFetchIncorrect(exception.response.data.error.message));
-    } else {
-      dispatch(registerFetchFailed(exception));
-    }
-  });
+      if (exception.response.status === 400) {
+        dispatch(registerFetchIncorrect(exception.response.data.error.message));
+      } else {
+        dispatch(registerFetchFailed(exception));
+      }
+    });
 };

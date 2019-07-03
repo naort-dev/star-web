@@ -1,12 +1,12 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
 import Loader from '../Loader';
+import PrimaryButton from '../PrimaryButton';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
-
+import { TextInput } from '../TextField';
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -49,11 +49,7 @@ export default class ForgotPassword extends React.Component {
   }
   render() {
     const { email } = this.state;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
+
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
@@ -73,7 +69,7 @@ export default class ForgotPassword extends React.Component {
                     alt=""
                   />
                   <ForgotPasswordWrap.MailContent>
-                    A password reset link has been sent to your email address.Please tap the link
+                    A password reset link has been sent to your email address. Please tap the link
                       in that message to reset your password.
                   </ForgotPasswordWrap.MailContent>
                 </ForgotPasswordWrap.Message>
@@ -85,7 +81,8 @@ export default class ForgotPassword extends React.Component {
                   <LoginContainer.InputContainer>
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
+                        <TextInput
+                          fullWidth={true}
                           type="text"
                           name="email"
                           value={email.value}
@@ -97,13 +94,16 @@ export default class ForgotPassword extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                     <ForgotPasswordWrap>
-                      <LoginContainer.ButtonWrapper >
-                        <LoginContainer.SignIn
+                      <LoginContainer.ButtonWrapper className="align-center">
+                        <PrimaryButton
+                          secondary
                           onClick={this.onForgotPassword}
                           disabled={this.props.loading}
                           value="Continue"
                           type="submit"
-                        />
+                        >
+                          Continue
+                        </PrimaryButton>
                       </LoginContainer.ButtonWrapper>
                       <LoginContainer.ErrorMsg>{this.state.errorCondition ? this.state.message : null}</LoginContainer.ErrorMsg>
                     </ForgotPasswordWrap>

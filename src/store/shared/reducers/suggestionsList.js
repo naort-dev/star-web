@@ -1,7 +1,7 @@
 import { SUGGESTION_LIST } from '../actions/getSuggestionsList';
 
 const initalState = {
-  suggestions: [],
+  suggestions: null,
   loading: false,
   error: undefined,
   searchText: undefined,

@@ -46,6 +46,17 @@ GroupStyled.VideoRecorderWrapper = GroupStyled.DetailsWrapper.extend`
   }
 `;
 
+GroupStyled.CropWrapper = styled.div``;
+
+GroupStyled.Heading = styled.div`
+  text-align: center;
+  color: #ff6c58;
+  font-size: 24px;
+  font-family: 'Gilroy-Medium';
+  padding-top: 44px;
+  padding-bottom: 92px;
+`;
+
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
   margin-bottom: 30px;
@@ -247,6 +258,10 @@ GroupStyled.Label = styled.div`
       letter-spacing: 2px;
       cursor: text;
     }
+    input:focus::-webkit-input-placeholder { color:transparent; }
+    input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+    input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+    input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
     .react-phone-number-input {
       display: inline-block;
       .react-phone-number-input__row {
@@ -628,12 +643,12 @@ GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
 `;
 
 GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   position: relative;
-  border: ${props => (props.imageUrl ? 'none' : '2px dashed #FF6C58')};
+  border: none;
   border-radius: 50%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#fff')};
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
@@ -662,9 +677,10 @@ GroupStyled.ProfileInputWrapper = styled.span`
 `;
 
 GroupStyled.UploadText = styled.span`
-  color: #FF6C58;
+  color: #555;
   font-family: 'Avenir-Light';
   font-size: 14px;
+  max-width: 110px;
 `;
 
 GroupStyled.ProfileInputButton = styled.div`
@@ -954,6 +970,10 @@ GroupStyled.AddRepForm = styled.div`
       outline: none;
       font-family: 'Avenir-Regular';
     }
+    input:focus::-webkit-input-placeholder { color:transparent; }
+    input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+    input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+    input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
     .errorElement {
       color: red;
       margin-top: 2px;

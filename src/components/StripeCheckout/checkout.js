@@ -4,7 +4,6 @@ import {
   CardNumberElement,
   CardExpiryElement,
   CardCVCElement,
-  PostalCodeElement,
 } from 'react-stripe-elements';
 import PaymentStyled from './styled';
 
@@ -32,67 +31,66 @@ class checkout extends React.Component {
       },
     };
   }
-  componentWillMount() {
-    this.props.setStripe(this.props.stripe);
-  }
+  // componentWillMount() {
+  //   this.props.setStripe(this.props.stripe);
+  // }
   setErrorMsg = (event, element) => {
     let { cardTypeImage } = this.state;
     if (event.elementType === 'cardNumber') {
-      cardTypeImage = event.brand && event.brand !== 'unknown' ? `assets/images/card-icons/${event.brand}.png` : null;
+      cardTypeImage =
+        event.brand && event.brand !== 'unknown'
+          ? `assets/images/card-icons/${event.brand}.png`
+          : null;
     }
     const errorMsg = event.error ? event.error.message : '';
     this.setState({ [element]: errorMsg, cardTypeImage });
-  }
+  };
   returnErrorMsg = (element) => {
     if (this.state[element] !== '') {
-      return <PaymentStyled.ErrorElement>{this.state[element]}</PaymentStyled.ErrorElement>;
+      return (
+        <PaymentStyled.ErrorElement>
+          {this.state[element]}
+        </PaymentStyled.ErrorElement>
+      );
     }
     return null;
-  }
+  };
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.handleBooking();
-  }
+  };
 
   render() {
     return (
       <PaymentStyled onSubmit={this.handleSubmit}>
         <PaymentStyled.CardElementWrapper>
-          <PaymentStyled.title>Card Number</PaymentStyled.title>
           <PaymentStyled.CardInputWrapper>
             <PaymentStyled.CardTypeIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
-              onChange={event => this.setErrorMsg(event, 'cardNumberError')}
+              onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
+              placeholder="1234 1234 1234 1234"
             />
           </PaymentStyled.CardInputWrapper>
-          { this.returnErrorMsg('cardNumberError') }
+          {this.returnErrorMsg('cardNumberError')}
         </PaymentStyled.CardElementWrapper>
         <PaymentStyled.OtherDetailsWrapper>
           <PaymentStyled.CardElementWrapper>
-            <PaymentStyled.title>Valid till</PaymentStyled.title>
             <CardExpiryElement
-              onChange={event => this.setErrorMsg(event, 'cardExpiryError')}
+              onChange={(event) => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
+              placeholder="MM/YY"
             />
-            { this.returnErrorMsg('cardExpiryError') }
+            {this.returnErrorMsg('cardExpiryError')}
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
-            <PaymentStyled.title>CVC</PaymentStyled.title>
             <CardCVCElement
-              onChange={event => this.setErrorMsg(event, 'cvvError')}
+              onChange={(event) => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
+              placeholder="CCV Code"
             />
-            { this.returnErrorMsg('cvvError') }
+            {this.returnErrorMsg('cvvError')}
           </PaymentStyled.CardElementWrapper>
-          {/* <PaymentStyled.CardElementWrapper>
-            <PaymentStyled.title>Zip code</PaymentStyled.title>
-            <PostalCodeElement
-              onChange={event => this.setErrorMsg(event, 'zipCodeError')}
-              style={this.styles}
-            />
-            { this.returnErrorMsg('zipCodeError') }
-          </PaymentStyled.CardElementWrapper> */}
         </PaymentStyled.OtherDetailsWrapper>
       </PaymentStyled>
     );
