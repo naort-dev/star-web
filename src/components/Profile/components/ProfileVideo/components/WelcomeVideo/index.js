@@ -24,22 +24,18 @@ const WelcomeVideo = props => {
   );
   const [isDeviceSupported, setDeviceSupport] = useState(false);
   useEffect(() => {
-    // checkforAudioVideoSupport();
+    checkforAudioVideoSupport();
     props.updateMediaStore({
       videoSrc: props.userDetails.settings_celebrityDetails.profile_video,
       recordedTime: props.userDetails.settings_celebrityDetails.duration,
     });
-    // props.setVideoUploadedFlag(props.signupDetails.videoUploaded);
   }, []);
-  // const checkforAudioVideoSupport = async () => {
-  //   const deviceSupport = await audioVideoSupport('videoinput');
-  //   if (deviceSupport) {
-  //     setDeviceSupport(true);
-  //     props.audioVideoSupport(true);
-  //   } else {
-  //     props.audioVideoSupport(false);
-  //   }
-  // };
+  const checkforAudioVideoSupport = async () => {
+    const deviceSupport = await audioVideoSupport('videoinput');
+    if (deviceSupport) {
+      setDeviceSupport(true);
+    }
+  };
   const continueCallback = () => {
       compSwitchHandler(true);
   };
@@ -94,6 +90,7 @@ const WelcomeVideo = props => {
               loaderAction={props.loaderAction}
               // setVideoUploadedFlag={props.setVideoUploadedFlag}
               updateToast={props.updateToast}
+              isDeviceSupported={isDeviceSupported}
               src={props.userDetails.settings_celebrityDetails.profile_video}
             />
           {/* ) : (

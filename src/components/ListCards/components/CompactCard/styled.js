@@ -18,6 +18,12 @@ const CompactStyled = Card.extend`
   margin-bottom: 18px;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  &:last-child {
+    @media (min-width: 1280px) {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 CompactStyled.UserName = styled.span`
@@ -33,7 +39,6 @@ CompactStyled.DetailsWrapper = styled.div`
   .tick-text {
     flex-direction: row;
     justify-content: space-between;
-    width: 65px;
   }
   .time {
     &.expiring {

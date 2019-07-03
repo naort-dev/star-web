@@ -167,21 +167,25 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     .comment-section {
       width: 224px;
     }
-    .action-text {
-      position: static;
-      margin-left: 24px;
-    }
   }
   @media(min-width: 832px) and (max-width: 1280px) {
     .comment-section {
-      width: 330px;
+      width: 400px;
       max-width: 100%;
+    }
+    .action-text {
+      right: 19px;
+      top: 15px;
     }
   }
   @media(min-width: 1280px) {
     .comment-section {
       width: 267px;
       max-width: 100%;
+    }
+    .action-text {
+      position: static;
+      margin-left: 24px;
     }
   }
 `;
