@@ -58,6 +58,9 @@ export const Layout = styled.section`
     ${media.largeScreen} {
       max-width: 100%;
       width: 100%;
+      .rate {
+        padding-left: 29px;
+      }
     }
     .custom-loader {
       position: absolute;

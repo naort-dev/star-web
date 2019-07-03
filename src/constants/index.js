@@ -71,12 +71,3 @@ export const awsKeys = {
   starsonaVIdeo: 'stargram_videos',
 };
 
-export const termsAnnouncement = `I understand and accept that neither Star Name, nor Starsona nor any
-of its affiliates or representatives endorses or recommends this event
-in any way. Furthermore, I acknowledge and agree that neither Star
-Name, nor Starsona nor any of its affiliates controls or guarantees
-the relevance or completeness of information produced during this
-event, and I agree to hold harmless Star Name, Starsona and its
-affiliates and representatives from any liability for any and all
-damage caused by or related to the use of the information as published
-in this event.`;

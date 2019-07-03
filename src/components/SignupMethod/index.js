@@ -144,7 +144,7 @@ class SignupMethod extends React.Component {
       const name = r
         .getName()
         .trim()
-        .split('');
+        .split(' ');
       const firstName = name[0];
       const lastName = name[1];
       this.setState({

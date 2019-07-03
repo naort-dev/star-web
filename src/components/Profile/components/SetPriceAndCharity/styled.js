@@ -15,6 +15,7 @@ export const Layout = styled.section`
     background: #f6f6f6;
     padding-left: 35px;
     padding-right: 32px;
+    position: relative;
   }
   @media(min-width: 832px) {
     height: 100%;

@@ -110,7 +110,7 @@ const ManageStarProfile = props => {
         confirmDescription={STAR_PROFILE.PRICE_AND_LIMITS.confirmDescription}
         description={STAR_PROFILE.PRICE_AND_LIMITS.description}
         confirmationTitle={STAR_PROFILE.PRICE_AND_LIMITS.confirmationTitle}
-        title={STAR_PROFILE.PRICE_AND_LIMITS.title}/>}
+        title={isMobile? STAR_PROFILE.PRICE_AND_LIMITS.titleMobile : STAR_PROFILE.PRICE_AND_LIMITS.title}/>}
       />
     </Switch>
     );

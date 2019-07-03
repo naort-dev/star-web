@@ -16,6 +16,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: true,
         data: action.refresh ? [] : state.data,
+        token: action.token,
       };
 
     case ACTIVITIES_LIST.end:
