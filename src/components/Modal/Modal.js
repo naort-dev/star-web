@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { isIOSDevice } from '../../utils/checkOS';
 import { DialogStyled } from './Modal.styles';
 
 class Modal extends Component {
-  componentDidMount() {
-    // disableBodyScroll(null);
-    document.body.style.position = "fixed";
-  }
 
   componentWillUnmount() {
-    // enableBodyScroll();
-    document.body.style.position = "relative";
+    if (isIOSDevice()) {
+      enableBodyScroll(null);
+    }
+  }
+
+  onModalMount = () => {
+    if (isIOSDevice()) {
+      disableBodyScroll(null);
+    }
   }
 
   render() {
@@ -20,6 +24,7 @@ class Modal extends Component {
         disableBackdropClick
         open={this.props.open}
         onClose={this.props.onClose}
+        onRendered={this.onModalMount}
         classes={{ paper: 'body', paperScrollPaper: 'paperScroll' }}
       >
         {this.props.children}

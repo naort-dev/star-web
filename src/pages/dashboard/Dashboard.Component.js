@@ -13,7 +13,7 @@ const Dashboard = props => {
     setLoader(false);
   };
   const goBack = () => {
-    props.history.goBack();
+    props.history.push('/manage');
   };
   const buttonClickHandler = card => {
     props.history.push(card.data.url);

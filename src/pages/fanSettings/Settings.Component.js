@@ -24,7 +24,7 @@ const Settings = props => {
   const [redirect, setRedirect] = useState(false);
 
   const goBack = () => {
-    props.history.goBack();
+    props.history.push('/manage');
   };
 
   const getNotifications = () => {

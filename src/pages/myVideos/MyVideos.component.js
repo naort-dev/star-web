@@ -35,7 +35,7 @@ class MyVideos extends React.Component {
   }
 
   onBackClick = () => {
-    this.props.history.goBack();
+    this.props.history.push('/manage');
   };
 
   onOpenClick = bookingId => () => {
