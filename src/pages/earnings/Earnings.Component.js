@@ -8,7 +8,7 @@ import { Layout, Wrapper } from './styled';
 const Earnings = props => {
   const [loader, setLoader] = useState(false);
   const goBack = () => {
-    props.history.goBack();
+    props.history.push('/manage');
   };
   const getDataSuccess = () => {
     setLoader(false);
