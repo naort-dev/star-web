@@ -6,6 +6,9 @@ export const Layout = styled.section`
   background: #fff;
   .leftArrow {
     position: absolute;
+    @media (min-width: 1280px){
+      display: none;
+    }
   }
   .save-button{
     min-height: 40px;
