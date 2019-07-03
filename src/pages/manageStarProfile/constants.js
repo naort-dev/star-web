@@ -34,5 +34,6 @@ export const STAR_PROFILE = {
     description: 'How much should your fans pay for you to create a video?',
     title: 'Set your price and limits',
     confirmationTitle: 'Are you sure?',
+    titleMobile: 'Price & Limits',
   }
 };

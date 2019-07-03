@@ -15,7 +15,7 @@ import Loader from '../Loader';
 import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
-import { fetchActivitiesList } from '../../store/shared/actions/getActivities'
+import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
 import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
@@ -50,8 +50,8 @@ const BookingCard = (props) => {
   }
 
   const changePaymentSuccess = (state) => () => {
-    resetPaymentDetails();
     togglePaymentSuccess(state);
+    resetPaymentDetails();
   }
 
   const updateRequestData = (newData) => {
@@ -77,8 +77,13 @@ const BookingCard = (props) => {
         loaderAction: props.loaderAction,
       })
     } else if (type === 'rating') {
+      props.fetchActivitiesList(newRequestData.booking_id, 0, true);
       newRequestData.has_rating = true;
       setRequestData(newRequestData)
+    } else if (type === 'reaction') {
+      props.fetchActivitiesList(newRequestData.booking_id, 0, true);
+      newRequestData.has_reaction = true;
+      setRequestData(newRequestData);
     }
   }
 
@@ -188,6 +193,7 @@ const BookingCard = (props) => {
                     <StarView
                       bookingData={requestData}
                       fetchActivitiesList={props.fetchActivitiesList}
+                      resetActivitiesList={props.resetActivitiesList}
                       loaderAction={props.loaderAction}
                       updateToast={props.updateToast}
                       activitiesList={props.activitiesList}
@@ -199,6 +205,7 @@ const BookingCard = (props) => {
                     <FanView
                       bookingData={requestData}
                       fetchActivitiesList={props.fetchActivitiesList}
+                      resetActivitiesList={props.resetActivitiesList}
                       toggleContactSupport={props.toggleContactSupport}
                       updateRequestData={updateRequestData}
                       loaderAction={props.loaderAction}
@@ -237,6 +244,7 @@ BookingCard.propTypes = {
   toggleContactSupport: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
+  resetActivitiesList: PropTypes.func.isRequired,
   activitiesList: PropTypes.object.isRequired,
 }
 
@@ -249,6 +257,7 @@ const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
   fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh)),
+  resetActivitiesList: () => dispatch(resetActivitiesList()),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),
 })
