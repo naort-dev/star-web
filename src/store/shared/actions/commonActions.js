@@ -13,6 +13,7 @@ export const Actions = {
   SET_VIDEO_UPLOADED_FLG: 'SET_VIDEO_UPLOADED_FLG',
   SET_TOAST: 'SET_TOAST',
   AUDIO_RECORD_HANDLER: 'AUDIO_RECORD_HANDLER',
+  PROGRESS_LOADER: 'PROGRESS_LOADER',
 };
 
 export const recordTrigger = () => ({
@@ -51,4 +52,9 @@ export const updateToast = toastObj => ({
 export const audioRecordHandler = audioFlags => ({
   type: Actions.AUDIO_RECORD_HANDLER,
   audioFlags,
+});
+
+export const progressLoader = data => ({
+  type: Actions.PROGRESS_LOADER,
+  data,
 });

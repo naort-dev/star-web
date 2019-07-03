@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '../../styles/mediaQueries';
 
 const CommentStyled = styled.div`
   display: inline-block;
@@ -79,6 +80,9 @@ CommentStyled.Comment = styled.span`
       padding: 6px;
       min-height: auto;
       font-size: 12px;
+      ${media.mobileScreen} {
+        width: 65px;
+      }
     }
     .text-description {
       font-family: Gilroy-Light;
@@ -96,10 +100,13 @@ CommentStyled.Comment = styled.span`
     margin-top: 6px;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 6px;
-    left: 15px;
-    right: 8px;
+    position: relative;
+    ${media.webView} {
+      position: absolute;
+      bottom: 6px;
+      left: 15px;
+      right: 8px;
+    }
     .more-action-root {
       width: 10px;
       height: 10px;

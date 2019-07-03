@@ -14,7 +14,7 @@ export const Layout = styled.section`
   }
   .contentPadding {
     ${media.mobileScreen} {
-      height: calc(100% - 178px)
+      height: calc(100% - 178px) !important;
     }
   }
   .termsWrapper {

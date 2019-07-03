@@ -126,6 +126,8 @@ class ScriptBuilder extends Component {
         public_request: !this.props.checked,
         from_audio_file: this.getAudioFile('from'),
         to_audio_file: this.getAudioFile('for'),
+        host_audio_file: this.getAudioFile('host'),
+        honor_audio_file: this.getAudioFile('honor'),
         type: this.props.category,
         requestRelationshipData: this.props.bookingData.relationshipValue,
         stargramto: this.props.bookingData.hostName,

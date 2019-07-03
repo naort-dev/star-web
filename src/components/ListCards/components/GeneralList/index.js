@@ -22,13 +22,13 @@ const GeneralList = (props) => {
     } else if (requestTypes[props.data.request_type] === 'Shout-out') {
       return (
         <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout <br /> for <HeadingBold>{props.data.fan}</HeadingBold>
         </MediumText>
       )
     }
     return (
       <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> announcement for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> announcement <br /> for <HeadingBold>{props.data.fan}</HeadingBold>
       </MediumText>
     )
   }
