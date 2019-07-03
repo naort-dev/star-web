@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { times, random } from 'lodash';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { isIOSDevice } from '../../utils/checkOS';
+// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+// import { isIOSDevice } from '../../utils/checkOS';
 import PopupStyled from './styled';
 import { CloseButton } from '../../styles/CommonStyled';
 
@@ -22,16 +22,16 @@ class RequestFlowPopup extends React.Component {
   }
 
   componentWillUnmount() {
-    if (isIOSDevice()) {
-      enableBodyScroll(this.popupContent.current);
-    }
+    // if (isIOSDevice()) {
+    //   enableBodyScroll(this.popupContent.current);
+    // }
     window.removeEventListener('resize', this.handleResize);
   }
  
   onModalMount = () => {
-    if (isIOSDevice()) {
-      disableBodyScroll(this.popupContent.current);
-    }
+    // if (isIOSDevice()) {
+    //   disableBodyScroll(this.popupContent.current);
+    // }
     if (this.props.setScrollRef) {
       this.props.setScrollRef(this.popupContent.current);
     }
