@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EmptyText } from 'styles/CommonStyled'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styled from 'styled-components';
 import Loader from '../../components/Loader';
@@ -26,7 +27,7 @@ export const withScroll = (WrappedComponent) => {
     }
   `;
 
-  const NoDataText = styled.span`
+  const NoDataText = styled(EmptyText)`
     position: absolute;
     left: 0;
     right: 0;
