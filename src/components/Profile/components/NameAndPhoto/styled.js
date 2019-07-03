@@ -30,6 +30,11 @@ export const Layout = styled.section`
       display: none;
     }
   }
+  .arrow-head {
+    width: 14px;
+    height: 28px;
+    top: 110px;
+  }
 `;
 
 Layout.SubheaderWrap = styled.div`
