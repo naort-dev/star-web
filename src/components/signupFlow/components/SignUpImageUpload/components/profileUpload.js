@@ -191,8 +191,9 @@ export default class ProfileUpload extends React.Component {
             <Loader />
             :
             <React.Fragment>
-              <ImageUpload.ProfileInputButton image={this.props.image} takePhoto={this.state.recording}>
+              <ImageUpload.ProfileInputButton className="profile-img-wrapper" image={this.props.image} takePhoto={this.state.recording}>
                 <ImageUpload.ProfileImageWrapper
+                  className='profile-image-wrapper'
                   imageUrl={this.state.finalImage}
                 >
                   <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
@@ -204,6 +205,7 @@ export default class ProfileUpload extends React.Component {
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
                 <ImageUpload.ProfileImageWrapper
+                className='profile-image-wrapper'
                   imageUrl={this.state.finalImage}
                   onClick={this.props.onTakePicture}
                 >
@@ -215,12 +217,13 @@ export default class ProfileUpload extends React.Component {
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
               </ImageUpload.ProfileInputButton>
-              <ImageUpload.UploadedImage image={this.props.image}>
+              <ImageUpload.UploadedImage className='upload-image' image={this.props.image}>
                 <ImageUpload.ProfileImageWrapper
+                className='profile-image-wrapper'
                   imageUrl={this.props.image}
                 >
                 </ImageUpload.ProfileImageWrapper>
-                <ImageUpload.ButtonWrapper isMultiline={this.props.multiline? true : false}>
+                <ImageUpload.ButtonWrapper isMultiline={this.props.multiline? true : false} className="profile-btn">
                   <ImageUpload.CropperLightButton isMultiline={this.props.multiline? true : false} onClick={this.props.onTakePicture}>
                     <FontAwesomeIcon icon={faCamera} className="icon take-picture"/>
                     Take picture
