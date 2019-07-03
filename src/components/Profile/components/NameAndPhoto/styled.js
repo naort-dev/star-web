@@ -27,6 +27,11 @@ export const Layout = styled.section`
   .arrow-head {
     top: 35px;
   }
+  .arrow-head {
+    width: 14px;
+    height: 28px;
+    top: 110px;
+  }
 `;
 
 Layout.SubheaderWrap = styled.div`

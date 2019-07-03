@@ -9,7 +9,7 @@ import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
 import ToolTip from 'components/ToolTip';
-import { checkMediaRecorderSupport } from 'utils/checkOS';
+import { checkMediaRecorderSupport, audioVideoSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
 import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
@@ -64,7 +64,7 @@ const Question = props => {
   });
   const [playing, setPlaying] = useState(false);
   const [isQuestion, updateIsQuestion] = useState(true);
-
+  const [noSupport, updateSupport] = useState(false);
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
     props.recordTrigger();
     props.playPauseMedia();
@@ -260,6 +260,17 @@ const Question = props => {
     );
   };
 
+  const recordLinkHandler = className => {
+    if (noSupport) {
+      if (isIOSDevice()) {
+        return getRecordLink(className);
+      }
+    } else {
+      return getRecordLink(className);
+    }
+    return null;
+  };
+
   const getQuestionList = () => {
     if (props.bookedItem.request_type === 3) {
       return questions;
@@ -300,10 +311,24 @@ const Question = props => {
       if (!isEmpty(stargramfrom))
         return (
           <React.Fragment>
+            {' '}
             from <span className="bold-head-name">{stargramfrom}</span>
             {getToolTip(audioFile)}
           </React.Fragment>
         );
+      return null;
+    };
+
+    const getFor = (stargramto, to_audio_file) => {
+      if (!isEmpty(stargramto)) {
+        return (
+          <React.Fragment>
+            {' '}
+            for <span className="bold-head-name">{stargramto}</span>
+            {getToolTip(to_audio_file)}
+          </React.Fragment>
+        );
+      }
       return null;
     };
 
@@ -318,8 +343,8 @@ const Question = props => {
         <React.Fragment>
           Record a{' '}
           <span className="bold-head-name">{props.bookedItem.occasion}</span>{' '}
-          {occasion} for <span className="bold-head-name">{stargramto} </span>
-          {getToolTip(to_audio_file)}
+          {occasion}
+          {getFor(stargramto, to_audio_file)}
           {getFrom(stargramfrom, from_audio_file)}
         </React.Fragment>
       );
@@ -345,7 +370,7 @@ const Question = props => {
   const getLinkButtons = className => {
     if (props.recorded || isIOSDevice())
       return getFileUpload([`uploadLink ${className}`]);
-    return getRecordLink(className);
+    return recordLinkHandler(className);
   };
 
   const closeSuccess = () => {
@@ -384,7 +409,15 @@ const Question = props => {
     });
   }, [props.bookedItem, props.buttonLabel]);
 
+  const checkDeviceSupport = async () => {
+    const deviceSupport = await audioVideoSupport('videoinput');
+    if (!deviceSupport) {
+      updateSupport(true);
+    }
+  };
+
   useEffect(() => {
+    checkDeviceSupport();
     audio.addEventListener('ended', onAudioEnded);
   }, []);
 

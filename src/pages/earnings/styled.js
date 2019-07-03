@@ -42,7 +42,7 @@ export const Layout = styled.section`
   }
 
   .middle-section {
-    max-width: 580px;
+    max-width: 620px;
     margin: 0 auto;
     position: relative;
     ${media.smallScreen} {
