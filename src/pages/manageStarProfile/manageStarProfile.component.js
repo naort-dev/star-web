@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
-import SubHeader from '../../components/SubHeader';
+import { BackArrow } from '../../styles/CommonStyled';
 import Header from '../../components/Header';
 import { Layout, Content, ProgressBarWrapper } from './styled';
 import { STAR_PROFILE } from './constants';
@@ -18,7 +18,7 @@ const ManageStarProfile = props => {
   const [redirect, setRedirect] = useState(false);
   const [redirecttoProfile, setredirecttoProfile] = useState(false);
 
-  const isMobile = useMedia('(max-width: 831px)');
+  const isMobile = useMedia('(max-width: 1279px)');
   const isIpad = useMedia('(min-width:832px) and (max-width: 1279px)');
 
   useEffect(() => {
@@ -37,7 +37,9 @@ const ManageStarProfile = props => {
   const closeProfileModal = () => {
     setredirecttoProfile(true);
   };
-
+  const goToManage = () => {
+    props.history.push('/manage');
+  }
   const linkStatus = link => {
     const celebrityDetails = props.userDetails.settings_celebrityDetails;
     const userDetails = props.userDetails.settings_userDetails;
@@ -131,6 +133,7 @@ const ManageStarProfile = props => {
   }
   return (
     <Layout>
+       <BackArrow className="leftArrow" onClick={goToManage}/>
       <Layout.Header className="top-heading">My Profile</Layout.Header>
       <Content.CommonContent>
         <Content.Description>
