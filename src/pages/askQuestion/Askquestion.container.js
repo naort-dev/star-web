@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Askquestion from './Askquestion.component';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
-import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { toggleRequestFlow } from '../../store/shared/actions/toggleModals';
@@ -23,7 +22,6 @@ const mapDispatchToProps = dispatch => ({
   onPlayVideo: () => dispatch(playVideo()),
   onRerecord: () => dispatch(reRecord()),
   onClearStreams: () => dispatch(clearStreams()),
-  setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),

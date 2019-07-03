@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 const LandingStyled = styled.div`
-  margin-top: 60px;
-  height: calc(100vh - 60px);
-  background-color: #F8F8F8;
-  @media(min-width: 1920px) {
-    margin-top: 72px;
-    height: calc(100vh - 72px);
+  margin-top: 0;
+  @media(min-width: 832px) {
+    margin-top: 0;
+    height: auto;
+  }
+`;
+
+LandingStyled.Container = styled.div`
+  @media(min-width: 832px) {
+    display: block;
   }
 `;
 

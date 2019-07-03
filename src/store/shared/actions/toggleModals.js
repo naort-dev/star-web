@@ -1,12 +1,13 @@
 export const TOGGLE_MODALS = {
-  toggleLogin: 'toggleLogin/TOGGLEMODAL',
-  toggleSignup: 'toggleSignup/TOGGLEMODAL',
-  toggleRefer: 'toggleRefer/TOGGLEREFER',
-  setRequestFlow: 'setRequestFlow/TOGGLEMODAL',
-  toggleRequestFlow: 'toggleRequestFlow/TOGGLEMODAL',
-  resetRequestFlow: 'resetRequestFlow/TOGGLEMODAL',
-  toggleRequestPopup: 'toggleRequestPopup/TOGGLEMODAL',
-  togglePopup: 'togglePopup/TOGGLEMODAL',
+  toggleLogin: 'toggleLogin/TOGGLE_MODAL',
+  toggleSignup: 'toggleSignup/TOGGLE_MODAL',
+  toggleQuickView: 'toggleQuickView/TOGGLE_QUICK_VIEW',
+  setRequestFlow: 'setRequestFlow/TOGGLE_MODAL',
+  toggleRequestFlow: 'toggleRequestFlow/TOGGLE_MODAL',
+  resetRequestFlow: 'resetRequestFlow/TOGGLE_MODAL',
+  toggleBookingModal: 'toggleBookingModal/TOGGLE_MODAL',
+  toggleUpdateBooking: 'toggleUpdateBooking/TOGGLE_MODAL',
+  toggleContactSupport: 'toggleContactSupport/TOGGLE_MODAL',
 };
 
 export const toggleLogin = state => ({
@@ -22,9 +23,10 @@ export const toggleSignup = (state, signUpType, step, enableClose) => ({
   enableClose,
 });
 
-export const toggleRefer = state => ({
-  type: TOGGLE_MODALS.toggleRefer,
+export const toggleQuickView = (state, modalData) => ({
+  type: TOGGLE_MODALS.toggleQuickView,
   state,
+  modalData,
 });
 
 export const toggleRequestFlow = state => ({
@@ -43,12 +45,22 @@ export const resetRequestFlow = () => ({
   type: TOGGLE_MODALS.resetRequestFlow,
 });
 
-export const togglePopup = state => ({
-  type: TOGGLE_MODALS.togglePopup,
+export const toggleUpdateBooking = (state, requestId, starMode, requestData) => ({
+  type: TOGGLE_MODALS.toggleUpdateBooking,
+  state,
+  requestId,
+  starMode,
+  requestData,
+});
+
+export const toggleContactSupport = state => ({
+  type: TOGGLE_MODALS.toggleContactSupport,
   state,
 });
 
-export const toggleRequestPopup = state => ({
-  type: TOGGLE_MODALS.toggleRequestPopup,
+export const toggleBookingModal = (state, bookingData, starMode) => ({
+  type: TOGGLE_MODALS.toggleBookingModal,
   state,
+  bookingData,
+  starMode,
 });

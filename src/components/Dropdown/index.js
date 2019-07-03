@@ -9,14 +9,17 @@ export default class Dropdown extends React.Component {
     super(props);
     const list = props.options
       ? props.options.map(option => ({
-          label: option[props.labelKey],
-          value: option[props.valueKey],
-        }))
+        label: option[props.labelKey],
+        value: option[props.valueKey],
+      }))
       : [];
+    const selected = list.find(
+      option => option.value === props.selected[props.valueKey],
+    );
     this.state = {
       showDropList: false,
       list,
-      selected: null,
+      selected,
     };
     this.cursorPos = -1;
     this.optionList = React.createRef();
@@ -34,14 +37,17 @@ export default class Dropdown extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { list } = prevState;
+    let { list, selected } = prevState;
     list = nextProps.options
       ? nextProps.options.map(option => ({
-          label: option[nextProps.labelKey],
-          value: option[nextProps.valueKey],
-        }))
+        label: option[nextProps.labelKey],
+        value: option[nextProps.valueKey],
+      }))
       : [];
-    return { list };
+    selected = list.find(
+      option => option.value === nextProps.selected[nextProps.valueKey],
+    );
+    return { list, selected };
   }
 
   toggleDropDown = state => () => {
@@ -49,18 +55,18 @@ export default class Dropdown extends React.Component {
     this.setState({ showDropList: state });
   };
 
-  checkWindowClick = (e) => {
+  checkWindowClick = e => {
     if (this.selectRef.current && !this.selectRef.current.contains(e.target)) {
       this.toggleDropDown(false)();
     }
   };
 
-  findActualOption = (option) => {
+  findActualOption = option => {
     const { options, labelKey } = this.props;
     return options.find(optionItem => optionItem[labelKey] === option.label);
-  }
+  };
 
-  selectOption = option => (event) => {
+  selectOption = option => event => {
     if (event.nativeEvent.type === 'click') {
       this.setState({ selected: option });
       this.props.onChange(this.findActualOption(option));
@@ -72,7 +78,7 @@ export default class Dropdown extends React.Component {
     }
   };
 
-  handleListKeyUp = (event) => {
+  handleListKeyUp = event => {
     const { showDropList } = this.state;
     const { cursorPos } = this;
     const { options } = this.props;
@@ -89,12 +95,18 @@ export default class Dropdown extends React.Component {
     }
   };
 
+  handleScrollbarsMount = node => {
+    this.optionList.current = node && node.view;
+  };
+
   render() {
     const { showDropList, list, selected } = this.state;
-    const { placeHolder } = this.props;
+    const { placeHolder, secondary, rootClass } = this.props;
     return (
-      <DropdownStyled>
+      <DropdownStyled className={`cus-drop ${rootClass}`}>
         <DropdownStyled.Select
+          secondary={secondary}
+          showList={showDropList}
           onClick={this.toggleDropDown(!showDropList)}
           tabIndex="0"
           onKeyUp={this.handleListKeyUp}
@@ -106,20 +118,28 @@ export default class Dropdown extends React.Component {
           </DropdownStyled.CurrentSelected>
           <DropdownStyled.DropIcon />
           {showDropList && (
-            <DropdownStyled.OptionsList>
-              <Scrollbars>
-                <DropdownStyled.Options innerRef={this.optionList}>
-                  {list.map(item => (
-                    <DropdownStyled.OptionItem
-                      tabIndex="0"
-                      onClick={this.selectOption(item)}
-                      onKeyUp={this.selectOption(item)}
-                      key={item.value}
-                    >
-                      {item.label}
-                    </DropdownStyled.OptionItem>
-                  ))}
-                </DropdownStyled.Options>
+            <DropdownStyled.OptionsList secondary={secondary}>
+              <Scrollbars
+                className={this.props.classes.scrollbar}
+                autoHeight
+                autoHeightMin={0}
+                autoHeightMax={346}
+                ref={this.handleScrollbarsMount}
+                renderView={props => (
+                  <div {...props} className="drop-custom-scroll" />
+                )}
+              >
+                {list.map(item => (
+                  <DropdownStyled.Options
+                    secondary={secondary}
+                    tabIndex="0"
+                    onClick={this.selectOption(item)}
+                    onKeyUp={this.selectOption(item)}
+                    key={item.value}
+                  >
+                    {item.label}
+                  </DropdownStyled.Options>
+                ))}
               </Scrollbars>
             </DropdownStyled.OptionsList>
           )}
@@ -132,13 +152,21 @@ export default class Dropdown extends React.Component {
 Dropdown.defaultProps = {
   placeHolder: 'Select',
   className: '',
+  rootClass: 'drop-down',
+  secondary: false,
+  selected: {},
+  classes: {},
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   labelKey: PropTypes.string.isRequired,
   valueKey: PropTypes.string.isRequired,
+  selected: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   placeHolder: PropTypes.string,
   className: PropTypes.string,
+  secondary: PropTypes.bool,
+  rootClass: PropTypes.string,
+  classes: PropTypes.object,
 };

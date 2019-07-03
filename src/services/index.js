@@ -25,3 +25,17 @@ export const validatePromo = (promo) => {
   }))
     .then(resp => resp.data)
 }
+
+export const updateUnseenCount = () => {
+  return (fetch(Api.updateUnseenCount)
+    .then(resp => resp.data)
+  )
+}
+
+export const contactSupport = (topic, comments) => {
+  return (fetch.post(Api.contactSupport, {
+    topic,
+    comments,
+  }))
+    .then(resp => resp.data)
+}

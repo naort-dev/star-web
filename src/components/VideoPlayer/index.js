@@ -1,5 +1,8 @@
 import React from 'react';
-import { Player, BigPlayButton, LoadingSpinner } from 'video-react';
+import { Player, BigPlayButton, LoadingSpinner, ControlBar } from 'video-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { CheckInViewport } from '../../utils/domUtils';
 import './video';
 import VideoRenderDiv from './styled';
 
@@ -18,17 +21,22 @@ export default class VideoPlayer extends React.Component {
       },
       videoWrapperRef: null,
       videoHeight: null,
+      isPlaying: false,
     };
+    this.videoRef = React.createRef();
   }
 
   componentDidMount() {
+    this.checkInViewPort();
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
-
-    window.addEventListener('resize', this.setVideoHeight);
+    window.addEventListener('scroll', this.checkInViewPort);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.pauseVideo !== prevProps.pauseVideo && this.props.pauseVideo) {
+    if (
+      this.props.pauseVideo !== prevProps.pauseVideo &&
+      this.props.pauseVideo
+    ) {
       this.player.pause();
     }
   }
@@ -54,87 +62,139 @@ export default class VideoPlayer extends React.Component {
       };
     }
     return null;
-  }
+  };
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.setVideoHeight);
+    window.removeEventListener('scroll', this.checkInViewPort);
   }
 
-  setVideoHeight = () => {
-    let videoHeight;
-    if (this.state.videoWrapperRef && this.props.ratio) {
-      videoHeight = this.state.videoWrapperRef.clientWidth / this.props.ratio;
+  checkInViewPort = () => {
+    const videoElement = this.videoRef.current;
+    const { player } = this.player.getState();
+    const visible = CheckInViewport(videoElement);
+    if (visible && player.paused && this.props.autoPlay) {
+      this.toggleVideoPlay();
+    } else if (!visible) {
+      this.player.pause();
     }
-    this.setState({ videoHeight });
-  }
+  };
 
-  setVideoWrapperRef = (node) => {
-    if (!this.state.videoWrapperRef) {
-      this.setState({ videoWrapperRef: node }, () => {
-        this.setVideoHeight();
-      });
+  pauseAllVideos = () => {
+    const videoElements = Array.prototype.slice.call(
+      document.getElementsByTagName('video'),
+    );
+    videoElements.forEach(video => {
+      if (!video.paused) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  };
+
+  toggleVideoPlay = () => {
+    const { player } = this.player.getState();
+    this.pauseAllVideos();
+    if (player.paused) {
+      this.player.play();
+    } else {
+      this.player.pause();
     }
-  }
+  };
 
   handleStateChange = (state, prevState) => {
-    if (state.ended && this.state.primary.video === this.props.primarySrc && this.state.secondary.video) {
+    if (
+      state.ended &&
+      this.state.primary.video === this.props.primarySrc &&
+      this.state.secondary.video
+    ) {
       this.swapVideos();
-    } else if (prevState.ended !== state.ended && state.ended && this.state.primary.video === this.props.secondarySrc) {
+    } else if (
+      prevState.ended !== state.ended &&
+      state.ended &&
+      this.state.primary.video === this.props.secondarySrc
+    ) {
       if (this.props.onVideoEnded) {
         this.props.onVideoEnded();
       }
-    } else if (prevState.ended !== state.ended && state.ended && this.state.primary.video === this.props.primarySrc && !this.state.secondary.video) {
+    } else if (
+      prevState.ended !== state.ended &&
+      state.ended &&
+      this.state.primary.video === this.props.primarySrc &&
+      !this.state.secondary.video
+    ) {
       if (this.props.onVideoEnded) {
         this.props.onVideoEnded();
       }
     }
-    if (prevState.hasStarted !== state.hasStarted && state.hasStarted && this.props.onVideoStart) {
+    if (
+      prevState.hasStarted !== state.hasStarted &&
+      state.hasStarted &&
+      this.props.onVideoStart
+    ) {
       this.props.onVideoStart();
     }
-  }
+    if (state.error !== null && this.props.onError) {
+      this.props.onError();
+    }
+    this.setState({
+      isPlaying: !state.paused,
+    });
+  };
 
   swapVideos = () => {
     const primary = this.state.secondary;
     const secondary = this.state.primary;
-    this.setState({
-      primary: {
-        thumbnail: '',
-        video: '',
+    this.setState(
+      {
+        primary: {
+          thumbnail: '',
+          video: '',
+        },
+        fullScreen: true,
       },
-      fullScreen: true,
-    }, () => {
-      this.player.play();
-    });
-    setTimeout(() => this.setState({ primary, secondary, fullScreen: false }), 500);
-  }
+      () => {
+        this.player.play();
+      },
+    );
+    setTimeout(
+      () => this.setState({ primary, secondary, fullScreen: false }),
+      500,
+    );
+  };
 
   render() {
+    const { props } = this;
+    const { isPlaying } = this.state;
     return (
-      <VideoRenderDiv
-        innerRef={node => this.setVideoWrapperRef(node)}
-        height={this.state.videoHeight}
-      >
-        {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo
-          onClick={this.swapVideos}
-          src={this.state.secondary.thumbnail}
-          fullScreen={this.state.fullScreen}
-        />}
-        <div id="player">
+      <VideoRenderDiv onClick={this.toggleVideoPlay} innerRef={this.videoRef}>
+        {this.state.secondary.thumbnail && (
+          <VideoRenderDiv.answerVideo
+            onClick={this.swapVideos}
+            src={this.state.secondary.thumbnail}
+            fullScreen={this.state.fullScreen}
+          />
+        )}
+        <div className="player">
           <Player
             playsInline
-            ref={player => this.player = player}
+            ref={player => (this.player = player)}
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            autoPlay={this.state.primary.video === this.props.secondarySrc || this.props.autoPlay}
-            
+            {...this.props}
           >
             <LoadingSpinner />
-            <BigPlayButton position="center" />
+            <ControlBar autoHide={false} disabled={!props.controls} />
+            <BigPlayButton position="center-bottom" disabled />
           </Player>
+          <VideoRenderDiv.ControlIconWrapper className="player-icon-wrap">
+            <VideoRenderDiv.ControlIcon className="play-button">
+              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+            </VideoRenderDiv.ControlIcon>
+            {this.props.renderCustomText()}
+          </VideoRenderDiv.ControlIconWrapper>
         </div>
       </VideoRenderDiv>
     );
   }
 }
-

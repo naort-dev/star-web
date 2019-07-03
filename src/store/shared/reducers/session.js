@@ -1,10 +1,12 @@
 import { LOGIN } from '../actions/login';
+import { REGISTER } from '../actions/register';
 
 const initialState = {
   isLoggedIn: false,
   loading: false,
   auth_token: '',
   incorrectError: '',
+  tempDetails: {},
   error: {
     has: false,
     message: '',
@@ -30,9 +32,22 @@ export default (state = { ...initialState }, action) => {
         loading: false,
         statusCode: undefined,
         auth_token: action.data.user,
+        tempDetails: {},
         starRole: action.data.user.celebrity,
       };
 
+    case REGISTER.updateTempDetails:
+      return {
+        ...state,
+        loading: false,
+        tempDetails: action.data.user,
+      }
+    case REGISTER.clearErrors:
+      return {
+        ...state,
+        loading: false,
+        incorrectError: '',
+      }
     case LOGIN.incorrect:
       return {
         ...state,
@@ -65,6 +80,7 @@ export default (state = { ...initialState }, action) => {
       return {
         ...initialState,
       };
+      
     case LOGIN.reset:
       return initialState;
 

@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const commonPaths = require('./commonPaths');
 const SriPlugin = require('webpack-subresource-integrity');
@@ -23,6 +24,7 @@ module.exports = {
     public: process.env.DOMAIN_NAME,
   },
   plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new UglifyJSPlugin({
       sourceMap: true,
       cache: true,
@@ -32,7 +34,7 @@ module.exports = {
         compress: {
           warnings: false,
           drop_debugger: true,
-          // drop_console: true,
+          drop_console: true,
         },
         output: {
           comments: false,
@@ -44,4 +46,15 @@ module.exports = {
       enabled: true,
     }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "initial",
+        },
+      },
+    },
+  },
 };

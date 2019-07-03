@@ -12,8 +12,20 @@ export const getMobileOperatingSystem = () => {
   return false;
 };
 
+export const isIOSDevice = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return true;
+  }
+  return false;
+};
+
 export const checkMediaRecorderSupport = () => {
-  if (window.navigator && (window.navigator.mediaDevices && window.navigator.mediaDevices.getUserMedia)) {
+  const { navigator } = window;
+  if (
+    navigator &&
+    (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+  ) {
     if (window.MediaRecorder) {
       return true;
     }
@@ -22,8 +34,10 @@ export const checkMediaRecorderSupport = () => {
 };
 
 export const checkDevice = () => {
-  return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-    .then(() => true, () => false);
+  return window.navigator.mediaDevices
+    .getUserMedia({ audio: true, video: true })
+    .then(() => true)
+    .catch(() => false);
 };
 
 export const checkPrerender = () => {
@@ -32,4 +46,34 @@ export const checkPrerender = () => {
     return true;
   }
   return false;
+};
+
+export const audioVideoSupport = type => {
+  if (checkMediaRecorderSupport()) {
+    return navigator.mediaDevices
+      .enumerateDevices()
+      .then(devices => {
+        let haveSupport = false;
+        if (devices) {
+          if (type === 'audioinput') {
+
+            if (devices.find(device => device.kind === "audioinput")) {
+              haveSupport = true;
+            }
+          } else if (type === 'videoinput') {
+
+            if (devices.find(device => device.kind === "audioinput") && devices.find(device => device.kind === "videoinput")) {
+              haveSupport = true;
+            }
+          }
+        }
+        return haveSupport;
+      })
+      .catch(() => {
+        return false
+      });
+  }
+  return new Promise((resolve, reject) => {
+    reject(Error(false));
+  });
 };

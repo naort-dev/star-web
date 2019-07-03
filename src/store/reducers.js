@@ -3,33 +3,31 @@ import { LOGIN } from './shared/actions/login';
 
 import config from './shared/reducers/config';
 import session from './shared/reducers/session';
-import featuredStars from '../pages/landingNew/reducers/featuredStars';
-import trendingStars from '../pages/landingNew/reducers/trendingStars';
+import featuredStars from '../pages/landing/reducers/featuredStars';
+import trendingStars from '../pages/landing/reducers/trendingStars';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
-import celebDetails from '../pages/starProfile/reducers/celebDetails';
-import celebVideos from '../pages/starProfile/reducers/celebVideos';
+import starDetails from '../pages/starProfile/reducers';
 import professionsList from './shared/reducers/professionsList';
+import signupDetails from './shared/reducers/signupDetails';
 import groupTypes from './shared/reducers/groupTypes';
 import suggestionsList from './shared/reducers/suggestionsList';
 import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
-import favouritesList from '../pages/favourites/reducers/favouritesList';
-import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
-import myVideosList from '../pages/requests/reducers/myVideosList';
+import favouritesList from '../pages/favoriteStars/reducers/favouritesList';
+import occasionList from '../pages/Purchase/reducers/occasionList';
+import bookings from '../pages/Bookings/reducers';
+import myVideos from '../pages/myVideos/reducers';
 import groupSupporters from '../pages/starSupporters/reducers';
-import earningsList from '../pages/earnings/reducers/earningsList';
+import groupListing from '../pages/groupListing/reducers';
 import bookingData from '../store/shared/reducers/bookings';
-import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
 import videoRecorder from '../store/shared/reducers/videoRecording';
 import videoUploader from '../store/shared/reducers/videoUploader';
-import requestHandler from '../pages/requests/reducers/requestHandler';
-import imageViewer from '../store/shared/reducers/imageViewer';
+import requestHandler from '../pages/myVideos/reducers/requestHandler';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 import referralDetails from '../store/shared/reducers/starReferral';
-import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
 import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
@@ -37,11 +35,14 @@ import changePassword from '../store/shared/reducers/changePassword';
 import socialMediaData from '../store/shared/reducers/socialMediaState';
 import photoUpload from './shared/reducers/photoUpload';
 import modals from './shared/reducers/modals';
+import activitiesList from '../store/shared/reducers/activitiesList';
 import commentsList from '../store/shared/reducers/commentsList';
 import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 import groupTypesListing from './shared/reducers/groupTypeListing';
-import groupListing from '../pages/groupListingNew/reducers';
+import commonReducer from './shared/reducers/commonReducer';
+import subCategoryList from './shared/reducers/subCategoryLists';
+import dashBoard from '../pages/dashboard/reducers';
 
 const appReducer = combineReducers({
   config,
@@ -52,30 +53,27 @@ const appReducer = combineReducers({
   professionsList,
   groupTypes,
   filters,
+  signupDetails,
   videosList,
-  groupListing,
   suggestionsList,
-  celebDetails,
-  celebVideos,
+  starDetails,
   favouritesList,
   followCelebrityStatus,
   occasionList,
-  myVideosList,
+  myVideos,
+  bookings,
   bookingData,
   otherRelation,
-  redirectReferrer,
+  activitiesList,
   paymentDetails,
   videoRecorder,
   videoUploader,
-  imageViewer,
   requestHandler,
   audioRecorder,
-  popupData,
   userDetails,
   saveSettings,
   stripeRegistration,
   changePassword,
-  earningsList,
   socialMediaData,
   referralDetails,
   commentsList,
@@ -84,7 +82,11 @@ const appReducer = combineReducers({
   groupDetails,
   memberList,
   groupSupporters,
+  groupListing,
   groupTypesListing,
+  commonReducer,
+  subCategoryList,
+  dashBoard,
 });
 
 const rootReducer = (state, action) => {
@@ -94,6 +96,7 @@ const rootReducer = (state, action) => {
     newState.config = state.config;
     newState.groupTypes = state.groupTypes;
     newState.groupTypesListing = state.groupTypesListing;
+    newState.professionsList = state.professionsList;
     newState.featuredStars = state.featuredStars;
     newState.trendingStars = state.trendingStars;
   }

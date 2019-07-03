@@ -29,3 +29,24 @@ export function iosPriceFinder(actualPrice, priceList) {
   }
   return iosPrice;
 }
+
+export function findCompletedVideo(bookingData) {
+  if (bookingData && bookingData.request_video) {
+    const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
+    return finalVideo;
+  }
+  return {}
+}
+
+export function parseQueryString(queryString) {
+  const  queryList = {}
+  if (queryString) {
+    const query = queryString.split('?')[1];
+    const queryItem = query.split('&');
+    queryItem.forEach((item) => {
+      const queryArray = item.split('=')
+      queryList[queryArray[0]] = queryArray[1];
+    })
+  }
+  return queryList;
+}

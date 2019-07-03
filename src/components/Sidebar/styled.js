@@ -1,210 +1,78 @@
-import styled, { keyframes } from 'styled-components';
-
-const menuEnter = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const menuLeave = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
+import styled from 'styled-components';
 
 const SidebarStyled = styled.div`
-  padding: 20px 0;
-  display: ${props => (props.menuActive ? 'block' : 'none')};
-  animation: ${props => (props.menuActive ? menuEnter : menuLeave)} 0.4s linear;
-  @media(min-width: 768px) {
-    padding: 0;
-    padding-top: 40px;
-    display: ${props => (props.menuActive ? 'flex' : 'none')};
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-  @media(min-width: 1025px) {
-    margin: 0;
-    padding-top: 30px;
-    display: inline-block;
-    float: left;
-    width: 100%;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 0;
-  }
-`;
-
-SidebarStyled.FilterWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  @media(min-width: 768px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0 40px;
-  }
-  @media(min-width: 1025px) {
-    margin: 0;
-    flex-direction: column;
-    margin-left: 20px;
-  }
 `;
 
-SidebarStyled.Filter = styled.div`
-`;
-
-SidebarStyled.ListWrapper = styled.ul`
-  padding: 20px 0;
-  line-height: 33px;
-  cursor: pointer;
-  @media(min-width: 768px) {
-    margin: 0 30px;
-  }
-  @media(min-width: 1025px) {
-    line-height: 36px;
-  }
-`;
-
-SidebarStyled.ListItem = styled.li`
-  font-family: 'Avenir-Light';
-  font-size: 16px;
-  color: ${props => props.selected && '#FF6C58'};
-  background-color: ${props => props.selected && '#F8F8F8'};
-  @media(min-width: 1920px) {
-    font-size: 18px;
-  }
-`;
-
-SidebarStyled.CategoryTitle = styled.span`
+SidebarStyled.AvatarImage = styled.div`
+  border: none;
+  border-radius: 50%;
   display: block;
-  padding: 0 40px;
-  color: ${props => props.selected && '#FF6C58'};
-  background-color: ${props => props.selected && '#F8F8F8'};
-  a {
-    display: block;
-  }
-  &:hover {
-    color: #FF6C58;
-    background-color: #F8F8F8;
-  }
-  @media(min-width: 768px) {
-    padding: 0 10px;
-    border-left: ${props => props.selected && '4px solid #FF6C58'};
-    margin-left: ${props => props.selected && '-4px'}; 
-    &:hover {
-      margin-left: -4px; 
-      border-left: 4px solid #FF6C58;
-    }
-  }
-`;
-
-SidebarStyled.InnerListItem = SidebarStyled.ListItem.extend`
-  background: transparent;
-`;
-
-SidebarStyled.LinkElement = styled.span`
+  width: 170px;
+  margin: 0 auto;
+  height: 170px;
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/fan-profile-pic.svg)')} no-repeat;
+  background-position: center center;
+  background-size: cover;
   position: relative;
 `;
 
-SidebarStyled.InnerListItemCount = styled.span`
-  font-family: 'Avenir-Medium';
-  font-size: 13px;
-  line-height: 18px;
-  margin-left: 5px;
-  padding: 0 11px;
-  text-align: center;
-  border-radius: 16px;
-  background-color: #FF6C58;
-  color: #fff;
-  display: inline-block;
+SidebarStyled.LinkList = styled.ul`
+  padding: 28px 25px;
+  @media(min-width: 832px) {
+    padding: 32px 0;
+  }
 `;
 
-SidebarStyled.InnerCategoryTitle = SidebarStyled.CategoryTitle.extend`
-  background: transparent;
-  color: ${props => (props.selected ? '#1f1f1f' : '#9E9E9E')};
-  &:hover {
-    color: #1f1f1f;
-    background: transparent;
-  }
-  @media(min-width: 768px) {
-    border: none;
-    margin: 0;
-    &:hover {
-      margin: 0;
-      border: none;
+SidebarStyled.LinkItem = styled.li`
+  font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+  color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
+  font-size: 18px;
+  cursor: pointer;
+  @media(max-width: 831px) {
+    &:not(:last-child) {
+      border-bottom: ${props => `1px solid ${props.theme.borderGrey}`};
     }
   }
-`;
-
-SidebarStyled.SubCategoryList = styled.ul`
-  margin-left: 60px;
-  width: calc(100% - 60px);
-  @media(min-width: 768px) {
-    margin-left: 20px;
-    width: calc(100% - 20px);
+  a, .log-out {
+    padding: 10px 0 7.35px;
+    display: flex;
   }
-`;
-
-SidebarStyled.SubCategoryListItem = styled.li`
-  color: ${props => (props.selected ? '#FF6C58' : '#333333')};
-  padding: 0 10px;
-  border-left: ${props => props.selected && '4px solid #FF6C58'};
-  margin-left: ${props => props.selected && '-4px'}; 
-`;
-
-SidebarStyled.SectionHeading = styled.h3`
-  font-family: 'Avenir-Bold';
-  font-size: 18px;
-  color: #333333;
-  padding: 10px 0;
-  margin: 0 40px;
-  @media(min-width: 1920px) {
-    font-size: 24px;
+  a {
+    justify-content: space-between;
+    align-items: center;
+    &:hover, &:focus, &:active {
+      font-family: Gilroy-Medium;
+      color: ${props => props.theme.flatBlue};
+    }
+    .notification-count {
+      display: flex;
+      line-height: 14px;
+      padding: 8px 10px 5px;
+      justify-content: center;
+      align-items: center;
+    }
+    @media(min-width: 832px) {
+      justify-content: flex-start;
+      align-items: flex-end;
+      line-height: 27px;
+      cursor: pointer;
+      .notification-count {
+        margin-left: 8px;
+      }
+    }
+    @media(max-width: 831px) {
+      color: #555;
+      line-height: 22px;
+    }
   }
-`;
-
-SidebarStyled.Separator = styled.span`
-  border-top: 1px solid #CCCCCC;
-  display: block;
-  margin: 0 40px;
-  @media(min-width: 768px) {
-    display: none;
-  }
-`;
-
-SidebarStyled.ApplyButton = styled.button`
-  position: fixed;
-  bottom: 0px;
-  background-color:#FF6C58 ; 
-  color: #fff;
-  padding: 12px 30px;
-  width:100%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size:14px;
-  font-family: 'Avenir-Bold';
-  outline:none;
-  cursor: pointer;
-  border: 2px solid #FF6C58;
-  margin-top:3%;
-  @media(min-width:1025px){
-    display: none;
-  }
-  @media(min-width: 768px) {
-    bottom: auto;
-    top: 75px;
-    right: 40px;
-    width: 100px;
+  & > span {
+    @media(max-width: 831px) {
+      color: #555;
+    }
   }
 `;
 
