@@ -52,12 +52,8 @@ const ActionBar = (props) => {
                   const response = await sendFeedback('reaction', props.bookingId, {fileType, fileName: resp.fileName});
                   props.loaderAction(false);
                   if (response) {
-                    onAction('reaction', reactionFile);
+                    onAction('reaction')(reactionFile);
                     onReactionComplete();
-                    setActionStates({
-                      ...actionStates,
-                      reaction: false,
-                    })
                     props.updateToast({
                       value: true,
                       message: 'Reaction file uploaded',
@@ -85,7 +81,7 @@ const ActionBar = (props) => {
     try {
       const response = await sendFeedback('rating', props.bookingId, {rating: `${rating}`});
       if (response) {
-        onAction('rating', rating);
+        onAction('rating')(rating);
         setActionStates({
           ...actionStates,
           rating: false,
