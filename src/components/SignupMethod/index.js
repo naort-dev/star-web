@@ -161,6 +161,7 @@ class SignupMethod extends React.Component {
       });
     } else if (source === 4) {
       const val = r;
+      console.log(val);
       const name = val.full_name.trim().split(' ');
       const firstName = name[0];
       const lastName = name[1];
