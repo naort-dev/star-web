@@ -103,6 +103,16 @@ const SetPriceAndCharity = props => {
     });
     return true;
   };
+
+  const backArrowClickHandler = () => {
+    if((enableCharity && !modifyDetails) || showCharity) {
+      !modifyDetails ? setenableCharity(false): setShowCharity(false);
+    } else if(confirmPrice) {
+      setconfirmPrice(false);
+    } else {
+      props.goBack();
+    }
+  }
   const saveCharityDetails = () => {
     setmodifyDetails(true);
     setShowCharity(false);
@@ -114,7 +124,7 @@ const SetPriceAndCharity = props => {
         const finalUserDetails = {
           celebrity_details: {
             rate: priceCharityData.price.value,
-            weekly_limits: priceCharityData.bookingsLimit,
+            weekly_limits: priceCharityData.bookingsLimit ? priceCharityData.bookingsLimit : 0 ,
             charity: priceCharityData.charityName,
             website: priceCharityData.charityWebsite,
             charity_visibility: priceCharityData.addToProfile,
@@ -208,6 +218,8 @@ const SetPriceAndCharity = props => {
           <TextInput 
             value={priceCharityData.bookingsLimit}
             fullWidth
+            defaultValue={25}
+            onChange={(event)=>saveFormEntries(event,'bookingsLimit')}
           />
           <Content.CharityCheckbox>
             <Checkbox
@@ -237,7 +249,7 @@ const SetPriceAndCharity = props => {
 
   return(
     <Layout>
-      <BackArrow className="leftArrow" />
+      <BackArrow className="leftArrow" onClick={backArrowClickHandler}/>
       {renderContent()}
     </Layout>
   );

@@ -20,7 +20,7 @@ import Payment from '../../components/Payment';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
-const getTerms = (
+const getTermsQA = (
   <React.Fragment>
     <p>
       The information provided by the Star via a Starsona video, and any
@@ -70,6 +70,23 @@ const getTerms = (
     </p>
   </React.Fragment>
 );
+
+const getAnnouncementTerm = () => {
+  return (
+    <React.Fragment>
+      <p>
+        I understand and accept that neither Star Name, nor Starsona nor any of
+        its affiliates or representatives endorses or recommends this event in
+        any way. Furthermore, I acknowledge and agree that neither Star Name,
+        nor Starsona nor any of its affiliates controls or guarantees the
+        relevance or completeness of information produced during this event, and
+        I agree to hold harmless Star Name, Starsona and its affiliates and
+        representatives from any liability for any and all damage caused by or
+        related to the use of the information as published in this event.
+      </p>
+    </React.Fragment>
+  );
+};
 class Purchase extends Component {
   constructor(props) {
     super(props);
@@ -180,7 +197,9 @@ class Purchase extends Component {
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
-            termText={getTerms}
+            termText={
+              this.state.category === 2 ? getAnnouncementTerm() : getTermsQA()
+            }
             // buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
             buttonText="Agree"
             isCheckbox={this.state.category === 2}
@@ -299,8 +318,8 @@ class Purchase extends Component {
             className={`contentPadding ${this.state.stepCount === 2 &&
               this.state.category === 3 &&
               'custom-video'} ${this.state.stepCount === 3 &&
-                (this.state.category === 2 || this.state.category === 3) &&
-                'custom-terms'}`}
+              (this.state.category === 2 || this.state.category === 3) &&
+              'custom-terms'}`}
             step={this.state.stepCount}
           >
             <Scrollbars

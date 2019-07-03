@@ -54,13 +54,13 @@ const CompletedBookings = (props) => {
           onChange={props.handleFilterOrSort('sort')}
           placeHolder="Sort by"
         />
-        <Search
+        {/* <Search
           classes={{
             root: 'search-root',
             inputRoot: 'search-input-container',
           }}
           placeholder='Search by keyword'
-        />
+        /> */}
       </CompletedStyled.FilterSection>
       {
         props.bookingsList.data.length > 0 &&

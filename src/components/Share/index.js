@@ -17,21 +17,21 @@ import ShareStyled from './styled';
 const Share = React.forwardRef((props, ref) => {
 
   const shareAnchor = useRef(null);
-  const [isMobile] = useState(getMobileOperatingSystem());  
+  // const [isMobile] = useState(getMobileOperatingSystem());  
   const [showShare, toggleShare] = useState(false);
 
   const toggleList = state => () => {
     toggleShare(state);
   }
 
-  const sendSms = (shareUrl) => () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    if (/android/i.test(userAgent)) {
-      window.open(`sms:1234?body=${encodeURIComponent(shareUrl)}`);
-    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      window.open(`sms:1234&body=${encodeURIComponent(shareUrl)}`);
-    }
-  }
+  // const sendSms = (shareUrl) => () => {
+  //   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  //   if (/android/i.test(userAgent)) {
+  //     window.open(`sms:1234?body=${encodeURIComponent(shareUrl)}`);
+  //   } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+  //     window.open(`sms:1234&body=${encodeURIComponent(shareUrl)}`);
+  //   }
+  // }
 
   const shareUrl = `https://${props.shareUrl}`;
 
@@ -80,7 +80,7 @@ const Share = React.forwardRef((props, ref) => {
               <span className='icon-text'>Email</span>
             </EmailShareButton>
           </li>
-          {
+          {/* {
             isMobile &&
               <li className='list-item'>
                 <div className='social-btn' onClick={sendSms(shareUrl)}>
@@ -88,7 +88,7 @@ const Share = React.forwardRef((props, ref) => {
                   <span className='icon-text'>SMS</span>
                 </div>
               </li>
-          }
+          } */}
         </ShareStyled.List>
       </Popover>
     </ShareStyled>

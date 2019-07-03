@@ -35,7 +35,6 @@ CompletedStyled.FilterSection = styled.div`
   }
   @media(min-width: 832px) {
     flex-direction: row;
-    justify-content: space-between;
     .drop-down {
       margin-right: 16.4px;
       &.filter, &.sort-by {
