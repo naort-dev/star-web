@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Popover from '@material-ui/core/Popover';
+import { media } from 'styles/mediaQueries';
 
 const MoreStyled = styled.div`
   
@@ -20,6 +21,10 @@ MoreStyled.EllipsIcon = styled.span`
   justify-content: center;
   cursor: pointer;
   position: relative;
+  ${media.mobileScreen} {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 MoreStyled.Popover = styled(Popover)`
@@ -50,6 +55,8 @@ MoreStyled.Option = styled.span`
   margin: 15px 0;
   cursor: pointer;
   padding: 0 15px;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
 `;
 
 export default MoreStyled;
