@@ -13,7 +13,7 @@ export const STAR_PROFILE = {
       url: '/manage/profile/bio',
     },
     { linkName: 'Industry', selectedName: 'industry', url: '/manage/profile/industry' },
-    { linkName: 'Tags', selectedName: 'tags', url: '/manage/earnings' },
+    // { linkName: 'Tags', selectedName: 'tags', url: '/manage/earnings' },
     {
       linkName: 'Social handles',
       selectedName: 'social',

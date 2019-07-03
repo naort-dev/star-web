@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
-import { checkMediaRecorderSupport } from 'utils/checkOS';
+import { checkMediaRecorderSupport, audioVideoSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import {
   Layout,
@@ -39,6 +39,8 @@ const Question = props => {
     isStop: false,
     continueFlg: !!props.videoSrc,
   });
+
+  const [noSupport, updateSupport] = useState(false);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
     props.recordTrigger();
@@ -186,6 +188,29 @@ const Question = props => {
       </span>
     );
   };
+
+  const recordLinkHandler = () => {
+    if (noSupport) {
+      if (isIOSDevice()) {
+        return getRecordLink();
+      }
+    } else {
+      return getRecordLink();
+    }
+    return null;
+  };
+
+  const checkDeviceSupport = async () => {
+    const deviceSupport = await audioVideoSupport('videoinput');
+    if (!deviceSupport) {
+      updateSupport(true);
+    }
+  };
+
+  useEffect(() => {
+    checkDeviceSupport();
+  }, []);
+
   return (
     <Layout>
       {(isIOSDevice() || checkMediaRecorderSupport()) && (
@@ -236,7 +261,7 @@ const Question = props => {
                   {stateObject.continueFlg &&
                     (props.recorded || isIOSDevice()
                       ? getFileUpload(['uploadLink'])
-                      : getRecordLink())}
+                      : recordLinkHandler())}
                 </WebButtons>
               </React.Fragment>
             )}
@@ -251,10 +276,10 @@ const Question = props => {
                 stateObject.buttonLabel,
               )}
               {props.recorded ||
-                isIOSDevice() ||
-                stateObject.buttonLabel === 'Record'
+              isIOSDevice() ||
+              stateObject.buttonLabel === 'Record'
                 ? getFileUpload(['uploadLink'])
-                : getRecordLink()}
+                : recordLinkHandler()}
             </MobButtons>
           )}
 
@@ -280,17 +305,16 @@ const Question = props => {
           <QuestionContainer isShow error className="no-support">
             <p className="note">
               Your system does not have video recording capability, but you will
-            need to record a video to ask a question to the Star. <br />
+              need to record a video to ask a question to the Star. <br />
               <br />
               You can:
-            <br />
+              <br />
               <br /> Record with our App
-            <br /> Use our iOS or Android app to book the star.
-          </p>
+              <br /> Use our iOS or Android app to book the star.
+            </p>
             {getFileUpload(['uploadBtn noSupportBtn'])}
           </QuestionContainer>
         </React.Fragment>
-
       )}
 
       <input

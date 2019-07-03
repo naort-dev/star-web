@@ -39,6 +39,11 @@ export const Layout = styled.section`
   .profile-btn{
     flex-direction:row;
   }
+  .arrow-head {
+    width: 14px;
+    height: 28px;
+    top: 110px;
+  }
 `;
 
 Layout.SubheaderWrap = styled.div`
