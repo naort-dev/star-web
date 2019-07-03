@@ -64,7 +64,7 @@ CompletedStyled.IconWrapper = styled.span`
     padding: 5px 9.5px;
     border-radius: 10px;
     font-family: Gilroy-Medium;
-    font-size: 14px;
+    font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,7 +80,8 @@ CompletedStyled.IconWrapper = styled.span`
     background-color: ${props => props.theme.orangePink};
     color: #fff;
     border-radius: 60px;
-    padding: 7px;
+    padding: 5px 9.5px;
+    text-transform: uppercase;
     .reaction-icon {
       margin-right: 6.5px;
       display: block;

@@ -61,7 +61,7 @@ class Bookings extends React.Component {
   }
 
   onBackClick = () => {
-    this.props.history.goBack();
+    this.props.history.push('/manage');
   };
 
   onOpenClick = bookingId => () => {
@@ -125,7 +125,7 @@ class Bookings extends React.Component {
     const { dropValue, selected, filter, sort, hasBookings } = this.state;
     const { props } = this;
     return (
-      <BookingsStyled>
+      <BookingsStyled className="booking-wrapper">
         <BackArrow className="arrow" onClick={this.onBackClick} />
         <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
         <BookingsStyled.Container>
@@ -180,7 +180,7 @@ class Bookings extends React.Component {
                 }
               </React.Fragment>
               :
-                <EmptyText>You currently do not have any bookings.
+                <EmptyText className="empty-text">You currently do not have any bookings.
                   Visit&nbsp;<Link to="/manage/promotional-tools">Promote Yourself</Link>&nbsp;to spread the word you are available.
                 </EmptyText>
           }

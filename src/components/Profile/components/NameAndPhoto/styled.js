@@ -26,6 +26,9 @@ export const Layout = styled.section`
   }
   .arrow-head {
     top: 35px;
+    @media (min-width: 1280px){
+      display: none;
+    }
   }
   .arrow-head {
     width: 14px;

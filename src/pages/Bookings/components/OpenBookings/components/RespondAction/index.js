@@ -344,6 +344,7 @@ const Question = props => {
           Record a{' '}
           <span className="bold-head-name">{props.bookedItem.occasion}</span>{' '}
           {occasion}
+          <br />
           {getFor(stargramto, to_audio_file)}
           {getFrom(stargramfrom, from_audio_file)}
         </React.Fragment>
@@ -357,7 +358,7 @@ const Question = props => {
     }
     return (
       <React.Fragment>
-        Record an answer for{' '}
+        Record an answer <br /> for{' '}
         <span className="bold-head-name">{props.bookedItem.fan}</span>
       </React.Fragment>
     );
@@ -431,7 +432,7 @@ const Question = props => {
           <Layout>
             {(isIOSDevice() || checkMediaRecorderSupport()) && (
               <React.Fragment>
-                <section>
+                <section className="video-wrapper">
                   {props.bookedItem.request_type === 3 && (
                     <ul className="video-option">
                       <li
@@ -568,11 +569,11 @@ const Question = props => {
                           showHideFlg: !stateObject.showHideFlg,
                         })
                       }
+                      scriptVisible={stateObject.showHideFlg}
                       isShow={stateObject.showHideFlg}
                       isQA={props.bookedItem.request_type === 3}
                     >
-                      {/* {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'} */}
-                      Instructions
+                      {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
                     </ShowHide>
                   )}
               </React.Fragment>

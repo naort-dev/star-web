@@ -8,7 +8,7 @@ const GeneralStyled = styled.div`
   .left-content {
     display: none;
   }
-  @media(min-width: 832px) {
+  @media(min-width: 1280px) {
     .left-content {
       display: inherit;
     }
@@ -87,11 +87,8 @@ GeneralStyled.Section = styled.div`
   }
 `;
 GeneralStyled.Description = styled.span`
-  @media(min-width: 832px) {
+  @media(min-width: 1280px) {
     padding-left: 19.3px;
-  }
-  @media(min-width: 832px) and (max-width: 1280px) {
-
   }
 `;
 
@@ -136,9 +133,6 @@ GeneralStyled.Details = styled.span`
     .comment {
       margin-right: 39px;
     }
-  }
-  @media(min-width: 832px) and (max-width: 1280px) {
-    padding-left: 29px;
   }
 `;
 export default GeneralStyled;

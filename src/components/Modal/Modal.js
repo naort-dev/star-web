@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 import { DialogStyled } from './Modal.styles';
 
 class Modal extends Component {
-  componentDidMount() {
-    // disableBodyScroll(null);
-    document.body.style.position = "fixed";
-  }
 
   componentWillUnmount() {
-    // enableBodyScroll();
-    document.body.style.position = "relative";
+
+  }
+
+  onModalMount = () => {
+
   }
 
   render() {
@@ -20,6 +19,7 @@ class Modal extends Component {
         disableBackdropClick
         open={this.props.open}
         onClose={this.props.onClose}
+        onRendered={this.onModalMount}
         classes={{ paper: 'body', paperScrollPaper: 'paperScroll' }}
       >
         {this.props.children}

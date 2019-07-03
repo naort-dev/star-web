@@ -20,7 +20,7 @@ import Payment from '../../components/Payment';
 import TermsAndCondition from './Components/TermsAndCondition';
 import CancelConfirm from './Components/CancelConfirm';
 
-const getTermsQA = (
+const getTermsQA = () => (
   <React.Fragment>
     <p>
       The information provided by the Star via a Starsona video, and any

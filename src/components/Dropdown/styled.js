@@ -30,12 +30,13 @@ DropdownStyled.Select = styled.div`
 DropdownStyled.CurrentSelected = styled.span`
   font-family: Gilroy;
   font-size: 20px;
-  line-height: 1.9;
   text-align: left;
   width: calc(100% - 20px);
-  color: ${props => props.theme.greyishBrown};
+  color: #6a6a6a;
   white-space: nowrap;
   overflow: hidden;
+  margin-bottom: 10px;
+  padding-top: 13px;
 `;
 
 DropdownStyled.DropIcon = styled.span`
@@ -64,23 +65,24 @@ DropdownStyled.OptionsList = styled.ul`
 DropdownStyled.Options = styled.li`
   font-family: Gilroy;
   padding: 5px 18px
-  display: block;
   text-align: left;
   display: flex;
   align-items: center;
   height: 36px;
+  color: #6a6a6a;
+  margin-bottom: 10px;
   ${props => props.secondary && `
-    font-size: 20px;
+    font-size: 18px;
     height: auto;
   `}
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {
     outline: none;
     font-family: Gilroy;
-    padding: 8px 18px;
+    padding: 5px 18px;
     background: ${props => props.theme.veryLightPinkTwo};
     ${props => props.secondary && `
-      font-family: Gilroy-Medium;
+      font-family: Gilroy;
       font-size: 18px;
     `}
   }

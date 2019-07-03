@@ -7,6 +7,9 @@ export const Layout = styled.section`
   position: relative;
   .leftArrow {
     position: absolute;
+    @media (min-width: 1280px){
+      display: none;
+    }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
