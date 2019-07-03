@@ -112,7 +112,6 @@ const Video = props => {
     return '01:00';
   };
   const calculateDuration = (time) => {
-    debugger
     const formatted = moment.utc(time * 1000).format('mm:ss');
     setRecordingTime(formatted);
   }

@@ -18,7 +18,7 @@ const ManageStarProfile = props => {
   const [redirect, setRedirect] = useState(false);
   const [redirecttoProfile, setredirecttoProfile] = useState(false);
 
-  const isMobile = useMedia('(max-width: 831px)');
+  const isMobile = useMedia('(max-width: 1279px)');
   const isIpad = useMedia('(min-width:832px) and (max-width: 1279px)');
 
   useEffect(() => {
