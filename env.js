@@ -5,7 +5,7 @@
   SERVER_URL: 'https://app.staging.starsona.com/',
   BRANCH_IO_KEY: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
   STRIPE_PUBLISH_KEY: 'pk_test_RBSzULFNLChp2ACqsYRkMJPV',
-  fbId: '1638565172829009',
+  fbId: '2145425165537991',
   device: 'web',
   ApiVersion: '4.4',
   instaId: '8bea5765428248eca3a09d288ef7e4c2',
@@ -25,4 +25,5 @@
   window.env = function(key) {
     return config[key] || undefined;
   }
-}(this || {}));
+  }(this || {}));
+
