@@ -202,7 +202,7 @@ const getAnnouncementScript = (
       return `<span class="boldTxt">${specification.charAt(0).toUpperCase() +
         specification.slice(
           1,
-        )}’s</span>  having a<span class="boldTxt">${occasion}</span>${dateFormatter(
+        )}’s</span>  having a <span class="boldTxt">${occasion}</span>${dateFormatter(
         date,
         '',
       )}. Hope you can make it!
