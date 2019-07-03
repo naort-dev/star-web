@@ -9,7 +9,12 @@ export const Layout = styled.section`
     padding-top: 9px;
     margin-bottom: 28px;
   }
-  
+  .leftArrow {
+    position: absolute;
+    @media (min-width: 1280px){
+      display: none;
+    }
+  }
 `;
 
 Layout.Header = styled.span`

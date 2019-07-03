@@ -9,6 +9,9 @@ const OpenStyled = styled.div`
     flex-direction: row;
     min-height: calc(100vh - 353px);
   }
+  @media (min-width: 832px) and (max-width: 1279px) {
+    min-height: 100%;
+  }
   .video-loader {
     position: absolute;
   }
@@ -36,7 +39,7 @@ const OpenStyled = styled.div`
 OpenStyled.BookingList = styled.div`
   height: 100vh;
   @media (min-width: 1280px) {
-    height: calc(100% - 290px);
+    height: 100%;
     max-height: 700px;
   }
   @media (min-width: 832px) and (max-width: 1279px) {
@@ -45,9 +48,14 @@ OpenStyled.BookingList = styled.div`
 `;
 
 OpenStyled.LeftSection = styled.div`
-  @media (min-width: 832px) {
+  @media (min-width: 1280px) {
     max-width: 273.6px;
-    ${props => props.fullWidth && `max-width:100%; width: 100%;`}
+    ${props => props.fullWidth && `max-width:100%; width: 100%;`};
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 832px) and (max-width: 1279px) {
+    width: 100%;
   }
 `;
 

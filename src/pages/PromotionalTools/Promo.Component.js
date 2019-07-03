@@ -41,7 +41,7 @@ const templates = [
 
 const PromoTools = props => {
   const goBack = () => {
-    props.history.goBack();
+    props.history.push('/manage');
   };
   const getSocial = () => {
     return (

@@ -1,22 +1,22 @@
 export const requestExpiryDays = 7;
 
 export const fanInnerLinks = [
-  { linkName: 'My videos', selectedName: 'myVideos', url: '/manage/my-videos' },
+  { linkName: 'My Videos', selectedName: 'myVideos', url: '/manage/my-videos' },
   {
-    linkName: 'Favorite stars',
+    linkName: 'Favorite Stars',
     selectedName: 'favorites',
     tooltip:
       'Save your favorites and make it easy when booking a personalized shout-out.',
     url: '/manage/favorites',
   },
   { linkName: 'Profile', selectedName: 'profile', url: '/manage/profile' },
-  {
-    linkName: 'Refer A Star',
-    selectedName: 'referStar',
-    tooltip:
-      'Do you know a star that would be great on Starsona?  Get them signed up  using your referral code and earn a 20% commission! Read the terms.',
-    url: '/manage/refer-star',
-  },
+  // {
+  //   linkName: 'Refer A Star',
+  //   selectedName: 'referStar',
+  //   tooltip:
+  //     'Do you know a star that would be great on Starsona?  Get them signed up  using your referral code and earn a 20% commission! Read the terms.',
+  //   url: '/manage/refer-star',
+  // },
 ];
 
 export const starInnerLinks = [
@@ -26,9 +26,9 @@ export const starInnerLinks = [
     url: '/manage/dashboard',
   },
   { linkName: 'Bookings', selectedName: 'requests', url: '/manage/bookings' },
-  { linkName: 'My videos', selectedName: 'myVideos', url: '/manage/my-videos' },
+  { linkName: 'My Videos', selectedName: 'myVideos', url: '/manage/my-videos' },
   {
-    linkName: 'Favorite stars',
+    linkName: 'Favorite Stars',
     selectedName: 'favorites',
     tooltip:
       'Save your favorites and make it easy when booking a personalized shout-out.',
@@ -46,13 +46,13 @@ export const starInnerLinks = [
     selectedName: 'settings',
     url: '/manage/settings',
   },
-  {
-    linkName: 'Referral Program',
-    selectedName: 'referral',
-    tooltip:
-      'Do you have contacts that would enjoy Starsona? Help them sign up using your referral code and earn 20% of our commission!',
-    url: '/manage/referral',
-  },
+  // {
+  //   linkName: 'Referral Program',
+  //   selectedName: 'referral',
+  //   tooltip:
+  //     'Do you have contacts that would enjoy Starsona? Help them sign up using your referral code and earn 20% of our commission!',
+  //   url: '/manage/referral',
+  // },
 ];
 
 export const groupInnerLinks = [
