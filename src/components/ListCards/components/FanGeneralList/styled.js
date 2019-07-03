@@ -75,6 +75,9 @@ GeneralStyled.Section = styled.div`
         width: 93px;
       }
     }
+    @media(min-width: 832px) and (max-width: 1279px) {
+      margin-top: 10px;
+    }
   }
   @media(min-width: 832px) {
     align-items: center;
