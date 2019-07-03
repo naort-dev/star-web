@@ -59,7 +59,7 @@ const ManageUser = props => {
               <Route path="/manage/profile/" component={ManageStarProfile} />
               <Route path="/manage/earnings" component={Earnings} />
               <Route path="/manage/settings" component={Settings} />
-              <Route path="/manage/referral" render={() => 'referral'} />
+              {/* <Route path="/manage/referral" render={() => 'referral'} /> */}
             </Switch>
           ) : (
             <Switch>

@@ -217,10 +217,10 @@ const OrderDetails = (props) => {
                   requestType === 'completed' &&
                     <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
                 }
-                {
+                {/* {
                   requestType === 'open' &&
                     <OrderStyled.TextButton>Make changes</OrderStyled.TextButton>
-                }
+                } */}
               </React.Fragment>
           }
         </OrderStyled.Details>
