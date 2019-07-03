@@ -19,6 +19,10 @@ const initalState = {
     playing: false,
   },
   recorded: false,
+  progress: {
+    value: 5,
+    loader: false,
+  },
 };
 
 const commonReducer = (state = { ...initalState }, action) => {
@@ -70,6 +74,12 @@ const commonReducer = (state = { ...initalState }, action) => {
       return {
         ...state,
         audioFlags: action.audioFlags,
+      };
+
+    case Actions.PROGRESS_LOADER:
+      return {
+        ...state,
+        progress: action.data,
       };
 
     default:
