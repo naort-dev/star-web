@@ -109,6 +109,13 @@ const ActionBar = (props) => {
     }
   }, [showList])
 
+  useEffect(() => {
+    setActionStates({
+      reaction: !props.disableReaction,
+      rating: !props.disableRating,
+    })
+  }, [props.disableRating, props.disableReaction])
+
   return (
     <ActionStyled>
       <ActionStyled.Dropbar showList={showList} onClick={toggleListState(!showList)}>
