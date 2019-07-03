@@ -64,7 +64,7 @@ const ctaList = [
     value_sub: '',
     btnTextPrimary: 'Update video',
     btnTextSecondary: '',
-    url: '/manage/profile/welcome-videoI',
+    url: '/manage/profile/welcome-video',
   },
 ];
 
@@ -158,7 +158,7 @@ const ActivityCard = props => {
           value_sub: '',
           btnTextPrimary: 'View',
           btnTextSecondary: 'Now',
-          url: '/manage/bookings',
+          url: '/manage/earnings',
         },
       });
     }

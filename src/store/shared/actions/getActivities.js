@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { cloneDeep } from 'lodash';
 import Api from '../../../lib/api';
-import { fetch } from '../../../services/fetch';
+import { fetch, CancelToken } from '../../../services/fetch';
 
 export const ACTIVITIES_LIST = {
   start: 'fetch_start/activities_list',
@@ -11,9 +12,10 @@ export const ACTIVITIES_LIST = {
   reset: 'reset/activities_list',
 };
 
-export const activitiesListFetchStart = refresh => ({
+export const activitiesListFetchStart = (refresh, token) => ({
   type: ACTIVITIES_LIST.start,
   refresh,
+  token,
 });
 
 export const activitiesListFetchEnd = () => ({
@@ -58,8 +60,14 @@ export const toggleActivityVisibility = (activityId) => (dispatch, getState) => 
 
 export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, getState) => {
   const { count, limit } = getState().activitiesList;
-  dispatch(activitiesListFetchStart(refresh));
-  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}&offset=${offset}&limit=${limit}`).then((resp) => {
+  if (typeof getState().activitiesList.token !== typeof undefined) {
+    getState().activitiesList.token.cancel('Operation canceled due to new request.');
+  }
+  const source = CancelToken.source();
+  dispatch(activitiesListFetchStart(refresh, source));
+  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}&offset=${offset}&limit=${limit}`, {
+    cancelToken: source.token,
+  }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(activitiesListFetchEnd());
       let list = getState().activitiesList.data;
@@ -74,7 +82,9 @@ export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, ge
       dispatch(activitiesListFetchEnd());
     }
   }).catch((exception) => {
-    dispatch(activitiesListFetchEnd());
+    if (axios.isCancel(exception)) {
+      dispatch(activitiesListFetchEnd());
+    }
     dispatch(activitiesListtFetchFailed(exception));
   });
 };

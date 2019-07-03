@@ -48,6 +48,9 @@ const FanView = (props) => {
     } else {
       updateRequestType('cancelled');
     }
+    return () => {
+      props.resetActivitiesList();
+    }
   }, [props.bookingData.id])
 
   const onReactionClose = () => {
@@ -203,6 +206,7 @@ FanView.propTypes = {
   activitiesList: PropTypes.object,
   onCompleteAction: PropTypes.func,
   updateRequestData: PropTypes.func.isRequired,
+  resetActivitiesList: PropTypes.func.isRequired,
 }
 
 export default FanView;
