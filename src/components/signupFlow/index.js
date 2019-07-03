@@ -239,7 +239,7 @@ class SignupFlow extends React.Component {
   submitCelebrityDetails(priceDetails) {
     const celebrityProfileData = {
       ...priceDetails,
-      weekly_limits: 5,
+      weekly_limits: 25,
       profession: this.props.signupDetails.categoryList.map(profession => profession.id),
       availability: true,
       profile_video: this.state.profile_video,
