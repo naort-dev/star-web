@@ -124,6 +124,7 @@ export const TickText = styled.span`
     border-top: 2px solid #fe6b57;
     transform: rotate(130deg);
     margin-bottom: 8px;
+    margin-right: 15px;
   }
 `;
 

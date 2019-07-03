@@ -168,7 +168,17 @@ const FanGeneralList = (props) => {
                   {
                     !isDesktop ?
                      <React.Fragment>
-                       <span className='btn-links' onClick={selectRequest(props.data)}>Share</span>
+                       <Share
+                          secondary
+                          buttonText='Share'
+                          classes={{
+                            root: 'share-root',
+                            button: 'btn-links',
+                          }}
+                          title={`Check out this video from ${props.data.celebrity} !`}
+                          body={`Watch this personalized video from ${props.data.celebrity}`}            
+                          shareUrl={completedVideo.video_url}
+                        />  
                         | &nbsp; <span className='btn-links' onClick={openVideo}>View video</span>
                       </React.Fragment>
                     : 

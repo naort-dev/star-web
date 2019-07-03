@@ -75,6 +75,9 @@ GeneralStyled.Section = styled.div`
         width: 93px;
       }
     }
+    @media(min-width: 832px) and (max-width: 1279px) {
+      margin-top: 10px;
+    }
   }
   @media(min-width: 832px) {
     align-items: center;
@@ -114,10 +117,26 @@ GeneralStyled.Details = styled.span`
       color: #cc0000;
     }
   }
+  .share-root {
+    margin-top: -4px;
+  }
   .btn-links {
     color: ${props => props.theme.flatBlue};
     margin-right: 5px;
     cursor: pointer;
+    padding: 0;
+    border: 0;
+    width: auto;
+    height: auto;
+    vertical-align: top;
+    font-family: Gilroy-Medium;
+    display: inline;
+    outline: none;
+    background: transparent;
+    user-select: none;
+    &:hover, &:focus {
+      box-shadow: none;
+    }
   }
   .action {
     color: ${props => props.theme.flatBlue};

@@ -9,8 +9,22 @@ export const Layout = styled.section`
   position: relative;
   height: 493px;
   ${media.mobileScreen} {
-    justify-content: center;
-    padding: 0 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    min-height: 454px;
+    max-height: 575px;
+    width: 319px;
+    margin: 0 auto;
+  }
+  .video-wrapper {
+    ${media.mobileScreen} {
+      order: 1;
+      max-height: 426px;
+      height: calc(100% - 150px);
+      min-height: 305px;
+    }
   }
   .button {
     height: 40px;
@@ -36,6 +50,7 @@ export const Layout = styled.section`
     font-family: Gilroy-Semibold;
     font-size: 14px;
     color: #7c7c7c;
+    text-transform: capitalize;
   }
   .uploadLink {
     font-family: Gilroy;
@@ -98,6 +113,10 @@ export const Layout = styled.section`
       font-size: 16px;
       color: #cccccc;
       cursor: pointer;
+
+      &.ques-item {
+        font-family: Gilroy-Medium;
+      }
     }
     li + li:before {
       content: '|';
@@ -107,7 +126,7 @@ export const Layout = styled.section`
     }
   }
   .questionWrapper {
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     :last-of-type {
       padding-bottom: 9px;
     }
@@ -120,7 +139,7 @@ export const Layout = styled.section`
   }
   .ques-item {
     color: #2f2f2f !important;
-    font-family: Gilroy-Semibold !important;
+    font-family: Gilroy-Semibold;
   }
   .ans-item {
     color: #2f2f2f !important;
@@ -168,6 +187,10 @@ export const VideoContainer = styled.section`
   background-color: #e3e3e3;
   margin-bottom: 60px;
   position: relative;
+  ${media.mobileScreen} {
+    height: 100%;
+    margin-bottom: 0;
+  }
   .playButton {
     position: absolute;
     top: 50%;
@@ -197,15 +220,16 @@ export const QuestionContainer = styled.section`
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
-    padding-left: 24px;
-    padding-top: 30px;
-    padding-bottom: 25px;
-    bottom: ${props => (props.isQA ? '-33px' : '0')};
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 50px;
+    bottom: ${props => (props.isQA ? '-33px' : '150px')};
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
     width: 319px;
     transform: translateX(-50%);
+    order: 2;
   }
   .question-wrapper {
     position: relative;
@@ -213,6 +237,14 @@ export const QuestionContainer = styled.section`
       position: absolute;
       top: -10px;
       right: -11px;
+      ${media.mobileScreen} {
+        top: inherit;
+        bottom: -33px;
+        right: 40px;
+        .more-action-icon {
+          background: #fff;
+        }
+      }
     }
   }
   h1 {
@@ -243,7 +275,7 @@ export const QuestionContainer = styled.section`
   }
   .bold-text,
   .boldTxt {
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy-Medium;
     font-size: 16px;
     color: #fff;
     ${media.webView} {
@@ -252,6 +284,19 @@ export const QuestionContainer = styled.section`
   }
   .question {
     font-size: 16px;
+    line-height: 22px;
+    ${media.mobileScreen} {
+      padding-left: 5px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .boldTxt {
+      ${media.mobileScreen} {
+        padding-left: 5px;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
   }
   .agreement-note {
     font-family: Gilroy-Light;
@@ -267,14 +312,18 @@ export const QuestionContainer = styled.section`
 
 export const ShowHide = styled.span`
   display: block;
-  position: absolute;
-  bottom: ${props => (props.isQA ? '0' : '20px')};
+  /* position: absolute;
+  bottom: ${props => (props.isQA ? '0' : '20px')}; */
+  order: 2;
+  margin: ${props => props.scriptVisible ? '-47px auto 15px 10px' : '-47px auto 15px'}
+  position: relative;
   width: 224px;
   text-align: center;
   height: 30px;
   line-height: 30px;
   border-radius: 20px;
   background: #fff;
+  /* background: ${props => props.scriptVisible ? 'red' : '#fff'} */
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
@@ -296,6 +345,19 @@ export const ShowHide = styled.span`
     margin-right: 28px;
     /* margin-left: 28px; */
   }
+  :after {
+    position: relative;
+    top: ${props => (props.isShow ? '-3px' : '3px')};
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 1px solid #2f839d;
+    border-top: 1px solid #2f839d;
+    transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
+    margin-left: 28px;
+    /* margin-left: 28px; */
+  }
 `;
 
 export const PlayButton = styled.section`
@@ -313,14 +375,19 @@ export const PlayButton = styled.section`
 `;
 export const WebButtons = styled.section`
   padding-top: 50px;
+  ${media.mobileScreen} {
+    padding-top: 0;
+  }
 `;
 export const MobButtons = styled.section`
-  position: absolute;
-  bottom: ${props => (props.isQA ? ' -220px' : '-180px')};
+  position: relative;
+  //bottom: ${props => (props.isQA ? ' -220px' : '-180px')};
+  bottom: 0;
+  order: 3;
   display: flex;
   flex-direction: column;
-  padding-bottom: 40px;
-  padding-top: 37px;
+  padding-bottom: 15px;
+  padding-top: 15px;
   ${media.webView} {
     display: none;
   }
@@ -329,13 +396,13 @@ export const Header = styled.h4`
   font-family: Gilroy-Regular;
   color: ${props => props.theme.orangePink};
   font-size: 24px;
-  width: 232px;
-  ${media.webView} {
-    width: 310px;
-  }
   margin: 0 auto;
   text-align: center;
   margin-bottom: 44.7px;
+  ${media.mobileScreen} {
+    margin-bottom: 15px;
+    padding: 0 40px;
+  }
   .bold-head-name {
     font-family: Gilroy-Bold;
   }

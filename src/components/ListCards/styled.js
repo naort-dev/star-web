@@ -9,7 +9,7 @@ export const HeadingBold = styled.span`
 `;
 
 export const BoldTextM = styled.span`
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 14px;
   color: #6a6a6a;
   line-height: 16px;

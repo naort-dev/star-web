@@ -6,7 +6,7 @@ import FavouriteStyled from './styled';
 
 const FavoriteStars = (props) => {
   const goBack = () => {
-    props.history.goBack();
+    props.history.push('/manage');
   };
 
   const onUnFavoriteStar = (star) => {

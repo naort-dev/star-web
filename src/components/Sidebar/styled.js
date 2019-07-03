@@ -59,6 +59,7 @@ SidebarStyled.LinkItem = styled.li`
       justify-content: flex-start;
       align-items: flex-end;
       line-height: 27px;
+      cursor: pointer;
       .notification-count {
         margin-left: 8px;
       }
