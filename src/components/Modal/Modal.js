@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { isIOSDevice } from '../../utils/checkOS';
+// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { DialogStyled } from './Modal.styles';
 
 class Modal extends Component {
 
   componentWillUnmount() {
-    if (isIOSDevice()) {
-      enableBodyScroll(null);
-    }
+
   }
 
   onModalMount = () => {
-    if (isIOSDevice()) {
-      disableBodyScroll(null);
-    }
+
   }
 
   render() {
