@@ -19,6 +19,7 @@ export const TextInput = props => (
     required={props.required}
     onBlur={props.onBlur}
     label={props.label}
+    defaultValue={props.defaultValue}
     classes={{ root: 'MuiFormControl' }}
     InputLabelProps={{
       classes: {
@@ -44,6 +45,7 @@ TextInput.propTypes = {
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
+  defaultValue: PropTypes.string,
   fullWidth: PropTypes.bool,
   onChange: PropTypes.func,
   id: PropTypes.string,
@@ -66,6 +68,7 @@ TextInput.defaultProps = {
   type: '',
   name: '',
   value: '',
+  defaultValue: '',
   fullWidth: false,
   id: '',
   required: false,
