@@ -49,13 +49,13 @@ const CancelledBookings = (props) => {
           onChange={props.handleCategoryChange}
           placeHolder="Select a booking type"
         />
-        <Search
+        {/* <Search
           classes={{
             root: 'search-root',
             inputRoot: 'search-input-container',
           }}
           placeholder='Search by keyword'
-        />
+        /> */}
       </CancelledStyled.FilterSection>
       {
         props.bookingsList.data.length > 0 &&
