@@ -138,7 +138,7 @@ const OrderDetails = (props) => {
               </OrderStyled.Heading>
             </React.Fragment>
         }
-        <OrderStyled.ScriptWrapper>
+        <OrderStyled.ScriptWrapper isMoreActions={!starMode && (requestType === 'open' || requestType === 'cancelled')}>
           {
             bookingData.request_details.booking_statement &&
               <Script script={bookingData.request_details.booking_statement} />

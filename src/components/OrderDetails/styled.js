@@ -79,6 +79,9 @@ OrderStyled.ScriptWrapper = styled.div`
   max-width: 520px;
   margin: 0 auto;
   position: relative;
+  ${props => props.isMoreActions && `
+    padding-top: 28px;  
+  `}
   .additional-info {
     display: table;
     padding-left: 11px;
@@ -102,7 +105,13 @@ OrderStyled.ScriptWrapper = styled.div`
   .more-action-root {
     position: absolute;
     top: -12px;
-    right: -30px;
+    right: 12px;
+    @media(min-width: 832px) {
+      right: -30px;
+    }
+  }
+  @media(min-width: 832px) {
+    padding-top: 0;
   }
 `;
 
