@@ -9,6 +9,12 @@ export const Layout = styled.section`
   padding-right: 31px;
   display: flex;
   flex-direction: column;
+  .name-photo-wrap{
+    display: flex;
+    flex-direction: column;
+    max-width: 422px;
+    margin: 30px auto;
+  }
   .subheader {
     color: ${props => props.theme.orangePink};
     fontsize: 24px;
@@ -30,6 +36,9 @@ export const Layout = styled.section`
       display: none;
     }
   }
+  .profile-btn{
+    flex-direction:row;
+  }
   .arrow-head {
     width: 14px;
     height: 28px;
@@ -45,6 +54,7 @@ Layout.SubheaderWrap = styled.div`
 
 Layout.InputWrap = styled.div`
   order: 2;
+  margin-bottom:40px;
   @media (min-width: 832px) {
     order: 3;
   }
@@ -121,6 +131,9 @@ UploadContainer.ProfileUploadWrap = styled.div`
   order: 3;
   @media (min-width: 832px) {
     order: 2;
+  }
+  .upload-image {
+    height: auto;
   }
   .profileupload {
     height: inherit !important;

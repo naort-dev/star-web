@@ -113,6 +113,8 @@ class NameAndPhoto extends React.Component {
   render() {
     return (
       <Layout>
+<section className="name-photo-wrap">
+
         <Layout.SubheaderWrap>
           <SubHeader
             className="subheader"
@@ -187,6 +189,8 @@ class NameAndPhoto extends React.Component {
             Save
           </PrimaryButton>
         </Layout.ButtonWrapper>
+
+</section>
       </Layout>
     );
   }
