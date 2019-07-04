@@ -132,7 +132,9 @@ QuickViewStyled.ActionBar = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
-  cursor: pointer;
+  ${props => props.available && `
+    cursor: pointer;
+  `}
 `;
 
 QuickViewStyled.ActionContent = styled.div`
