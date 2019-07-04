@@ -6,17 +6,19 @@ const CompletedStyled = Card.extend`
   display: inline-block;
   position: relative;
   .favorite-icon {
-    display: none;
+    display: block;
+    color: ${props => props.isFavorite ? props.theme.orangePink : '#fff'};
+    font-size: 28px;
+    position: absolute;
+    top: 22.2px;
+    left: 20px;
+    cursor: pointer;
   }
   @media(min-width: 832px) {
     .favorite-icon {
-      display: block;
-      color: ${props => props.isFavorite ? props.theme.orangePink : '#fff'};
-      font-size: 28px;
-      position: absolute;
       top: 20.2px;
+      left: initial;
       right: 18.3px;
-      cursor: pointer;
     }
   }
 `;

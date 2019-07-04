@@ -7,19 +7,19 @@ const BookingTitle = ({ requestData, secondary }) => {
   if (requestTypes[requestData.request_type] === 'Q&A') {
     return (
       <MediumText secondary={secondary}>
-        <HeadingBold>Answer</HeadingBold> to question for <HeadingBold>{requestData.fan}</HeadingBold>
+        <HeadingBold>Answer</HeadingBold> to question for <HeadingBold>{requestData.fan_first_name}</HeadingBold>
       </MediumText>
     )
   } else if (requestTypes[requestData.request_type] === 'Shout-out') {
     return (
       <MediumText secondary={secondary}>
-        <HeadingBold>{requestData.occasion}</HeadingBold> shoutout for <HeadingBold>{requestData.fan}</HeadingBold>
+        <HeadingBold>{requestData.occasion}</HeadingBold> shoutout for <HeadingBold>{requestData.fan_first_name}</HeadingBold>
       </MediumText>
     )
   }
   return (
     <MediumText secondary={secondary}>
-      <HeadingBold>{requestData.occasion}</HeadingBold> announcement for <HeadingBold>{requestData.fan}</HeadingBold>
+      <HeadingBold>{requestData.occasion}</HeadingBold> announcement for <HeadingBold>{requestData.fan_first_name}</HeadingBold>
     </MediumText>
   )
 }
