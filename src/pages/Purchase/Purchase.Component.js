@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
-import { getStarName } from 'utils/dataToStringFormatter';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import Header from 'components/ModalHeader';
@@ -71,16 +70,16 @@ const getTermsQA = () => (
   </React.Fragment>
 );
 
-const getAnnouncementTerm = () => {
+const getAnnouncementTerm = starNM => {
   return (
     <React.Fragment>
       <p>
-        I understand and accept that neither Star Name, nor Starsona nor any of
+        I understand and accept that neither {starNM}, nor Starsona nor any of
         its affiliates or representatives endorses or recommends this event in
-        any way. Furthermore, I acknowledge and agree that neither Star Name,
+        any way. Furthermore, I acknowledge and agree that neither {starNM},
         nor Starsona nor any of its affiliates controls or guarantees the
         relevance or completeness of information produced during this event, and
-        I agree to hold harmless Star Name, Starsona and its affiliates and
+        I agree to hold harmless {starNM}, Starsona and its affiliates and
         representatives from any liability for any and all damage caused by or
         related to the use of the information as published in this event.
       </p>
@@ -190,7 +189,9 @@ class Purchase extends Component {
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
             termText={
-              this.state.category === 2 ? getAnnouncementTerm() : getTermsQA()
+              this.state.category === 2
+                ? getAnnouncementTerm(this.props.userDetails.first_name)
+                : getTermsQA()
             }
             // buttonText={this.state.category === 2 ? 'Continue' : 'Agree'}
             buttonText="Agree"
