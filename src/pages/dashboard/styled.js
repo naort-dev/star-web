@@ -20,6 +20,9 @@ export const Layout = styled.section`
   }
   .top-heading {
     padding-top: 9px;
+    @media (max-width: 832px) {
+      font-size: 24px;
+    }
   }
   .arrow {
     ${media.webView} {
@@ -38,6 +41,7 @@ export const Layout = styled.section`
     }
     @media (max-width: 831px) {
       padding-bottom: 17px;
+      font-size: 24px;
     }
   }
   .middle-section {
@@ -77,6 +81,7 @@ export const Social = styled(Card)`
   width: 369px;
   margin-left: 27px;
   padding: 24px 49px 29px;
+  align-self: flex-start;
   display: none;
   ${media.largeScreen} {
     display: block;
