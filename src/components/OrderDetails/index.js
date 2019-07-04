@@ -42,7 +42,7 @@ const OrderDetails = (props) => {
             from&nbsp;
             <strong>
               {
-                bookingData.fan
+                bookingData.fan_first_name
               }
             </strong>
         </React.Fragment>
@@ -53,7 +53,7 @@ const OrderDetails = (props) => {
         <strong>{bookingData.occasion}</strong>&nbsp;
           {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : bookingData.fan }
+            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : bookingData.fan_first_name }
           </strong>
           {
             requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ?

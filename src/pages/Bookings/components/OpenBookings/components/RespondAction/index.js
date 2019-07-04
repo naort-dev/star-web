@@ -337,7 +337,7 @@ const Question = props => {
       const { stargramfrom, is_myself } = props.bookedItem.request_details;
       let { stargramto } = props.bookedItem.request_details;
       if (is_myself) {
-        stargramto = props.bookedItem.fan;
+        stargramto = props.bookedItem.fan_first_name;
       }
       return (
         <React.Fragment>
@@ -359,7 +359,7 @@ const Question = props => {
     return (
       <React.Fragment>
         Record an answer <br /> for{' '}
-        <span className="bold-head-name">{props.bookedItem.fan}</span>
+        <span className="bold-head-name">{props.bookedItem.fan_first_name}</span>
       </React.Fragment>
     );
   };
@@ -451,7 +451,7 @@ const Question = props => {
                       </li>
                     </ul>
                   )}
-                  <VideoContainer>
+                  <VideoContainer isQA={props.bookedItem.request_type === 3}>
                     {props.bookedItem.request_type === 3 && isQuestion ? (
                       <VideoRender
                         variableWidth

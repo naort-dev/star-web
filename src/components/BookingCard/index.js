@@ -107,7 +107,7 @@ const BookingCard = (props) => {
         <strong>{requestData.occasion}</strong>&nbsp;
           {requestTypes[requestData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
-            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan }
+            { requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself ? requestDetails.stargramto : requestData.fan_first_name }
           </strong>
           {
             requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself && requestDetails.stargramfrom !== '' ?

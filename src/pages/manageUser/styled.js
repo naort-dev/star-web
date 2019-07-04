@@ -22,6 +22,7 @@ const ManageStyled = styled.div`
     }
     @media (max-width: 831px) {
       padding-bottom: 17px;
+      font-size: 24px;
     }
   }
   .popstyle-wrap {
@@ -93,7 +94,7 @@ ManageStyled.Container = styled.div`
   }
   @media(min-width: 1280px) {
     max-width: 1246px;
-    padding: 47px 36px 50px;
+    padding: 25px 36px 25px;
     padding-right: 10px;
     padding-left: 0;
   }
@@ -110,7 +111,7 @@ ManageStyled.MobileHeading = ManageStyled.Visiblity.extend`
   font-family: Gilroy-Light;
   font-size: 30px;
   color: ${props => props.theme.brownGrey};
-  padding: 27px 0 20px;
+  padding: 15px 0 15px;
   margin: 0 auto;
   @media(min-width: 832px) {
     display: none;

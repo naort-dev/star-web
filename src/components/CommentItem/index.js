@@ -24,7 +24,7 @@ const CommentItem = (props) => {
             <span className='text-description'>Reaction recorded:</span>
             <span className="text-bold">{moment.utc(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
           </span>
-          <PrimaryButton className='action-button' onClick={onReactionClick}>Play</PrimaryButton>
+          <PrimaryButton className='action-button' onClick={onReactionClick}>View</PrimaryButton>
         </span>
       )
     } else if (type === 'tip') {
