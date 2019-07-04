@@ -7,7 +7,7 @@ const OpenStyled = styled.div`
   flex-direction: column;
   @media (min-width: 832px) {
     flex-direction: row;
-    min-height: calc(100vh - 353px);
+    min-height: calc(100vh - 275px);
   }
   @media (min-width: 832px) and (max-width: 1279px) {
     min-height: 100%;
@@ -62,6 +62,9 @@ OpenStyled.LeftSection = styled.div`
 OpenStyled.RightSection = Card.extend`
   flex: 1;
   padding-top: 40.8px;
+  @media (min-width: 831px) {
+    padding-top: 34px;
+  }
   @media (max-width: 1279px) {
     position: fixed;
     top: 0;

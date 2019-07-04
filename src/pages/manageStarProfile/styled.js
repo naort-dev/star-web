@@ -8,6 +8,9 @@ export const Layout = styled.section`
   .top-heading {
     padding-top: 9px;
     margin-bottom: 28px;
+    @media (max-width: 832px) {
+      font-size: 24px;
+    }
   }
   .leftArrow {
     position: absolute;

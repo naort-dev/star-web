@@ -21,10 +21,13 @@ const BookingsStyled = styled.div`
     }
   }
   .top-heading {
-    padding-top: 9px;
-    margin-bottom: 28px;
+    padding-top: 0;
+    margin-bottom: 25px;
+    @media (max-width: 1280px) and (min-width: 442px) {
+      padding-top: 23px;
+    }
     @media (max-width: 832px) {
-      padding-top: 22px;
+      font-size: 24px;
     }
   }
   .latest-activity {
@@ -52,6 +55,7 @@ BookingsStyled.Container = styled.div`
     @media(max-width: 831px) {
       width: 336px;
       margin: 0px auto;
+      max-width: 100%;
     }
     @media (max-width: 1279px) and (min-width: 832px) {
       height: 100%;

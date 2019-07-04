@@ -22,6 +22,7 @@ const FavouriteStyled = styled.div`
     }
     @media (max-width: 831px) {
       padding-bottom: 17px;
+      font-size: 24px;
     }
   }
 `;
