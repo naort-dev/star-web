@@ -12,11 +12,12 @@ import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport, audioVideoSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
-import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
+import { BackArrow, CloseButton } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
 import { useMedia } from 'utils/domUtils';
+import { generateScriptFromData } from 'utils/dataToStringFormatter';
 import {
   Layout,
   VideoContainer,
@@ -359,7 +360,9 @@ const Question = props => {
     return (
       <React.Fragment>
         Record an answer <br /> for{' '}
-        <span className="bold-head-name">{props.bookedItem.fan_first_name}</span>
+        <span className="bold-head-name">
+          {props.bookedItem.fan_first_name}
+        </span>
       </React.Fragment>
     );
   };
@@ -382,32 +385,41 @@ const Question = props => {
     props.nextRequestHandler(props.requestId, true);
   };
 
-  const nextClick = () => {
-    updateIsQuestion(false);
-    props.nextClick();
+  // const nextClick = () => {
+  //   updateIsQuestion(false);
+  //   props.nextClick();
+  // };
+
+  const getScript = () => {
+    return generateScriptFromData({
+      ...props.bookedItem,
+      responseTime: props.responseTime,
+    });
   };
 
   useEffect(() => {
-    const qusList = [
-      {
-        key: 'que2',
-        question: props.bookedItem.request_details.booking_statement,
-        className: '',
-      },
-      {
-        key: 'que3',
-        question: props.bookedItem.request_details.important_info,
-        className: '',
-      },
-    ];
-    updatedStateHandler({
-      ...stateObject,
-      buttonLabel: props.videoSrc
-        ? props.buttonLabel.primary.continue
-        : props.buttonLabel.primary.record,
-      qusList: [...[questions[0]], ...qusList],
-      continueFlg: false,
-    });
+    if (props.bookedItem.request_type !== 3) {
+      const qusList = [
+        {
+          key: 'que2',
+          question: getScript(),
+          className: '',
+        },
+        {
+          key: 'que3',
+          question: props.bookedItem.request_details.important_info,
+          className: '',
+        },
+      ];
+      updatedStateHandler({
+        ...stateObject,
+        buttonLabel: props.videoSrc
+          ? props.buttonLabel.primary.continue
+          : props.buttonLabel.primary.record,
+        qusList: [...[questions[0]], ...qusList],
+        continueFlg: false,
+      });
+    }
   }, [props.bookedItem, props.buttonLabel]);
 
   const checkDeviceSupport = async () => {
@@ -451,7 +463,7 @@ const Question = props => {
                       </li>
                     </ul>
                   )}
-                  <VideoContainer>
+                  <VideoContainer isQA={props.bookedItem.request_type === 3}>
                     {props.bookedItem.request_type === 3 && isQuestion ? (
                       <VideoRender
                         variableWidth
@@ -638,6 +650,9 @@ Question.propTypes = {
   uploadSuccess: PropTypes.func.isRequired,
   uploadSuccessFlg: PropTypes.bool,
   nextRequestHandler: PropTypes.func.isRequired,
+  responseTime: PropTypes.string,
+  toggleUpdateBooking: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
@@ -648,6 +663,7 @@ Question.defaultProps = {
   requestId: '',
   videoFile: {},
   uploadSuccessFlg: false,
+  responseTime: '',
 };
 
 function mapStateToProps(state) {
@@ -658,6 +674,7 @@ function mapStateToProps(state) {
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
     shouldRecord: state.commonReducer.shouldRecord,
     videoFile: state.commonReducer.file,
+    responseTime: state.starDetails.celebDetails.celebrityDetails.responseTime,
   };
 }
 

@@ -18,6 +18,10 @@ SidebarStyled.AvatarImage = styled.div`
   background-position: center center;
   background-size: cover;
   position: relative;
+  @media(max-width: 831px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 SidebarStyled.LinkList = styled.ul`
@@ -28,7 +32,7 @@ SidebarStyled.LinkList = styled.ul`
 `;
 
 SidebarStyled.LinkItem = styled.li`
-  font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+  font-family: ${props => props.selected ? 'Gilroy-SemiBold' : 'Gilroy-Regular'};
   color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
   font-size: 18px;
   cursor: pointer;

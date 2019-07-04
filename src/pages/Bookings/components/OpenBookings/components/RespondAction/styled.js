@@ -21,9 +21,7 @@ export const Layout = styled.section`
   .video-wrapper {
     ${media.mobileScreen} {
       order: 1;
-      max-height: 426px;
-      height: calc(100% - 150px);
-      min-height: 305px;
+      height: 426px;
     }
   }
   .button {
@@ -47,7 +45,7 @@ export const Layout = styled.section`
   }
   .quesHead {
     padding-bottom: 20px;
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy-Medium;
     font-size: 14px;
     color: #7c7c7c;
     text-transform: capitalize;
@@ -76,29 +74,15 @@ export const Layout = styled.section`
     display: none;
   }
   .uploadBtn {
-    width: 100%;
     display: inline-block;
     text-align: center;
-    ${media.webView} {
-      border: 1px solid #2f839d;
-    }
     color: #2f839d;
-    height: 40px;
-    line-height: 40px;
     border-radius: 30px;
     margin-bottom: 10px;
+    margin-top: 25px;
     font-family: Gilroy-SemiBold;
     font-size: 14px;
     cursor: pointer;
-    :hover,
-    :focus {
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
-    }
-    &:active {
-      color: #fff;
-      background-color: ${props => props.theme.greyishBrown};
-      border-color: ${props => props.theme.greyishBrown};
-    }
   }
   .videoInputCapture {
     display: none;
@@ -183,13 +167,13 @@ export const Layout = styled.section`
 export const VideoContainer = styled.section`
   width: 319px;
   height: 493px;
-  border-radius: 23px;
+  border-radius: 23px;  
   background-color: #e3e3e3;
   margin-bottom: 60px;
   position: relative;
   ${media.mobileScreen} {
-    height: 100%;
     margin-bottom: 0;
+    height: ${props => (props.isQA ? 'calc(100% - 30px)' : '100%')};
   }
   .playButton {
     position: absolute;
@@ -222,8 +206,8 @@ export const QuestionContainer = styled.section`
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 15px;
     padding-top: 15px;
-    padding-bottom: 50px;
-    bottom: ${props => (props.isQA ? '-33px' : '150px')};
+    padding-bottom: ${props => (props.isQA ? '60px' : '50px')};
+    bottom: ${props => (props.isQA ? '148px' : '150px')};
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -239,8 +223,8 @@ export const QuestionContainer = styled.section`
       right: -11px;
       ${media.mobileScreen} {
         top: inherit;
-        bottom: -33px;
-        right: 40px;
+        bottom: ${props => (props.isQA ? '-41px' : '-33px')};
+        right: 10px;
         .more-action-icon {
           background: #fff;
         }
@@ -285,16 +269,28 @@ export const QuestionContainer = styled.section`
   .question {
     font-size: 16px;
     line-height: 22px;
+    color: #555;
     ${media.mobileScreen} {
       padding-left: 5px;
       font-size: 14px;
       line-height: 20px;
+      color: #fff;
     }
-    .boldTxt {
+    p {
+      font-family: Gilroy;
+      color: #555;
+      ${media.mobileScreen} {
+        color: #fff;
+      }
+    }
+    .boldTxt, &.bold-text {
+      font-family: Gilroy-Bold;
+      color: #555;
       ${media.mobileScreen} {
         padding-left: 5px;
         font-size: 14px;
         line-height: 20px;
+        color: #fff;
       }
     }
   }
@@ -303,9 +299,10 @@ export const QuestionContainer = styled.section`
     font-size: 12px;
     color: #fff;
     max-width: 215px;
-    padding-left: 29px;
+    padding-left: 20px;
     ${media.webView} {
       color: #3b3b3b;
+      padding-left: 29px;
     }
   }
 `;
@@ -315,7 +312,8 @@ export const ShowHide = styled.span`
   /* position: absolute;
   bottom: ${props => (props.isQA ? '0' : '20px')}; */
   order: 2;
-  margin: ${props => props.scriptVisible ? '-47px auto 15px 10px' : '-47px auto 15px'}
+  /* margin: ${props => props.scriptVisible ? '-47px auto 15px 10px' : '-47px auto 15px'} */
+  margin: -47px auto 15px; 
   position: relative;
   width: 224px;
   text-align: center;
@@ -404,7 +402,7 @@ export const Header = styled.h4`
     padding: 0 40px;
   }
   .bold-head-name {
-    font-family: Gilroy-Bold;
+    font-family: Gilroy-SemiBold;
   }
 `;
 export const Speaker = styled(FontAwesomeIcon)`

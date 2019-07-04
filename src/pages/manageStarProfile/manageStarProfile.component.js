@@ -121,7 +121,7 @@ const ManageStarProfile = props => {
   const getPercentage = () => {
     const completedArray = getLinks(STAR_PROFILE.INNER_LINKS);
     const completedCount = completedArray.filter(link => link.completed === true).length;
-    const percentage = Math.round(completedCount * (100/7));
+    const percentage = Math.round(completedCount * (100/completedArray.length));
     return percentage;
   }
 

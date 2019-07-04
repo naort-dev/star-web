@@ -33,7 +33,7 @@ function FormContainer(props) {
       ...FormData,
       user: 'Myself',
       enableAudioRecorder: true,
-      hostName: props.user_name ? props.user_name : 'YOU',
+      hostName: props.first_name ? props.first_name : 'YOU',
       validSelf: true,
     });
   };

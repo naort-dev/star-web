@@ -104,7 +104,8 @@ CompletedStyled.DetailsWrapper = styled.div`
     padding-top: 6.7px;
     .date {
       font-family: Gilroy-Medium;
-      font-size: 14px;
+      font-size: 12px;
+      margin-top: 6px;
     }
     .rating {
       padding: 0;

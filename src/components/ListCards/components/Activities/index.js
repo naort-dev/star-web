@@ -35,7 +35,7 @@ const ctaList = [
   },
   {
     heading: 'Consider your pricing',
-    value_main: 'price yourself in a more affordable range for fans.',
+    value_main: 'Price yourself in a more affordable range for fans.',
     value_sub: '',
     btnTextPrimary: 'Update price',
     btnTextSecondary: '',

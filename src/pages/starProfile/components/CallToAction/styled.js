@@ -22,7 +22,9 @@ const ActionStyled = styled.div`
   @media (min-width: 832px) {
     height: 111px;
     padding: 0 65px;
-    cursor: pointer;
+    ${props => props.available && `
+      cursor: pointer;
+    `}
   }
 `;
 
