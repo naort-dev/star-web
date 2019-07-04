@@ -13,7 +13,12 @@ export const Layout = styled.section`
     padding-top: 0;
   }
   .no-device-support {
-    width: 224px;
+    ${media.webView} {
+      width: 224px;
+    }
+    ${media.mobileScreen} {
+      height: 192px;
+    }
   }
   .uploadBtn {
     display: block;
@@ -37,7 +42,7 @@ export const Layout = styled.section`
     font-family: Gilroy-SemiBold;
     cursor: pointer;
     ${media.mobileScreen} {
-      height: 43.9px;
+      height: 56.9px;
       font-family: Gilroy-Light;
       font-size: 20px;
       background-color: rgba(0, 0, 0, 0);
@@ -46,7 +51,6 @@ export const Layout = styled.section`
       border-radius: 0px;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
-      border: none;
       width: 100%;
       color: #2f839d;
       padding: 0px;
@@ -229,8 +233,10 @@ QuestionContainer.ButtonHeading = styled.div`
   color: #8f8f8f;
   font-family: Gilroy;
   font-size: 13px;
-  border-bottom: 1px solid #ccc;
   margin-bottom: 6px;
+  display: flex;
+  padding-top: 5px;
+  justify-content: center;
 
 `;
 QuestionContainer.ButtonWrapper = styled.div`
@@ -247,12 +253,10 @@ QuestionContainer.ButtonWrapper = styled.div`
       font-family: Gilroy-Light;
       font-size: 20px;
       background-color: rgba(0, 0, 0, 0);
-      border-bottom: 1px solid #ccc;
       font-size: 20px;
       border-top: 1px solid #ccc;
       border: none;
       border-radius: 0px;
-      border-bottom: 1px solid #ccc;
       width: 100%;
       color: #2f839d;
       padding: 0px;
@@ -312,20 +316,20 @@ display: block;
 ${media.webView} {
   display: none;
 }
-:after,
-:before {
-  position: relative;
-  top: ${props => (props.isShow ? '-3px' : '5px')};
-  content: '';
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-right: 1px solid #2f839d;
-  border-top: 1px solid #2f839d;
-  transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
-  margin-right: 28px;
-  margin-left: 28px;
-}
+// :after,
+// :before {
+//   position: relative;
+//   top: ${props => (props.isShow ? '-3px' : '5px')};
+//   content: '';
+//   display: inline-block;
+//   width: 9px;
+//   height: 9px;
+//   border-right: 1px solid #2f839d;
+//   border-top: 1px solid #2f839d;
+//   transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
+//   margin-right: 28px;
+//   margin-left: 28px;
+// }
 `;
 export const PlayButton = styled.section`
   display: flex;

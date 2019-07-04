@@ -230,8 +230,7 @@ const Video = props => {
         {(!checkMediaRecorderSupport() || !props.isDeviceSupported || error) && (
             <QuestionContainer className="no-device-support" isShow error>
               <p className="note">
-                Your system does not have video recording capability, but you
-                will need to record a welcome video so you can start taking bookings.{' '}
+                Your system does not have video recording capability.{' '}
                 <br />
                 <br />
                 You can:
@@ -245,7 +244,9 @@ const Video = props => {
                     {buttonLabel}
                   </Button>
                 }
-                {getFileUpload(['uploadBtn '])}
+                { !isMobile &&
+                  getFileUpload(['uploadBtn '])
+                }
               </QuestionContainer.ButtonWrapper>
             </QuestionContainer>
           )}
@@ -263,11 +264,13 @@ const Video = props => {
             <QuestionContainer.ButtonWrapper>
               <QuestionContainer.ButtonHeading>
                 How do you want to create a new video
-                  </QuestionContainer.ButtonHeading>
+              </QuestionContainer.ButtonHeading>
               {getFileUpload(['uploadBtn '])}
-              <Button onClick={mobileBtnClickHandler} className="button">
-                Record new video
-                  </Button>
+              { (checkMediaRecorderSupport() && props.isDeviceSupported && !error) &&
+                <Button onClick={mobileBtnClickHandler} className="button">
+                  Record new video
+                </Button>
+              }
             </QuestionContainer.ButtonWrapper>
           </ShowButtons>
         }
