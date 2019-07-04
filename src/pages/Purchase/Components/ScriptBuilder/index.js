@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty, isPlainObject } from 'lodash';
 import { connect } from 'react-redux';
-import { isPlainObject } from 'lodash';
 import Checkbox from 'components/Checkbox';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -80,13 +79,19 @@ class ScriptBuilder extends Component {
 
     const script = ScriptGenerator({
       templateType,
-      forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
-      fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
+      forName:
+        !isEmpty(hostName) &&
+        hostName.charAt(0).toUpperCase() + hostName.slice(1),
+      fromName:
+        !isEmpty(userName) &&
+        userName.charAt(0).toUpperCase() + userName.slice(1),
       relationship: relationship.toLowerCase(),
       date,
-      occasion: occasion.label.toLowerCase(),
+      occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : ' ',
       someOneElse: user !== 'Myself',
-      specification: specification.toLowerCase(),
+      specification: !isEmpty(specification)
+        ? specification.toLowerCase()
+        : ' ',
       occasionKey: occasion.key,
       responseTime: this.props.responseTime,
     });
