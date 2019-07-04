@@ -79,21 +79,21 @@ const LatestCard = (props) => {
       return (
         <MediumText className='card-description'>
           <HeadingBold>Question</HeadingBold> requested
-          from <HeadingBold>{request.fan}</HeadingBold>
+          from <HeadingBold>{request.fan_first_name}</HeadingBold>
         </MediumText>
       )
     } else if (requestTypes[request.request_type] === 'Shout-out') {
       return (
         <MediumText className='card-description'>
           <HeadingBold>{request.occasion}</HeadingBold> shoutout
-           for <HeadingBold>{request.fan}</HeadingBold>
+           for <HeadingBold>{request.fan_first_name}</HeadingBold>
         </MediumText>
       )
     }
     return (
       <MediumText className='card-description'>
         <HeadingBold>{request.occasion}</HeadingBold> announcement 
-        for <HeadingBold>{request.fan}</HeadingBold>
+        for <HeadingBold>{request.fan_first_name}</HeadingBold>
       </MediumText>
     )
   }

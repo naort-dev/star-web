@@ -41,19 +41,19 @@ const FanGeneralList = (props) => {
     if (requestTypes[props.data.request_type] === 'Q&A') {
       return (
         <MediumText>
-          <HeadingBold>Answer</HeadingBold> to question for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>Answer</HeadingBold> to question for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
         </MediumText>
       )
     } else if (requestTypes[props.data.request_type] === 'Shout-out') {
       return (
         <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout for <HeadingBold>{props.data.fan}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
         </MediumText>
       )
     }
     return (
       <MediumText>
-        <HeadingBold>{props.data.occasion}</HeadingBold> announcement for <HeadingBold>{props.data.fan}</HeadingBold>
+        <HeadingBold>{props.data.occasion}</HeadingBold> announcement for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
       </MediumText>
     )
   }
