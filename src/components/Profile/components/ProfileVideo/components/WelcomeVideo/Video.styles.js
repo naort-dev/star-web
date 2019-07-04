@@ -12,6 +12,9 @@ export const Layout = styled.section`
   @media (max-width: 831px) {
     padding-top: 0;
   }
+  .no-device-support {
+    width: 224px;
+  }
   .uploadBtn {
     display: block;
     margin-top: 10px;
@@ -211,7 +214,6 @@ export const QuestionContainer = styled.section`
       min-height: 40px;
       min-width: inherit;
     }
-    
   }
   .heading {
     font-family: Gilroy-Medium;

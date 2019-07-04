@@ -228,7 +228,7 @@ const Video = props => {
         </QuestionContainer>
 
         {(!checkMediaRecorderSupport() || !props.isDeviceSupported || error) && (
-            <QuestionContainer isShow error>
+            <QuestionContainer className="no-device-support" isShow error>
               <p className="note">
                 Your system does not have video recording capability, but you
                 will need to record a welcome video so you can start taking bookings.{' '}
