@@ -32,7 +32,7 @@ export const starRoutes = [
   '/manage/settings/notification',
   '/manage/earnings',
 ];
-export const groupRoutes = [...fanRoutes, '/user/star-supporters'];
+export const groupRoutes = [...commonAuthRoutes, ...fanRoutes, '/user/star-supporters'];
 export const protectedRoutes = [
   ...commonAuthRoutes,
   ...fanRoutes,
