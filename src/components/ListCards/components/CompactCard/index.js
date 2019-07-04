@@ -40,7 +40,7 @@ const CompactCard = props => {
       initialSelected={props.initialSelected}
     >
       {renderTitle()}
-      <CompactStyled.UserName>{bookData.fan}</CompactStyled.UserName>
+      <CompactStyled.UserName>{bookData.fan_first_name}</CompactStyled.UserName>
       <CompactStyled.DetailsWrapper>
         <TickText className="tick-text">To Do</TickText>
         <span className="time-text">{renderTime(bookData.created_date)}</span>
