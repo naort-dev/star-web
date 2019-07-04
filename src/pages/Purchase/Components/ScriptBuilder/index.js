@@ -88,11 +88,9 @@ class ScriptBuilder extends Component {
         userName.charAt(0).toUpperCase() + userName.slice(1),
       relationship: !isEmpty(relationship) && relationship.toLowerCase(),
       date,
-      occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : ' ',
+      occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : '',
       someOneElse: user !== 'Myself',
-      specification: !isEmpty(specification)
-        ? specification.toLowerCase()
-        : ' ',
+      specification: !isEmpty(specification) ? specification.toLowerCase() : '',
       occasionKey: occasion.key,
       responseTime: this.props.responseTime,
     });
@@ -137,7 +135,10 @@ class ScriptBuilder extends Component {
         type: this.props.category,
         requestRelationshipData: this.props.bookingData.relationshipValue,
         stargramto: this.props.bookingData.hostName,
-        stargramfrom: this.props.bookingData.userName,
+        stargramfrom:
+          this.props.bookingData.user !== 'Myself'
+            ? this.props.bookingData.userName
+            : '',
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
         booking_statement: this.state.script,
@@ -152,6 +153,7 @@ class ScriptBuilder extends Component {
             : '',
         is_myself: this.props.bookingData.user === 'Myself',
         requestId: this.props.bookingData.requestId,
+        templateType: this.props.bookingData.templateType,
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
-import { ScriptGenerator } from 'components/ScriptGenerator';
 import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
@@ -18,6 +17,7 @@ import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
 import { useMedia } from 'utils/domUtils';
+import { generateScriptFromData } from 'utils/dataToStringFormatter';
 import {
   Layout,
   VideoContainer,
@@ -360,7 +360,9 @@ const Question = props => {
     return (
       <React.Fragment>
         Record an answer <br /> for{' '}
-        <span className="bold-head-name">{props.bookedItem.fan_first_name}</span>
+        <span className="bold-head-name">
+          {props.bookedItem.fan_first_name}
+        </span>
       </React.Fragment>
     );
   };
@@ -383,51 +385,16 @@ const Question = props => {
     props.nextRequestHandler(props.requestId, true);
   };
 
-  const nextClick = () => {
-    updateIsQuestion(false);
-    props.nextClick();
-  };
+  // const nextClick = () => {
+  //   updateIsQuestion(false);
+  //   props.nextClick();
+  // };
 
   const getScript = () => {
-    const {
-      date,
-      event_guest_honor,
-      event_title,
-      from_where,
-      is_myself,
-      relationship,
-      stargramfrom,
-      stargramto,
-    } = props.bookedItem.request_details;
-
-    const specification = [event_guest_honor, event_title, from_where].find(
-      field => !isEmpty(field),
-    );
-    
-
-    const script = ScriptGenerator({
-      templateType: props.bookedItem.occasion_type,
-      forName:
-        !isEmpty(stargramto) &&
-        stargramto.charAt(0).toUpperCase() + stargramto.slice(1),
-      fromName:
-        !isEmpty(stargramfrom) &&
-        !is_myself &&
-        stargramfrom.charAt(0).toUpperCase() + stargramfrom.slice(1),
-      relationship:
-        !isEmpty(relationship.title) && relationship.title.toLowerCase(),
-      date,
-      occasion: !isEmpty(props.bookedItem.occasion)
-        ? props.bookedItem.occasion.toLowerCase()
-        : ' ',
-      someOneElse: !is_myself,
-      specification: !isEmpty(specification)
-        ? specification.toLowerCase()
-        : ' ',
-      occasionKey: props.bookedItem.occasion_id,
+    return generateScriptFromData({
+      ...props.bookedItem,
       responseTime: props.responseTime,
     });
-    return script;
   };
 
   useEffect(() => {
@@ -684,6 +651,8 @@ Question.propTypes = {
   uploadSuccessFlg: PropTypes.bool,
   nextRequestHandler: PropTypes.func.isRequired,
   responseTime: PropTypes.string,
+  toggleUpdateBooking: PropTypes.func.isRequired,
+  toggleContactSupport: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
