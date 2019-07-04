@@ -3,6 +3,7 @@ import { media } from '../../styles/mediaQueries';
 
 const CommentStyled = styled.div`
   display: inline-block;
+  width: 100%;
 `;
 
 CommentStyled.Container = styled.div`
@@ -25,11 +26,12 @@ CommentStyled.ProfileImage = styled.span`
 CommentStyled.Comment = styled.span`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   background-color: ${props => props.visible ? '#ffffff' : '#f6f6f6'};
-  padding: 10px 8px 18px 15px;
+  padding: 10px 8px 10px 15px;
   border-radius: 10px;
   max-width: 228px;
   position: relative;
   min-width: 121px;
+  width: 100%;
   .hidden-header {
     display: block;
     text-align: center;
@@ -46,21 +48,30 @@ CommentStyled.Comment = styled.span`
   `)}
   .comment {
     font-family: Gilroy-Light;
-    font-size: 14px;
+    font-size: 12px;
     color: #3c3c3c;
     display: block;
     line-height: 18px;
     overflow: hidden;
+    margin-bottom: 3px;
     .text-bold {
-      font-family: Gilroy-Medium;
-      font-size: 14px;
+      font-family: Gilroy-SemiBold;
+      font-size: 12px;
       &.user-name {
         margin-right: 5px;
       }
     }
     &.reaction {
       display: flex;
-      justify-content: space-between;
+      .icon-heart {
+        color: #ff3636;
+        width: 27px;
+        height: 23px;
+        margin-right: 10px;
+      }
+      .action-button {
+        margin-left: auto;
+      }
     }
     &.tip {
       .text-bold {
@@ -74,12 +85,13 @@ CommentStyled.Comment = styled.span`
       }
     }
     .action-button {
-      width: 118px;
-      height: 34px;
+      width: auto;
+      height: 27px;
       min-width: auto;
-      padding: 6px;
+      padding: 2px 23px;
       min-height: auto;
       font-size: 12px;
+      line-height: 16px;
       ${media.mobileScreen} {
         width: 65px;
       }
@@ -91,7 +103,7 @@ CommentStyled.Comment = styled.span`
     }
     .title {
       font-family: Gilroy-Regular;
-      font-size: 14px;
+      font-size: 12px;
       display: block;
     }
   }
@@ -101,15 +113,10 @@ CommentStyled.Comment = styled.span`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    ${media.webView} {
-      position: absolute;
-      bottom: 6px;
-      left: 15px;
-      right: 8px;
-    }
     .more-action-root {
       width: 10px;
       height: 10px;
+      margin-top: -7px;
       .more-action-icon {
         width: 10px;
         height: 10px;

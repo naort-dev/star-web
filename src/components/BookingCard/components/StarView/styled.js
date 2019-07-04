@@ -30,7 +30,10 @@ StarViewStyled.VideoWrapper = styled.div`
 StarViewStyled.DetailWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  &:first-child {
+    margin-bottom: 8px;
+  }
   .title {
     display: block;
   }
@@ -45,12 +48,20 @@ StarViewStyled.CommentWrapper = styled.div`
     height: 100%;
   }
   .comment-box {
-    width: calc(100% - 60px);
+    width: calc(100% - 50px);
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
   .quick-comment {
     border: 1px solid ${props => props.theme.brownGrey};
     border-radius: 50%;
-    margin-top: 17px;
+    margin-top: 15px;
+    .icon-image {
+      width: 13px;
+      height: 20px;
+    }
   }
 `;
 
