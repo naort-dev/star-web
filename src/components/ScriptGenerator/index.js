@@ -314,70 +314,22 @@ export const ScriptGenerator = ({
   occasionKey,
   responseTime,
 }) => {
-  let htmlElm = '<p class="script">';
-  if (templateType === 1) {
-    htmlElm += getScript(
-      forName,
-      relationship,
-      fromName,
-      occasion,
-      date,
-      `${specification}`,
-      'Hey',
-      'your',
-      getMainText(
-        someOneElse,
-        ' wanted me to wish you an amazing ',
-        ' I wanted to wish you an amazing ',
-        fromName,
-        relationship,
-      ),
-      '',
-      '',
-      templateType,
-      occasionKey,
-    );
-  } else if (templateType === 2) {
-    let spec = specification;
-    if (!isEmpty(specification)) {
-      spec = `${specification}'s `;
-    }
-    if (occasionKey === 15) {
-      htmlElm += getScript(
-        forName,
-        relationship,
-        fromName,
-        '',
-        date,
-        spec,
-        'Hey',
-        'your',
-        getMainText(
-          someOneElse,
-          ' wanted me to you send you my sincerest sympathies for ',
-          ' I wanted to send you my sincerest sympathies for ',
-          fromName,
-          relationship,
-        ),
-        '',
-        ' passing',
-        templateType,
-        occasionKey,
-      );
-    } else {
+  if (templateType) {
+    let htmlElm = '<p class="script">';
+    if (templateType === 1) {
       htmlElm += getScript(
         forName,
         relationship,
         fromName,
         occasion,
         date,
-        spec,
+        `${specification}`,
         'Hey',
         'your',
         getMainText(
           someOneElse,
-          ' wanted me to wish you congratulations on ',
-          ' I wanted to wish you congratulations on ',
+          ' wanted me to wish you an amazing ',
+          ' I wanted to wish you an amazing ',
           fromName,
           relationship,
         ),
@@ -386,83 +338,134 @@ export const ScriptGenerator = ({
         templateType,
         occasionKey,
       );
-    }
-  } else if (templateType === 3) {
-    let text1 = ' wanted me to send you ';
-    let text2 = ' I wanted me to send you ';
-    let occasionText = occasion;
-    if (occasionKey === 37) {
-      text1 = ' wanted me to propose ';
-      text2 = ' I wanted me to propose ';
-      occasionText = '';
-    }
-    if (isEmpty(fromName) && !isEmpty(relationship)) {
-      text2 = ' wanted me to send you ';
-    }
-    htmlElm += getScript(
-      forName,
-      relationship,
-      fromName,
-      occasionText,
-      date,
-      `${specification}`,
-      'Hey',
-      'your',
-      getMainText(someOneElse, text1, text2, fromName, relationship),
-      '',
-      '',
-      templateType,
-      occasionKey,
-    );
-  } else if (templateType === 4) {
-    htmlElm += getScript(
-      forName,
-      relationship,
-      fromName,
-      '',
-      date,
-      specification,
-      'Hey',
-      'your',
-      getMainText(
-        someOneElse,
-        ' wanted me to reach out to you because ',
-        ' this shout-out is because ',
-        fromName,
+    } else if (templateType === 2) {
+      let spec = specification;
+      if (!isEmpty(specification)) {
+        spec = `${specification}'s `;
+      }
+      if (occasionKey === 15) {
+        htmlElm += getScript(
+          forName,
+          relationship,
+          fromName,
+          '',
+          date,
+          spec,
+          'Hey',
+          'your',
+          getMainText(
+            someOneElse,
+            ' wanted me to you send you my sincerest sympathies for ',
+            ' I wanted to send you my sincerest sympathies for ',
+            fromName,
+            relationship,
+          ),
+          '',
+          ' passing',
+          templateType,
+          occasionKey,
+        );
+      } else {
+        htmlElm += getScript(
+          forName,
+          relationship,
+          fromName,
+          occasion,
+          date,
+          spec,
+          'Hey',
+          'your',
+          getMainText(
+            someOneElse,
+            ' wanted me to wish you congratulations on ',
+            ' I wanted to wish you congratulations on ',
+            fromName,
+            relationship,
+          ),
+          '',
+          '',
+          templateType,
+          occasionKey,
+        );
+      }
+    } else if (templateType === 3) {
+      let text1 = ' wanted me to send you ';
+      let text2 = ' I wanted me to send you ';
+      let occasionText = occasion;
+      if (occasionKey === 37) {
+        text1 = ' wanted me to propose ';
+        text2 = ' I wanted me to propose ';
+        occasionText = '';
+      }
+      if (isEmpty(fromName) && !isEmpty(relationship)) {
+        text2 = ' wanted me to send you ';
+      }
+      htmlElm += getScript(
+        forName,
         relationship,
-      ),
-      '',
-      '',
-      templateType,
-      occasionKey,
-    );
-  } else if (templateType === 5) {
-    let days = [0];
-    if (!isEmpty(responseTime)) {
-      days = responseTime.split(' ');
+        fromName,
+        occasionText,
+        date,
+        `${specification}`,
+        'Hey',
+        'your',
+        getMainText(someOneElse, text1, text2, fromName, relationship),
+        '',
+        '',
+        templateType,
+        occasionKey,
+      );
+    } else if (templateType === 4) {
+      htmlElm += getScript(
+        forName,
+        relationship,
+        fromName,
+        '',
+        date,
+        specification,
+        'Hey',
+        'your',
+        getMainText(
+          someOneElse,
+          ' wanted me to reach out to you because ',
+          ' this shout-out is because ',
+          fromName,
+          relationship,
+        ),
+        '',
+        '',
+        templateType,
+        occasionKey,
+      );
+    } else if (templateType === 5) {
+      let days = [0];
+      if (!isEmpty(responseTime)) {
+        days = responseTime.split(' ');
+      }
+      htmlElm += getStep5Script(
+        forName,
+        relationship,
+        fromName,
+        occasion,
+        date,
+        `${specification}`,
+        'Hey',
+        'your',
+        getDateSpecificText(date, days[0], fromName, someOneElse),
+        '',
+        getLastContent(date, days[0], fromName, relationship, someOneElse),
+      );
+    } else if ([6, 7].includes(templateType)) {
+      htmlElm += getAnnouncementScript(
+        forName,
+        specification,
+        date,
+        occasion,
+        templateType,
+      );
     }
-    htmlElm += getStep5Script(
-      forName,
-      relationship,
-      fromName,
-      occasion,
-      date,
-      `${specification}`,
-      'Hey',
-      'your',
-      getDateSpecificText(date, days[0], fromName, someOneElse),
-      '',
-      getLastContent(date, days[0], fromName, relationship, someOneElse),
-    );
-  } else if ([6, 7].includes(templateType)) {
-    htmlElm += getAnnouncementScript(
-      forName,
-      specification,
-      date,
-      occasion,
-      templateType,
-    );
+    htmlElm += '</p>';
+    return htmlElm;
   }
-  htmlElm += '</p>';
-  return htmlElm;
+  return '';
 };
