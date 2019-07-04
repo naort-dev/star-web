@@ -32,6 +32,10 @@ class LoginFlow extends React.Component {
 
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
+  loadSignup = () => {
+    this.props.toggleSignup(true);
+  }
+
   render() {
     const path = this.props.location.pathname;
     return (
@@ -71,6 +75,7 @@ class LoginFlow extends React.Component {
                       changeView={this.changeView}
                       data={this.state.socialData}
                       saveData={this.saveData}
+                      loadSignup={this.loadSignup}
                       closeLogin={() => this.props.toggleLogin(false)}/>
                       :
                       null

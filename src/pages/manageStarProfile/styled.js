@@ -5,6 +5,7 @@ export const Layout = styled.section`
   height: 100%;
   padding-left: 40px;
   padding-right: 31px;
+  position: relative;
   .top-heading {
     padding-top: 9px;
     margin-bottom: 28px;
