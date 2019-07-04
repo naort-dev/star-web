@@ -24,8 +24,10 @@ export const Layout = styled.section`
       }
     }
     .custom-button {
-      min-width: 200px;
       margin: 10px auto;
+      ${media.webView} {
+        margin: 10px 0;
+      }
     }
     ${media.smallScreen} {
       padding: 10px;
@@ -61,31 +63,26 @@ export const Layout = styled.section`
     }
   }
   .button-booking {
-    width: 91px;
-    height: 40px;
-    min-width: 91px;
+    width: auto;
+    min-width: 150px;
     min-height: 40px;
     font-size: 14px;
     padding: 5px;
     ${media.webView} {
       min-width: 160px;
-      width: 160px;
     }
   }
   .button-activity {
-    width: 69px;
-    height: 40px;
     min-width: 69px;
     min-height: 40px;
     font-size: 14px;
     ${media.webView} {
       min-width: 160px;
-      width: 160px;
     }
   }
   .button-promote {
-    width: 329px;
-    height: 55px;
+    min-width: 329px;
+    min-height: 55px;
     font-family: Gilroy-Bold
     ${media.smallScreen} {
       font-size: 16px;
@@ -102,7 +99,7 @@ export const Layout = styled.section`
     max-width: 204px;
   }
   .head2 {
-    font-family: Gilroy-Bold;
+    font-family: Gilroy-SemiBold;
     font-size: 18px;
     line-height: 30px;
     color: #5d5d5d;
