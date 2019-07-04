@@ -25,7 +25,7 @@ export const protectRoute = ({
       if (isStar) {
         hasRole = starRoutes.includes(location.pathname) || commonAuthRoutes.includes(location.pathname);
       } else if (role === ROLES.group) {
-        hasRole = groupRoutes.includes(location.pathname);
+        hasRole = groupRoutes.includes(location.pathname) || commonAuthRoutes.includes(location.pathname);
       } else {
         hasRole = fanRoutes.includes(location.pathname) || commonAuthRoutes.includes(location.pathname);
       }

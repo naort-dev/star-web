@@ -34,7 +34,9 @@ const CallToAction = (props) => {
   }
 
   const toggleRequestFlow = () => {
-    props.toggleRequestFlow(true);
+    if (props.celebDetails.availability && props.celebDetails.remaining_limit > 0) {
+      props.toggleRequestFlow(true);
+    }
   }
 
   useEffect(() => {
@@ -46,15 +48,15 @@ const CallToAction = (props) => {
   })
 
   return (
-    <ActionStyled onClick={toggleRequestFlow} available={props.celebDetails.availability}>
-      <ActionStyled.ActionContent available={props.celebDetails.availability}>
+    <ActionStyled onClick={toggleRequestFlow} available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0}>
+      <ActionStyled.ActionContent available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0}>
         <ActionStyled.AvatarWrapper>
           <StarProfileStyled.Avatar imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url} />
         </ActionStyled.AvatarWrapper>
         <ActionStyled.DescriptionWrapper>
           <ActionStyled.Description id="action-description">
             {
-              props.celebDetails.availability ?
+              props.celebDetails.availability && props.celebDetails.remaining_limit > 0 ?
                 <React.Fragment>
                   Book <span className="long-description">a shoutout from </span>
                   <strong>{getShortName()}</strong> for <strong>${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
@@ -68,7 +70,7 @@ const CallToAction = (props) => {
         </ActionStyled.DescriptionWrapper>
       </ActionStyled.ActionContent>
       {
-        props.celebDetails.availability &&
+        props.celebDetails.availability && props.celebDetails.remaining_limit > 0 &&
         <ActionStyled.ActionSection>
           <ActionStyled.ArrowWrapper>
             <FontAwesomeIcon icon={faChevronRight} />
