@@ -47,7 +47,7 @@ export const Wrapper = styled.section`
   }
 `;
 
-export const Form = styled.section`
+export const Form = styled.form`
   padding-left: 20px;
   padding-right: 20px;
   ${media.webView} {

@@ -512,6 +512,15 @@ export default class LoginForm extends React.Component {
                           Forgot your password?
                         </LoginContainer.ForgotButtonSpan>
                       </LoginContainer.actionText>
+                      &nbsp; | &nbsp;
+                      <LoginContainer.actionText
+                        onClick={() => this.props.loadSignup()}
+                      >
+                        <LoginContainer.ForgotButtonSpan>
+                          {" "}
+                          Register
+                        </LoginContainer.ForgotButtonSpan>
+                      </LoginContainer.actionText>
                     </LoginContainer.ForgotButtonWrapper>
                   )}
               </LoginContainer.InputContainer>

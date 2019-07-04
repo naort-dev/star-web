@@ -27,7 +27,7 @@ const CompletedCard = (props) => {
             from&nbsp;
             <HeadingBold>
               {
-                props.data.fan
+                props.data.fan_first_name
               }
             </HeadingBold>
         </React.Fragment>
@@ -38,7 +38,7 @@ const CompletedCard = (props) => {
         <HeadingBold>{props.data.occasion}</HeadingBold>&nbsp;
           {requestTypes[props.data.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <HeadingBold>
-            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : props.data.fan }
+            { requestDetails && !requestDetails.is_myself ? requestDetails.stargramto : props.data.fan_first_name }
           </HeadingBold>
           {
             requestDetails && requestDetails.is_myself !== undefined && !requestDetails.is_myself && requestDetails.stargramfrom !== '' ?
