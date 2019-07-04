@@ -71,6 +71,7 @@ const Video = props => {
       mediaHandler('Save & Continue');
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
+      changeButtonLabel('Record New Video');
       if (props.videoUploaded) {
         // handle logic if video already uploaded
       } else {
@@ -215,7 +216,7 @@ const Video = props => {
                   <span className="time">{renderTime()}</span>
                 </TimeSpan>
               )}
-              <h1 className="heading">What You Should Sayfghfghfh…</h1>
+              <h1 className="heading">What You Should Say…</h1>
               <QuestionBuilder questionsList={questionsAbout} />
               <QuestionContainer.ButtonWrapper>
                 <Button onClick={buttonClickHandler} className="button">

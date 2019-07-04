@@ -56,6 +56,9 @@ export const Layout = styled.section`
       padding: 0px;
       
     }
+    input {
+      width: 100%;
+    } 
     :hover,
     :focus {
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
@@ -244,8 +247,8 @@ QuestionContainer.ButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;  
   flex-direction: column;
-  padding-left: 20px;
-  padding-right: 20px;
+  // padding-left: 20px;
+  // padding-right: 20px;
   .button{
     ${media.mobileScreen} {
       height: 43.9px;
