@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MoreActions from '../MoreActions';
 import PrimaryButton from '../PrimaryButton';
 import StarRating from '../StarRating';
@@ -20,8 +22,9 @@ const CommentItem = (props) => {
     if (type === 'reaction')  {
       return (
         <span className='comment reaction'>
+          <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
           <span>
-            <span className='text-description'>Reaction recorded:</span>
+            <span className='text-description'>Reaction:</span>
             <span className="text-bold">{moment.utc(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
           </span>
           <PrimaryButton className='action-button' onClick={onReactionClick}>View</PrimaryButton>

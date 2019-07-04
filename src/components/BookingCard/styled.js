@@ -85,11 +85,13 @@ BookingStyled.HeaderText = styled.h5`
   padding-right: 24px;
   text-align: center;
   strong {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-SemiBold;
+    font-weight: normal;
   }
   @media(min-width: 832px) {
     color: ${props => props.theme.flatBlue};
     padding-right: 53px;
+    margin-top: 11px;
   }
 `;
 
@@ -101,7 +103,10 @@ BookingStyled.Layout = styled.div`
   padding-bottom: 10px;
   @media(min-width: 832px) {
     flex-direction: row;
-    padding-top: ${props => (props.starMode ? '55.2px' : '0')};
+    padding-top: ${props => (props.starMode ? '40px' : '0')};
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    padding-top: ${props => (props.starMode ? '20px' : '0')};
   }
 `;
 

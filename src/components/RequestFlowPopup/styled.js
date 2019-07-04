@@ -59,6 +59,9 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
     width: 700px;
     height: 700px;
   }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    max-height: 650px;
+  }
 `;
 
 PopupStyled.SmallContent = styled.div`
