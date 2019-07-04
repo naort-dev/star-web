@@ -54,26 +54,15 @@ CompletedStyled.ListSection = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     padding-bottom: 16px;
+    margin-left: -40px;
     .list-item {
-      width: calc((100% - 40px)/2);
-      margin-right: 20px;
-      margin-bottom: 20px;
-      &:nth-child(2n) {
-        margin-right: 0;
-      }
-    }
-  }
-  @media(min-width: 1280px) {
-    .list-item {
-      width: calc((100% - 123px)/4);
-      margin-right: 41px;
+      width: auto;
+      margin-right: 0;
       margin-bottom: 41px;
-      &:nth-child(2n) {
-        margin-right: 41px;
-      }
-      &:nth-child(4n) {
-        margin-right: 0;
-      }
+      margin-left: 40px;
+      flex: 0 0 calc(25% - 40px);
+      min-width: 220px;
+      
     }
   }
 `;

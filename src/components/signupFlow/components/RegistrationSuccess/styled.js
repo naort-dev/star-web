@@ -84,11 +84,10 @@ RegSuccessWrapper.Image = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 273px;
+  height: 210px;
   margin-bottom: 0;
   @media(max-width: 831px){
     background-size: 207px auto;
-    height: 210px;
   }
   &.success-fan {
     @media screen and (min-width: 832px) and (max-height: 720px) {

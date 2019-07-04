@@ -451,7 +451,7 @@ const Question = props => {
                       </li>
                     </ul>
                   )}
-                  <VideoContainer>
+                  <VideoContainer isQA={props.bookedItem.request_type === 3}>
                     {props.bookedItem.request_type === 3 && isQuestion ? (
                       <VideoRender
                         variableWidth
