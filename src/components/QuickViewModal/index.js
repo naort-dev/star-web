@@ -54,8 +54,10 @@ const QuickViewModal = (props) => {
   }
 
   const onBookAction = () => {
-    props.toggleQuickView(false)();
-    props.toggleRequestFlow(true);
+    if (props.celebDetails.availability && props.celebDetails.remaining_limit > 0) {
+      props.toggleQuickView(false)();
+      props.toggleRequestFlow(true);
+    }
   }
 
   useEffect(() => {
@@ -172,14 +174,14 @@ const QuickViewModal = (props) => {
             <QuickViewStyled.StarWrapper>
               <StarDrawer starData={starData} />
             </QuickViewStyled.StarWrapper>
-            <QuickViewStyled.ActionBar available={props.celebDetails.availability} onClick={onBookAction}>
-              <QuickViewStyled.ActionContent available={props.celebDetails.availability}>
+            <QuickViewStyled.ActionBar available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0} onClick={onBookAction}>
+              <QuickViewStyled.ActionContent available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0}>
                 <span>
                   <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url} />
                 </span>
                 <QuickViewStyled.Description>
                   {
-                    props.celebDetails.availability ?
+                    props.celebDetails.availability && props.celebDetails.remaining_limit > 0 ?
                       <React.Fragment>
                         Book a shoutout
                       from <strong>{getShortName()}</strong> for <strong> ${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
@@ -192,7 +194,7 @@ const QuickViewModal = (props) => {
                 </QuickViewStyled.Description>
               </QuickViewStyled.ActionContent>
               {
-                props.celebDetails.availability &&
+                props.celebDetails.availability && props.celebDetails.remaining_limit > 0 &&
                 <QuickViewStyled.ActionSection>
                   <QuickViewStyled.ArrowWrapper>
                     <FontAwesomeIcon icon={faChevronRight} />
