@@ -129,13 +129,10 @@ class Purchase extends Component {
   }
 
   getBodyComponent = () => {
+    const starNM = this.props.userDetails.first_name;
     if (this.state.stepCount === 1) {
       let list = [];
-      let starNM = '';
       if (list.length === 0) {
-        // eslint-disable-next-line camelcase
-        const { nick_name, first_name, last_name } = this.props.userDetails;
-        starNM = getStarName(nick_name, first_name, last_name);
         list = dataModal(starNM).category;
       }
       return (
@@ -159,12 +156,7 @@ class Purchase extends Component {
             loaderAction={this.props.loaderAction}
             setVideoUploadedFlag={this.props.setVideoUploadedFlag}
             starsonaRequest={this.props.starsonaRequest}
-            starNM={
-              this.props.userDetails.nick_name !== '' &&
-              this.props.userDetails.nick_name
-                ? this.props.userDetails.nick_name
-                : this.props.userDetails.first_name
-            }
+            starNM={starNM}
             updateToast={this.props.updateToast}
             headerUpdate={this.props.headerUpdate}
           />
@@ -538,8 +530,6 @@ class Purchase extends Component {
   };
 
   render() {
-    // eslint-disable-next-line
-    const { nick_name, first_name } = this.props.userDetails;
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         {!this.state.closeModal ? (
@@ -551,8 +541,7 @@ class Purchase extends Component {
           <CancelConfirm
             modalClose={this.modalClose}
             requestFLowClose={this.clearStore}
-            // eslint-disable-next-line
-            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+            starNM={this.props.userDetails.first_name}
           />
         )}
       </Modal>

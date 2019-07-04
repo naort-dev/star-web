@@ -84,8 +84,9 @@ class ScriptBuilder extends Component {
         hostName.charAt(0).toUpperCase() + hostName.slice(1),
       fromName:
         !isEmpty(userName) &&
+        user !== 'Myself' &&
         userName.charAt(0).toUpperCase() + userName.slice(1),
-      relationship: relationship.toLowerCase(),
+      relationship: !isEmpty(relationship) && relationship.toLowerCase(),
       date,
       occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : ' ',
       someOneElse: user !== 'Myself',

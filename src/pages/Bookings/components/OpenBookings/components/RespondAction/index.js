@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
+import { ScriptGenerator } from 'components/ScriptGenerator';
 import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
@@ -12,7 +13,7 @@ import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport, audioVideoSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
-import { BackArrow, CloseButton, MenuDots } from 'styles/CommonStyled';
+import { BackArrow, CloseButton } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
 import VideoRender from 'components/VideoRender';
@@ -387,27 +388,71 @@ const Question = props => {
     props.nextClick();
   };
 
-  useEffect(() => {
-    const qusList = [
-      {
-        key: 'que2',
-        question: props.bookedItem.request_details.booking_statement,
-        className: '',
-      },
-      {
-        key: 'que3',
-        question: props.bookedItem.request_details.important_info,
-        className: '',
-      },
-    ];
-    updatedStateHandler({
-      ...stateObject,
-      buttonLabel: props.videoSrc
-        ? props.buttonLabel.primary.continue
-        : props.buttonLabel.primary.record,
-      qusList: [...[questions[0]], ...qusList],
-      continueFlg: false,
+  const getScript = () => {
+    const {
+      date,
+      event_guest_honor,
+      event_title,
+      from_where,
+      is_myself,
+      relationship,
+      stargramfrom,
+      stargramto,
+    } = props.bookedItem.request_details;
+
+    const specification = [event_guest_honor, event_title, from_where].find(
+      field => !isEmpty(field),
+    );
+    
+
+    const script = ScriptGenerator({
+      templateType: props.bookedItem.occasion_type,
+      forName:
+        !isEmpty(stargramto) &&
+        stargramto.charAt(0).toUpperCase() + stargramto.slice(1),
+      fromName:
+        !isEmpty(stargramfrom) &&
+        !is_myself &&
+        stargramfrom.charAt(0).toUpperCase() + stargramfrom.slice(1),
+      relationship:
+        !isEmpty(relationship.title) && relationship.title.toLowerCase(),
+      date,
+      occasion: !isEmpty(props.bookedItem.occasion)
+        ? props.bookedItem.occasion.toLowerCase()
+        : ' ',
+      someOneElse: !is_myself,
+      specification: !isEmpty(specification)
+        ? specification.toLowerCase()
+        : ' ',
+      occasionKey: props.bookedItem.occasion_id,
+      responseTime: props.responseTime,
     });
+    return script;
+  };
+
+  useEffect(() => {
+    if (props.bookedItem.request_type !== 3) {
+      const qusList = [
+        {
+          key: 'que2',
+          question: getScript(),
+          className: '',
+        },
+        {
+          key: 'que3',
+          question: props.bookedItem.request_details.important_info,
+          className: '',
+        },
+      ];
+      updatedStateHandler({
+        ...stateObject,
+        buttonLabel: props.videoSrc
+          ? props.buttonLabel.primary.continue
+          : props.buttonLabel.primary.record,
+        qusList: [...[questions[0]], ...qusList],
+        continueFlg: false,
+      });
+    }
   }, [props.bookedItem, props.buttonLabel]);
 
   const checkDeviceSupport = async () => {
@@ -638,6 +683,7 @@ Question.propTypes = {
   uploadSuccess: PropTypes.func.isRequired,
   uploadSuccessFlg: PropTypes.bool,
   nextRequestHandler: PropTypes.func.isRequired,
+  responseTime: PropTypes.string,
 };
 
 Question.defaultProps = {
@@ -648,6 +694,7 @@ Question.defaultProps = {
   requestId: '',
   videoFile: {},
   uploadSuccessFlg: false,
+  responseTime: '',
 };
 
 function mapStateToProps(state) {
@@ -658,6 +705,7 @@ function mapStateToProps(state) {
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
     shouldRecord: state.commonReducer.shouldRecord,
     videoFile: state.commonReducer.file,
+    responseTime: state.starDetails.celebDetails.celebrityDetails.responseTime,
   };
 }
 
