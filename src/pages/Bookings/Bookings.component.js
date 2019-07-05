@@ -49,9 +49,6 @@ class Bookings extends React.Component {
       this.fetchList('open');
     }
     props.fetchRecentActivity();
-    if (this.queryString.request_id && dropValue.id === 'completed') {
-      props.toggleBookingModal(true, { id: this.queryString.request_id }, true);
-    }
     this.state = {
       dropValue,
       orderDetails: null,
@@ -67,20 +64,20 @@ class Bookings extends React.Component {
       .then((hasBookings) => {
         this.setState({ hasBookings });
       })
-    const { dropValue } = this.state;
     if (this.queryString.request_id) {
-      if (dropValue.id === 'completed') {
-        this.props.toggleBookingModal(true, { id: this.queryString.request_id }, true);
-      } else if (dropValue.id === 'cancelled') {
-        getRequestDetails(this.queryString.request_id)
+      getRequestDetails(this.queryString.request_id)
         .then((requestDetails) => {
           if (requestDetails.success) {
-            this.setState({
-              orderDetails: requestDetails.data.stargramz_response,
-            })
+            const newRequestDetails = requestDetails.data.stargramz_response;
+            if (celebCompletedStatusList.indexOf(newRequestDetails.request_status) >= 0) {
+              this.props.toggleBookingModal(true, { id: this.queryString.request_id }, true);
+            } else if (celebCancelledStatusList.indexOf(newRequestDetails.request_status) >= 0) {
+              this.setState({
+                orderDetails: requestDetails.data.stargramz_response,
+              })
+            }
           }
         })
-      }
     }
   }
 
@@ -105,6 +102,10 @@ class Bookings extends React.Component {
   setRequest = bookId => {
     this.setState({ selected: bookId });
   };
+
+  closeOrderDetails = () => {
+    this.setState({ orderDetails: null });
+  }
 
   fetchList = (type, filter={}, sort={}) => {
     switch (type) {
