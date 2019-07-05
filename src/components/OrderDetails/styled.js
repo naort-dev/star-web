@@ -195,6 +195,7 @@ OrderStyled.Details = styled.div`
   padding: 0 44px;
   .star-action-btn {
     display: ${props => (props.starMode ? 'none' : 'block')};
+    margin-bottom: 20px;
     @media(min-width: 832px) {
       display: block;
     }
