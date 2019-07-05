@@ -139,10 +139,12 @@ const OrderDetails = (props) => {
             </React.Fragment>
         }
         <OrderStyled.ScriptWrapper isMoreActions={!starMode && (requestType === 'open' || requestType === 'cancelled')}>
+          <section className="script-wrapper">
           {
             bookingData.request_details.booking_statement &&
               <Script script={bookingData.request_details.booking_statement} />
           }
+          </section>
           <span className='additional-info'>
             <span className='info-item title'>Additional information:</span>
             <span className='info-item value'>

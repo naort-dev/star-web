@@ -115,6 +115,9 @@ OrderStyled.ScriptWrapper = styled.div`
   max-width: 520px;
   margin: 0 auto;
   position: relative;
+  .script-wrapper {
+    margin-bottom: 15px;
+  }
   .script {
     color: #2f839d;
   }
@@ -137,6 +140,9 @@ OrderStyled.ScriptWrapper = styled.div`
     flex-direction: column;
     .title {
       margin-bottom: 5px;
+    }
+    @media(max-width: 831px) {
+      padding: 0 20px;
     }
     .value {
       min-height: 85px;
@@ -188,7 +194,7 @@ OrderStyled.Details = styled.div`
     }
   }
   @media(max-width: 831px) {
-    padding: 0 10px;
+    padding: 0 20px;
     align-items: flex-start;
   }
 `;
