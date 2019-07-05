@@ -22,7 +22,9 @@ const TermsAndCondition = props => {
       >
         <div>
           {/* {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />} */}
-          <div className="terms-text">{props.termText}</div>
+          <div className={`terms-text ${props.className}`}>
+            {props.termText}
+          </div>
         </div>
       </Scrollbars>
       <FlexBox className="button-wrapper">
@@ -48,12 +50,14 @@ TermsAndCondition.propTypes = {
   termText: PropTypes.string,
   buttonText: PropTypes.string,
   isCheckbox: PropTypes.bool,
+  className: PropTypes.string,
 };
 TermsAndCondition.defaultProps = {
   category: 0,
   termText: '',
   buttonText: 'Continue',
   isCheckbox: true,
+  className: '',
 };
 
 export default TermsAndCondition;
