@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MoreActions from '../MoreActions';
 import PrimaryButton from '../PrimaryButton';
 import StarRating from '../StarRating';
+import { numberToCommaFormatter } from '../../utils/dataformatter';
 import { getTime } from '../../utils/dataToStringFormatter';
 import { toggleActivityVisibility } from '../../store/shared/actions/getActivities';
 import CommentStyled from './styled';
@@ -34,7 +35,7 @@ const CommentItem = (props) => {
       return (
         <span className='comment tip'>
           <span className='title'>{props.user} tipped you</span>
-          <span className="text-bold">${props.commentDetails.amount}</span>
+          <span className="text-bold">${numberToCommaFormatter(props.commentDetails.amount)}</span>
         </span>
       )
     } else if (type === 'rating') {
