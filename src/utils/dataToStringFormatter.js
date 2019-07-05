@@ -101,7 +101,6 @@ export const generateScriptFromData = data => {
   const relationshipTitle = isPlainObject(relationship)
     ? relationship.title
     : relationship;
-    debugger
   const script = ScriptGenerator({
     templateType: data.request_details.templateType,
     forName:
