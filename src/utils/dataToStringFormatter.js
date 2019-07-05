@@ -117,7 +117,7 @@ export const generateScriptFromData = data => {
     someOneElse: !is_myself,
     specification: !isEmpty(specification) ? specification.toLowerCase() : '',
     occasionKey: data.occasion_id,
-    responseTime: data.responseTime,
+    responseTime: data.celebrity_average_response_time,
   });
   return script;
 };

@@ -76,10 +76,10 @@ const getAnnouncementTerm = starNM => {
       <p>
         I understand and accept that neither {starNM}, nor Starsona nor any of
         its affiliates or representatives endorses or recommends this event in
-        any way. Furthermore, I acknowledge and agree that neither {starNM},
-        nor Starsona nor any of its affiliates controls or guarantees the
-        relevance or completeness of information produced during this event, and
-        I agree to hold harmless {starNM}, Starsona and its affiliates and
+        any way. Furthermore, I acknowledge and agree that neither {starNM}, nor
+        Starsona nor any of its affiliates controls or guarantees the relevance
+        or completeness of information produced during this event, and I agree
+        to hold harmless {starNM}, Starsona and its affiliates and
         representatives from any liability for any and all damage caused by or
         related to the use of the information as published in this event.
       </p>
@@ -188,6 +188,7 @@ class Purchase extends Component {
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
             category={this.state.category}
+            className={this.state.category === 2 ? 'custom-font' : ''}
             termText={
               this.state.category === 2
                 ? getAnnouncementTerm(this.props.userDetails.first_name)
@@ -223,7 +224,7 @@ class Purchase extends Component {
       headerUpdate={this.props.headerUpdate}
       importantInfo={this.state.importantInfo}
       infoChange={this.infoChange}
-      responseTime={this.props.celebDetails.average_response_time}
+      responseTime={this.props.celebDetails.average_response_value}
       updateBookingData={this.props.updateBookingData}
     />
   );

@@ -227,16 +227,18 @@ const BookingCard = (props) => {
                 </Scrollbars>              
               </BookingStyled.Booking>
               <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
-                <BookingStyled.Heading starMode={starMode}>
-                  Order Details
-                </BookingStyled.Heading>
-                <OrderDetails
-                  closeModal={closeModal}
-                  disableHeader
-                  starMode={starMode}
-                  onPrimaryClick={setDetails(false)}
-                  bookingData={requestData}
-                />
+                <Scrollbars>
+                  <BookingStyled.Heading starMode={starMode}>
+                    Order Details
+                  </BookingStyled.Heading>
+                  <OrderDetails
+                    closeModal={closeModal}
+                    disableHeader
+                    starMode={starMode}
+                    onPrimaryClick={setDetails(false)}
+                    bookingData={requestData}
+                  />
+                </Scrollbars>
               </BookingStyled.OrderWrapper>
             </BookingStyled>
           </BookingStyled.Wrapper>

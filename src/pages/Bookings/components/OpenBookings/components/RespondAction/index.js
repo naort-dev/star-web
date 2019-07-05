@@ -393,7 +393,6 @@ const Question = props => {
   const getScript = () => {
     return generateScriptFromData({
       ...props.bookedItem,
-      responseTime: props.responseTime,
     });
   };
 
@@ -650,7 +649,6 @@ Question.propTypes = {
   uploadSuccess: PropTypes.func.isRequired,
   uploadSuccessFlg: PropTypes.bool,
   nextRequestHandler: PropTypes.func.isRequired,
-  responseTime: PropTypes.string,
   toggleUpdateBooking: PropTypes.func.isRequired,
   toggleContactSupport: PropTypes.func.isRequired,
 };
@@ -663,7 +661,6 @@ Question.defaultProps = {
   requestId: '',
   videoFile: {},
   uploadSuccessFlg: false,
-  responseTime: '',
 };
 
 function mapStateToProps(state) {
@@ -674,7 +671,6 @@ function mapStateToProps(state) {
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
     shouldRecord: state.commonReducer.shouldRecord,
     videoFile: state.commonReducer.file,
-    responseTime: state.starDetails.celebDetails.celebrityDetails.responseTime,
   };
 }
 
