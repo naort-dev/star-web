@@ -39,20 +39,22 @@ class MyVideos extends React.Component {
   }
 
   componentDidMount() {
-    const { dropValue } = this.state;
     if (this.queryString.request_id) {
-      if (dropValue.id === 'completed') {
-        this.props.toggleBookingModal(true, { id: this.queryString.request_id }, false);
-      } else if (dropValue.id === 'open' || dropValue.id === 'cancelled' || dropValue.id === 'all' ) {
-        getRequestDetails(this.queryString.request_id)
+      getRequestDetails(this.queryString.request_id)
         .then((requestDetails) => {
           if (requestDetails.success) {
-            this.setState({
-              orderDetails: requestDetails.data.stargramz_response,
-            })
+            const newRequestDetails = requestDetails.data.stargramz_response;
+            if (completedStatusList.indexOf(newRequestDetails.request_status) >= 0) {
+              this.props.toggleBookingModal(true, { id: this.queryString.request_id }, false);
+            } else if (celebCancelledStatusList.indexOf(newRequestDetails.request_status) >= 0 ||
+              openStatusList.indexOf(newRequestDetails.request_status) >= 0
+              ) {
+              this.setState({
+                orderDetails: requestDetails.data.stargramz_response,
+              })
+            }
           }
         })
-      }
     }
   }
 
