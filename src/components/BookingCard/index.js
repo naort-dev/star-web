@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { CloseButton } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
@@ -14,6 +15,7 @@ import ModalHeader from '../ModalHeader';
 import Loader from '../Loader';
 import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
+import { celebCompletedStatusList } from '../../constants/requestStatusList';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
 import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
@@ -38,8 +40,12 @@ const BookingCard = (props) => {
     if (props.bookingModal.requestId) {
       getRequestDetails(props.bookingModal.requestId)
         .then((requestDetails) => {
-          if (requestDetails.success) {
+          const newRequestDetails = requestDetails.success && requestDetails.data && requestDetails.data.stargramz_response
+          const validRequestDetails = newRequestDetails && celebCompletedStatusList.indexOf(newRequestDetails.request_status) >= 0 ? true : false;
+          if (validRequestDetails) {
             setRequestData(requestDetails.data.stargramz_response);
+          } else {
+            closeModal();
           }
         })
     }
@@ -188,35 +194,37 @@ const BookingCard = (props) => {
             }
             <BookingStyled showDetails={showDetails} starMode={starMode}>
               <BookingStyled.Booking showDetails={showDetails} starMode={starMode}>
-                {
-                  starMode ?
-                    <StarView
-                      bookingData={requestData}
-                      fetchActivitiesList={props.fetchActivitiesList}
-                      resetActivitiesList={props.resetActivitiesList}
-                      loaderAction={props.loaderAction}
-                      updateToast={props.updateToast}
-                      activitiesList={props.activitiesList}
-                      modalData={props.bookingModal.data}
-                      toggleDetails={setDetails}
-                      closeModal={closeModal}
-                    />
-                  :
-                    <FanView
-                      bookingData={requestData}
-                      fetchActivitiesList={props.fetchActivitiesList}
-                      resetActivitiesList={props.resetActivitiesList}
-                      toggleContactSupport={props.toggleContactSupport}
-                      updateRequestData={updateRequestData}
-                      loaderAction={props.loaderAction}
-                      updateToast={props.updateToast}
-                      onCompleteAction={onFanCompleteAction}
-                      activitiesList={props.activitiesList}
-                      modalData={props.bookingModal.data}
-                      toggleDetails={setDetails}
-                      closeModal={closeModal}
-                    />
-                }              
+                <Scrollbars>
+                  {
+                    starMode ?
+                      <StarView
+                        bookingData={requestData}
+                        fetchActivitiesList={props.fetchActivitiesList}
+                        resetActivitiesList={props.resetActivitiesList}
+                        loaderAction={props.loaderAction}
+                        updateToast={props.updateToast}
+                        activitiesList={props.activitiesList}
+                        modalData={props.bookingModal.data}
+                        toggleDetails={setDetails}
+                        closeModal={closeModal}
+                      />
+                    :
+                      <FanView
+                        bookingData={requestData}
+                        fetchActivitiesList={props.fetchActivitiesList}
+                        resetActivitiesList={props.resetActivitiesList}
+                        toggleContactSupport={props.toggleContactSupport}
+                        updateRequestData={updateRequestData}
+                        loaderAction={props.loaderAction}
+                        updateToast={props.updateToast}
+                        onCompleteAction={onFanCompleteAction}
+                        activitiesList={props.activitiesList}
+                        modalData={props.bookingModal.data}
+                        toggleDetails={setDetails}
+                        closeModal={closeModal}
+                      />
+                  }
+                </Scrollbars>              
               </BookingStyled.Booking>
               <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
                 <BookingStyled.Heading starMode={starMode}>

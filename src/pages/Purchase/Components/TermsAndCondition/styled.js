@@ -32,7 +32,7 @@ export const Layout = styled.section`
       height: calc(100% - 115px) !important;
       overflow: auto;
     }
-    p {
+    .terms-text {
       p {
         font-size: 12px;
         line-height: 16px;

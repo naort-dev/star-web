@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cloneDeep from 'lodash/cloneDeep';
 import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
 import CancelledBookings from './components/CancelledBookings';
 import { options } from './constants';
+import OrderDetails from '../../components/OrderDetails';
+import { getRequestDetails } from '../../services/request';
 import { openStatusList, completedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {} from '../../styles/CommonStyled';
@@ -14,9 +17,9 @@ import BookingsStyled from './styled';
 class MyVideos extends React.Component {
   constructor(props) {
     super(props);
-    let dropValue;
-    const queryString = parseQueryString(this.props.location.search);
-    const newDropValue = options.find(option => option.id === queryString.type);
+    let dropValue = {};
+    this.queryString = parseQueryString(this.props.location.search);
+    const newDropValue = options.find(option => option.id === this.queryString.type);
     if (newDropValue && newDropValue.id !== 'all') {
       dropValue = newDropValue;
       this.fetchList(newDropValue.id);
@@ -31,7 +34,28 @@ class MyVideos extends React.Component {
     this.state = {
       dropValue,
       selected: '',
+      orderDetails: null,
     };
+  }
+
+  componentDidMount() {
+    if (this.queryString.request_id) {
+      getRequestDetails(this.queryString.request_id)
+        .then((requestDetails) => {
+          if (requestDetails.success) {
+            const newRequestDetails = requestDetails.data.stargramz_response;
+            if (completedStatusList.indexOf(newRequestDetails.request_status) >= 0) {
+              this.props.toggleBookingModal(true, { id: this.queryString.request_id }, false);
+            } else if (celebCancelledStatusList.indexOf(newRequestDetails.request_status) >= 0 ||
+              openStatusList.indexOf(newRequestDetails.request_status) >= 0
+              ) {
+              this.setState({
+                orderDetails: requestDetails.data.stargramz_response,
+              })
+            }
+          }
+        })
+    }
   }
 
   onBackClick = () => {
@@ -48,6 +72,13 @@ class MyVideos extends React.Component {
     });
   };
 
+  onPrivacyChange = (isPublic) => {
+    const { orderDetails } = this.state;
+    const newRequestData = cloneDeep(orderDetails);
+    newRequestData.public_request = isPublic;
+    this.props.updateMyVideosList(newRequestData.id, newRequestData);
+  }
+
   setRequestType = dropValue => () => {
     this.setState({ dropValue });
   };
@@ -55,6 +86,10 @@ class MyVideos extends React.Component {
   setRequest = bookId => {
     this.setState({ selected: bookId });
   };
+
+  closeOrderDetails = () => {
+    this.setState({ orderDetails: null });
+  }
 
   fetchList = type => {
     switch (type) {
@@ -86,12 +121,21 @@ class MyVideos extends React.Component {
   };
 
   render() {
-    const { dropValue, selected } = this.state;
+    const { dropValue, selected, orderDetails } = this.state;
     const { props } = this;
     return (
       <BookingsStyled>
         <BackArrow className="arrow" onClick={this.onBackClick} />
         <BookingsStyled.Header>My Videos</BookingsStyled.Header>
+        {
+          orderDetails &&
+            <OrderDetails
+              isModal
+              closeModal={this.closeOrderDetails}
+              onCheckboxChange={this.onPrivacyChange}
+              bookingData={orderDetails}
+            />
+        }
         {
           dropValue.id === 'all'&&
             <AllBookings

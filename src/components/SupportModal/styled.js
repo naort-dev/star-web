@@ -9,6 +9,9 @@ const SupportStyled = styled.div`
     display: block;
     margin: 26.8px 0;
     width: 100%;
+    @media(min-width: 832px) {
+      margin: 15px 0;
+    }
   }
   .submit-btn {
     @media(min-width: 832px) {

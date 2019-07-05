@@ -10,6 +10,7 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faLightStar } from '@fortawesome/pro-light-svg-icons';
+import { numberToCommaFormatter } from '../../utils/dataformatter';
 import { Layout, SummaryItem, Label, Value, Summary } from './styled';
 
 const StarCard = ({ data }) => {
@@ -19,10 +20,10 @@ const StarCard = ({ data }) => {
         <section className="earnings-wrap">
           <FlexBoxSB className="flex-start">
             <span data-val="Total earnings:" className="earnings headLbl">
-              ${data.total_earnings}
+              ${numberToCommaFormatter(data.total_earnings)}
             </span>
             <span data-val="Pending payments:" className="payments headLbl">
-              ${data.pending_payments}
+              ${numberToCommaFormatter(data.pending_payments)}
             </span>
           </FlexBoxSB>
           <span className="earningPercentage">

@@ -64,7 +64,7 @@ GeneralStyled.Section = styled.div`
   .more-action-root {
     @media(max-width: 831px) {
       position: absolute;
-      bottom: -6px;
+      bottom: 5px;
       right: 3px;
       .more-action-icon {
         border: none;

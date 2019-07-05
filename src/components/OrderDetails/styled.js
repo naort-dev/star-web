@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 const OrderStyled = styled.div`
+  height: ${props => props.starMode ? 'calc(100% - 100px)' : '100%'};
+  ${props => props.isModal && `
+    height: calc(100% - 214px);
+  `}
+
   .checkbox-wrapper {
     display: flex;
     justify-content: center;
@@ -18,8 +23,6 @@ const OrderStyled = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-  }
-  .scrollbar-order{
   }
 `;
 
@@ -171,7 +174,7 @@ OrderStyled.ScriptWrapper = styled.div`
   }
   .more-action-root {
     position: absolute;
-    top: -12px;
+    top: 0;
     right: 12px;
     @media(min-width: 832px) {
       right: -30px;
