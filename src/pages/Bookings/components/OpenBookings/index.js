@@ -132,7 +132,6 @@ const OpenBookings = props => {
         updateSelectedBooking(props.bookingsList.data[0]);
       }
     } else {
-      props.updateSelected('');
       updateSelectedBooking({});
       updateCardClicked(false);
     }

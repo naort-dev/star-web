@@ -7,7 +7,8 @@ import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
 import CancelledBookings from './components/CancelledBookings';
 import { options, filterOptions, sortBy } from './constants';
-import { checkIfAnyBooking } from '../../services/request';
+import { checkIfAnyBooking, getRequestDetails } from '../../services/request';
+import OrderDetails from '../../components/OrderDetails';
 import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {} from '../../styles/CommonStyled';
@@ -16,11 +17,15 @@ import BookingsStyled from './styled';
 class Bookings extends React.Component {
   constructor(props) {
     super(props);
-    let dropValue;
-    const queryString = parseQueryString(this.props.location.search);
-    const newDropValue = options.find(option => option.id === queryString.type);
-    let filter = filterOptions.find(filterItem => filterItem.id === queryString.filter);
-    let sort = sortBy.find(sortItem => sortItem.id === queryString.sort);
+    let dropValue = {};
+    let selected = '';
+    this.queryString = parseQueryString(this.props.location.search);
+    const newDropValue = options.find(option => option.id === this.queryString.type);
+    let filter = filterOptions.find(filterItem => filterItem.id === this.queryString.filter);
+    let sort = sortBy.find(sortItem => sortItem.id === this.queryString.sort);
+    if (this.queryString.selected && newDropValue.id === 'open') {
+      selected = this.queryString.selected;
+    }
     if (!filter) {
       filter = {
         title: 'Show all',
@@ -38,16 +43,20 @@ class Bookings extends React.Component {
       this.fetchList(newDropValue.id);
     } else {
       dropValue = {
-        title: 'All',
+        title: 'Overview',
         id: 'all',
       };
       this.fetchList('open');
     }
     props.fetchRecentActivity();
+    if (this.queryString.request_id && dropValue.id === 'completed') {
+      props.toggleBookingModal(true, { id: this.queryString.request_id }, true);
+    }
     this.state = {
       dropValue,
+      orderDetails: null,
       filter,
-      selected: '',
+      selected,
       sort,
       hasBookings: true,
     };
@@ -58,6 +67,21 @@ class Bookings extends React.Component {
       .then((hasBookings) => {
         this.setState({ hasBookings });
       })
+    const { dropValue } = this.state;
+    if (this.queryString.request_id) {
+      if (dropValue.id === 'completed') {
+        this.props.toggleBookingModal(true, { id: this.queryString.request_id }, true);
+      } else if (dropValue.id === 'cancelled') {
+        getRequestDetails(this.queryString.request_id)
+        .then((requestDetails) => {
+          if (requestDetails.success) {
+            this.setState({
+              orderDetails: requestDetails.data.stargramz_response,
+            })
+          }
+        })
+      }
+    }
   }
 
   onBackClick = () => {
@@ -122,12 +146,22 @@ class Bookings extends React.Component {
   }
 
   render() {
-    const { dropValue, selected, filter, sort, hasBookings } = this.state;
+    const { dropValue, selected, filter, sort, hasBookings, orderDetails } = this.state;
     const { props } = this;
     return (
       <BookingsStyled className="booking-wrapper">
         <BackArrow className="arrow" onClick={this.onBackClick} />
         <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
+        {
+          orderDetails &&
+            <OrderDetails
+              isModal
+              starMode
+              closeModal={this.closeOrderDetails}
+              onCheckboxChange={this.onPrivacyChange}
+              bookingData={orderDetails}
+            />
+        }
         <BookingsStyled.Container>
           {
             hasBookings ?
