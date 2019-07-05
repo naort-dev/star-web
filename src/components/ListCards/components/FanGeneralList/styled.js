@@ -20,6 +20,18 @@ const GeneralStyled = styled.div`
       display: inherit;
     }
   }
+  @media(max-width: 1280px) and (min-width: 832px) {
+    &.video-card {
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > div {
+        span {
+          padding-left: 0;
+        }
+      }
+    }
+  }
 `;
 
 GeneralStyled.Section = styled.div`

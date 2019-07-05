@@ -111,7 +111,7 @@ const FanGeneralList = (props) => {
             bookingData={requestSelected}
           />
       }
-      <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>
+      <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url} className="video-card">
         <GeneralStyled.Section imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>     
           {
             requestType !== 'open' &&

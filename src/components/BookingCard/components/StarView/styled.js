@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 const StarViewStyled = styled.div`
 
+  #comments-scroll-target > section {
+    min-height: 265px;
+  }
+
 `;
 
 StarViewStyled.VideoWrapper = styled.div`

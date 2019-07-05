@@ -89,8 +89,12 @@ BookingStyled.HeaderText = styled.h5`
   color: ${props => props.theme.orangePink};
   padding-right: 24px;
   text-align: center;
+  word-break: break-word;
+  white-space: normal;
+  word-wrap: break-word;
+  font-weight: normal;
   strong {
-    font-family: Gilroy-SemiBold;
+    font-family: Gilroy-Medium;
     font-weight: normal;
   }
   @media(min-width: 832px) {
@@ -169,7 +173,7 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  height: ${props => (props.starMode ? '342px' : '296px')};
+  height: ${props => (props.starMode ? '342px' : '265px')};
 `;
 
 export default BookingStyled;

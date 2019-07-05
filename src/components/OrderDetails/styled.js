@@ -1,7 +1,26 @@
 import styled from 'styled-components';
 
 const OrderStyled = styled.div`
-
+  .checkbox-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 13px;
+    @media(max-width: 831px) {
+      justify-content: flex-start;
+      margin-left: 10px;
+    }
+    .check-text {
+      padding-top: 7px;
+      font-size: 12px;
+    }
+  }
+  .order-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .scrollbar-order{
+  }
 `;
 
 OrderStyled.HeaderText = styled.h5`
@@ -10,11 +29,18 @@ OrderStyled.HeaderText = styled.h5`
   color: ${props => props.theme.orangePink};
   padding-right: 24px;
   text-align: center;
+  word-break: break-word;
+  white-space: normal;
+  word-wrap: break-word;
+  font-weight: normal;
   strong {
     font-family: Gilroy-Medium;
+    font-weight: normal;
   }
   @media(min-width: 832px) {
     color: ${props => props.theme.flatBlue};
+    padding-right: 53px;
+    margin-top: 11px;
   }
 `;
 
@@ -99,22 +125,41 @@ OrderStyled.ScriptWrapper = styled.div`
     padding-top: 28px;  
   `}
   .additional-info {
-    display: table;
+    display: flex;
     padding-left: 11px;
     padding-top: 13px;
     font-family: Gilroy-Regular;
     font-size: 14px;
     color: ${props => props.theme.greyishBrown};
+
+    padding-left: 43px;
+    display: flex;
+    flex-direction: column;
+    .title {
+      margin-bottom: 5px;
+    }
+    .value {
+      min-height: 85px;
+      max-height: 85px;
+      overflow: auto;
+      padding-left: 0;
+      margin-bottom: 5px;
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #aaa;
+      }
+
+      &::-webkit-scrollbar-thumb {
+          background: #000; 
+      }
+    }
     @media(min-width: 832px) {
       padding-left: 43px;
-    }
-    .info-item {
-      display: table-cell;
-      &.title {
-        white-space: nowrap;
-      }
-      &.value {
-        padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      .title {
+        margin-bottom: 5px;
       }
     }
   }

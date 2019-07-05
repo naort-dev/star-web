@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const FanViewStyled = styled.div`
   padding: 0 30px;
+  #comments-scroll-target > section {
+    min-height: 265px;
+  }
 `;
 
 FanViewStyled.VideoWrapper = styled.div`

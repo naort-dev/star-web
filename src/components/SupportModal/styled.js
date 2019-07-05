@@ -10,6 +10,11 @@ const SupportStyled = styled.div`
     margin: 26.8px 0;
     width: 100%;
   }
+  .submit-btn {
+    @media(min-width: 832px) {
+      margin-top: 45px;
+    }
+  }
 
   .MuiFormControl {
     width: 100%;
@@ -30,6 +35,26 @@ const SupportStyled = styled.div`
           font-family: Gilroy-Regular;
           color: #b7b7b7;
           line-height: 25px;
+          &::-webkit-input-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &:-moz-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &::-moz-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &:-ms-input-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &::placeholder {
+            color: #b7b7b7;
+            font-size: 18px;  
+          }
         }
       }
       &:before, &:after {
