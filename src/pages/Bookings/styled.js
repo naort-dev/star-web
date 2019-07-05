@@ -93,7 +93,8 @@ BookingsStyled.SectionHeader = styled.div`
     font-size: 18px;
     cursor: pointer;
     strong {
-      font-family: Gilroy-Bold;
+      font-family: Gilroy-Medium;
+      font-weight: normal;
     }
     @media(max-width: 831px) {
       display: none;

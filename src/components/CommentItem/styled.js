@@ -42,6 +42,9 @@ CommentStyled.Comment = styled.span`
   ${props => (props.receive ? `
     border-top-left-radius: 0;
     margin-left: 15.2px;
+    ${media.mobileScreen} {
+      margin-left: 7px;
+    }
   ` : `
     border-top-right-radius: 0;
     margin-right: 15.2px;

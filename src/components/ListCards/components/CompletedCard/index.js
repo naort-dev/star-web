@@ -92,7 +92,7 @@ const CompletedCard = (props) => {
             </ToolTip>
             <ToolTip title={`This booking has $${numberToCommaFormatter(props.data.tip_amount)} in tips.`}>            
               <CompletedStyled.IconWrapper className='tip' visible={props.data.tip_amount > 0} >
-                $ TIP
+                $ <span>TIP</span>
               </CompletedStyled.IconWrapper>
             </ToolTip>
             <ToolTip title={`This video has ${props.data.reaction_count} reaction videos.`}>

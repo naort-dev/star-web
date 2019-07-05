@@ -42,6 +42,12 @@ export const Layout = styled.section`
         }
       }
     }
+    .custom-font {
+      p {
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
   }
   #terms-scroll > div {
     padding-right: 15px;
@@ -77,9 +83,8 @@ export const Layout = styled.section`
     }
   }
 
-
   &.content-wrapper > .button-wrapper .continue-button {
-    align-self: flex-end
+    align-self: flex-end;
   }
 `;
 

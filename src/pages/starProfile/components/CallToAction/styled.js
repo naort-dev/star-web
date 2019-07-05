@@ -66,7 +66,8 @@ ActionStyled.Description = styled.span`
     }
   }
   strong {
-    font-family: Gilroy-medium;
+    font-family: Gilroy-Medium;
+    font-weight: normal;
   }
   @media (min-width: 1280px) {
     .long-description {

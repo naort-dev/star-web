@@ -9,6 +9,17 @@ const SupportStyled = styled.div`
     display: block;
     margin: 26.8px 0;
     width: 100%;
+    @media(min-width: 832px) {
+      margin: 15px 0;
+    }
+    @media(max-width: 831px) {
+      margin: 15px 0;
+    }
+  }
+  .submit-btn {
+    @media(min-width: 832px) {
+      margin-top: 45px;
+    }
   }
 
   .MuiFormControl {
@@ -23,6 +34,10 @@ const SupportStyled = styled.div`
       margin: 10px 0;
       padding: 32px;
       overflow-y: auto;
+
+      @media(max-width: 831px) {
+        margin-bottom: 15px;
+      }
       &.input-textarea {
         div, textarea {
           height: 100%;
@@ -30,6 +45,26 @@ const SupportStyled = styled.div`
           font-family: Gilroy-Regular;
           color: #b7b7b7;
           line-height: 25px;
+          &::-webkit-input-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &:-moz-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &::-moz-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &:-ms-input-placeholder {
+            color: #b7b7b7;
+            font-size: 18px;
+          }
+          &::placeholder {
+            color: #b7b7b7;
+            font-size: 18px;  
+          }
         }
       }
       &:before, &:after {
