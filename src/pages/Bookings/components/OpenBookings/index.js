@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
@@ -38,6 +38,7 @@ const buttonLabel = {
 
 const OpenBookings = props => {
   const isDesktop = useMedia('(min-width: 1280px)');
+  const scrollRef = useRef(null);
   const clearVideo = () => {
     props.updateMediaStore({
       videoSrc: null,
@@ -153,6 +154,12 @@ const OpenBookings = props => {
     };
   }, []);
 
+  // if (document.getElementById(props.selected)) {
+  //   document
+  //     .getElementById(props.selected)
+  //     .scrollIntoView();
+  // }
+
   return (
     <OpenStyled clicked={cardClicked}>
       <OpenStyled.LeftSection fullWidth={props.bookingsList.data.length === 0}>
@@ -171,9 +178,10 @@ const OpenBookings = props => {
             <EmptyText>You currently do not have any open bookings.</EmptyText>
           )}
         <OpenStyled.BookingList>
-          <Scrollbars autoHide>
+          <Scrollbars autoHide ref={scrollRef}>
             {props.bookingsList.data.map(bookItem => (
               <CompactCard
+                key={bookItem.booking_id}
                 keyValue={bookItem.booking_id}
                 expiration={props.config.request_expiration_days}
                 bookData={bookItem}
