@@ -224,7 +224,7 @@ class Purchase extends Component {
       headerUpdate={this.props.headerUpdate}
       importantInfo={this.state.importantInfo}
       infoChange={this.infoChange}
-      responseTime={this.props.celebDetails.average_response_time}
+      responseTime={this.props.celebDetails.average_response_value}
       updateBookingData={this.props.updateBookingData}
     />
   );

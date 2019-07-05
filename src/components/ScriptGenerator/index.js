@@ -438,9 +438,9 @@ export const ScriptGenerator = ({
         occasionKey,
       );
     } else if (templateType === 5) {
-      let days = [0];
+      let days = 0;
       if (!isEmpty(responseTime)) {
-        days = responseTime.split(' ');
+        days = Number(responseTime)
       }
       htmlElm += getStep5Script(
         forName,
