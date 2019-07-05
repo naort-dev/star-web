@@ -6,6 +6,7 @@ const BookingStyled = styled.div`
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
     height: ${props => (props.starMode ? '100%' : 'calc(100% - 214px)')};
+    overflow: hidden;
     ${props => !props.starMode && `
       position: relative;
     `}
@@ -178,7 +179,17 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  height: ${props => (props.starMode ? '342px' : '265px')};
+  @media screen and (min-width: 832px) {
+    height: ${props => (props.starMode ? '342px' : '335px')};
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    height: ${props => (props.starMode ? '342px' : '275px')};
+  }
+  @media screen and (max-width: 831px) {
+    min-height: 50px;
+    max-height: 250px;
+    overflow: auto;
+  }
 `;
 
 export default BookingStyled;

@@ -12,7 +12,7 @@ const OrderStyled = styled.div`
     padding-top: 13px;
     @media(max-width: 831px) {
       justify-content: flex-start;
-      margin-left: 10px;
+      margin-left: 0;
     }
     .check-text {
       padding-top: 7px;
@@ -153,6 +153,9 @@ OrderStyled.ScriptWrapper = styled.div`
       overflow: auto;
       padding-left: 0;
       margin-bottom: 5px;
+      @media(max-width: 831px) {
+        min-height: 20px;
+      }
       &::-webkit-scrollbar {
         width: 5px;
         height: 8px;
@@ -198,7 +201,7 @@ OrderStyled.Details = styled.div`
   }
   @media(max-width: 831px) {
     padding: 0 20px;
-    align-items: flex-start;
+    align-items: center;
   }
 `;
 

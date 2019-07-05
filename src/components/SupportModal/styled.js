@@ -12,6 +12,9 @@ const SupportStyled = styled.div`
     @media(min-width: 832px) {
       margin: 15px 0;
     }
+    @media(max-width: 831px) {
+      margin: 15px 0;
+    }
   }
   .submit-btn {
     @media(min-width: 832px) {
@@ -31,6 +34,10 @@ const SupportStyled = styled.div`
       margin: 10px 0;
       padding: 32px;
       overflow-y: auto;
+
+      @media(max-width: 831px) {
+        margin-bottom: 15px;
+      }
       &.input-textarea {
         div, textarea {
           height: 100%;

@@ -2,8 +2,17 @@ import styled from 'styled-components';
 
 const FanViewStyled = styled.div`
   padding: 0 30px;
+  #comments-scroll-target {
+    @media(max-width: 831px) {
+      position: relative !important;
+      margin: 0 !important;
+    }
+  }
   #comments-scroll-target > section {
     min-height: 265px;
+    @media(max-width: 831px) {
+      min-height: auto;
+    }
   }
 `;
 
@@ -26,7 +35,8 @@ FanViewStyled.VideoWrapper = styled.div`
   }
   @media(min-width: 832px) {
     width: 310.3px;
-    height: 439.6px;
+    height: 100%;
+    min-height: 350px;
   }
 `;
 
