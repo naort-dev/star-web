@@ -44,7 +44,7 @@ const CommentBox = (props) => {
           className={props.classes.input}
           onChange={onInputChange}
           onKeyUp={onKeyChange}
-          placeholder="Add a comment..."
+          placeholder={props.placeholder}
         />
         <FontAwesomeIcon className="message-icon" icon={faTelegramPlane} onClick={onSubmit} />
       </BoxStyled>
@@ -58,6 +58,7 @@ CommentBox.defaultProps = {
   onSubmit: () => {},
   value: undefined,
   maxLength: -1,
+  placeholder: 'Add a comment...'
 }
 
 CommentBox.propTypes = {
@@ -66,6 +67,7 @@ CommentBox.propTypes = {
   onSubmit: PropTypes.func,
   value: PropTypes.string,
   maxLength: PropTypes.number,
+  placeholder: PropTypes.string,
 }
 
 export default CommentBox;
