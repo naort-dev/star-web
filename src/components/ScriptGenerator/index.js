@@ -276,6 +276,8 @@ const getDateSpecificText = (date, responseTime, fromName, someOneElse) => {
   } else if (!isEmpty(fromName)) {
     if (responseDateCheck(date, responseTime)) return ' told me you have a ';
     return ' told me you just had a ';
+  } else if (responseDateCheck(date, responseTime)) {
+    return ' I heard you just have a ';
   }
   return ' I heard you just had a ';
 };
@@ -440,7 +442,7 @@ export const ScriptGenerator = ({
     } else if (templateType === 5) {
       let days = 0;
       if (!isEmpty(responseTime)) {
-        days = Number(responseTime)
+        days = Number(responseTime);
       }
       htmlElm += getStep5Script(
         forName,
