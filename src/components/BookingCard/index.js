@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { CloseButton } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
@@ -193,35 +194,37 @@ const BookingCard = (props) => {
             }
             <BookingStyled showDetails={showDetails} starMode={starMode}>
               <BookingStyled.Booking showDetails={showDetails} starMode={starMode}>
-                {
-                  starMode ?
-                    <StarView
-                      bookingData={requestData}
-                      fetchActivitiesList={props.fetchActivitiesList}
-                      resetActivitiesList={props.resetActivitiesList}
-                      loaderAction={props.loaderAction}
-                      updateToast={props.updateToast}
-                      activitiesList={props.activitiesList}
-                      modalData={props.bookingModal.data}
-                      toggleDetails={setDetails}
-                      closeModal={closeModal}
-                    />
-                  :
-                    <FanView
-                      bookingData={requestData}
-                      fetchActivitiesList={props.fetchActivitiesList}
-                      resetActivitiesList={props.resetActivitiesList}
-                      toggleContactSupport={props.toggleContactSupport}
-                      updateRequestData={updateRequestData}
-                      loaderAction={props.loaderAction}
-                      updateToast={props.updateToast}
-                      onCompleteAction={onFanCompleteAction}
-                      activitiesList={props.activitiesList}
-                      modalData={props.bookingModal.data}
-                      toggleDetails={setDetails}
-                      closeModal={closeModal}
-                    />
-                }              
+                <Scrollbars>
+                  {
+                    starMode ?
+                      <StarView
+                        bookingData={requestData}
+                        fetchActivitiesList={props.fetchActivitiesList}
+                        resetActivitiesList={props.resetActivitiesList}
+                        loaderAction={props.loaderAction}
+                        updateToast={props.updateToast}
+                        activitiesList={props.activitiesList}
+                        modalData={props.bookingModal.data}
+                        toggleDetails={setDetails}
+                        closeModal={closeModal}
+                      />
+                    :
+                      <FanView
+                        bookingData={requestData}
+                        fetchActivitiesList={props.fetchActivitiesList}
+                        resetActivitiesList={props.resetActivitiesList}
+                        toggleContactSupport={props.toggleContactSupport}
+                        updateRequestData={updateRequestData}
+                        loaderAction={props.loaderAction}
+                        updateToast={props.updateToast}
+                        onCompleteAction={onFanCompleteAction}
+                        activitiesList={props.activitiesList}
+                        modalData={props.bookingModal.data}
+                        toggleDetails={setDetails}
+                        closeModal={closeModal}
+                      />
+                  }
+                </Scrollbars>              
               </BookingStyled.Booking>
               <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
                 <BookingStyled.Heading starMode={starMode}>

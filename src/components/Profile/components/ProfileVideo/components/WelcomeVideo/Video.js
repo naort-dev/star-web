@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
+
 import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -25,7 +27,7 @@ import {
 } from '../../../../../../store/shared/actions/commonActions';
 import { recorder } from '../../../../../../constants/videoRecorder';
 import VideoRender from '../../../../../VideoRender';
-import { useMedia } from '../../../../../../utils/domUtils'
+import { useMedia } from '../../../../../../utils/domUtils';
 
 const Video = props => {
   const [showHideFlg, showHideScript] = useState(false);
@@ -71,7 +73,7 @@ const Video = props => {
       mediaHandler('Save & Continue');
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
-      changeButtonLabel('Record New Video');
+      isMobile ? changeButtonLabel('New Video') : changeButtonLabel('Record New Video');
       if (props.videoUploaded) {
         // handle logic if video already uploaded
       } else {
@@ -127,6 +129,9 @@ const Video = props => {
     showHideScript(false);
     errorHandler(false);
   };
+  const handleClickAway = () => {
+    showMobileBtns(false);
+  }
   const uploadHandler = isIOS => input => {
     const file = input.target.files[0];
     setvideoRecord(false);
@@ -228,7 +233,7 @@ const Video = props => {
           )}
         </QuestionContainer>
 
-        {(!checkMediaRecorderSupport() || !props.isDeviceSupported || error) && (
+        {(!checkMediaRecorderSupport() || !props.isDeviceSupported || error) && !mobileBtns && (
             <QuestionContainer className="no-device-support" isShow error>
               <p className="note">
                 Your system does not have video recording capability.{' '}
@@ -240,7 +245,7 @@ const Video = props => {
                 <br /> Use our iOS or Android app to book the star.
               </p>
               <QuestionContainer.ButtonWrapper>
-                { props.videoSrc &&
+                { props.videoSrc && buttonLabel !== 'Record New Video' &&
                   <Button onClick={buttonClickHandler} className="button">
                     {buttonLabel}
                   </Button>
@@ -259,21 +264,23 @@ const Video = props => {
           </FlexCenter>
         )}
         {buttonLabel === 'New Video' && mobileBtns &&
-          <ShowButtons
-            isShow={showHideFlg}
-          >
-            <QuestionContainer.ButtonWrapper>
-              <QuestionContainer.ButtonHeading>
-                How do you want to create a new video
-              </QuestionContainer.ButtonHeading>
-              {getFileUpload(['uploadBtn '])}
-              { (checkMediaRecorderSupport() && props.isDeviceSupported && !error) &&
-                <Button onClick={mobileBtnClickHandler} className="button">
-                  Record new video
-                </Button>
-              }
-            </QuestionContainer.ButtonWrapper>
-          </ShowButtons>
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <ShowButtons
+              isShow={showHideFlg}
+            >
+              <QuestionContainer.ButtonWrapper>
+                <QuestionContainer.ButtonHeading>
+                  How do you want to create a new video
+                </QuestionContainer.ButtonHeading>
+                {getFileUpload(['uploadBtn '])}
+                { (checkMediaRecorderSupport() && props.isDeviceSupported && !error) &&
+                  <Button onClick={mobileBtnClickHandler} className="button">
+                    Record new video
+                  </Button>
+                }
+              </QuestionContainer.ButtonWrapper>
+            </ShowButtons>
+          </ClickAwayListener>
         }
       </FlexBox>
     </Layout>
