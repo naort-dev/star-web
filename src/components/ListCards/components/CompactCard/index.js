@@ -37,6 +37,7 @@ const CompactCard = props => {
       selected={props.selected}
       onClick={props.onClick}
       key={props.keyValue}
+      id={props.keyValue}
       initialSelected={props.initialSelected}
     >
       {renderTitle()}
@@ -51,7 +52,7 @@ const CompactCard = props => {
 
 CompactCard.defaultProps = {
   bookData: {},
-}
+};
 
 CompactCard.propTypes = {
   bookData: PropTypes.object,
@@ -59,6 +60,7 @@ CompactCard.propTypes = {
   expiration: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   initialSelected: PropTypes.bool.isRequired,
+  keyValue: PropTypes.string.isRequired,
 };
 
 export { CompactCard };

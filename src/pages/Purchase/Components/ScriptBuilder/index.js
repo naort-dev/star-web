@@ -187,6 +187,7 @@ class ScriptBuilder extends Component {
         </FlexBoxCenter>
         <TextAreaWrapper>
           <textarea
+            maxLength={256}
             value={this.props.importantInfo}
             onChange={event => this.props.infoChange(event.target.value)}
             placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…."

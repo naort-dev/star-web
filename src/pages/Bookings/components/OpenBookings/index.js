@@ -132,7 +132,6 @@ const OpenBookings = props => {
         updateSelectedBooking(props.bookingsList.data[0]);
       }
     } else {
-      props.updateSelected('');
       updateSelectedBooking({});
       updateCardClicked(false);
     }
@@ -149,10 +148,17 @@ const OpenBookings = props => {
   }, [props.hasDeclinedFlg]);
 
   useEffect(() => {
+    if (document.getElementById(props.selected))
+      document.getElementById(props.selected).focus();
     return () => {
       clearVideo();
     };
   }, []);
+
+  useEffect(() => {
+    if (document.getElementById(props.selected))
+      document.getElementById(props.selected).focus();
+  }, [props.selected]);
 
   return (
     <OpenStyled clicked={cardClicked}>
