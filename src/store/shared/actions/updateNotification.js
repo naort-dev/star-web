@@ -1,4 +1,6 @@
+import { cloneDeep } from 'lodash';
 import { loaderAction, updateToast } from 'store/shared/actions/commonActions';
+import { updateUserDetails } from 'store/shared/actions/getUserDetails';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 
@@ -33,6 +35,15 @@ export const resetNotification = () => ({
   type: UPDATE_NOTIFICATION.reset,
 });
 
+function getUpdatedUserDetails(getState, property) {
+  const temp = cloneDeep(getState().userDetails.settings_userDetails);
+  temp.notification_settings = { ...temp.notification_settings, ...property };
+  return {
+    userDetails: temp,
+    celbDetails: getState().userDetails.settings_celebrityDetails,
+  };
+}
+
 export const updateNotification = obj => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
@@ -51,6 +62,7 @@ export const updateNotification = obj => (dispatch, getState) => {
     .post(API_URL, obj, options)
     .then(resp => {
       if (resp.data && resp.data.success) {
+        dispatch(updateUserDetails(getUpdatedUserDetails(getState, obj)));
         dispatch(updateNotificationFetchEnd());
         dispatch(updateNotificationFetchSuccess(resp.data.data));
       } else {
