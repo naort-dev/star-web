@@ -6,6 +6,8 @@ const FanViewStyled = styled.div`
     @media(max-width: 831px) {
       position: relative !important;
       margin: 0 !important;
+      overflow: auto !important;
+      height: auto !important;
     }
   }
   #comments-scroll-target > section {
