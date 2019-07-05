@@ -10,6 +10,9 @@ const UpdateStyled = Styled.div`
   }
   ${props => !props.starMode && `
     padding: 40px 30px;
+    @media(max-width: 831px) {
+      padding: 36px 30px;
+    }
   `}
 
   .secondary-btn {

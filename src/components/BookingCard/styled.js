@@ -2,10 +2,17 @@ import styled from 'styled-components';
 
 const BookingStyled = styled.div`
   height: ${props => (props.starMode ? '100vh' : 'calc(100vh - 214px)')};
+  .scrollbar-content {
+    position: static !important;
+  }
   @media(min-width: 832px) {
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
     height: ${props => (props.starMode ? '100%' : 'calc(100% - 214px)')};
+    position: relative;
+    .scrollbar-content {
+      position: absolute !important;
+    }
     ${props => !props.starMode && `
       position: relative;
     `}
@@ -31,13 +38,18 @@ BookingStyled.Heading = styled.span`
   display: ${props => (props.starMode ? 'block' : 'none')};
   text-align: center;
   color: ${props => props.theme.flatBlue};
-  margin: 30px 0;
+  margin: 30px 0 10px;
+  @media(max-width: 831px) {
+    font-size: 18px;
+    color: #999;
+    margin: 10px 0 10px;
+  }
 `;
 
 BookingStyled.Booking = styled.div`
   display: ${props => !props.starMode && props.showDetails ? 'none' : 'block'};
-  height: 100%;
   @media(min-width: 832px) {
+    height: 100%;
     display: block;
     position: absolute;
     left: 0;
@@ -53,8 +65,8 @@ BookingStyled.Booking = styled.div`
 
 BookingStyled.OrderWrapper = styled.div`
   display: ${props => props.starMode || props.showDetails ? 'block' : 'none'};
-  height: 100%;
   @media(min-width: 832px) {
+    height: 100%;
     display: block;
     position: absolute;
     left: 0;
@@ -89,8 +101,12 @@ BookingStyled.HeaderText = styled.h5`
   color: ${props => props.theme.orangePink};
   padding-right: 24px;
   text-align: center;
+  word-break: break-word;
+  white-space: normal;
+  word-wrap: break-word;
+  font-weight: normal;
   strong {
-    font-family: Gilroy-SemiBold;
+    font-family: Gilroy-Medium;
     font-weight: normal;
   }
   @media(min-width: 832px) {
@@ -169,7 +185,12 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
-  height: ${props => (props.starMode ? '342px' : '296px')};
+  @media screen and (min-width: 832px) {
+    height: ${props => (props.starMode ? '342px' : '335px')};
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    height: ${props => (props.starMode ? '342px' : '275px')};
+  }
 `;
 
 export default BookingStyled;

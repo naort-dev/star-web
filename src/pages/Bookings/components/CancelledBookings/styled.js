@@ -3,6 +3,12 @@ import styled from 'styled-components';
 const CancelledStyled = styled.div`
   .pagination-wrapper {
     margin: 13px 0;
+    .left-arrow, .right-arrow {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
   .cancel-count-notification {
     margin: 0 auto;
@@ -23,6 +29,11 @@ const CancelledStyled = styled.div`
       &.bottom {
         bottom: 0;
       }
+    }
+  }
+  @media (max-width: 1280px) and (min-width: 832px) {
+    .inner-top {
+      margin-bottom: 0 ;
     }
   }
 `;

@@ -45,6 +45,7 @@ export const Layout = styled.section`
     .custom-font {
       p {
         font-size: 14px;
+        line-height: 20px;
       }
     }
   }

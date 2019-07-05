@@ -194,7 +194,9 @@ const BookingCard = (props) => {
             }
             <BookingStyled showDetails={showDetails} starMode={starMode}>
               <BookingStyled.Booking showDetails={showDetails} starMode={starMode}>
-                <Scrollbars>
+                <Scrollbars
+                  renderView={scrollProps => <div {...scrollProps} className="scrollbar-content"/>}
+                >
                   {
                     starMode ?
                       <StarView
@@ -227,7 +229,9 @@ const BookingCard = (props) => {
                 </Scrollbars>              
               </BookingStyled.Booking>
               <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
-                <Scrollbars>
+                <Scrollbars
+                  renderView={scrollProps => <div {...scrollProps} className="scrollbar-content"/>}
+                >
                   <BookingStyled.Heading starMode={starMode}>
                     Order Details
                   </BookingStyled.Heading>
