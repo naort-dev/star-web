@@ -214,7 +214,7 @@ const OrderDetails = (props) => {
             !props.disableFooter &&
               <React.Fragment>
                 {
-                  requestType === 'completed' &&
+                  requestType === 'completed' && props.starMode &&
                     <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
                 }
                 {/* {
