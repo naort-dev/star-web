@@ -2,11 +2,17 @@ import styled from 'styled-components';
 
 const BookingStyled = styled.div`
   height: ${props => (props.starMode ? '100vh' : 'calc(100vh - 214px)')};
+  .scrollbar-content {
+    position: static !important;
+  }
   @media(min-width: 832px) {
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
     height: ${props => (props.starMode ? '100%' : 'calc(100% - 214px)')};
     position: relative;
+    .scrollbar-content {
+      position: absolute !important;
+    }
     ${props => !props.starMode && `
       position: relative;
     `}
@@ -42,8 +48,8 @@ BookingStyled.Heading = styled.span`
 
 BookingStyled.Booking = styled.div`
   display: ${props => !props.starMode && props.showDetails ? 'none' : 'block'};
-  height: 100%;
   @media(min-width: 832px) {
+    height: 100%;
     display: block;
     position: absolute;
     left: 0;
@@ -59,8 +65,8 @@ BookingStyled.Booking = styled.div`
 
 BookingStyled.OrderWrapper = styled.div`
   display: ${props => props.starMode || props.showDetails ? 'block' : 'none'};
-  height: 100%;
   @media(min-width: 832px) {
+    height: 100%;
     display: block;
     position: absolute;
     left: 0;
@@ -184,11 +190,6 @@ BookingStyled.CommentList = styled.div`
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
     height: ${props => (props.starMode ? '342px' : '275px')};
-  }
-  @media screen and (max-width: 831px) {
-    min-height: 50px;
-    max-height: 250px;
-    overflow: auto;
   }
 `;
 

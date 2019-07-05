@@ -122,6 +122,9 @@ const StarView = (props) => {
           <BookingStyled.CommentList starMode>
             <Scrollbars
               autoHide
+              autoHeight
+              autoHeightMin={50}
+              autoHeightMax={350}
               renderView={scrollProps => <div {...scrollProps} id="comments-scroll-target" />}
             >
               <CommentListing
