@@ -24,10 +24,15 @@ OrderStyled.Heading = styled.span`
   display: block;
   text-align: center;
   color: ${props => props.theme.flatBlue};
-  margin: 30px 0;
+  margin: 30px 0 10px;
   ${props => !props.starMode && `
     margin-top: 0;  
   `}
+  @media(max-width: 831px) {
+    font-size: 18px;
+    color: #999;
+    margin: 10px 0 10px;
+  }
 `;
 
 OrderStyled.TextButton = styled.span`
@@ -42,8 +47,13 @@ OrderStyled.ColumnCenter = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 13px;
+  @media(max-width: 831px) {
+    justify-content: flex-start;
+    margin-left: 10px;
+  }
   .check-text {
-    padding-top: 5px;
+    padding-top: 7px;
+    font-size: 12px;
   }
 `;
 
@@ -79,6 +89,12 @@ OrderStyled.ScriptWrapper = styled.div`
   max-width: 520px;
   margin: 0 auto;
   position: relative;
+  .script {
+    color: #2f839d;
+  }
+  section:nth-child(2) {
+    padding: 18px 30px;
+  }
   ${props => props.isMoreActions && `
     padding-top: 28px;  
   `}
@@ -126,8 +142,9 @@ OrderStyled.Details = styled.div`
       display: block;
     }
   }
-  @media(mn-width: 832px) {
-    padding: 0 85px;
+  @media(max-width: 831px) {
+    padding: 0 10px;
+    align-items: flex-start;
   }
 `;
 

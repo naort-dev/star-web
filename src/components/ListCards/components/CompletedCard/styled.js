@@ -61,6 +61,9 @@ CompletedStyled.IconWrapper = styled.span`
       transform: rotateY(180deg);
       font-size: 26px;
     }
+    @media(max-width: 831px) {
+      margin-right: 55px;
+    }
   }
   &.tip {
     padding: 5px 9.5px;
@@ -72,6 +75,14 @@ CompletedStyled.IconWrapper = styled.span`
     justify-content: center;
     background-color: ${props => props.theme.orangePink};
     color: #fff;
+    @media(max-width: 831px) {
+      font-size: 14px;
+      padding: 4px 8px 2px;
+      border-radius: 50%;
+      span {
+        display: none;
+      }
+    }
   }
   &.reaction {
     display: flex;
@@ -87,6 +98,9 @@ CompletedStyled.IconWrapper = styled.span`
     .reaction-icon {
       margin-right: 6.5px;
       display: block;
+    }
+    @media(max-width: 831px) {
+      margin-right: 0;
     }
   }
   @media(min-width: 832px) {

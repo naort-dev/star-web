@@ -30,7 +30,12 @@ BookingStyled.Heading = styled.span`
   display: ${props => (props.starMode ? 'block' : 'none')};
   text-align: center;
   color: ${props => props.theme.flatBlue};
-  margin: 30px 0;
+  margin: 30px 0 10px;
+  @media(max-width: 831px) {
+    font-size: 18px;
+    color: #999;
+    margin: 10px 0 10px;
+  }
 `;
 
 BookingStyled.Booking = styled.div`
