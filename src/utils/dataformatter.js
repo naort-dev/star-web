@@ -8,6 +8,12 @@ export function numberToDollarFormatter(input) {
 }
 
 export function numberToCommaFormatter(input) {
+  if (!input) {
+    return 0;
+  }
+  if (typeof(input) === 'string') {
+    return input.replace(/\B(?=(\d{3})+(?!\d))/g, ','); 
+  }
   return (parseFloat(input, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 }
 

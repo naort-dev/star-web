@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const BookingStyled = styled.div`
+  height: ${props => (props.starMode ? '100vh' : 'calc(100vh - 214px)')};
   @media(min-width: 832px) {
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
@@ -34,7 +35,8 @@ BookingStyled.Heading = styled.span`
 `;
 
 BookingStyled.Booking = styled.div`
-  display: ${props => !props.starMode && props.showDetails ? 'none' : 'block'}
+  display: ${props => !props.starMode && props.showDetails ? 'none' : 'block'};
+  height: 100%;
   @media(min-width: 832px) {
     display: block;
     position: absolute;
@@ -43,13 +45,15 @@ BookingStyled.Booking = styled.div`
     bottom: 0;
     top: 0;
     z-index: 5;
+    height: auto;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
 `;
 
 BookingStyled.OrderWrapper = styled.div`
-  display: ${props => props.starMode || props.showDetails ? 'block' : 'none'}
+  display: ${props => props.starMode || props.showDetails ? 'block' : 'none'};
+  height: 100%;
   @media(min-width: 832px) {
     display: block;
     position: absolute;
@@ -58,6 +62,7 @@ BookingStyled.OrderWrapper = styled.div`
     bottom: 0;
     top: 0;
     z-index: 10;
+    height: auto;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: rotateY(180deg);
@@ -85,11 +90,13 @@ BookingStyled.HeaderText = styled.h5`
   padding-right: 24px;
   text-align: center;
   strong {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-SemiBold;
+    font-weight: normal;
   }
   @media(min-width: 832px) {
     color: ${props => props.theme.flatBlue};
     padding-right: 53px;
+    margin-top: 11px;
   }
 `;
 
@@ -101,7 +108,10 @@ BookingStyled.Layout = styled.div`
   padding-bottom: 10px;
   @media(min-width: 832px) {
     flex-direction: row;
-    padding-top: ${props => (props.starMode ? '55.2px' : '0')};
+    padding-top: ${props => (props.starMode ? '40px' : '0')};
+  }
+  @media screen and (min-width: 832px) and (max-height: 720px) {
+    padding-top: ${props => (props.starMode ? '20px' : '0')};
   }
 `;
 

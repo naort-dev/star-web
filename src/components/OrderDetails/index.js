@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
 import ToolTip from '../ToolTip';
@@ -115,6 +116,8 @@ const OrderDetails = (props) => {
 
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
+
+  const ScrollComponent = props.isModal ? Scrollbars : React.Fragment ;
   return (
     <WrapperComponent {...modalProps}>
       {
@@ -125,105 +128,107 @@ const OrderDetails = (props) => {
             customHeading={<BookingTitle secondary requestData={bookingData} />}
           />
       }
-      <OrderStyled>
-        {
-          !props.disableHeader && starMode &&
-            <React.Fragment>
-              <CloseButton onClick={props.closeModal} />
-              <OrderStyled.HeaderText>
-                {renderHeading()}
-              </OrderStyled.HeaderText>
-              <OrderStyled.Heading starMode={starMode}>
-                Order Details
-              </OrderStyled.Heading>
-            </React.Fragment>
-        }
-        <OrderStyled.ScriptWrapper isMoreActions={!starMode && (requestType === 'open' || requestType === 'cancelled')}>
+      <OrderStyled starMode={props.starMode} isModal={props.isModal}>
+        <ScrollComponent>
           {
-            bookingData.request_details.booking_statement &&
-              <Script script={bookingData.request_details.booking_statement} />
-          }
-          <span className='additional-info'>
-            <span className='info-item title'>Additional information:</span>
-            <span className='info-item value'>
-              {
-                bookingData.request_details.important_info || 'None'
-              }
-            </span>
-          </span>
-          {
-            !starMode && (requestType === 'open' || requestType === 'cancelled') &&
-              <MoreActions
-                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-                options={moreOptions[requestType]}
-                onSelectOption={onSelectAction}
-              />
-          }
-        </OrderStyled.ScriptWrapper>
-        {
-          requestType !== 'cancelled' &&
-            <OrderStyled.ColumnCenter>
-              <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
-              <span className="check-text ">
-                {
-                  starMode ?
-                    'Hide from profile'
-                  :
-                    <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
-                      <span>Make my video private!</span>
-                    </ToolTip>
-                }
-              </span>
-            </OrderStyled.ColumnCenter>
-        }
-        <OrderStyled.Details starMode={props.starMode}>
-          <OrderStyled.DetailList>
-            <li className='detail-item'>
-              <span className='detail-title'>Purchased:</span>
-              <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
-            </li>
-            <li className='detail-item'>
-              <span className='detail-title'>Paid:</span>
-              <ToolTip title={requestType === 'open' ? 'This amount was reserved on your card but will not be charged until your video is completed.' : ''}>
-                <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
-              </ToolTip>
-            </li>
-            <li className='detail-item'>
-              <span className='detail-title'>Recorded:</span>
-              <span className='detail-value'>
-                {
-                  requestType === 'open' &&
-                    'The star has 7 days to complete your booking.'
-                }
-                { requestType === 'cancelled' && 'CANCELLED'}
-                { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
-                {
-                  requestType === 'cancelled' &&
-                    <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
-                      <span className='detail-comment'>{bookingData.comment}</span>
-                    </ToolTip>
-                }
-              </span>
-            </li>
-            <li className='detail-item'>
-              <span className='detail-title'>Order #:</span>
-              <span className='detail-value'>{bookingData.order_details.order}</span>
-            </li>
-          </OrderStyled.DetailList>
-          {
-            !props.disableFooter &&
+            !props.disableHeader && starMode &&
               <React.Fragment>
-                {
-                  requestType === 'completed' &&
-                    <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
-                }
-                {/* {
-                  requestType === 'open' &&
-                    <OrderStyled.TextButton>Make changes</OrderStyled.TextButton>
-                } */}
+                <CloseButton onClick={props.closeModal} />
+                <OrderStyled.HeaderText>
+                  {renderHeading()}
+                </OrderStyled.HeaderText>
+                <OrderStyled.Heading starMode={starMode}>
+                  Order Details
+                </OrderStyled.Heading>
               </React.Fragment>
           }
-        </OrderStyled.Details>
+          <OrderStyled.ScriptWrapper isMoreActions={!starMode && (requestType === 'open' || requestType === 'cancelled')}>
+            {
+              bookingData.request_details.booking_statement &&
+                <Script script={bookingData.request_details.booking_statement} />
+            }
+            <span className='additional-info'>
+              <span className='info-item title'>Additional information:</span>
+              <span className='info-item value'>
+                {
+                  bookingData.request_details.important_info || 'None'
+                }
+              </span>
+            </span>
+            {
+              !starMode && (requestType === 'open' || requestType === 'cancelled') &&
+                <MoreActions
+                  classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                  options={moreOptions[requestType]}
+                  onSelectOption={onSelectAction}
+                />
+            }
+          </OrderStyled.ScriptWrapper>
+          {
+            requestType !== 'cancelled' &&
+              <OrderStyled.ColumnCenter>
+                <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
+                <span className="check-text ">
+                  {
+                    starMode ?
+                      'Hide from profile'
+                    :
+                      <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
+                        <span>Make my video private!</span>
+                      </ToolTip>
+                  }
+                </span>
+              </OrderStyled.ColumnCenter>
+          }
+          <OrderStyled.Details starMode={props.starMode}>
+            <OrderStyled.DetailList>
+              <li className='detail-item'>
+                <span className='detail-title'>Purchased:</span>
+                <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
+              </li>
+              <li className='detail-item'>
+                <span className='detail-title'>Paid:</span>
+                <ToolTip title={requestType === 'open' ? 'This amount was reserved on your card but will not be charged until your video is completed.' : ''}>
+                  <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
+                </ToolTip>
+              </li>
+              <li className='detail-item'>
+                <span className='detail-title'>Recorded:</span>
+                <span className='detail-value'>
+                  {
+                    requestType === 'open' &&
+                      'The star has 7 days to complete your booking.'
+                  }
+                  { requestType === 'cancelled' && 'CANCELLED'}
+                  { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
+                  {
+                    requestType === 'cancelled' &&
+                      <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
+                        <span className='detail-comment'>{bookingData.comment}</span>
+                      </ToolTip>
+                  }
+                </span>
+              </li>
+              <li className='detail-item'>
+                <span className='detail-title'>Order #:</span>
+                <span className='detail-value'>{bookingData.order_details.order}</span>
+              </li>
+            </OrderStyled.DetailList>
+            {
+              !props.disableFooter &&
+                <React.Fragment>
+                  {
+                    requestType === 'completed' && !props.isModal &&
+                      <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
+                  }
+                  {/* {
+                    requestType === 'open' &&
+                      <OrderStyled.TextButton>Make changes</OrderStyled.TextButton>
+                  } */}
+                </React.Fragment>
+            }
+          </OrderStyled.Details>
+        </ScrollComponent>
       </OrderStyled>
     </WrapperComponent>
   )

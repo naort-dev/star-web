@@ -115,7 +115,7 @@ CompletedStyled.DetailsWrapper = styled.div`
   .description {
     color: ${props => props.theme.flatBlue};
     font-family: Gilroy-Regular;
-    margin-top: 17.3px;
+    margin-top: 5px;
     display: block;
     font-size: 14px;
     ${HeadingBold} {
@@ -130,7 +130,7 @@ CompletedStyled.DetailsWrapper = styled.div`
     align-items: center;
   }
   @media(min-width: 832px) {
-    margin-bottom: 71.2px;
+    margin-bottom: 50px;
     padding: 10px;
     .action-section {
       left: 10px;

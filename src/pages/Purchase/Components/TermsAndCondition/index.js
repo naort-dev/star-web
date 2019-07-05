@@ -17,13 +17,13 @@ const TermsAndCondition = props => {
   return (
     <Layout className="content-wrapper">
       <Scrollbars
-      className="termsWrapper"
-       renderView={scrollProps => <div {...scrollProps} id="terms-scroll" />}
-      > 
-      <div>
-        {/* {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />} */}
-        <p>{props.termText}</p>
-      </div>
+        className="termsWrapper"
+        renderView={scrollProps => <div {...scrollProps} id="terms-scroll" />}
+      >
+        <div>
+          {/* {props.isCheckbox && <Checkbox onChange={handleCheck} checked={props.checked} />} */}
+          <div className="terms-text">{props.termText}</div>
+        </div>
       </Scrollbars>
       <FlexBox className="button-wrapper">
         <Button

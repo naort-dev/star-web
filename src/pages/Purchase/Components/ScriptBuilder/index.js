@@ -84,14 +84,13 @@ class ScriptBuilder extends Component {
         hostName.charAt(0).toUpperCase() + hostName.slice(1),
       fromName:
         !isEmpty(userName) &&
+        user !== 'Myself' &&
         userName.charAt(0).toUpperCase() + userName.slice(1),
-      relationship: relationship.toLowerCase(),
+      relationship: !isEmpty(relationship) && relationship.toLowerCase(),
       date,
-      occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : ' ',
+      occasion: !isEmpty(occasion.label) ? occasion.label.toLowerCase() : '',
       someOneElse: user !== 'Myself',
-      specification: !isEmpty(specification)
-        ? specification.toLowerCase()
-        : ' ',
+      specification: !isEmpty(specification) ? specification.toLowerCase() : '',
       occasionKey: occasion.key,
       responseTime: this.props.responseTime,
     });
@@ -136,7 +135,10 @@ class ScriptBuilder extends Component {
         type: this.props.category,
         requestRelationshipData: this.props.bookingData.relationshipValue,
         stargramto: this.props.bookingData.hostName,
-        stargramfrom: this.props.bookingData.userName,
+        stargramfrom:
+          this.props.bookingData.user !== 'Myself'
+            ? this.props.bookingData.userName
+            : '',
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
         booking_statement: this.state.script,
@@ -151,6 +153,7 @@ class ScriptBuilder extends Component {
             : '',
         is_myself: this.props.bookingData.user === 'Myself',
         requestId: this.props.bookingData.requestId,
+        templateType: this.props.bookingData.templateType,
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(
@@ -184,6 +187,7 @@ class ScriptBuilder extends Component {
         </FlexBoxCenter>
         <TextAreaWrapper>
           <textarea
+            maxLength={256}
             value={this.props.importantInfo}
             onChange={event => this.props.infoChange(event.target.value)}
             placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…."
