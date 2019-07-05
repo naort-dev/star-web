@@ -7,6 +7,7 @@ const BookingStyled = styled.div`
     transform-style: preserve-3d;
     height: ${props => (props.starMode ? '100%' : 'calc(100% - 214px)')};
     overflow: hidden;
+    position: relative;
     ${props => !props.starMode && `
       position: relative;
     `}
