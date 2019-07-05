@@ -177,6 +177,7 @@ const FanView = (props) => {
                 <CommentBox
                   maxLength={52}
                   classes={{root: 'comment-box'}}
+                  placeholder={`Send a comment to ${bookingData.fan_first_name}….`}
                   onSubmit={submitComment}
                 />
               </FanViewStyled.CommentWrapper>

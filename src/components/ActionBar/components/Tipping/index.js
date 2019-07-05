@@ -29,7 +29,7 @@ const Tipping = (props) => {
   }
 
   const onTipChange = (event) => {
-    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
+    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,3}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     if (event.target.value !== "0" && (pattern.test(event.target.value) || event.target.value === '')) {
       setTip(event.target.value);
     }
