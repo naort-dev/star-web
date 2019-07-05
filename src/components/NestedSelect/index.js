@@ -96,6 +96,8 @@ const NestedSelect = props => {
         value={props.value}
         isMulti
         name="selectedProfessions"
+        menuIsOpen
+        isSearchable={false}
         options={props.options}
         className="basic-multi-select"
         classNamePrefix="select"
