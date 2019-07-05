@@ -14,6 +14,7 @@ import ModalHeader from '../ModalHeader';
 import Loader from '../Loader';
 import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
+import { celebCompletedStatusList } from '../../constants/requestStatusList';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
 import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
@@ -38,8 +39,12 @@ const BookingCard = (props) => {
     if (props.bookingModal.requestId) {
       getRequestDetails(props.bookingModal.requestId)
         .then((requestDetails) => {
-          if (requestDetails.success) {
+          const newRequestDetails = requestDetails.success && requestDetails.data && requestDetails.data.stargramz_response
+          const validRequestDetails = newRequestDetails && celebCompletedStatusList.indexOf(newRequestDetails.request_status) >= 0 ? true : false;
+          if (validRequestDetails) {
             setRequestData(requestDetails.data.stargramz_response);
+          } else {
+            closeModal();
           }
         })
     }
