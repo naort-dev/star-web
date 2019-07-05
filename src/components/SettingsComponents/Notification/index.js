@@ -26,10 +26,10 @@ const Notification = props => {
                   onChange={checkboxChange(notification)}
                   checked={notification.value}
                 />
-                <p className="main-text">
+                <span className="main-text">
                   <p className="sub-text">{notification.mainText}</p>{' '}
                   {notification.subText}
-                </p>
+                </span>
               </div>
             );
           })}

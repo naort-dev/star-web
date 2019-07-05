@@ -32,6 +32,7 @@ const AllBookings = props => {
       {props.bookingsList.data.map(bookItem => (
         <FanGeneralList
           expiration={props.config.request_expiration_days}
+          onUpdateData={props.updateMyVideosList}
           onPrimaryClick={props.onOpenClick(bookItem.booking_id)}
           key={bookItem.booking_id}
           data={bookItem}

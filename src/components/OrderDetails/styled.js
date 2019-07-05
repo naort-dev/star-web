@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 const OrderStyled = styled.div`
-
+  height: ${props => props.starMode ? 'calc(100% - 100px)' : '100%'};
+  ${props => props.isModal && `
+    height: calc(100% - 214px);
+  `}
 `;
 
 OrderStyled.HeaderText = styled.h5`
