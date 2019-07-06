@@ -45,7 +45,7 @@ Content.Description = styled.div`
   text-align: left;
   color: #888888;
   @media(min-width: 832px) {
-    width: 190px;
+    max-width: 190px;
     height: 65px;
   }
 `;
