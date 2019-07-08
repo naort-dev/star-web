@@ -16,7 +16,7 @@ SidebarStyled.LinkList = styled.ul`
 
 SidebarStyled.LinkItem = styled.li`
   font-family: ${props =>
-    props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+    props.selected ? 'Gilroy-SemiBold' : 'Gilroy-Regular'};
   color: ${props =>
     props.selected ? props.theme.flatBlue : props.theme.brownGrey};
   font-size: 16px;

@@ -205,7 +205,7 @@ const Video = props => {
   }
   return (
     <Layout>
-      <FlexBox>
+      <FlexBox className="video-wrapper">
         <VideoContainer>
           { !videoRecord &&
             <video style={{ display: 'none' }} onLoadedMetadata={e => calculateDuration(e.currentTarget.duration)} src={props.videoSrc ? props.videoSrc : props.src} ref={videoTag} controls="controls" ></video>

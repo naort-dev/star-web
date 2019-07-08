@@ -75,7 +75,7 @@ class RequestFlowPopup extends React.Component {
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
-          className={`${this.props.classes.root} modal-root`}
+          className={`${this.props.classes.root} ${this.props.classes.sub} modal-root`}
           noPadding={this.props.noPadding}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}

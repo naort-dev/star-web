@@ -76,9 +76,7 @@ export const Layout = styled.section`
     min-width: 69px;
     min-height: 40px;
     font-size: 14px;
-    ${media.webView} {
-      max-width: 160px;
-    }
+    max-width: 150px;
   }
   .button-promote {
     min-width: 329px;

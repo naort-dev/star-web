@@ -5,12 +5,21 @@ export const Layout = styled.section`
   height: 100%;
   background: #fff;
   position: relative;
+  padding: 30px 0;
+  @media (max-width: 1280px) {
+    padding-top: 0;
+  }
   .leftArrow {
     position: absolute;
     left: 20px;
     top: 21px;
+    background-size: 14px 28px;
+    
     @media (min-width: 1280px){
       display: none;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      top: -21px;
     }
   }
   .bio-wrapper {
@@ -42,16 +51,20 @@ export const Layout = styled.section`
       &:before, &:after {
         display: none;
       }
+      @media (min-width: 1280px) {
+        margin-top: 35px;
+      }
       @media(max-width: 831px) {
-        width: 310.4px;
+        width: calc(100% - 70px);
         height: 256px;
         margin-left: 35px;
-        margin-right: 29.5px;
+        margin-right: 35px;
       }
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    height: calc(100% + 75px);
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -68,7 +81,7 @@ export const Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 61px;
+  padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;

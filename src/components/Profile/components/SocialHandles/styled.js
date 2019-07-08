@@ -5,17 +5,25 @@ export const Layout = styled.section`
   height: 100%;
   background: #fff;
   position: relative;
-
+  padding: 30px 0;
+  @media (max-width: 1280px) {
+    padding-top: 0;
+  }
   .leftArrow {
     position: absolute;
     left: 20px;
     top: 21px;
+    background-size: 14px 28px;
     @media (min-width: 1280px){
       display: none;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      top: -21px;
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    height: calc(100% + 75px);
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -31,12 +39,12 @@ export const Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 61px;
+  padding-top: 0;
   margin-bottom: 10px;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
-    margin: 0 auto 10.2px;
+    margin: 0 auto 25px;
     line-height: 28px;
   }
 `;
@@ -63,7 +71,6 @@ export const Content = styled.section`
 
 Content.SubTitle= styled.div`
   width: 398px;
-  height: 55px;
   font-family: Gilroy;
   font-size: 14px;
   text-align: center;
@@ -84,7 +91,11 @@ Content.InputWraper= styled.div`
   border-bottom: 2px solid #cccccc;
   height: 83px;
   width: 400px;
-  padding-top: 50px;
+  padding-top: 35px;
+  @media (max-width: 1280px) {
+    padding-top: 25px;
+    height: 65px;
+  }
   .MuiFormControl {
     width: 100%;
     margin-bottom: 11px;

@@ -6,7 +6,7 @@ export const Layout = styled.section`
   width: 100%;
   height: 100%;
   padding-left: 40px;
-  padding-right: 31px;
+  padding-right: 40px;
   display: flex;
   flex-direction: column;
   .name-photo-wrap{
@@ -16,7 +16,10 @@ export const Layout = styled.section`
     margin: 30px auto;
     @media (max-width: 831px) {
       margin: 20px auto;
-      height: 100%;
+      height: auto;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      margin: 0 auto;
     }
     @media (max-width: 450px) {
       max-width: 100%;
@@ -24,12 +27,13 @@ export const Layout = styled.section`
     .head1 {
       @media (max-width: 831px) {
         padding-top: 0;
+        padding-bottom: 20px;
       }
     }
   }
   .subheader {
     color: ${props => props.theme.orangePink};
-    fontsize: 24px;
+    font-size: 24px;
   }
   @media (min-width: 832px) {
     border-radius: 20px;
@@ -37,6 +41,7 @@ export const Layout = styled.section`
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    height: calc(100% + 170px);
   }
   .cropper-Wrapper {
     max-width: 700px;
@@ -60,6 +65,10 @@ export const Layout = styled.section`
     @media (max-width: 831px){
       left: 20px;
       top: 21px;
+      background-size: 14px 28px;
+    }
+    @media (min-width: 832px) and (max-width: 1280px){
+      top: -21px;
     }
   }
   @media (max-width: 831px){
@@ -77,7 +86,10 @@ export const Layout = styled.section`
 Layout.SubheaderWrap = styled.div`
   order: 1;
   color: ${props => props.theme.orangePink};
-  fontsize: 24px;
+  font-size: 24px;
+  .head1 {
+    padding-top: 0 !important;
+  }
 `;
 
 Layout.InputWrap = styled.div`
@@ -85,6 +97,9 @@ Layout.InputWrap = styled.div`
   margin-bottom:40px;
   @media (min-width: 832px) {
     order: 3;
+  }
+  @media (max-width: 831px) {
+    margin-bottom: 20px;
   }
   .name-text {
     width: 100%;
@@ -96,6 +111,7 @@ Layout.InputWrap = styled.div`
     margin-bottom: 20px;
     @media (max-width: 831px){
       font-size: 14px;
+      margin-bottom: 5px;
     }
   }
   input {
@@ -138,6 +154,7 @@ UploadContainer.CropperContainer = styled.div`
   .action-buttons {
     @media (max-width: 831px) {
       top: 21px;
+      background-size: 14px 28px;
     }
   }
 `;
@@ -165,7 +182,6 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 43px;
   @media (max-width: 831px) {
     padding-top: 20px;
   }
