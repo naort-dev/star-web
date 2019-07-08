@@ -95,11 +95,13 @@ const OpenBookings = props => {
   const backArrowHandler = () => {
     updateCardClicked(false);
     setInitialSelected(true);
+    clearVideo();
   };
 
   const closeHandler = () => {
     updateCardClicked(false);
     setInitialSelected(true);
+    clearVideo();
   };
 
   const nextRequestHandler = (selected, clicked) => {

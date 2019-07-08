@@ -97,8 +97,11 @@ export const Layout = styled.section`
   .questionWrapper:last-child {
     padding-bottom: 35px;
     @media screen and (min-width: 832px) and (max-height: 720px) {
-      padding-bottom: 56px;
+      padding-bottom: 15px;
     }
+  }
+  .right-sec-wrap {
+    order: 2;
   }
 `;
 
@@ -145,7 +148,7 @@ export const QuestionContainer = styled.section`
   padding-left: ${props => (props.error ? '20px' : '40px')};
   display: flex;
   align-items: center;
-  flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
+  flex-direction: column;
   order: 2;
   ${media.mobileScreen} {
     display: ${props => (props.isShow ? 'block' : 'none')};
@@ -161,6 +164,8 @@ export const QuestionContainer = styled.section`
     z-index: 9;
     position: absolute;
     bottom: 150px;
+    height: 259px;
+    overflow: auto;
   }
   &:empty {
     display: none;
@@ -260,7 +265,6 @@ export const WebButtons = styled.section`
 `;
 export const MobButtons = styled.section`
   position: relative;
-  // top: 415px;
   display: flex;
   flex-direction: column;
   padding-top: 15px;
@@ -273,5 +277,27 @@ export const MobButtons = styled.section`
   ${media.mobileScreen} {
     padding-bottom: 15px;
     height: 125px;
+  }
+`;
+
+export const TimeSpan = styled.span`
+  align-items: center;
+  flex-direction: column;
+  font-family: Gilroy;
+  color: #555555;
+  padding-bottom: 15px;
+  padding-top: 2px;
+  display: none;
+  padding-left: 40px;
+  ${media.webView} {
+    display: flex;
+  }
+  .text {
+    font-size: 16px;
+    line-height: 0.9;
+    margin-bottom: 4px;
+  }
+  .time {
+    font-size: 21px;
   }
 `;

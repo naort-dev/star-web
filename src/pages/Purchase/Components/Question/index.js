@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
@@ -13,6 +14,7 @@ import {
   ShowHide,
   WebButtons,
   MobButtons,
+  TimeSpan,
 } from './styled';
 
 const Question = props => {
@@ -39,7 +41,7 @@ const Question = props => {
     isStop: false,
     continueFlg: !!props.videoSrc,
   });
-
+  const [recordingTime, setRecordingTime] = useState('05:00');
   const [noSupport, updateSupport] = useState(false);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
@@ -84,6 +86,7 @@ const Question = props => {
         mediaHandler('Record', false, false);
       }
     } else if (stateObject.buttonLabel === 'Stop Recording') {
+      setRecordingTime('05:00');
       mediaHandler('Continue', true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
     } else if (stateObject.buttonLabel === 'Continue') {
@@ -200,6 +203,30 @@ const Question = props => {
     return null;
   };
 
+  const renderTimeHeader = () => {
+    if (props.shouldRecord) {
+      return 'Remaining Time';
+    } else if (props.videoSrc && props.recordedTime) {
+      return 'Video Length';
+    } else if (isEmpty(props.recordedTime) && isEmpty(props.videoSrc)) {
+      return 'Maximum Time';
+    }
+    return '';
+  };
+
+  const renderTime = () => {
+    if (props.shouldRecord) {
+      return recordingTime;
+    } else if (props.videoSrc) {
+      return props.recordedTime;
+    }
+    return '05:00';
+  };
+
+  const getRecordTime = recordTime => {
+    setRecordingTime(recordTime);
+  };
+
   const checkDeviceSupport = async () => {
     const deviceSupport = await audioVideoSupport('videoinput');
     if (!deviceSupport) {
@@ -230,42 +257,52 @@ const Question = props => {
               starNM={props.starNM}
               uploadHandler={uploadHandler}
               recorded={props.recorded}
+              getRecordTime={getRecordTime}
               uploader
             />
           </VideoContainer>
-          <QuestionContainer
-            isShow={stateObject.showHideFlg || stateObject.error}
-            continueFlg={stateObject.continueFlg}
-          >
-            {!stateObject.error && (
-              <React.Fragment>
-                {!stateObject.continueFlg && (
-                  <div>
-                    <h1 className="quesHead">What you should say?</h1>
-                    <h1 className="instruction-head-mob">
-                      Ask the question to {props.starNM}
-                    </h1>
-
-                    <QuestionBuilder questionsList={questions} />
-                  </div>
-                )}
-                <WebButtons className="web-btns">
-                  {!stateObject.continueFlg &&
-                    getFileUpload(['uploadBtn mobDisplay'])}
-                  {getButton(
-                    false,
-                    '',
-                    buttonClickHandler,
-                    stateObject.buttonLabel,
-                  )}
-                  {stateObject.continueFlg &&
-                    (props.recorded || isIOSDevice()
-                      ? getFileUpload(['uploadLink'])
-                      : recordLinkHandler())}
-                </WebButtons>
-              </React.Fragment>
+          <section className="right-sec-wrap">
+            {!isIOSDevice() && (
+              <TimeSpan>
+                <span className="text">{renderTimeHeader()}</span>
+                <span className="time">{renderTime()}</span>
+              </TimeSpan>
             )}
-          </QuestionContainer>
+
+            <QuestionContainer
+              isShow={stateObject.showHideFlg || stateObject.error}
+              continueFlg={stateObject.continueFlg}
+            >
+              {!stateObject.error && (
+                <React.Fragment>
+                  {(!stateObject.continueFlg || props.shouldRecord) && (
+                    <div>
+                      <h1 className="quesHead">What you should say?</h1>
+                      <h1 className="instruction-head-mob">
+                        Ask the question to {props.starNM}
+                      </h1>
+
+                      <QuestionBuilder questionsList={questions} />
+                    </div>
+                  )}
+                  <WebButtons className="web-btns">
+                    {!stateObject.continueFlg &&
+                      getFileUpload(['uploadBtn mobDisplay'])}
+                    {getButton(
+                      false,
+                      '',
+                      buttonClickHandler,
+                      stateObject.buttonLabel,
+                    )}
+                    {stateObject.continueFlg &&
+                      (props.recorded || isIOSDevice()
+                        ? getFileUpload(['uploadLink'])
+                        : recordLinkHandler())}
+                  </WebButtons>
+                </React.Fragment>
+              )}
+            </QuestionContainer>
+          </section>
 
           {!stateObject.error && (
             <MobButtons className="mob-btns">
@@ -283,20 +320,20 @@ const Question = props => {
             </MobButtons>
           )}
 
-          {stateObject.buttonLabel === 'Record' && !stateObject.error && (
-            <ShowHide
-              onClick={() =>
-                updatedStateHandler({
-                  ...stateObject,
-                  showHideFlg: !stateObject.showHideFlg,
-                })
-              }
-              isShow={stateObject.showHideFlg}
-            >
-              {/* {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'} */}
-              Instructions
-            </ShowHide>
-          )}
+          {(stateObject.buttonLabel === 'Record' || props.shouldRecord) &&
+            !stateObject.error && (
+              <ShowHide
+                onClick={() =>
+                  updatedStateHandler({
+                    ...stateObject,
+                    showHideFlg: !stateObject.showHideFlg,
+                  })
+                }
+                isShow={stateObject.showHideFlg}
+              >
+                Instructions
+              </ShowHide>
+            )}
         </React.Fragment>
       )}
 
@@ -342,6 +379,7 @@ Question.propTypes = {
   recorded: PropTypes.bool,
   playPauseMediaFlg: PropTypes.bool,
   shouldRecord: PropTypes.bool.isRequired,
+  recordedTime: PropTypes.string,
 };
 
 Question.defaultProps = {
@@ -350,6 +388,7 @@ Question.defaultProps = {
   recorded: false,
   playPauseMediaFlg: false,
   starNM: '',
+  recordedTime: '',
 };
 
 function mapStateToProps(state) {
@@ -359,6 +398,7 @@ function mapStateToProps(state) {
     videoUploaded: state.commonReducer.videoUploaded,
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
     shouldRecord: state.commonReducer.shouldRecord,
+    recordedTime: state.commonReducer.recordedTime,
   };
 }
 export default connect(
