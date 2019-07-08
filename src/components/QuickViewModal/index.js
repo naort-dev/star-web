@@ -141,7 +141,6 @@ const QuickViewModal = (props) => {
                       autoPlay
                       onVideoError={onVideoError}
                       videoSrc={props.celebDetails.profile_video}
-                      cover="assets/images/default-cover.jpg"
                     />
                     : <QuickViewStyled.Avatar size={200} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url} />
 

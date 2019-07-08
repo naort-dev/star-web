@@ -182,6 +182,7 @@ export default class SetPrice extends React.Component {
       { isReferred ? <ReferralCode
       error={this.state.referralCode.message}
       value={this.state.referralCode.value}
+      description={props.referralDescription}
       onChange={(event) => this.saveFormEntries(event, "referralCode")}
       onPrimaryButtonClick={this.onSubmitReferralCode}
     /> :

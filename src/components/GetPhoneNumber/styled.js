@@ -146,7 +146,7 @@ Layout.Image = styled.div`
 `;
 Layout.ButtonWrapper = styled.div`
   @media(min-width: 832px){
-    position: absolute;
+    // position: absolute;
     bottom: 73px;
     margin: auto;
     left: 0;
@@ -283,7 +283,7 @@ export const FloatLabel = styled.section`
   }
   input:hover,
   input:focus {
-    border-color: #8174aa;
+    border-color: ${props => props.theme.flatBlue};
   }
   input:focus {
     background-position: left bottom;
@@ -291,7 +291,7 @@ export const FloatLabel = styled.section`
   }
 
   .react-phone-number-input--focus {
-    border-color: #8174aa !important;
+    border-color: ${props => props.theme.flatBlue}; !important;
     border-width: 2px;
     outline: none !important;
     background-color: transparent;

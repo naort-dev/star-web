@@ -35,7 +35,7 @@ const GeneralList = (props) => {
 
   const renderTime = (time) => {
     const actualTimeObject = moment();
-    const currentTimeObject = moment.utc(time).add(parseInt(props.expiration, 0), 'days');
+    const currentTimeObject = moment(time).add(parseInt(props.expiration, 0), 'days');
     const timeDifference = currentTimeObject.diff(actualTimeObject, 'hours');
     if (timeDifference > 48) { // does not expires in 48 hours
       return (
