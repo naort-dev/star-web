@@ -89,8 +89,8 @@ const Video = props => {
       return 'Remaining Time';
     } else if (props.videoSrc && props.recordedTime) {
       return 'Welcome Video Length';
-    } else if(isEmpty(props.recordedTime) && isEmpty(props.videoSrc)) {
-    return 'Maximum Time';
+    } else if (isEmpty(props.recordedTime) && isEmpty(props.videoSrc)) {
+      return 'Maximum Time';
     }
   };
 
@@ -206,7 +206,7 @@ const Video = props => {
           >
             Skip
           </span>
-          {buttonLabel === 'Start Recording' && !error && (
+          {(buttonLabel === 'Start Recording' || props.recordState) && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
