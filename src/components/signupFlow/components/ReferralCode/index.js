@@ -13,6 +13,7 @@ export const ReferralCode = (props) =>(
               {props.title}
               <DotsContainer dotsCount={3} selectedDot={3} />
             </ReferralCodeWrapper.HeaderText>
+            <ReferralCodeWrapper.Description>{props.description}</ReferralCodeWrapper.Description>
             {props.error ?
             <ReferralCodeWrapper.Description error={props.error}>
               {props.error}
@@ -50,10 +51,12 @@ ReferralCode.propTypes = {
   primary_button: PropTypes.string,
   onPrimaryButtonClick: PropTypes.func,
   title: PropTypes.string,
+  description: PropTypes.string,
 };
 ReferralCode.defaultProps = {
   error: '',
   placeholder:'What is your referral code?',
+  description: '',
   type: 'text',
   name: 'referralCode',
   value: '',

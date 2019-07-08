@@ -27,7 +27,7 @@ ReferralCodeWrapper.HeaderText = styled.div`
   line-height: 28px;
   text-align: center;
   color: #ff6c58;
-  padding-bottom: 65px;
+  padding-bottom: 30px;
   margin: 0 auto;
   ${media.mobileScreen} {
     padding-bottom: 30px;
@@ -39,16 +39,16 @@ ReferralCodeWrapper.HeaderText = styled.div`
 
 ReferralCodeWrapper.Description = styled.div`
   font-family: Gilroy;
-  font-size: 12px;
+  font-size: ${props => (props.error ? '12px' : '14px')};
   line-height: 1.57;
   letter-spacing: normal;
   text-align: center;
-  color: #990000; 
+  color: ${props => (props.error ? '#990000' : '#7c7c7c')};
 `;
 
 ReferralCodeWrapper.WrapsInput = styled.div`
   width:100%;
-  padding-bottom: 10px;
+  padding-top: 20px;
   input {
     font-family: Gilroy;
     font-size: 22px;

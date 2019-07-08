@@ -178,7 +178,7 @@ export default class VideoPlayer extends React.Component {
           <Player
             playsInline
             ref={player => (this.player = player)}
-            poster={this.state.primary.thumbnail}
+            poster={this.state.primary.thumbnail || this.props.coverImage}
             src={this.state.primary.video}
             fluid
             {...this.props}

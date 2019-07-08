@@ -12,15 +12,37 @@ import {
   modifySourceList,
 } from '../../store/shared/actions/processPayments';
 import { updateCustomerId } from '../../store/shared/actions/commonActions';
+import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 const Payment = props => {
   const [isNewCard, cardSelection] = useState(false);
+
+  const getEphemeralKey = () => {
+    props.loaderAction(true);
+    fetchEphemeralKey()
+      .then(resp => {
+        if (resp.success) {
+          const customerId =
+            resp.data.ephemeralKey.associated_objects &&
+            resp.data.ephemeralKey.associated_objects[0]
+              ? resp.data.ephemeralKey.associated_objects[0].id
+              : null;
+          props.updateCustomerId(customerId);
+          if (props.sourceList && Object.keys(props.sourceList).length === 0)
+            props.fetchSourceList();
+          else {
+            props.loaderAction(false);
+          }
+        }
+        props.loaderAction(false);
+      })
+      .catch(() => {
+        props.loaderAction(false);
+      });
+  };
+
   useEffect(() => {
-    if (props.sourceList && Object.keys(props.sourceList).length === 0)
-      props.fetchSourceList();
-    else {
-      props.loaderAction(false);
-    }
+    getEphemeralKey();
   }, []);
 
   const contentSwitchCallback = value => {
@@ -49,7 +71,7 @@ const Payment = props => {
         source.source.id,
         paymentSuccess,
       );
-    } else{
+    } else {
       props.createCharge(
         props.request.id,
         props.celebDetails.rate,
@@ -68,9 +90,10 @@ const Payment = props => {
           <CloseButton onClick={props.closeHandler} />
         </FlexCenter>
       </SubHeader>
-      <Scrollbars className="customScroll" renderView={prop => (
-        <div {...prop} className="scrollRenderView" />
-      )}>
+      <Scrollbars
+        className="customScroll"
+        renderView={prop => <div {...prop} className="scrollRenderView" />}
+      >
         {Object.keys(props.celebDetails).length > 0 && (
           <Layout>
             {Object.keys(props.celebDetails).length > 0 &&

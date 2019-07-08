@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { EmptyText } from 'styles/CommonStyled';
 import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import Dropdown from '../../../../components/Dropdown';
-import Search from '../../../../components/Search';
 import Loader from '../../../../components/Loader';
 import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
@@ -76,6 +76,10 @@ const CompletedBookings = (props) => {
       {
         props.bookingsList.loading && <Loader />
       }
+      {!props.bookingsList.loading &&
+      props.bookingsList.data.length === 0 && (
+        <EmptyText>You currently do not have any completed bookings.</EmptyText>
+      )}
       {
         !props.bookingsList.loading &&
           <CompletedStyled.ListSection>

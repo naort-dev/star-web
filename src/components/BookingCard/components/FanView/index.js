@@ -131,7 +131,7 @@ const FanView = (props) => {
             <span className='detail-header'>
               <span>
                 <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
-                <BookingStyled.Description>{ moment.utc(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                <BookingStyled.Description>{ moment(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
               </span>
               <MoreActions
                 classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
