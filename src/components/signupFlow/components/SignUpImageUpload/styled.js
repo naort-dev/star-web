@@ -455,6 +455,9 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: ${props =>
     props.imagePresent ? '30px 10px 0' : '15px 10px 10px'};
+    &.upload-wrap {
+      margin-bottom: 20px;
+    }
   @media(min-width: 832px) {
     padding: 35px 60px 32px;
   }

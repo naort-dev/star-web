@@ -5,16 +5,31 @@ export const Layout = styled.section`
   height: 100%;
   background: #fff;
   position: relative;
+  padding: 30px 0;
+  @media (max-width: 1280px) {
+    padding-top: 0;
+  }
   .leftArrow {
     position: absolute;
-    top: 29px;
-    left: 29px;
+    left: 20px;
+    top: 21px;
+    background-size: 14px 28px;
+
+    @media (max-width: 831px){
+      top: 96px;
+    }
+
     @media (min-width: 1280px){
       display: none;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      top: -21px;
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    height: 100%;
+    padding: 75px 0 20px;
   }
   .dots-container {
     @media (max-width: 831px) {
@@ -27,16 +42,31 @@ export const Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 61px;
+  padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
     margin: 0 auto 10.2px;
     line-height: 28px;
   }
+  @media (min-width: 832px) and (max-width: 1280px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
+  & > section {
+    @media (min-width: 1280px) {
+      padding-top: 35px;
+    }
+    @media (max-width: 831px) {
+      padding-top: 0;
+    }
+  }
+  @media (max-width: 831px) {
+    height: calc(100% - 60px) !important;
+    max-height: 450px;
+  }
 `;

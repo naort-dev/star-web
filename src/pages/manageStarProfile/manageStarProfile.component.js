@@ -134,42 +134,48 @@ const ManageStarProfile = props => {
   return (
     <Layout>
        <BackArrow className="leftArrow" onClick={goToManage}/>
-      <Layout.Header className="top-heading">My Profile</Layout.Header>
-      <Content.CommonContent>
-        <Content.Description>
-          {STAR_PROFILE.DESCRIPTION}
-        </Content.Description>
+       <Content.LeftSection>
+          <Layout.Header className="top-heading">My Profile</Layout.Header>
+          <Content.Description>
+            {STAR_PROFILE.DESCRIPTION}
+          </Content.Description>
+          <Content.SidebarWrapper>
+            <InnerSidebar links={getLinks(STAR_PROFILE.INNER_LINKS)} />
+          </Content.SidebarWrapper>
+       </Content.LeftSection>
+       
+       <Content.RightSection>
         <ProgressBarWrapper>
          <ProgressBar percentage={getPercentage()} />
         </ProgressBarWrapper>
-      </Content.CommonContent>
-      <Content.InnerWrapper>
-        <Content.SidebarWrapper>
-          <InnerSidebar links={getLinks(STAR_PROFILE.INNER_LINKS)} />
-        </Content.SidebarWrapper>
-        {
-          isMobile  && currentPage!== 'profile' ? (<RequestFlowPopup
-            closePopUp={closeProfileModal}
-            modalView
-            smallPopup
-            classes={
-              {
-                root: 'custom-modal',
+        <Content.InnerWrapper>
+        
+          {
+            isMobile  && currentPage!== 'profile' ? (<RequestFlowPopup
+              closePopUp={closeProfileModal}
+              modalView
+              smallPopup
+              classes={
+                {
+                  root: 'custom-modal',
+                  sub: props.location.pathname === '/manage/profile/welcome-video' ? "welcome-modal" : ""
+                }
               }
-            }
-          // setScrollRef={this.setScrollRef}
-          // disableClose={this.state.disableClose}
-          > 
-            {!isIpad && <Header desktopSearch/> }
-            {getRoutes()}
-          </RequestFlowPopup>
-          ) : (
-              <Content.RightContent>
-                {getRoutes()}
-              </Content.RightContent>)
+            // setScrollRef={this.setScrollRef}
+            // disableClose={this.state.disableClose}
+            > 
+              {!isIpad && <Header desktopSearch/> }
+              {getRoutes()}
+            </RequestFlowPopup>
+            ) : (
+                <Content.RightContent>
+                  {getRoutes()}
+                </Content.RightContent>)
 
-        }
-      </Content.InnerWrapper>
+          }
+        </Content.InnerWrapper>
+      </Content.RightSection>
+      
     </Layout>
   );
 }

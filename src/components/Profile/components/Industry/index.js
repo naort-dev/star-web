@@ -160,8 +160,7 @@ const Industry = props => {
         // disableClose={this.state.disableClose}
         > 
           <UploadContainer.BrowseCategoryWrapper>
-            <BackArrow onClick={onBack} />
-            <CloseButton onClick={onBack} />
+            <BackArrow className = "left-arrow" onClick={onBack} />
             <UploadContainer.DesktopView>
               <Heading>Browse Categories</Heading>
               <UploadContainer.BrowseCategoryContainer>
@@ -225,7 +224,7 @@ const Industry = props => {
   return(
     <Layout>
       <BackArrow className="leftArrow" onClick={props.goBack}/>
-      <Heading>Industry</Heading>
+      <Heading className="title">Industry</Heading>
       <Wrapper>
       {renderContent()}
       </Wrapper>

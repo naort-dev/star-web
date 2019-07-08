@@ -43,8 +43,9 @@ SearchSection.AutoSuggest = styled.div`
 `;
 SearchSection.SuggestionListWrapper = styled.div`
   font-family: Gilroy-light;
-  position: fixed;
-  top: ${props => `${props.topOffset}px`};
+  position: absolute;
+  //top: ${props => `${props.topOffset}px`};
+  top: 45px;
   left: 0;
   right: 0;
   width: 100%;

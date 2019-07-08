@@ -265,6 +265,11 @@ injectGlobal`
 }
 .custom-modal{
   padding: 75px 0;
+  &.welcome-modal {
+    @media(max-width: 831px) {
+      padding: 0;
+    }
+  }
 }
 `
 ;

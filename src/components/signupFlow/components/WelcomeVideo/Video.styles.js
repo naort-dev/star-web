@@ -4,7 +4,7 @@ import { media } from '../../../../styles/mediaQueries';
 export const Layout = styled.section`
   height: 100%;
   max-width: 318px;
-  padding-top: 49px;
+  padding-top: 0;
   ${media.webView} {
     max-width: 570px;
     padding-top: 0;
