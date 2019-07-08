@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
+import { Scrollbars } from 'react-custom-scrollbars';
 import QuestionBuilder from 'components/QuestionBuilder';
 import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
