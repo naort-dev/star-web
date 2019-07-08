@@ -571,7 +571,7 @@ const Question = props => {
                   </MobButtons>
                 )}
 
-                {stateObject.buttonLabel === props.buttonLabel.primary.record &&
+                {(stateObject.buttonLabel === props.buttonLabel.primary.record || props.shouldRecord) &&
                   !stateObject.error && (
                     <ShowHide
                       onClick={() =>

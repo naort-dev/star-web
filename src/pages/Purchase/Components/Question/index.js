@@ -211,6 +211,7 @@ const Question = props => {
     } else if (isEmpty(props.recordedTime) && isEmpty(props.videoSrc)) {
       return 'Maximum Time';
     }
+    return '';
   };
 
   const renderTime = () => {
