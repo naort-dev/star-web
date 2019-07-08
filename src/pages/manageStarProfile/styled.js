@@ -21,7 +21,7 @@ export const Layout = styled.section`
       left: 20px;
       top: 21px;
     }
-    @media (min-width: 1280px){
+    @media (min-width: 832px){
       display: none;
     }
   }
@@ -84,10 +84,10 @@ Content.InnerWrapper = styled.div`
   flex-direction:row;
 `;
 Content.SidebarWrapper = Content.Visiblity.extend`
-  @media(max-width: 831px) {
+  @media(max-width: 1280px) {
     width: 100%;
   }
-  @media(min-width: 832px) {
+  @media(min-width: 1281px) {
     display: inline-block;
   }
 `;
