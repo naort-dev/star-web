@@ -46,6 +46,7 @@ SidebarStyled.LinkItem = styled.li`
     display: inline-block;
     padding-left: 18px;
     width: 100%;
+    margin-top: 3px;
   }
   .tick-circle {
     font-size: 24px;

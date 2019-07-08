@@ -225,7 +225,7 @@ const Industry = props => {
   return(
     <Layout>
       <BackArrow className="leftArrow" onClick={props.goBack}/>
-      <Heading>Industry</Heading>
+      <Heading className="title">Industry</Heading>
       <Wrapper>
       {renderContent()}
       </Wrapper>

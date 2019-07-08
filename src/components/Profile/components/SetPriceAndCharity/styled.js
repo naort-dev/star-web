@@ -6,6 +6,8 @@ export const Layout = styled.section`
   background: #fff;
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
     @media (min-width: 1280px){
       display: none;
     }
@@ -24,6 +26,18 @@ export const Layout = styled.section`
     height: 100%;
     padding-left: 151px;
     padding-right: 149px;
+  }
+  input {
+    text-align: center;
+  }
+  .MuiFormControl {
+    margin-bottom: 35px;
+  }
+  .check-text {
+    font-size: 14px;
+    line-height: 20px;
+    color: #797979;
+    margin-top: 5px;
   }
 `;
 
@@ -118,7 +132,7 @@ export const SetPriceWrapper = styled.div`
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 25px;
   letter-spacing: normal;
   text-align: center;
   color: ${props => props.error ? '#f44336': '#555555'};

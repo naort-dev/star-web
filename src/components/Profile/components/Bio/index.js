@@ -28,7 +28,7 @@ const Bio = props => {
     <Layout>
       <BackArrow className="leftArrow" onClick={props.goBack}/>
       <Heading>Profile Bio</Heading>
-      <Wrapper>
+      <Wrapper className="bio-wrapper">
         <TextInput
           placeholder="Make yourself sound cooler than you really are…"
           multiline

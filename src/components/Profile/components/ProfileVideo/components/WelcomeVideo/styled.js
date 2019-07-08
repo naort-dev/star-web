@@ -7,8 +7,8 @@ export const Layout = styled.section`
   position: relative;
   .leftArrow {
     position: absolute;
-    top: 29px;
-    left: 29px;
+    left: 20px;
+    top: 21px;
     @media (min-width: 1280px){
       display: none;
     }

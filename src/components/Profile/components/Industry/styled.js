@@ -8,9 +8,15 @@ export const Layout = styled.section`
   position: relative;
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
     @media (min-width: 1280px){
       display: none;
     }
+  }
+
+  .title {
+    margin-bottom: 20px;
   }
   @media (max-width: 831px) {
     background: #f6f6f6;

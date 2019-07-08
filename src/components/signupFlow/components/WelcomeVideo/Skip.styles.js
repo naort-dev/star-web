@@ -10,6 +10,10 @@ export const Container = styled(Layout)`
   }
   .leftArrow {
     position: absolute;
+    @media (max-width: 831px) {
+      left: 30px;
+      top: 21px;
+    }
   }
   .content {
     max-width: 470px;
@@ -33,7 +37,7 @@ export const Container = styled(Layout)`
     font-family: Gilroy;
     padding-top: 38px;
     @media (max-width: 831px) {
-      padding-top: 0;
+      padding-top: 20px;
       max-width: 260px;
       line-height: 32px;
       font-size: 24px;

@@ -7,9 +7,14 @@ export const Layout = styled.section`
   position: relative;
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
     @media (min-width: 1280px){
       display: none;
     }
+  }
+  .bio-wrapper {
+    height: auto !important;
   }
   .MuiFormControl {
     width: 100%;

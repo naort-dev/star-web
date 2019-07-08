@@ -5,8 +5,11 @@ export const Layout = styled.section`
   height: 100%;
   background: #fff;
   position: relative;
+
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
     @media (min-width: 1280px){
       display: none;
     }
@@ -29,6 +32,7 @@ export const Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 61px;
+  margin-bottom: 10px;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
@@ -39,11 +43,12 @@ export const Heading = styled.div`
 
 export const Content = styled.section`
   width: 100%;
-  height: calc(100% - 146px) !important;
+  height: auto !important;
   display:flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 25px;
   .socialmedia-icon{
     color: #cccccc;
     width: 35.7px;
@@ -59,10 +64,10 @@ export const Content = styled.section`
 Content.SubTitle= styled.div`
   width: 398px;
   height: 55px;
-  font-family: Gilroy-Light;
+  font-family: Gilroy;
   font-size: 14px;
   text-align: center;
-  line-height: 1.14;
+  line-height: 16px;
   color: ${(props)=>props.theme.greyishBrown}
   @media (max-width: 831px) {
     width:100%;
@@ -99,4 +104,13 @@ Content.InputLabel = styled.div`
   color: #555555;
   text-align: left;
   color: ${(props)=>props.theme.greyishBrown}
+  line-height: 25px;
+  margin-top: 4px;
+  margin-left: 10px;
+
+  & + div {
+    font-size: 18px;
+    line-height: 25px;
+    margin-top: 1px;
+  }
 `;

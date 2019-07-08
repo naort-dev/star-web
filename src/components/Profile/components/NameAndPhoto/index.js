@@ -120,7 +120,7 @@ class NameAndPhoto extends React.Component {
             className="subheader"
             size="24px"
             headercolor="orangePink"
-            heading="Profile Name & Photo"
+            heading="Name & Photo"
             onClick={this.props.goBack}
           />
         </Layout.SubheaderWrap>

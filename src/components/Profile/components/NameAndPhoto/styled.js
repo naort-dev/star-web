@@ -14,15 +14,26 @@ export const Layout = styled.section`
     flex-direction: column;
     max-width: 422px;
     margin: 30px auto;
+    @media (max-width: 831px) {
+      margin: 20px auto;
+      height: 100%;
+    }
+    @media (max-width: 450px) {
+      max-width: 100%;
+    }
+    .head1 {
+      @media (max-width: 831px) {
+        padding-top: 0;
+      }
+    }
   }
   .subheader {
     color: ${props => props.theme.orangePink};
     fontsize: 24px;
   }
   @media (min-width: 832px) {
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: #ffffff;
-    margin-top: 40px;
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
@@ -37,12 +48,29 @@ export const Layout = styled.section`
     }
   }
   .profile-btn{
-    flex-direction:row;
+    flex-direction: row;
+    @media (max-width: 831px){
+      flex-direction: column;
+    }
   }
   .arrow-head {
     width: 14px;
     height: 28px;
     top: 110px;
+    @media (max-width: 831px){
+      left: 20px;
+      top: 21px;
+    }
+  }
+  @media (max-width: 831px){
+    .profile-image-wrapper {
+      width: 192px;
+      height: 192px;
+      margin-bottom: 15px;
+    }
+    .upload-wrap {
+      padding-top: 0;
+    }
   }
 `;
 
@@ -65,9 +93,16 @@ Layout.InputWrap = styled.div`
     font-family: Gilroy;
     font-size: 12px;
     color: #555;
+    margin-bottom: 20px;
+    @media (max-width: 831px){
+      font-size: 14px;
+    }
   }
   input {
     text-align: center;
+    color: #615195;
+    font-family: Gilroy-Medium;
+    font-size: 24px;
   }
 `;
 
@@ -96,6 +131,15 @@ UploadContainer.CropperContainer = styled.div`
   top: 27px;
   background-color: #fff;
   z-index: 3;
+  @media (max-width: 831px) {
+    top: 0;
+    height: 100%;
+  }
+  .action-buttons {
+    @media (max-width: 831px) {
+      top: 21px;
+    }
+  }
 `;
 
 const ImageUpload = styled.div`
@@ -122,8 +166,8 @@ ImageUpload.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 43px;
-  @media (min-width: 832px) {
-    padding-top: 37px;
+  @media (max-width: 831px) {
+    padding-top: 20px;
   }
 `;
 
