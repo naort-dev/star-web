@@ -18,7 +18,7 @@ const ManageStyled = styled.div`
     padding-bottom: 32px;
     @media (min-width: 1280px) {
       padding-top: 9px !important;
-      padding-bottom: 22px !important;
+      padding-bottom: 0 !important;
     }
     @media (max-width: 831px) {
       padding-bottom: 17px;

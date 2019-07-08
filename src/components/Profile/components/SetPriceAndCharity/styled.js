@@ -4,14 +4,25 @@ export const Layout = styled.section`
   width: 100%;
   height: 100%;
   background: #fff;
+  padding: 30px 0;
+  @media (max-width: 1280px) {
+    padding-top: 0;
+  }
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
+    background-size: 14px 28px;
+    
     @media (min-width: 1280px){
       display: none;
     }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      top: 47px;
+    }
   }
   .save-button{
-    min-height: 40px;
+    min-height: 60px;
     max-width: 200px;
   }
   @media (max-width: 831px) {
@@ -19,11 +30,28 @@ export const Layout = styled.section`
     padding-left: 35px;
     padding-right: 32px;
     position: relative;
+    height: calc(100% + 160px);
   }
   @media(min-width: 832px) {
     height: 100%;
     padding-left: 151px;
     padding-right: 149px;
+  }
+  input {
+    text-align: center;
+    font-size: 24px;
+  }
+  .MuiFormControl {
+    margin-bottom: 35px;
+    @media(max-width: 831px) {
+      width: 100%;
+    }
+  }
+  .check-text {
+    font-size: 14px;
+    line-height: 20px;
+    color: #797979;
+    margin-top: 5px;
   }
 `;
 
@@ -36,7 +64,7 @@ export const Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 61px;
+  padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
@@ -52,7 +80,7 @@ export const Content = styled.section`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-top: 37.8px;
+  padding-top: 35px;
   @media (max-width: 831px) {
     height: max-content;
     padding-top: 43px;
@@ -106,7 +134,7 @@ Content.InputLabel = styled.div`
 Content.CharityCheckbox = styled.div`
   display: flex;
   margin-bottom: 38px;
-  margin-top: 62px;
+  margin-top: 0;
 `;
 Content.ModifyDetails = styled.div`
   font-family: Gilroy;
@@ -118,15 +146,14 @@ export const SetPriceWrapper = styled.div`
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 18px;
   letter-spacing: normal;
   text-align: center;
   color: ${props => props.error ? '#f44336': '#555555'};
-  margin-bottom: 13px;
+  margin-bottom: 10px;
   @media(max-width:831px) {
     width: 239.7px;
-    height: 41px;
-    margin: 0 auto 18px;
+    margin: 0 auto 10px;
     color: ${props => props.error ? '#f44336': '#797979'};
   }
 `;
@@ -135,7 +162,7 @@ SetPriceWrapper.WrapsInput = styled.div`
   padding-bottom: 5px;
   input {
     font-family: Gilroy;
-    font-size: 28px;
+    font-size: 24px;
     text-align: center;
     color: #8174aa;
     width: 377px;

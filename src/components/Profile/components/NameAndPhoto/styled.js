@@ -6,7 +6,7 @@ export const Layout = styled.section`
   width: 100%;
   height: 100%;
   padding-left: 40px;
-  padding-right: 31px;
+  padding-right: 40px;
   display: flex;
   flex-direction: column;
   .name-photo-wrap{
@@ -14,18 +14,34 @@ export const Layout = styled.section`
     flex-direction: column;
     max-width: 422px;
     margin: 30px auto;
+    @media (max-width: 831px) {
+      margin: 20px auto;
+      height: auto;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      margin: 0 auto;
+    }
+    @media (max-width: 450px) {
+      max-width: 100%;
+    }
+    .head1 {
+      @media (max-width: 831px) {
+        padding-top: 0;
+        padding-bottom: 20px;
+      }
+    }
   }
   .subheader {
     color: ${props => props.theme.orangePink};
-    fontsize: 24px;
+    font-size: 24px;
   }
   @media (min-width: 832px) {
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: #ffffff;
-    margin-top: 40px;
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    height: calc(100% + 170px);
   }
   .cropper-Wrapper {
     max-width: 700px;
@@ -37,19 +53,43 @@ export const Layout = styled.section`
     }
   }
   .profile-btn{
-    flex-direction:row;
+    flex-direction: row;
+    @media (max-width: 831px){
+      flex-direction: column;
+    }
   }
   .arrow-head {
     width: 14px;
     height: 28px;
     top: 110px;
+    @media (max-width: 831px){
+      left: 20px;
+      top: 21px;
+      background-size: 14px 28px;
+    }
+    @media (min-width: 832px) and (max-width: 1280px){
+      top: -21px;
+    }
+  }
+  @media (max-width: 831px){
+    .profile-image-wrapper {
+      width: 192px;
+      height: 192px;
+      margin-bottom: 15px;
+    }
+    .upload-wrap {
+      padding-top: 0;
+    }
   }
 `;
 
 Layout.SubheaderWrap = styled.div`
   order: 1;
   color: ${props => props.theme.orangePink};
-  fontsize: 24px;
+  font-size: 24px;
+  .head1 {
+    padding-top: 0 !important;
+  }
 `;
 
 Layout.InputWrap = styled.div`
@@ -58,6 +98,9 @@ Layout.InputWrap = styled.div`
   @media (min-width: 832px) {
     order: 3;
   }
+  @media (max-width: 831px) {
+    margin-bottom: 20px;
+  }
   .name-text {
     width: 100%;
     display: inline-block;
@@ -65,9 +108,17 @@ Layout.InputWrap = styled.div`
     font-family: Gilroy;
     font-size: 12px;
     color: #555;
+    margin-bottom: 20px;
+    @media (max-width: 831px){
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
   }
   input {
     text-align: center;
+    color: #615195;
+    font-family: Gilroy-Medium;
+    font-size: 24px;
   }
 `;
 
@@ -96,6 +147,16 @@ UploadContainer.CropperContainer = styled.div`
   top: 27px;
   background-color: #fff;
   z-index: 3;
+  @media (max-width: 831px) {
+    top: 0;
+    height: 100%;
+  }
+  .action-buttons {
+    @media (max-width: 831px) {
+      top: 21px;
+      background-size: 14px 28px;
+    }
+  }
 `;
 
 const ImageUpload = styled.div`
@@ -121,9 +182,8 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 43px;
-  @media (min-width: 832px) {
-    padding-top: 37px;
+  @media (max-width: 831px) {
+    padding-top: 20px;
   }
 `;
 

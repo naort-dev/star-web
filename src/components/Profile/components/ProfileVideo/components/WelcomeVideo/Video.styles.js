@@ -70,15 +70,15 @@ export const Layout = styled.section`
     }
   }
   .mobileBtn {
-    position: absolute;
-    top: 547px;
-    padding-bottom: 60px;
     display: block;
     ${media.webView} {
       display: none;
     }
+    ${media.mobileScreen} {
+      order: 3;
+    }
     .button {
-      padding: 20px 0;
+      padding: 10px 0;
     }
   }
   .player-container {
@@ -135,6 +135,19 @@ export const Layout = styled.section`
   .videoInputCapture {
     display: none;
   }
+  .video-wrapper {
+    ${media.mobileScreen} {
+      flex-direction: column;
+      height: 100%;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+  .video-react-video {
+    @media(max-width: 831px) {
+      position: realtive;
+    }
+  }
 `;
 
 export const VideoContainer = styled.section`
@@ -145,7 +158,8 @@ export const VideoContainer = styled.section`
   position: relative;
   @media (max-width: 831px) {
     width: 317px;
-    height: 514px;
+    height: calc(100% - 80px);
+    margin: 0 auto 15px;
   }
   .playButton {
     position: absolute;
@@ -302,11 +316,10 @@ export const ShowHide = styled.span`
 
 export const ShowButtons = styled.span`
 display: none;
-position: absolute;
-top: 366px;
+position: relative;
+margin-top: -166px;
+margin-bottom: 15px;
 width: 322px;
-height: 152.9px;
-backdrop-filter: blur(20px);
 background-color: #ffffff;
 text-align: center;
 line-height: 30px;
@@ -316,6 +329,8 @@ font-family: Gilroy-Bold;
 font-size: 14px;
 cursor: pointer;
 display: block;
+border-radius: 20px;
+order: 2;
 ${media.webView} {
   display: none;
 }
@@ -355,7 +370,7 @@ export const TimeSpan = styled.span`
   flex-direction: column;
   font-family: Gilroy;
   color: #555555;
-  padding-bottom: 38px;
+  padding-bottom: 20px;
   display: none;
   ${media.webView} {
     display: flex;

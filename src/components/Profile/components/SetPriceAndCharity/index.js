@@ -170,7 +170,7 @@ const SetPriceAndCharity = props => {
               checked={priceCharityData.addToProfile}
               disabled={isEmpty(priceCharityData.charityName)}
             />
-            <span>
+            <span className="check-text">
             Add this to my profile
             </span>
           </Content.CharityCheckbox>
@@ -226,7 +226,7 @@ const SetPriceAndCharity = props => {
               onChange={toggleCharity}
               checked={enableCharity}
             />
-            <span>
+            <span className="check-text"> 
             I’m here to support a charity
             </span>
           </Content.CharityCheckbox>

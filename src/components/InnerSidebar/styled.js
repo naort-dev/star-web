@@ -16,7 +16,7 @@ SidebarStyled.LinkList = styled.ul`
 
 SidebarStyled.LinkItem = styled.li`
   font-family: ${props =>
-    props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+    props.selected ? 'Gilroy-SemiBold' : 'Gilroy-Regular'};
   color: ${props =>
     props.selected ? props.theme.flatBlue : props.theme.brownGrey};
   font-size: 16px;
@@ -46,6 +46,7 @@ SidebarStyled.LinkItem = styled.li`
     display: inline-block;
     padding-left: 18px;
     width: 100%;
+    margin-top: 3px;
   }
   .tick-circle {
     font-size: 24px;
