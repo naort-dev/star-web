@@ -70,7 +70,7 @@ const QuickComment = (props) => {
       <CommentStyled showList={showList} className={props.classes.root}>
         <CommentStyled.CommentIcon disable={disable} showList={showList} innerRef={anchorEl} onClick={openList}>
           <LightningIcon className='icon-image' />
-          <span className='quick-arrow' />
+          {/* <span className='quick-arrow' /> */}
         </CommentStyled.CommentIcon>
         <CommentStyled.Popover
           id="quick-comment-popper"

@@ -10,7 +10,7 @@ export default class VideoRender extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coverImage: false,
+      coverImage: null,
       profileImage: false,
     };
     this.coverImage = new Image();
@@ -79,6 +79,7 @@ export default class VideoRender extends React.Component {
                 <VideoPlayer
                   renderCustomText={this.renderCustomText}
                   autoPlay={this.props.autoPlay}
+                  coverImage={this.state.coverImage}
                   onError={this.props.onVideoError}
                   primarySrc={props.videoSrc}
                 />

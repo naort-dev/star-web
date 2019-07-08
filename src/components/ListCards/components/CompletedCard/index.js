@@ -72,7 +72,7 @@ const CompletedCard = (props) => {
         <CompletedStyled.DetailsWrapper>
           <div className='details-header'>
             <span className='date'>
-              { moment.utc(props.data.created_date).format('MMM Do YYYY') }
+              { moment(props.data.created_date).format('MMM Do YYYY') }
             </span>
             {
               props.data.fan_rating &&
@@ -92,7 +92,7 @@ const CompletedCard = (props) => {
             </ToolTip>
             <ToolTip title={`This booking has $${numberToCommaFormatter(props.data.tip_amount)} in tips.`}>            
               <CompletedStyled.IconWrapper className='tip' visible={props.data.tip_amount > 0} >
-                $ TIP
+                $ <span>TIP</span>
               </CompletedStyled.IconWrapper>
             </ToolTip>
             <ToolTip title={`This video has ${props.data.reaction_count} reaction videos.`}>

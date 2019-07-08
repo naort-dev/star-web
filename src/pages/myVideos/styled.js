@@ -47,6 +47,7 @@ BookingsStyled.SectionHeader = styled.div`
     cursor: pointer;
     strong {
       font-family: Gilroy-Bold;
+      font-weight: normal;
     }
   }
 `;

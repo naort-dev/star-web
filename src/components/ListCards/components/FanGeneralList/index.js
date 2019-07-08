@@ -64,7 +64,7 @@ const FanGeneralList = (props) => {
 
   const renderTime = (time) => {
     const actualTimeObject = moment();
-    const currentTimeObject = moment.utc(time).add(parseInt(props.expiration, 0), 'days');
+    const currentTimeObject = moment(time).add(parseInt(props.expiration, 0), 'days');
     const timeDifference = currentTimeObject.diff(actualTimeObject, 'hours');
     if (timeDifference > 120) { // does not expires in 120 hours
       return (
@@ -111,7 +111,7 @@ const FanGeneralList = (props) => {
             bookingData={requestSelected}
           />
       }
-      <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>
+      <GeneralStyled imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url} className="video-card">
         <GeneralStyled.Section imageUrl={props.data.avatar_photo && props.data.avatar_photo.thumbnail_url}>     
           {
             requestType !== 'open' &&
@@ -142,7 +142,7 @@ const FanGeneralList = (props) => {
               }
               {
                 requestType === 'completed' &&
-                  <React.Fragment>On {moment.utc(props.data.video_created_date).format('MMM Do YYYY')}, <span className='star-name'>{props.data.celebrity}</span> delivered a</React.Fragment>
+                  <React.Fragment>On {moment(props.data.video_created_date).format('MMM Do YYYY')}, <span className='star-name'>{props.data.celebrity}</span> delivered a</React.Fragment>
               }
             </span>
             { renderDescription() }

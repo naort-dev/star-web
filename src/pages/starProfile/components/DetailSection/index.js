@@ -180,7 +180,6 @@ const DetailSection = (props) => {
                 customText={<span>Watch {getShortName()}’s <br/> Welcome Message</span>}
                 noBorder={document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832}
                 videoSrc={props.celebDetails.profile_video}
-                cover="assets/images/default-cover.jpg"
               />
             </DetailStyled.ProfileVideo>
           </DetailStyled.ProfileVideoSection>

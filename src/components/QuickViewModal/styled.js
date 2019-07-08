@@ -105,7 +105,8 @@ QuickViewStyled.Description = styled.span`
   font-family: Gilroy-Light;
   padding-left: 19.3px;
   strong {
-    font-family: Gilroy-medium;
+    font-family: Gilroy-Medium;
+    font-weight: normal;
   }
 `;
 

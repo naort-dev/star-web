@@ -53,6 +53,7 @@ CommentStyled.Popover = styled(Popover)`
     overflow: initial;
     box-shadow: none;
     background: transparent;
+    width: 196px;
   }
 `;
 
@@ -75,10 +76,12 @@ CommentStyled.ListWrapper = styled.div`
       cursor: pointer;
       &.arrow-1 {
         transform: rotateZ(90deg);
-        margin-bottom: 18px;
+        margin-bottom: auto;
+        margin-top: 0;
       }
       &.arrow-2 {
         transform: rotateZ(-90deg);
+        margin-bottom: 7px;
       }
     }
     @media(min-width: 832px) {
@@ -91,16 +94,32 @@ CommentStyled.ListWrapper = styled.div`
 
 CommentStyled.OptionWrapper = styled.div`
   position: relative;
-  padding: 16px 35px;
+  padding: 16px 15px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);
   bottom: 3px;
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: 89px;
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-top: 10px solid transparent;
+    z-index: 10;
+    transform: rotateZ(180deg);
+    @media(max-width: 831px) {
+      display: none;
+    }
+  }
   .emoji-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+    padding: 0 20px;
     .emoji-icon {
       width: 24px;
       height: 30px;
@@ -118,8 +137,9 @@ CommentStyled.OptionWrapper = styled.div`
     height: 209px;
     width: 145px;
     .comment-item {
-      padding: 7px;
-      width: 141px;
+      padding: 7px 10px;
+      width: 112px;
+      font-size: 12px;
       text-align: center;
       border-radius: 60px;
       font-family: Gilroy-Medium;

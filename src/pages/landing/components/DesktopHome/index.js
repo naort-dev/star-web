@@ -239,7 +239,6 @@ class DesktopHome extends React.Component {
           </DesktopStyled.ProcessSection>
           <DesktopStyled.RespondSection>
             <VideoRender
-              autoPlay
               videoSrc={props.featuredStars.homeFeatured.homeVideos.star_video && props.featuredStars.homeFeatured.homeVideos.star_video.url}
             />
             <DesktopStyled.ColumnDivider>
@@ -260,9 +259,7 @@ class DesktopHome extends React.Component {
           <DesktopStyled.FlowWrapper>
             <DesktopStyled.ReceiveContent>
               <VideoRender
-                autoPlay
                 videoSrc={props.featuredStars.homeFeatured.homeVideos.fan_video && props.featuredStars.homeFeatured.homeVideos.fan_video.url}
-                cover="assets/images/default-cover.jpg"
               />
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.SubHeader>

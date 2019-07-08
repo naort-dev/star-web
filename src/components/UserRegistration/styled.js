@@ -477,6 +477,7 @@ GroupStyled.ErrorMsg = styled.div`
   text-align:left;
   strong {
     font-family: 'Avenir-Regular';
+    font-weight: normal;
   }
   ${props => !props.isError && ({
     color: 'grey',

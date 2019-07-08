@@ -131,6 +131,7 @@ ManageStyled.RightContent = ManageStyled.Visiblity.extend`
   @media(min-width: 832px) {
     flex: auto;
     padding-left: 50px;
+    width: calc(78% - 50px);
   }
 `
 export default ManageStyled;

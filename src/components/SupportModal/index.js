@@ -76,7 +76,7 @@ const SupportModal = (props) => {
             value={supportText}
             onChange={onTextChange}
           />
-        <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
+        <PrimaryButton className="submit-btn" onClick={onSubmit}>Submit</PrimaryButton>
       </SupportStyled>
     </RequestFlowPopup>
   );

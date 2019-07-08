@@ -3,6 +3,12 @@ import styled from 'styled-components'
 const CompletedStyled = styled.div`
   .pagination-wrapper {
     margin: 13px 0;
+    .left-arrow, .right-arrow {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
   @media(min-width: 832px) {
     .pagination-wrapper {
@@ -23,8 +29,16 @@ CompletedStyled.FilterSection = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  @media(max-width: 831px) {
+    margin-bottom: 10px;
+  }
   .drop-down {
     margin-bottom: 13px!important;
+    @media(max-width: 831px) {
+      &:last-child {
+        margin-bottom: 0!important;
+      }
+    }
   }
   .search-root {
     height: 50px;
@@ -55,6 +69,7 @@ CompletedStyled.ListSection = styled.div`
     flex-wrap: wrap;
     padding-bottom: 16px;
     margin-left: -40px;
+    justify-content: center;
     .list-item {
       width: auto;
       margin-right: 0;

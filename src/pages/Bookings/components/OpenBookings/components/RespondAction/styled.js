@@ -217,6 +217,7 @@ export const QuestionContainer = styled.section`
   }
   .question-wrapper {
     position: relative;
+    width: 100%;
     .more-action-root {
       position: absolute;
       top: -10px;
@@ -228,6 +229,10 @@ export const QuestionContainer = styled.section`
         .more-action-icon {
           background: #fff;
         }
+      }
+      .more-action-icon {
+        width: 30px;
+        height: 30px;
       }
     }
   }

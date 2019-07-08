@@ -21,6 +21,7 @@ import { toggleUpdateBooking, toggleContactSupport } from '../../store/shared/ac
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
+
 const OrderDetails = (props) => {
 
   const { bookingData, starMode } = props;
@@ -116,8 +117,7 @@ const OrderDetails = (props) => {
 
   const WrapperComponent = props.isModal ? 
     RequestFlowPopup : React.Fragment
-
-  const ScrollComponent = props.isModal ? Scrollbars : React.Fragment ;
+    const ScrollComponent = props.isModal ? Scrollbars : React.Fragment ;
   return (
     <WrapperComponent {...modalProps}>
       {
@@ -143,10 +143,12 @@ const OrderDetails = (props) => {
               </React.Fragment>
           }
           <OrderStyled.ScriptWrapper isMoreActions={!starMode && (requestType === 'open' || requestType === 'cancelled')}>
+            <section className="script-wrapper">
             {
               bookingData.request_details.booking_statement &&
                 <Script script={bookingData.request_details.booking_statement} />
             }
+            </section>
             <span className='additional-info'>
               <span className='info-item title'>Additional information:</span>
               <span className='info-item value'>
@@ -164,61 +166,63 @@ const OrderDetails = (props) => {
                 />
             }
           </OrderStyled.ScriptWrapper>
-          {
-            requestType !== 'cancelled' &&
-              <OrderStyled.ColumnCenter>
-                <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
-                <span className="check-text ">
-                  {
-                    starMode ?
-                      'Hide from profile'
-                    :
-                      <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
-                        <span>Make my video private!</span>
-                      </ToolTip>
-                  }
-                </span>
-              </OrderStyled.ColumnCenter>
-          }
           <OrderStyled.Details starMode={props.starMode}>
-            <OrderStyled.DetailList>
-              <li className='detail-item'>
-                <span className='detail-title'>Purchased:</span>
-                <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
-              </li>
-              <li className='detail-item'>
-                <span className='detail-title'>Paid:</span>
-                <ToolTip title={requestType === 'open' ? 'This amount was reserved on your card but will not be charged until your video is completed.' : ''}>
-                  <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
-                </ToolTip>
-              </li>
-              <li className='detail-item'>
-                <span className='detail-title'>Recorded:</span>
-                <span className='detail-value'>
-                  {
-                    requestType === 'open' &&
-                      'The star has 7 days to complete your booking.'
-                  }
-                  { requestType === 'cancelled' && 'CANCELLED'}
-                  { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
-                  {
-                    requestType === 'cancelled' &&
-                      <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
-                        <span className='detail-comment'>{bookingData.comment}</span>
-                      </ToolTip>
-                  }
-                </span>
-              </li>
-              <li className='detail-item'>
-                <span className='detail-title'>Order #:</span>
-                <span className='detail-value'>{bookingData.order_details.order}</span>
-              </li>
-            </OrderStyled.DetailList>
+            <section className="order-wrapper">
+              {
+                requestType !== 'cancelled' &&
+                  <section className="checkbox-wrapper">
+                    <Checkbox checked={checkBox} onChange={onCheckBoxChange} />
+                    <span className="check-text ">
+                      {
+                        starMode ?
+                          'Hide from profile'
+                        :
+                          <ToolTip title='This restricts the Star and Starsona from sharing this video with other fans, however you can still share it as much as you like. '>
+                            <span>Make my video private!</span>
+                          </ToolTip>
+                      }
+                    </span>
+                  </section>
+              }
+              <OrderStyled.DetailList>
+                <li className='detail-item'>
+                  <span className='detail-title'>Purchased:</span>
+                  <span className='detail-value'>{moment(bookingData.created_date).format('MMM Do YYYY')}</span>
+                </li>
+                <li className='detail-item'>
+                  <span className='detail-title'>Paid:</span>
+                  <ToolTip title={requestType === 'open' ? 'This amount was reserved on your card but will not be charged until your video is completed.' : ''}>
+                    <span className='detail-value'>{ requestType === 'cancelled' ? '$0.00' : `$${bookingData.order_details.amount}`}</span>
+                  </ToolTip>
+                </li>
+                <li className='detail-item'>
+                  <span className='detail-title'>Recorded:</span>
+                  <span className='detail-value'>
+                    {
+                      requestType === 'open' &&
+                        'The star has 7 days to complete your booking.'
+                    }
+                    { requestType === 'cancelled' && 'CANCELLED'}
+                    { requestType === 'completed' && moment(bookingData.video_created_date).format('MMM Do YYYY')}
+                    {
+                      requestType === 'cancelled' &&
+                        <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>
+                          <span className='detail-comment'>{bookingData.comment}</span>
+                        </ToolTip>
+                    }
+                  </span>
+                </li>
+                <li className='detail-item'>
+                  <span className='detail-title'>Order #:</span>
+                  <span className='detail-value'>{bookingData.order_details.order}</span>
+                </li>
+              </OrderStyled.DetailList>
+            </section>
             {
               !props.disableFooter &&
                 <React.Fragment>
                   {
-                    requestType === 'completed' && !props.isModal &&
+                    requestType === 'completed' && !props.isModal && 
                       <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
                   }
                   {/* {

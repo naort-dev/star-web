@@ -22,20 +22,20 @@ const GeneralList = (props) => {
     } else if (requestTypes[props.data.request_type] === 'Shout-out') {
       return (
         <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout <br /> for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> shoutout { props.isOpen && <br /> } for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
         </MediumText>
       )
     }
     return (
       <MediumText>
-          <HeadingBold>{props.data.occasion}</HeadingBold> announcement <br /> for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
+          <HeadingBold>{props.data.occasion}</HeadingBold> announcement { props.isOpen && <br /> } for <HeadingBold>{props.data.fan_first_name}</HeadingBold>
       </MediumText>
     )
   }
 
   const renderTime = (time) => {
     const actualTimeObject = moment();
-    const currentTimeObject = moment.utc(time).add(parseInt(props.expiration, 0), 'days');
+    const currentTimeObject = moment(time).add(parseInt(props.expiration, 0), 'days');
     const timeDifference = currentTimeObject.diff(actualTimeObject, 'hours');
     if (timeDifference > 48) { // does not expires in 48 hours
       return (

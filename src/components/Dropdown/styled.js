@@ -8,7 +8,7 @@ DropdownStyled.Select = styled.div`
   position: relative;
   max-width: 100%;
   background: ${props => props.secondary ? '#fff' : props.theme.white};
-  padding: 18px;
+  padding: 18px 15px;
   height: 50px;
   outline: none;
   font-family: Gilroy;
@@ -37,6 +37,7 @@ DropdownStyled.CurrentSelected = styled.span`
   overflow: hidden;
   margin-bottom: 10px;
   padding-top: 13px;
+  padding-right: 5px;
 `;
 
 DropdownStyled.DropIcon = styled.span`
