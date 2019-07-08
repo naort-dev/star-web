@@ -38,6 +38,7 @@ export const SET_PRICE = {
   CONFIRMATION_DESCRIPTION: 'Pick a price that is worth it to you, and still within the range of your fans.',
   IMAGE_URL: 'assets/images/art_price.svg',
   DESCRIPTION: "How much would you like to charge for each video?",
+  REFERRAL_CODE_DESCRIPTION: "If you received a referral code from a fellow star, be sure to enter the code here. This will make sure that they get credit for signing you up!",
   TITLE: 'Set your price',
   LINK: 'Have a referral code?',
   PRIMARY_BUTTON: 'Continue',

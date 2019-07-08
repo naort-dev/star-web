@@ -563,6 +563,7 @@ class SignupFlow extends React.Component {
               description={SET_PRICE.DESCRIPTION}
               inAppPriceList={this.props.inAppPriceList}
               image_url={SET_PRICE.IMAGE_URL}
+              referralDescription={SET_PRICE.REFERRAL_CODE_DESCRIPTION}
               message={SET_PRICE.MESSAGE}
               primary_button={SET_PRICE.PRIMARY_BUTTON}
               primaryButtonClick={priceDetails =>
