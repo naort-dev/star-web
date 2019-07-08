@@ -48,6 +48,9 @@ class Checkout extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getEphemeralKey();
+  }
   setErrorMsg = (event, element, errorElm) => {
     let { cardTypeImage } = this.state;
     if (event.elementType === 'cardNumber') {
@@ -63,7 +66,8 @@ class Checkout extends React.Component {
     );
   };
 
-  getEphemeralKey = source => {
+  getEphemeralKey = () => {
+    this.props.loaderAction(true);
     fetchEphemeralKey()
       .then(resp => {
         if (resp.success) {
@@ -73,8 +77,9 @@ class Checkout extends React.Component {
               ? resp.data.ephemeralKey.associated_objects[0].id
               : null;
           this.props.updateCustomerId(customerId);
-          this.addCardToList(source, customerId);
+          // this.addCardToList(source, customerId);
         }
+        this.props.loaderAction(false);
       })
       .catch(() => {
         this.props.loaderAction(false);
@@ -110,11 +115,7 @@ class Checkout extends React.Component {
           type: 'card',
         })
         .then(res => {
-          if (this.props.customerId !== null) {
-            this.addCardToList(res, this.props.customerId);
-          } else {
-            this.getEphemeralKey(res);
-          }
+          this.addCardToList(res, this.props.customerId);
         })
         .catch(() => {
           this.props.loaderAction(false);
