@@ -7,6 +7,7 @@ import { loginUser, resetSessionError, updateLoginStatus } from '../../store/sha
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
+import { updateToast } from '../../store/shared/actions/commonActions';
 import Loader from '../../components/Loader';
 import LoginForm from '../../components/LoginForm';
 import ForgotPassword from '../../components/ForgotPasswordForm';
@@ -111,6 +112,7 @@ const mapDispatchToProps = dispatch => ({
   resetSessionError: () => dispatch(resetSessionError()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginFlow));

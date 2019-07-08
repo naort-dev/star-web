@@ -101,6 +101,13 @@ function RequestTemplates(
           type="relationshipValue"
           value={value}
         />
+        {bookingData.hostName !== '' &&
+          bookingData.relationshipValue !== '' &&
+          bookingData.userName && (
+            <span className="relationship-text">
+              <p>{bookingData.hostName}</p> is <p>{bookingData.userName}</p>...
+            </span>
+          )}
       </Templates.InputWrapper>
     );
   };
