@@ -10,7 +10,7 @@ export default class VideoRender extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coverImage: false,
+      coverImage: null,
       profileImage: false,
     };
     this.coverImage = new Image();
