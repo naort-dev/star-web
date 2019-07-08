@@ -187,7 +187,7 @@ const OrderDetails = (props) => {
               <OrderStyled.DetailList>
                 <li className='detail-item'>
                   <span className='detail-title'>Purchased:</span>
-                  <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
+                  <span className='detail-value'>{moment(bookingData.created_date).format('MMM Do YYYY')}</span>
                 </li>
                 <li className='detail-item'>
                   <span className='detail-title'>Paid:</span>
@@ -203,7 +203,7 @@ const OrderDetails = (props) => {
                         'The star has 7 days to complete your booking.'
                     }
                     { requestType === 'cancelled' && 'CANCELLED'}
-                    { requestType === 'completed' && moment.utc(bookingData.video_created_date).format('MMM Do YYYY')}
+                    { requestType === 'completed' && moment(bookingData.video_created_date).format('MMM Do YYYY')}
                     {
                       requestType === 'cancelled' &&
                         <ToolTip title='Please note that your credit card was not charged for this cancelled request.'>

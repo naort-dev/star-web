@@ -77,7 +77,7 @@ export const getTime = time => {
   moment.relativeTimeThreshold('m', 60);
   moment.relativeTimeThreshold('h', 24);
   moment.relativeTimeThreshold('d', 25);
-  const timeObject = moment.utc(time);
+  const timeObject = moment(time);
   return timeObject.fromNow();
 };
 

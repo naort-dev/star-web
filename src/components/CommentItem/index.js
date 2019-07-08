@@ -26,7 +26,7 @@ const CommentItem = (props) => {
           <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
           <span>
             <span className='text-description'>Reaction:</span>
-            <span className="text-bold">{moment.utc(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
+            <span className="text-bold">{moment(props.commentDetails.created_date).format('MMM Do YYYY')}</span>
           </span>
           <PrimaryButton className='action-button' onClick={onReactionClick}>View</PrimaryButton>
         </span>
