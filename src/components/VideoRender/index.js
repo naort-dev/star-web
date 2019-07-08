@@ -79,6 +79,7 @@ export default class VideoRender extends React.Component {
                 <VideoPlayer
                   renderCustomText={this.renderCustomText}
                   autoPlay={this.props.autoPlay}
+                  coverImage={this.state.coverImage}
                   onError={this.props.onVideoError}
                   primarySrc={props.videoSrc}
                 />
