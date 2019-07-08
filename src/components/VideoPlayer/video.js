@@ -18,4 +18,8 @@ injectGlobal`
    padding-top: 0 !important;
    outline: none;
  }
+ .player .video-react .video-react-poster {
+   background-size: cover;
+   border-radius: inherit;
+ }
 `
