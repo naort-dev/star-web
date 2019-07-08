@@ -65,23 +65,14 @@ export const Layout = styled.section`
     width: 100%;
     display: inline-block;
     text-align: center;
-    border: 1px solid #2f839d;
     color: #2f839d;
     height: 60px;
     line-height: 60px;
+    font-size: 14px;
     border-radius: 30px;
     margin-bottom: 15px;
     font-family: Gilroy-SemiBold;
     cursor: pointer;
-    :hover,
-    :focus {
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
-    }
-    &:active {
-      color: #fff;
-      background-color: ${props => props.theme.greyishBrown};
-      border-color: ${props => props.theme.greyishBrown};
-    }
   }
   .videoInputCapture {
     display: none;

@@ -41,7 +41,7 @@ const Question = props => {
     isStop: false,
     continueFlg: !!props.videoSrc,
   });
-  const [recordingTime, setRecordingTime] = useState('05:00');
+  const [recordingTime, setRecordingTime] = useState('02:00');
   const [noSupport, updateSupport] = useState(false);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
@@ -86,7 +86,7 @@ const Question = props => {
         mediaHandler('Record', false, false);
       }
     } else if (stateObject.buttonLabel === 'Stop Recording') {
-      setRecordingTime('05:00');
+      setRecordingTime('02:00');
       mediaHandler('Continue', true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
     } else if (stateObject.buttonLabel === 'Continue') {
@@ -220,7 +220,7 @@ const Question = props => {
     } else if (props.videoSrc) {
       return props.recordedTime;
     }
-    return '05:00';
+    return '02:00';
   };
 
   const getRecordTime = recordTime => {
@@ -286,14 +286,14 @@ const Question = props => {
                     </div>
                   )}
                   <WebButtons className="web-btns">
-                    {!stateObject.continueFlg &&
-                      getFileUpload(['uploadBtn mobDisplay'])}
                     {getButton(
                       false,
                       '',
                       buttonClickHandler,
                       stateObject.buttonLabel,
                     )}
+                    {!stateObject.continueFlg &&
+                      getFileUpload(['uploadBtn mobDisplay'])}
                     {stateObject.continueFlg &&
                       (props.recorded || isIOSDevice()
                         ? getFileUpload(['uploadLink'])
