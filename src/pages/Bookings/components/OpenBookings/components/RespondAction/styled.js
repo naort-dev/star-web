@@ -167,7 +167,7 @@ export const Layout = styled.section`
 export const VideoContainer = styled.section`
   width: 319px;
   height: 493px;
-  border-radius: 23px;  
+  border-radius: 23px;
   background-color: #e3e3e3;
   margin-bottom: 60px;
   position: relative;
@@ -207,7 +207,7 @@ export const QuestionContainer = styled.section`
     padding-left: 15px;
     padding-top: 15px;
     padding-bottom: ${props => (props.isQA ? '60px' : '50px')};
-    bottom: ${props => (props.isQA ? '148px' : '150px')};
+    bottom: ${props => (props.isQA ? '148px' : '123px')};
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -288,7 +288,8 @@ export const QuestionContainer = styled.section`
         color: #fff;
       }
     }
-    .boldTxt, &.bold-text {
+    .boldTxt,
+    &.bold-text {
       font-family: Gilroy-Bold;
       color: #555;
       ${media.mobileScreen} {
@@ -317,7 +318,8 @@ export const ShowHide = styled.span`
   /* position: absolute;
   bottom: ${props => (props.isQA ? '0' : '20px')}; */
   order: 2;
-  /* margin: ${props => props.scriptVisible ? '-47px auto 15px 10px' : '-47px auto 15px'} */
+  /* margin: ${props =>
+    props.scriptVisible ? '-47px auto 15px 10px' : '-47px auto 15px'} */
   margin: -47px auto 15px; 
   position: relative;
   width: 224px;
@@ -326,7 +328,7 @@ export const ShowHide = styled.span`
   line-height: 30px;
   border-radius: 20px;
   background: #fff;
-  /* background: ${props => props.scriptVisible ? 'red' : '#fff'} */
+  /* background: ${props => (props.scriptVisible ? 'red' : '#fff')} */
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
@@ -380,6 +382,10 @@ export const WebButtons = styled.section`
   padding-top: 50px;
   ${media.mobileScreen} {
     padding-top: 0;
+  }
+  display: none;
+  ${media.webView} {
+    display: block;
   }
 `;
 export const MobButtons = styled.section`

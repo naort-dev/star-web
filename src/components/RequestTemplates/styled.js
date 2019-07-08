@@ -5,7 +5,6 @@ const Templates = styled.div`
   @media (min-width: 768px) {
     padding: 0px 0px;
   }
-  
 `;
 Templates.InputWrapper = styled.div`
   display: flex;
@@ -63,6 +62,20 @@ Templates.InputWrapper = styled.div`
   }
   .datepickerWrapper > div {
     width: 100%;
+  }
+
+  .relationship-text {
+    text-align: center;
+    padding-top: 9px;
+    font-size: 14px;
+    color: #aaa;
+    font-family: Gilroy;
+    p {
+      display: inline-block;
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
   }
 `;
 Templates.Myself = styled.div`

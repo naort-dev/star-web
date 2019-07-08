@@ -39,7 +39,7 @@ export function iosPriceFinder(actualPrice, priceList) {
 export function findCompletedVideo(bookingData) {
   if (bookingData && bookingData.request_video) {
     const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
-    return finalVideo;
+    return finalVideo || {};
   }
   return {}
 }

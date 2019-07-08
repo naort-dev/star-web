@@ -17,7 +17,6 @@ import {
 } from './Checkout.styles';
 import { FlexCenter } from '../../styles/CommonStyled';
 import Button from '../PrimaryButton';
-import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -63,23 +62,6 @@ class Checkout extends React.Component {
     );
   };
 
-  getEphemeralKey = source => {
-    fetchEphemeralKey()
-      .then(resp => {
-        if (resp.success) {
-          const customerId =
-            resp.data.ephemeralKey.associated_objects &&
-            resp.data.ephemeralKey.associated_objects[0]
-              ? resp.data.ephemeralKey.associated_objects[0].id
-              : null;
-          this.props.updateCustomerId(customerId);
-          this.addCardToList(source, customerId);
-        }
-      })
-      .catch(() => {
-        this.props.loaderAction(false);
-      });
-  };
 
   returnErrorMsg = element => {
     if (this.state[element] !== '') {
@@ -110,11 +92,7 @@ class Checkout extends React.Component {
           type: 'card',
         })
         .then(res => {
-          if (this.props.customerId !== null) {
-            this.addCardToList(res, this.props.customerId);
-          } else {
-            this.getEphemeralKey(res);
-          }
+          this.addCardToList(res, this.props.customerId);
         })
         .catch(() => {
           this.props.loaderAction(false);
