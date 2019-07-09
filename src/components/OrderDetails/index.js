@@ -20,6 +20,7 @@ import {
 } from '../../constants/requestStatusList';
 import { hideVideoFromProfile, makeVideoPrivate } from '../../services/request';
 import { findCompletedVideo } from '../../utils/dataformatter';
+import { useMedia } from '../../utils/domUtils';
 import BookingTitle from '../BookingTitle';
 import {
   toggleUpdateBooking,
@@ -30,6 +31,7 @@ import OrderStyled from './styled';
 
 const OrderDetails = props => {
   const { bookingData, starMode } = props;
+  const isMobile = useMedia('(max-width: 831px)')
 
   const setIntitialCheckBox = () => {
     if (starMode) {
@@ -140,6 +142,8 @@ const OrderDetails = props => {
     <WrapperComponent {...modalProps}>
       {!starMode && props.isModal && (
         <ModalHeader
+          arrowVisible={isMobile}
+          backArrowHandler={props.closeModal}
           starImage={
             bookingData.avatar_photo && bookingData.avatar_photo.thumbnail_url
           }
@@ -151,7 +155,6 @@ const OrderDetails = props => {
         <ScrollComponent>
           {!props.disableHeader && starMode && (
             <React.Fragment>
-              <CloseButton onClick={props.closeModal} />
               <OrderStyled.HeaderText>{renderHeading()}</OrderStyled.HeaderText>
               <OrderStyled.Heading starMode={starMode}>
                 Order Details
@@ -256,12 +259,14 @@ const OrderDetails = props => {
             {!props.disableFooter && (
               <React.Fragment>
                 {requestType === 'completed' && !props.isModal && (
-                  <PrimaryButton
-                    className="star-action-btn"
-                    onClick={props.onPrimaryClick}
-                  >
-                    Back to Video
-                  </PrimaryButton>
+                  props.starMode ?
+                    <PrimaryButton
+                      className="star-action-btn"
+                      onClick={props.onPrimaryClick}
+                    >
+                      Back to Video
+                    </PrimaryButton>
+                  :  <OrderStyled.TextButton onClick={props.onPrimaryClick}> Back to Video</OrderStyled.TextButton>
                 )}
                 {/* {
                     requestType === 'open' &&

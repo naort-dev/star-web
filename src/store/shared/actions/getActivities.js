@@ -68,9 +68,9 @@ export const fetchActivitiesList = (bookingId, offset, refresh, isPublic, isAll)
   let apiUrl = '';
   if (isPublic) {
     if (isAll) {
-      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/?is_public=true` : `${Api.getRecentActivity}${bookingId}/public_list/`;
+      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/` : `${Api.getRecentActivity}${bookingId}/`;
     } else {
-      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/?offset=${offset}&limit=${limit}&is_public=true` : `${Api.getRecentActivity}${bookingId}/public_list/?offset=${offset}&limit=${limit}` ;
+      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/?offset=${offset}&limit=${limit}` : `${Api.getRecentActivity}${bookingId}/?offset=${offset}&limit=${limit}` ;
     }
   } else if (isAll) {
     apiUrl = `${Api.getRecentActivity}${bookingId}/`;

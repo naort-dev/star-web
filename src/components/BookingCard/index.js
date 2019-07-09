@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { CloseButton } from 'styles/CommonStyled';
+import { CloseButton, BackArrow } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
 import { requestTypes } from '../../constants/requestTypes';
@@ -15,6 +15,7 @@ import ModalHeader from '../ModalHeader';
 import Loader from '../Loader';
 import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
+import { useMedia } from '../../utils/domUtils';
 import { celebCompletedStatusList } from '../../constants/requestStatusList';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
@@ -23,6 +24,7 @@ import BookingStyled from './styled';
 
 const BookingCard = (props) => {
 
+  const isMobile = useMedia('(max-width: 831px)')
   const [showDetails, toggleDetails] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [showPaymentSuccess, togglePaymentSuccess] = useState(false);
@@ -90,6 +92,14 @@ const BookingCard = (props) => {
       props.fetchActivitiesList(newRequestData.booking_id, 0, true);
       newRequestData.has_reaction = true;
       setRequestData(newRequestData);
+    }
+  }
+
+  const backArrowHandler = () => {
+    if (showDetails) {
+      setDetails(false)()
+    } else {
+      closeModal();
     }
   }
 
@@ -178,7 +188,9 @@ const BookingCard = (props) => {
             {
               !starMode &&
                 <ModalHeader
+                  arrowVisible={isMobile}
                   starImage={requestData.avatar_photo && requestData.avatar_photo.thumbnail_url}
+                  backArrowHandler={backArrowHandler}
                   closeHandler={closeModal}
                   customHeading={<BookingTitle secondary requestData={requestData} />}
                 />
@@ -186,6 +198,10 @@ const BookingCard = (props) => {
             {
               starMode &&
                 <React.Fragment>
+                  {
+                    isMobile &&
+                      <BackArrow  onClick={backArrowHandler} />
+                  }
                   <CloseButton className="close-btn" onClick={closeModal} />
                   <BookingStyled.HeaderText>
                     {renderHeading()}
