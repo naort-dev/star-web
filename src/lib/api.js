@@ -23,7 +23,7 @@ class Api {
   static setVideoView = 'v1/request/readvideo/';
   static otherRelation = 'v1/request/other_relation/';
   static getEphemeralKey = 'v1/payments/generatekey/';
-  static tipPayment = 'v1/payments/paytip/';
+  static tipPayment = 'v2/payments/paytip/';
   static createCharge = 'v1/payments/createcharge/';
   static starsonaRequest = 'v1/request/stargramz/';
   static starsonaVideo = 'v1/request/stargramz_video/';

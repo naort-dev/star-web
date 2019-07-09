@@ -99,7 +99,7 @@ BookingStyled.HeaderText = styled.h5`
   font-family: Gilroy-Regular;
   font-size: 24px;
   color: ${props => props.theme.orangePink};
-  padding-right: 24px;
+  padding: 0 24px;
   text-align: center;
   word-break: break-word;
   white-space: normal;
@@ -162,7 +162,7 @@ BookingStyled.LeftSection = styled.div`
       margin-top: 10px;
       width: 100%;
       font-family: Avenir-Medium;
-      font-size: 16px;
+      font-size: 20px;
       color: ${props => props.theme.twilight};
     }
   }
