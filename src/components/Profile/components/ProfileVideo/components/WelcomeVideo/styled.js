@@ -30,27 +30,40 @@ export const Layout = styled.section`
     background: #f6f6f6;
     height: 100%;
     padding: 75px 0 20px;
+
+    .player-container {
+      border-radius: 20px !important;
+      vertical-align: bottom;
+    }
+    .player {
+      min-height: 305px;
+    }
+    .no-device-support {
+      bottom: 79px;
+    }
+    .mobileBtn {
+      margin-top: 20px;
+    }
   }
   .dots-container {
     @media (max-width: 831px) {
       display: ${props => (props.compSwitch ? 'none' : 'block')};
     }
   }
+  
 `;
 export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
-    margin: 0 auto 10.2px;
+    margin: 0 auto 20px;
     line-height: 28px;
-  }
-  @media (min-width: 832px) and (max-width: 1280px) {
-    margin-bottom: 20px;
   }
 `;
 
