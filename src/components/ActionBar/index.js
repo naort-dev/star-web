@@ -127,7 +127,6 @@ const ActionBar = (props) => {
       rating: !props.disableRating,
     })
   }, [props.disableRating, props.disableReaction])
-  console.log(props.shareDetails)
   return (
     <ActionStyled>
       <ActionStyled.Dropbar showList={showList} onClick={toggleListState(!showList)}>
