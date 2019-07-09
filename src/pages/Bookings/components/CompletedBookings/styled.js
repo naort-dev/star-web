@@ -69,7 +69,7 @@ CompletedStyled.ListSection = styled.div`
     flex-wrap: wrap;
     padding-bottom: 16px;
     margin-left: -40px;
-    justify-content: center;
+    justify-content: flex-start;
     .list-item {
       width: auto;
       margin-right: 0;

@@ -33,7 +33,12 @@ export const Layout = styled.section`
     padding-top: 4px;
     padding-bottom: 32px;
     color: #888888;
+    font-family: Gilroy-Light;
+    font-size: 30px;
+    color: #888888;
+    margin-bottom: 15px;
     font-weight: normal;
+    
     ${media.webView} {
       text-align: left;
       padding-top: 9px;
@@ -106,6 +111,13 @@ export const Wrapper = styled.section`
       }
       .earnings-wrap {
         padding-top: 10px;
+      }
+    }
+    .flex-start {
+      span {
+        flex: 1 1 auto;
+        word-wrap: break-word;
+        padding-right: 5px;
       }
     }
   }

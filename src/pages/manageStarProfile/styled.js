@@ -10,7 +10,8 @@ export const Layout = styled.section`
   .top-heading {
     padding-top: 0;
     @media (max-width: 832px) {
-      font-size: 24px;
+      font-size: 28px;
+      line-height: 27px;
       padding-top: 20px;
       margin-bottom: 15px;
     }
