@@ -2,6 +2,17 @@ import styled from 'styled-components';
 
 const StarViewStyled = styled.div`
 
+  #comments-scroll-target {
+    @media(max-width: 831px) {
+      position: relative !important;
+      margin: 0 !important;
+      overflow: auto !important;
+      height: auto !important;
+      min-height: 100% !important;
+      max-height: 100% !important;
+    }
+  }
+
   #comments-scroll-target > section {
     min-height: auto;
   }
