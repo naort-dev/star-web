@@ -166,6 +166,11 @@ const FanView = (props) => {
                   disableRating={bookingData.has_rating}
                   disableReaction={bookingData.has_reaction}
                   onAction={props.onCompleteAction}
+                  shareDetails={{
+                    title: `Check out this video from ${bookingData.celebrity} !`,
+                    body: `Watch this personalized video from ${bookingData.celebrity}`,  
+                    shareUrl: `${finalVideo.video_url || ''}`,
+                  }}
                 />
             }
           </FanViewStyled.DetailWrapper>

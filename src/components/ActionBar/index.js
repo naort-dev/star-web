@@ -127,7 +127,7 @@ const ActionBar = (props) => {
       rating: !props.disableRating,
     })
   }, [props.disableRating, props.disableReaction])
-
+  console.log(props.shareDetails)
   return (
     <ActionStyled>
       <ActionStyled.Dropbar showList={showList} onClick={toggleListState(!showList)}>
@@ -142,7 +142,7 @@ const ActionBar = (props) => {
               <div>
                 <Share
                   className='action-btn'
-                  shareUrl=''
+                  {...props.shareDetails}
                 />
               </div>
             </ToolTip>
@@ -175,6 +175,7 @@ ActionBar.defaultProps = {
   disableRating: false,
   disableReaction: false,
   onAction: () => {},
+  shareDetails: {},
 }
 
 ActionBar.propTypes = {
@@ -187,6 +188,7 @@ ActionBar.propTypes = {
   bookingId: PropTypes.string.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  shareDetails: PropTypes.object,
 }
 
 const mapStateToProps = state => ({
