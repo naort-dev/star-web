@@ -85,7 +85,7 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: 'Avenir-Bold';
+  font-family: Gilroy;
   font-size: 25px;
   text-align: center;
   color: #FF6C58;
@@ -100,7 +100,6 @@ LoginContainer.Heading = styled.div`
   @media(min-width:1920px){
     font-size:38px;
   }
-  
 `;
 LoginContainer.SocialMediaMessage = styled.div`
   font-family: 'Avenir-Medium';
@@ -223,7 +222,7 @@ LoginContainer.InputFieldsWrapper = styled.div`
   padding: 0px 25px;
   @media(min-width:768px){
     padding: 0px 0px;
-    margin-top: 6%;
+    // margin-top: 6%;
   }
 `;
 LoginContainer.Label = styled.div`
@@ -528,6 +527,7 @@ LoginContainer.InputContainer = styled.div`
     display: inline-block;
     width:75%;
     margin: 20px 20px;
+    margin-top: 0px;
   }
 `;
 LoginContainer.SignupLine = styled.div`

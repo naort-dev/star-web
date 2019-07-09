@@ -58,14 +58,27 @@ export const toggleActivityVisibility = (activityId) => (dispatch, getState) => 
     })
 }
 
-export const fetchActivitiesList = (bookingId, offset, refresh) => (dispatch, getState) => {
+export const fetchActivitiesList = (bookingId, offset, refresh, isPublic, isAll) => (dispatch, getState) => {
   const { count, limit } = getState().activitiesList;
+  const { isLoggedIn } = getState().session;
   if (typeof getState().activitiesList.token !== typeof undefined) {
     getState().activitiesList.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
+  let apiUrl = '';
+  if (isPublic) {
+    if (isAll) {
+      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/` : `${Api.getRecentActivity}${bookingId}/`;
+    } else {
+      apiUrl = !isLoggedIn ? `${Api.getRecentActivity}${bookingId}/public_list/?offset=${offset}&limit=${limit}` : `${Api.getRecentActivity}${bookingId}/?offset=${offset}&limit=${limit}` ;
+    }
+  } else if (isAll) {
+    apiUrl = `${Api.getRecentActivity}${bookingId}/`;
+  } else {
+    apiUrl = `${Api.getRecentActivity}${bookingId}/?&offset=${offset}&limit=${limit}`;
+  }
   dispatch(activitiesListFetchStart(refresh, source));
-  return fetch.get(`${Api.getRecentActivity}?booking_id=${bookingId}&offset=${offset}&limit=${limit}`, {
+  return fetch.get(apiUrl, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {

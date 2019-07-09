@@ -28,6 +28,13 @@ export const FormContainer = styled(Form)`
       }
     }
   }
+  .labelHead {
+    ${media.mobileScreen} {
+      display: block;
+      max-width: 140px;
+      margin: 0 auto;
+    }
+  }
 `;
 
 export const InputLabel = styled.span`

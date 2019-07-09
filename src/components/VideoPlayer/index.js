@@ -93,11 +93,13 @@ export default class VideoPlayer extends React.Component {
 
   toggleVideoPlay = () => {
     const { player } = this.player.getState();
-    this.pauseAllVideos();
-    if (player.paused) {
-      this.player.play();
-    } else {
-      this.player.pause();
+    if (!this.props.noPlay) {
+      this.pauseAllVideos();
+      if (player.paused) {
+        this.player.play();
+      } else {
+        this.player.pause();
+      }
     }
   };
 
@@ -135,6 +137,9 @@ export default class VideoPlayer extends React.Component {
     }
     if (state.error !== null && this.props.onError) {
       this.props.onError();
+    }
+    if (this.props.noPlay) {
+      this.player.pause();
     }
     this.setState({
       isPlaying: !state.paused,

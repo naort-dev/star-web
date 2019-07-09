@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { CloseButton } from 'styles/CommonStyled';
+import { CloseButton, BackArrow } from 'styles/CommonStyled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import OrderDetails from '../OrderDetails';
 import { requestTypes } from '../../constants/requestTypes';
@@ -15,14 +15,16 @@ import ModalHeader from '../ModalHeader';
 import Loader from '../Loader';
 import SuccessScreen from '../SuccessScreen';
 import { getRequestDetails } from '../../services/request';
+import { useMedia } from '../../utils/domUtils';
 import { celebCompletedStatusList } from '../../constants/requestStatusList';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
-import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
+import { toggleBookingModal, toggleContactSupport, toggleLogin } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
 const BookingCard = (props) => {
 
+  const isMobile = useMedia('(max-width: 831px)')
   const [showDetails, toggleDetails] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [showPaymentSuccess, togglePaymentSuccess] = useState(false);
@@ -90,6 +92,14 @@ const BookingCard = (props) => {
       props.fetchActivitiesList(newRequestData.booking_id, 0, true);
       newRequestData.has_reaction = true;
       setRequestData(newRequestData);
+    }
+  }
+
+  const backArrowHandler = () => {
+    if (showDetails) {
+      setDetails(false)()
+    } else {
+      closeModal();
     }
   }
 
@@ -178,7 +188,9 @@ const BookingCard = (props) => {
             {
               !starMode &&
                 <ModalHeader
+                  arrowVisible={isMobile}
                   starImage={requestData.avatar_photo && requestData.avatar_photo.thumbnail_url}
+                  backArrowHandler={backArrowHandler}
                   closeHandler={closeModal}
                   customHeading={<BookingTitle secondary requestData={requestData} />}
                 />
@@ -186,6 +198,10 @@ const BookingCard = (props) => {
             {
               starMode &&
                 <React.Fragment>
+                  {
+                    isMobile &&
+                      <BackArrow  onClick={backArrowHandler} />
+                  }
                   <CloseButton className="close-btn" onClick={closeModal} />
                   <BookingStyled.HeaderText>
                     {renderHeading()}
@@ -219,6 +235,8 @@ const BookingCard = (props) => {
                         updateRequestData={updateRequestData}
                         loaderAction={props.loaderAction}
                         updateToast={props.updateToast}
+                        isLoggedIn={props.isLoggedIn}
+                        toggleLogin={props.toggleLogin}
                         onCompleteAction={onFanCompleteAction}
                         activitiesList={props.activitiesList}
                         modalData={props.bookingModal.data}
@@ -228,7 +246,7 @@ const BookingCard = (props) => {
                   }
                 </Scrollbars>              
               </BookingStyled.Booking>
-              <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
+              <BookingStyled.OrderWrapper showDetails={showDetails && !props.bookingModal.data.isPublic} starMode={starMode}>
                 <Scrollbars
                   renderView={scrollProps => <div {...scrollProps} className="scrollbar-content"/>}
                 >
@@ -260,20 +278,24 @@ BookingCard.propTypes = {
   updateToast: PropTypes.func.isRequired,
   resetActivitiesList: PropTypes.func.isRequired,
   activitiesList: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   bookingModal: state.modals.bookingModal,
   activitiesList: state.activitiesList,
+  isLoggedIn: state.session.isLoggedIn,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
-  fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh)),
+  fetchActivitiesList: (bookingId, offset, refresh, isPublic, isAll) => dispatch(fetchActivitiesList(bookingId, offset, refresh, isPublic, isAll)),
   resetActivitiesList: () => dispatch(resetActivitiesList()),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingCard);

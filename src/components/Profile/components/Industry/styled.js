@@ -6,14 +6,39 @@ export const Layout = styled.section`
   height: 100%;
   background: #fff;
   position: relative;
+  padding: 30px 0;
+  @media (max-width: 1280px) {
+    padding-top: 0;
+  }
   .leftArrow {
     position: absolute;
+    left: 20px;
+    top: 21px;
+    background-size: 14px 28px;
+    
     @media (min-width: 1280px){
       display: none;
+    }
+    @media (min-width: 832px) and (max-width: 1280px) {
+      top: -21px;
+    }
+    @media (max-width: 831px){
+      top: 95px;
+    }
+  }
+
+  .title {
+    margin-bottom: 20px;
+    @media (max-width: 831px) {
+      margin-bottom: 20px;
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
+    //height: calc(100% + 75px);
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -100,7 +125,7 @@ position: relative;
     margin-bottom: 10px;
   }
   + div {
-    margin-top: 24px;
+    margin-top: 40px;
     @media (min-width: 832px) {
       margin-top: 28px;
     }
@@ -160,6 +185,9 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   max-height: 620px;
   height: 100%;
   top: 0;
+  .left-arrow {
+    background-size: 14px 28px;
+  }
   ${UploadContainer.Heading} {
     padding-top: 27px;
     @media (min-width: 832px) {
@@ -171,7 +199,8 @@ UploadContainer.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 22px;
 
   
@@ -266,6 +295,9 @@ UploadContainer.MobileView = styled.div`
     max-width: 253px;
     white-space: pre-line;
     margin: 0 auto 11px;
+    @media (max-width: 831px) {
+      padding-top: 23px;
+    }
   }
   .select-input {
     margin-top: 18px;
@@ -333,8 +365,8 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
-  padding-top: 61px;
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
