@@ -30,7 +30,7 @@ const FanView = (props) => {
     setFinalVideo(completedVideo);
     updateVideoId(completedVideo.video_id);
     setVideoViewStatus(completedVideo.video_id);
-    props.fetchActivitiesList(bookingData.booking_id, 0, true);
+    props.fetchActivitiesList(bookingData.booking_id, 0, true, props.modalData.isPublic);
     if (props.modalData.reactionUrl) {
       setVideo({
         s3_video_url: props.modalData.reactionType === 2 && props.modalData.reactionUrl,
@@ -67,7 +67,7 @@ const FanView = (props) => {
   }
 
   const fetchActivity = (offset, refresh) => {
-    props.fetchActivitiesList(props.bookingData.id, offset, refresh);
+    props.fetchActivitiesList(props.bookingData.id, offset, refresh, props.modalData.isPublic);
   }
 
   const onSelectAction = (option) => {
@@ -80,32 +80,37 @@ const FanView = (props) => {
   }
 
   const submitComment = async (comment) => {
-    props.loaderAction(true);
-    try {
-      await addVideoComment(videoId, comment);
-      props.fetchActivitiesList(bookingData.booking_id, 0, true);
-      const newRequestData = { ...bookingData };
-      newRequestData.has_comment = true;
-      props.updateRequestData(newRequestData)
-    } catch(exception) {
-      props.updateToast({
-        value: true,
-        message: exception.response.data.error.message,
-        variant: 'error',
-      })
+    if (!props.isLoggedIn) {
+      props.toggleLogin(true);
+    } else {
+      props.loaderAction(true);
+      try {
+        await addVideoComment(videoId, comment);
+        props.fetchActivitiesList(bookingData.booking_id, 0, true);
+        const newRequestData = { ...bookingData };
+        newRequestData.has_comment = true;
+        props.updateRequestData(newRequestData)
+      } catch(exception) {
+        props.updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        })
+      }
+      props.loaderAction(false);
     }
-    props.loaderAction(false);
   }
   return (
     <FanViewStyled>
       <BookingStyled.Layout starMode={false}>
         <BookingStyled.LeftSection>
           {
-            <MoreActions
-              classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-              options={moreOptions[requestType]}
-              onSelectOption={onSelectAction}
-            />
+            !props.modalData.isPublic &&
+              <MoreActions
+                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                options={moreOptions[requestType]}
+                onSelectOption={onSelectAction}
+              />
           }
           <FanViewStyled.VideoWrapper closeEnable={video.isReaction}>
             {
@@ -124,21 +129,28 @@ const FanView = (props) => {
               cover={video.s3_thumbnail_url}
             />
           </FanViewStyled.VideoWrapper>
-          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Booking details</BookingStyled.OrderText>
+          {
+            !props.modalData.isPublic ?
+              <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
+            : <span className="star-name">{bookingData.celebrity}</span>
+          }
         </BookingStyled.LeftSection>
         <BookingStyled.RightSection>
-          <FanViewStyled.DetailWrapper>
-            <span className='detail-header'>
-              <span>
-                <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
-                <BookingStyled.Description>{ moment(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
-              </span>
-              <MoreActions
-                classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
-                options={moreOptions[requestType]}
-                onSelectOption={onSelectAction}
-              />
-            </span>
+          <FanViewStyled.DetailWrapper isPublic={props.modalData.isPublic}>
+            {
+              !props.modalData.isPublic &&
+                <span className='detail-header'>
+                  <span>
+                    <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
+                    <BookingStyled.Description>{ moment(bookingData.video_created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                  </span>
+                  <MoreActions
+                    classes={{ root: 'more-action-root', icon: 'more-action-icon' }}
+                    options={moreOptions[requestType]}
+                    onSelectOption={onSelectAction}
+                  />
+                </span>
+            }
             {
               video &&
                 <ActionBar
@@ -150,7 +162,7 @@ const FanView = (props) => {
                 />
             }
           </FanViewStyled.DetailWrapper>
-          <BookingStyled.CommentList starMode={false}>
+          <BookingStyled.CommentList starMode={false} isPublic={props.modalData.isPublic}>
             <Scrollbars
               autoHide
               renderView={scrollProps => <div {...scrollProps} id="comments-scroll-target" />}
@@ -173,16 +185,19 @@ const FanView = (props) => {
           </BookingStyled.CommentList>
           {
             !bookingData.has_comment &&
-              <FanViewStyled.CommentWrapper>
+              <FanViewStyled.CommentWrapper isPublic={props.modalData.isPublic}>
                 <CommentBox
                   maxLength={52}
-                  classes={{root: 'comment-box'}}
+                  classes={{root: 'comment-box', inputWrapper: 'input-wrapper', icon: 'comment-icon'}}
                   placeholder={`Send a comment to ${bookingData.fan_first_name}….`}
                   onSubmit={submitComment}
                 />
               </FanViewStyled.CommentWrapper>
           }
-          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
+          {
+            !props.modalData.isPublic &&
+              <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Bookings details</BookingStyled.OrderText>
+          }
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
     </FanViewStyled>
@@ -208,6 +223,8 @@ FanView.propTypes = {
   onCompleteAction: PropTypes.func,
   updateRequestData: PropTypes.func.isRequired,
   resetActivitiesList: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 }
 
 export default FanView;

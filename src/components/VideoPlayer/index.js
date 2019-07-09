@@ -136,6 +136,9 @@ export default class VideoPlayer extends React.Component {
     if (state.error !== null && this.props.onError) {
       this.props.onError();
     }
+    if (this.props.noPlay) {
+      this.player.pause();
+    }
     this.setState({
       isPlaying: !state.paused,
     });
