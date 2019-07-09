@@ -155,7 +155,6 @@ const OrderDetails = props => {
         <ScrollComponent>
           {!props.disableHeader && starMode && (
             <React.Fragment>
-              <CloseButton onClick={props.closeModal} />
               <OrderStyled.HeaderText>{renderHeading()}</OrderStyled.HeaderText>
               <OrderStyled.Heading starMode={starMode}>
                 Order Details
