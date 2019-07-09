@@ -219,7 +219,7 @@ const BookingCard = (props) => {
                         updateRequestData={updateRequestData}
                         loaderAction={props.loaderAction}
                         updateToast={props.updateToast}
-                        isLoggedIn={props.toggleLogin}
+                        isLoggedIn={props.isLoggedIn}
                         toggleLogin={props.toggleLogin}
                         onCompleteAction={onFanCompleteAction}
                         activitiesList={props.activitiesList}

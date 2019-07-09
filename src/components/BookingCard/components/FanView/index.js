@@ -29,7 +29,9 @@ const FanView = (props) => {
     const completedVideo = findCompletedVideo(bookingData);
     setFinalVideo(completedVideo);
     updateVideoId(completedVideo.video_id);
-    setVideoViewStatus(completedVideo.video_id);
+    if (!props.modalData.isPublic) {
+      setVideoViewStatus(completedVideo.video_id);
+    }
     props.fetchActivitiesList(bookingData.booking_id, 0, true, props.modalData.isPublic);
     if (props.modalData.reactionUrl) {
       setVideo({
