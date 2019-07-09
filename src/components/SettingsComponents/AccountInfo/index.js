@@ -155,6 +155,20 @@ const AccountInfo = props => {
     formData.phoneNumber,
   ]);
 
+  useEffect(() => {
+    const {
+      mobile_country_code,
+      mobile_number,
+    } = props.userDetails.notification_settings;
+    updateFormData({
+      ...formData,
+      phoneNumber: `+${mobile_country_code}${mobile_number}`,
+    });
+  }, [
+    props.userDetails.notification_settings.mobile_country_code,
+    props.userDetails.notification_settings.mobile_number,
+  ]);
+
   const getTextInput = ({
     placeholder,
     state,

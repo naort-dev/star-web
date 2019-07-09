@@ -53,4 +53,7 @@ export const OtpWrap = styled(Card)`
     border-radius: 15px;
     background: #fff;
   }
+  .otpTitle {
+    padding-top: 65px;
+  }
 `;

@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
 import { updateUserDetails } from 'store/shared/actions/saveSettings';
 import { changePassword } from 'store/shared/actions/changePassword';
-import { updateNotification } from 'store/shared/actions/updateNotification';
+import {
+  updateNotification,
+  userDetailsUpdateHandler,
+} from 'store/shared/actions/updateNotification';
 import { updateNotificationViewed } from 'services/userManagement';
 import { updateToast, loaderAction } from 'store/shared/actions/commonActions';
 import Settings from './Settings.Component';
@@ -29,6 +32,9 @@ function mapDispatch(dispatch) {
     },
     updateToast: errorObject => dispatch(updateToast(errorObject)),
     loaderAction: state => dispatch(loaderAction(state)),
+    userDetailsUpdateHandler: obj => {
+      dispatch(userDetailsUpdateHandler(obj));
+    },
   };
 }
 

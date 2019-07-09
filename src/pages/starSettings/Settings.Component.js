@@ -151,6 +151,10 @@ const Settings = props => {
       .then(resp => {
         if (resp.success) {
           setPhoneData({ ...phoneData, trigger: false, error: '' });
+          props.userDetailsUpdateHandler({
+            mobile_country_code: countryCode,
+            mobile_number: number,
+          });
           props.updateToast({
             value: true,
             message: 'Successfully updated',
@@ -243,7 +247,7 @@ const Settings = props => {
         <Switch>
           <Route
             path="/manage/settings/account-info"
-            render={childProps => getAccountScreen(childProps)}
+            render={childProps => getComponent(getAccountScreen(childProps))}
           />
           <Route
             path="/manage/settings/password"
@@ -327,6 +331,7 @@ Settings.propTypes = {
   updateNotificationViewed: PropTypes.func.isRequired,
   updateToast: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
+  userDetailsUpdateHandler: PropTypes.func.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',
