@@ -146,6 +146,15 @@ BookingStyled.LeftSection = styled.div`
   ${BookingStyled.OrderText} {
     display: none;
   }
+  .star-name {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+    width: 100%;
+    font-family: Avenir-Medium;
+    font-size: 20px;
+    color: ${props => props.theme.twilight};
+  }
   @media(min-width: 832px) {
     justify-content: flex-start;
     width: auto;
@@ -155,15 +164,6 @@ BookingStyled.LeftSection = styled.div`
     }
     ${BookingStyled.OrderText} {
       display: block;
-    }
-    .star-name {
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 10px;
-      width: 100%;
-      font-family: Avenir-Medium;
-      font-size: 20px;
-      color: ${props => props.theme.twilight};
     }
   }
 `;
