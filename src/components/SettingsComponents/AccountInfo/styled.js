@@ -28,6 +28,19 @@ export const FormContainer = styled(Form)`
       }
     }
   }
+
+  .ph-wrapper {
+    padding-top: 32px;
+    .react-phone-number-input {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+      input {
+        color: #615195 !important;
+      }
+    }
+    .ph-label {
+      padding-bottom: 0;
+    }
+  }
 `;
 
 export const InputLabel = styled.span`

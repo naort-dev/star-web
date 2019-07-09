@@ -149,12 +149,14 @@ const Settings = props => {
                   handleAccountSave={handleAccountSave}
                   mobHead="Account Info"
                   webHead="Account Information"
+                  allowPhone
                   labels={{
                     firstNameLbl: 'First Name',
                     lastNameLbl: 'Last Name',
                     emailLbl: 'Email',
                     emailHead: 'Email address',
                     nameHead: 'Use your real name so we can pay you',
+                    phoneLabel: 'Phone Number',
                     buttonLbl: 'Save',
                   }}
                 />,

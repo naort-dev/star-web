@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
+import PhoneNumber from 'components/PhoneNumber';
 import Tooltip from 'components/ToolTip';
 import { FormContainer, InputLabel } from './styled';
 import { Container, Wrapper } from '../styled';
@@ -13,13 +15,15 @@ const AccountInfo = props => {
     firstName: props.userDetails.first_name,
     lastName: props.userDetails.last_name,
     email: props.userDetails.email,
+    country: 'US',
+    phoneNumber: props.userDetails.phoneNumber,
   });
-
   const [errorObject, updateErrorObj] = useState({
     firstNameErr: false,
     lastNameErr: false,
     emailErr: false,
     formValid: false,
+    phoneNumberErr: '',
   });
 
   const validateEmail = email => {
@@ -35,6 +39,9 @@ const AccountInfo = props => {
     const { value } = event.target;
     if (state === 'email') {
       isValid = validateEmail(value);
+    }
+    if (state === 'phoneNumber' && !isEmpty(value)) {
+      isValid = isValidPhoneNumber(value);
     } else {
       isValid = isEmpty(value);
     }
@@ -63,6 +70,20 @@ const AccountInfo = props => {
     ].every(condition => condition);
 
     updateErrorObj({ ...errorObject, formValid });
+  };
+
+  const countryChange = value => {
+    updateFormData({
+      ...formData,
+      country: value,
+    });
+  };
+
+  const numberChange = number => {
+    updateFormData({
+      ...formData,
+      phoneNumber: number,
+    });
   };
 
   const saveChanges = () => {
@@ -167,6 +188,32 @@ const AccountInfo = props => {
             props.tooltip.emailTooltip,
             getTooltipInput,
           )}
+
+          {props.allowPhone && (
+            <section className="ph-wrapper">
+              {/* <InputLabel
+                error={errorObject.phoneNumberErr}
+                className="ph-label"
+              >
+                {props.labels.phoneLabel}
+              </InputLabel> */}
+              <PhoneNumber
+                numProps={{
+                  label: props.labels.phoneLabel,
+                  placeholder: '',
+                  value: formData.phoneNumber,
+                  countryChange,
+                  onChange: numberChange,
+                  onBlur: handleBlur({
+                    state: 'phoneNumber',
+                    errorState: 'phoneNumberErr',
+                  }),
+                  error: '',
+                  country: formData.country,
+                }}
+              ></PhoneNumber>
+            </section>
+          )}
         </FormContainer>
         <FlexCenter>
           <Button
@@ -190,12 +237,14 @@ AccountInfo.propTypes = {
   mobHead: PropTypes.string,
   labels: PropTypes.object.isRequired,
   tooltip: PropTypes.object,
+  allowPhone: PropTypes.bool,
 };
 
 AccountInfo.defaultProps = {
   webHead: '',
   mobHead: '',
   tooltip: {},
+  allowPhone: false,
 };
 
 export default AccountInfo;
