@@ -8,7 +8,7 @@ import { openStatusList, completedStatusList } from '../../../../constants/reque
 import { CloseButton } from '../../../../styles/CommonStyled';
 import CommentBox from '../../../CommentBox';
 import { setVideoViewStatus } from '../../../../services/requestFeedback';
-import { downloadItem } from '../../../../utils/domUtils';
+import { downloadItem, useMedia } from '../../../../utils/domUtils';
 import addVideoComment from '../../../../services/addVideoComment';
 import CommentListing from '../../../CommentListing';
 import MoreActions from '../../../MoreActions';
@@ -19,6 +19,7 @@ import FanViewStyled from './styled';
 
 const FanView = (props) => {
 
+  const isMobile = useMedia('(max-width: 831px)')
   const [requestType, updateRequestType] = useState('completed');
   const [finalVideo, setFinalVideo] = useState('');
   const [videoId, updateVideoId] = useState('');
@@ -29,10 +30,14 @@ const FanView = (props) => {
     const completedVideo = findCompletedVideo(bookingData);
     setFinalVideo(completedVideo);
     updateVideoId(completedVideo.video_id);
+    if (isMobile) {
+      props.fetchActivitiesList(bookingData.booking_id, 0, true, props.modalData.isPublic, true);
+    } else {
+      props.fetchActivitiesList(bookingData.booking_id, 0, true, props.modalData.isPublic);
+    }
     if (!props.modalData.isPublic) {
       setVideoViewStatus(completedVideo.video_id);
     }
-    props.fetchActivitiesList(bookingData.booking_id, 0, true, props.modalData.isPublic);
     if (props.modalData.reactionUrl) {
       setVideo({
         s3_video_url: props.modalData.reactionType === 2 && props.modalData.reactionUrl,

@@ -275,7 +275,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
-  fetchActivitiesList: (bookingId, offset, refresh, isPublic) => dispatch(fetchActivitiesList(bookingId, offset, refresh, isPublic)),
+  fetchActivitiesList: (bookingId, offset, refresh, isPublic, isAll) => dispatch(fetchActivitiesList(bookingId, offset, refresh, isPublic, isAll)),
   resetActivitiesList: () => dispatch(resetActivitiesList()),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),
