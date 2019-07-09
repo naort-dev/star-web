@@ -18,7 +18,7 @@ import { getRequestDetails } from '../../services/request';
 import { celebCompletedStatusList } from '../../constants/requestStatusList';
 import { updateToast, loaderAction } from '../../store/shared/actions/commonActions';
 import { fetchActivitiesList, resetActivitiesList } from '../../store/shared/actions/getActivities'
-import { toggleBookingModal, toggleContactSupport } from '../../store/shared/actions/toggleModals';
+import { toggleBookingModal, toggleContactSupport, toggleLogin } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
 const BookingCard = (props) => {
@@ -219,6 +219,8 @@ const BookingCard = (props) => {
                         updateRequestData={updateRequestData}
                         loaderAction={props.loaderAction}
                         updateToast={props.updateToast}
+                        isLoggedIn={props.isLoggedIn}
+                        toggleLogin={props.toggleLogin}
                         onCompleteAction={onFanCompleteAction}
                         activitiesList={props.activitiesList}
                         modalData={props.bookingModal.data}
@@ -228,7 +230,7 @@ const BookingCard = (props) => {
                   }
                 </Scrollbars>              
               </BookingStyled.Booking>
-              <BookingStyled.OrderWrapper showDetails={showDetails} starMode={starMode}>
+              <BookingStyled.OrderWrapper showDetails={showDetails && !props.bookingModal.data.isPublic} starMode={starMode}>
                 <Scrollbars
                   renderView={scrollProps => <div {...scrollProps} className="scrollbar-content"/>}
                 >
@@ -260,20 +262,24 @@ BookingCard.propTypes = {
   updateToast: PropTypes.func.isRequired,
   resetActivitiesList: PropTypes.func.isRequired,
   activitiesList: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   bookingModal: state.modals.bookingModal,
   activitiesList: state.activitiesList,
+  isLoggedIn: state.session.isLoggedIn,
 })
 
 const mapDispatchToProps = dispatch => ({
   toggleBookingModal: (state, bookingData, starMode) => dispatch(toggleBookingModal(state, bookingData, starMode)),
   toggleContactSupport: state => dispatch(toggleContactSupport(state)),
-  fetchActivitiesList: (bookingId, offset, refresh) => dispatch(fetchActivitiesList(bookingId, offset, refresh)),
+  fetchActivitiesList: (bookingId, offset, refresh, isPublic, isAll) => dispatch(fetchActivitiesList(bookingId, offset, refresh, isPublic, isAll)),
   resetActivitiesList: () => dispatch(resetActivitiesList()),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
   loaderAction: state => dispatch(loaderAction(state)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingCard);

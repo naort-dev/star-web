@@ -125,6 +125,7 @@ BookingStyled.Layout = styled.div`
   @media(min-width: 832px) {
     flex-direction: row;
     padding-top: ${props => (props.starMode ? '40px' : '0')};
+    height: 100%;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
     padding-top: ${props => (props.starMode ? '20px' : '0')};
@@ -155,11 +156,22 @@ BookingStyled.LeftSection = styled.div`
     ${BookingStyled.OrderText} {
       display: block;
     }
+    .star-name {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+      width: 100%;
+      font-family: Avenir-Medium;
+      font-size: 16px;
+      color: ${props => props.theme.twilight};
+    }
   }
 `;
 
 BookingStyled.RightSection = styled.div`
   padding-top: 27.9px;
+  display: flex;
+  flex-direction: column;
   ${BookingStyled.OrderText} {
     display: ${props => (props.starMode ? 'none' : 'block')};
   }
@@ -185,8 +197,12 @@ BookingStyled.Description = styled.span`
 `;
 
 BookingStyled.CommentList = styled.div`
+  ${props => props.isPublic && `
+    order: 3;
+  `}
   @media screen and (min-width: 832px) {
     height: ${props => (props.starMode ? '342px' : '335px')};
+    flex: 1;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
     height: ${props => (props.starMode ? '342px' : '275px')};
