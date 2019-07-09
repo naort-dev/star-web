@@ -103,6 +103,7 @@ function RequestTemplates(
         />
         {bookingData.hostName !== '' &&
           bookingData.relationshipValue !== '' &&
+          bookingData.user === 'someoneElse' &&
           bookingData.userName && (
             <span className="relationship-text">
               <p>{bookingData.hostName}</p> is <p>{bookingData.userName}</p>...

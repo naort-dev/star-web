@@ -28,19 +28,6 @@ export const FormContainer = styled(Form)`
       }
     }
   }
-
-  .ph-wrapper {
-    padding-top: 32px;
-    .react-phone-number-input {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-      input {
-        color: #615195 !important;
-      }
-    }
-    .ph-label {
-      padding-bottom: 0;
-    }
-  }
 `;
 
 export const InputLabel = styled.span`
@@ -54,4 +41,21 @@ export const InputLabel = styled.span`
   font-family: Gilroy;
   text-align: center;
   padding-bottom: 10px;
+`;
+
+export const PhoneWrap = styled.section`
+  padding-top: 32px;
+  .react-phone-number-input {
+    ${props =>
+      props.error
+        ? `border-bottom: 2px solid #980100`
+        : `border-bottom: 1px solid rgba(0, 0, 0, 0.42)`};
+    margin-bottom: 0;
+    input {
+      color: #615195 !important;
+    }
+  }
+  .ph-label {
+    padding-bottom: 0;
+  }
 `;

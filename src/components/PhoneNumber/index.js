@@ -8,8 +8,9 @@ import { FloatLabel, Error, Wrapper } from './styled';
 const PhoneNumber = ({ numProps }) => {
   return (
     <Wrapper>
-      <FloatLabel valid={!isEmpty(numProps.value)}>
+      <FloatLabel valid={!isEmpty(numProps.value)} error={numProps.notValid}>
         <PhoneInput
+          ref={numProps.phoneRef}
           id="for-phno"
           country={numProps.country}
           placeholder={numProps.placeholder}

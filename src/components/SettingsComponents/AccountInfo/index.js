@@ -1,29 +1,36 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { TextInput } from 'components/TextField';
 import { FlexCenter } from 'styles/CommonStyled';
 import Button from 'components/PrimaryButton';
 import PhoneNumber from 'components/PhoneNumber';
 import Tooltip from 'components/ToolTip';
-import { FormContainer, InputLabel } from './styled';
+import { FormContainer, InputLabel, PhoneWrap } from './styled';
 import { Container, Wrapper } from '../styled';
 
 const AccountInfo = props => {
+  const phoneRef = useRef(null);
+  const [country, setCountry] = useState('US');
+  const {
+    mobile_country_code,
+    mobile_number,
+  } = props.userDetails.notification_settings;
   const [formData, updateFormData] = useState({
     firstName: props.userDetails.first_name,
     lastName: props.userDetails.last_name,
     email: props.userDetails.email,
-    country: 'US',
-    phoneNumber: props.userDetails.phoneNumber,
+    phoneNumber: `+${mobile_country_code}${mobile_number}`,
   });
   const [errorObject, updateErrorObj] = useState({
     firstNameErr: false,
     lastNameErr: false,
     emailErr: false,
     formValid: false,
-    phoneNumberErr: '',
+    phoneNumberErr: false,
   });
 
   const validateEmail = email => {
@@ -40,8 +47,8 @@ const AccountInfo = props => {
     if (state === 'email') {
       isValid = validateEmail(value);
     }
-    if (state === 'phoneNumber' && !isEmpty(value)) {
-      isValid = isValidPhoneNumber(value);
+    if (state === 'phoneNumber') {
+      if (!isEmpty(value)) isValid = !isValidPhoneNumber(value);
     } else {
       isValid = isEmpty(value);
     }
@@ -63,20 +70,22 @@ const AccountInfo = props => {
   };
 
   const validateForm = () => {
+    let phoneValid = true;
+    if (!isEmpty(formData.phoneNumber)) {
+      phoneValid = isValidPhoneNumber(formData.phoneNumber);
+    }
     const formValid = [
       !isEmpty(formData.firstName),
       !isEmpty(formData.lastName),
       !validateEmail(formData.email),
+      phoneValid,
     ].every(condition => condition);
 
     updateErrorObj({ ...errorObject, formValid });
   };
 
   const countryChange = value => {
-    updateFormData({
-      ...formData,
-      country: value,
-    });
+    setCountry(value);
   };
 
   const numberChange = number => {
@@ -87,11 +96,42 @@ const AccountInfo = props => {
   };
 
   const saveChanges = () => {
-    props.handleAccountSave({
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      email: formData.email,
-    });
+    if (
+      !isEqual(
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+        },
+        {
+          firstName: props.userDetails.first_name,
+          lastName: props.userDetails.last_name,
+          email: props.userDetails.email,
+        },
+      )
+    ) {
+      props.handleAccountSave({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+      });
+    }
+
+    const {
+      mobile_country_code,
+      mobile_number,
+    } = props.userDetails.notification_settings;
+    const oldMon = `+${mobile_country_code}${mobile_number}`;
+
+    if (!isEmpty(formData.phoneNumber) && formData.phoneNumber !== oldMon) {
+      const codeNumber = phoneRef.current.props.metadata.countries[country][0];
+      const phoneNumber = formData.phoneNumber.substring(
+        codeNumber.length + 1,
+        formData.phoneNumber.length,
+      );
+
+      props.generateOTP(phoneNumber, codeNumber, country);
+    }
   };
 
   const tooltipWrapper = (text, isTooltip, fun) => {
@@ -103,7 +143,17 @@ const AccountInfo = props => {
 
   useEffect(() => {
     validateForm();
-  }, [errorObject, formData]);
+  }, [
+    errorObject.firstNameErr,
+    errorObject.lastNameErr,
+    errorObject.emailErr,
+    errorObject.formValid,
+    errorObject.phoneNumberErr,
+    formData.firstName,
+    formData.lastName,
+    formData.email,
+    formData.phoneNumber,
+  ]);
 
   const getTextInput = ({
     placeholder,
@@ -190,29 +240,28 @@ const AccountInfo = props => {
           )}
 
           {props.allowPhone && (
-            <section className="ph-wrapper">
-              {/* <InputLabel
-                error={errorObject.phoneNumberErr}
-                className="ph-label"
-              >
-                {props.labels.phoneLabel}
-              </InputLabel> */}
+            <PhoneWrap error={errorObject.phoneNumberErr}>
               <PhoneNumber
                 numProps={{
+                  phoneRef,
                   label: props.labels.phoneLabel,
                   placeholder: '',
                   value: formData.phoneNumber,
                   countryChange,
                   onChange: numberChange,
+                  notValid: errorObject.phoneNumberErr,
                   onBlur: handleBlur({
                     state: 'phoneNumber',
                     errorState: 'phoneNumberErr',
                   }),
-                  error: '',
-                  country: formData.country,
+                  error:
+                    errorObject.phoneNumberErr && !isEmpty(formData.phoneNumber)
+                      ? 'Invalid phone number'
+                      : '',
+                  country,
                 }}
               ></PhoneNumber>
-            </section>
+            </PhoneWrap>
           )}
         </FormContainer>
         <FlexCenter>
@@ -238,6 +287,7 @@ AccountInfo.propTypes = {
   labels: PropTypes.object.isRequired,
   tooltip: PropTypes.object,
   allowPhone: PropTypes.bool,
+  generateOTP: PropTypes.func.isRequired,
 };
 
 AccountInfo.defaultProps = {

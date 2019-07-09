@@ -72,7 +72,8 @@ export const FloatLabel = styled.section`
   }
 
   .react-phone-number-input--focus {
-    border-bottom: 2px solid ${props => props.theme.flatBlue} !important;
+    border-bottom: ${props =>
+      !props.error && `2px solid #2f839d !important`};
     outline: none !important;
     background-color: transparent;
     background: -webkit-linear-gradient(top, #2f839d 50%, #2f839d 50%);
@@ -115,17 +116,18 @@ export const FloatLabel = styled.section`
 `;
 
 export const Error = styled.span`
-  .errorElement {
-    color: #990000;
-    font-family: Gilroy;
-    font-size: 14px;
-    line-height: 25px;
-  }
+  color: #990000;
+  font-family: Gilroy;
+  font-size: 12px;
+  line-height: 25px;
 `;
 
 export const Wrapper = styled.section`
   .react-phone-number-input {
-    border-bottom: 1px solid #c5d2e0;
     margin-bottom: 10px;
+    ${props =>
+      props.error
+        ? `border-bottom: 2px solid #980100`
+        : `border-bottom: 1px solid #c5d2e0`};
   }
 `;
