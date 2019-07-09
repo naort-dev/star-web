@@ -65,4 +65,17 @@ export const PhoneWrap = styled.section`
   .ph-label {
     padding-bottom: 0;
   }
+  .react-phone-number-input--focus + label {
+    color: #555555;
+    font-family: Gilroy;
+    font-size: 12px;
+  }
+
+  ${props =>
+    props.valid &&
+    `label {
+      color: #555555;
+      font-family: Gilroy;
+      font-size: 12px;
+  }`}
 `;

@@ -224,7 +224,9 @@ const AccountInfo = props => {
               Enter valid full name
             </InputLabel>
           ) : (
-            <InputLabel className="labelHead">{props.labels.nameHead}</InputLabel>
+            <InputLabel className="labelHead">
+              {props.labels.nameHead}
+            </InputLabel>
           )}
           <section className="row-wrap">
             {getTextInput({
@@ -254,7 +256,10 @@ const AccountInfo = props => {
           )}
 
           {props.allowPhone && (
-            <PhoneWrap error={errorObject.phoneNumberErr}>
+            <PhoneWrap
+              error={errorObject.phoneNumberErr}
+              valid={!isEmpty(formData.phoneNumber)}
+            >
               <PhoneNumber
                 numProps={{
                   phoneRef,
