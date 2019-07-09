@@ -20,10 +20,17 @@ export const Layout = styled.section`
     @media (min-width: 832px) and (max-width: 1280px) {
       top: -21px;
     }
+    @media (max-width: 831px){
+      top: 95px;
+    }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-    height: calc(100% + 75px);
+    //height: calc(100% + 75px);
+
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -38,13 +45,14 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 0;
   margin-bottom: 10px;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
-    margin: 0 auto 25px;
+    margin: 0 auto 20px;
     line-height: 28px;
   }
 `;
@@ -65,7 +73,7 @@ export const Content = styled.section`
   @media (max-width: 831px) {
     height: max-content;
     padding-left:35px;
-    padding-right:31px;
+    padding-right:35px;
   } 
 `;
 
@@ -92,8 +100,10 @@ Content.InputWraper= styled.div`
   height: 83px;
   width: 400px;
   padding-top: 35px;
-  @media (max-width: 1280px) {
+  @media (max-width: 832px) {
     padding-top: 25px;
+  }
+  @media (max-width: 1280px) {
     height: 65px;
   }
   .MuiFormControl {

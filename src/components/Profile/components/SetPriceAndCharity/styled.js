@@ -20,6 +20,9 @@ export const Layout = styled.section`
     @media (min-width: 832px) and (max-width: 1280px) {
       top: 47px;
     }
+    @media (max-width: 831px){
+      top: 95px;
+    }
   }
   .save-button{
     min-height: 60px;
@@ -28,9 +31,12 @@ export const Layout = styled.section`
   @media (max-width: 831px) {
     background: #f6f6f6;
     padding-left: 35px;
-    padding-right: 32px;
+    padding-right: 35px;
     position: relative;
-    height: calc(100% + 160px);
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
+    //min-height: 595px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -40,12 +46,10 @@ export const Layout = styled.section`
   input {
     text-align: center;
     font-size: 24px;
-  }
-  .MuiFormControl {
-    margin-bottom: 35px;
-    @media(max-width: 831px) {
-      width: 100%;
-    }
+    line-height: 25px;
+    height: auto;
+    font-family: Gilroy;
+    padding: 1px 0 5px;
   }
   .check-text {
     font-size: 14px;
@@ -63,12 +67,13 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
-    margin: 0 auto 10.2px;
+    margin: 0 auto 20px;
     line-height: 28px;
   }
 `;
@@ -83,8 +88,21 @@ export const Content = styled.section`
   padding-top: 35px;
   @media (max-width: 831px) {
     height: max-content;
-    padding-top: 43px;
+    padding-top: 0;
   } 
+  .MuiFormControl {
+    margin-bottom: 35px;
+    @media(max-width: 831px) {
+      width: 100%;
+      margin-bottom: 15px;
+      
+    }
+  }
+  .price-wrapper .MuiFormControl {
+    @media(max-width: 831px) {
+      margin-bottom: 30px;
+    }
+  }
 `;
 
 Content.SubTitle= styled.div`
@@ -133,7 +151,7 @@ Content.InputLabel = styled.div`
 `;
 Content.CharityCheckbox = styled.div`
   display: flex;
-  margin-bottom: 38px;
+  margin-bottom: 15px;
   margin-top: 0;
 `;
 Content.ModifyDetails = styled.div`

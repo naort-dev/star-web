@@ -360,7 +360,7 @@ const Question = props => {
     }
     return (
       <React.Fragment>
-        Record an answer <br /> for{' '}
+        Record an answer for{' '}
         <span className="bold-head-name">
           {props.bookedItem.fan_first_name}
         </span>

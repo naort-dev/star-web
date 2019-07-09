@@ -22,17 +22,23 @@ export const Layout = styled.section`
     @media (min-width: 832px) and (max-width: 1280px) {
       top: -21px;
     }
+    @media (max-width: 831px){
+      top: 95px;
+    }
   }
 
   .title {
     margin-bottom: 20px;
     @media (max-width: 831px) {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-    height: calc(100% + 75px);
+    //height: calc(100% + 75px);
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -193,7 +199,8 @@ UploadContainer.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 22px;
 
   
@@ -358,7 +365,8 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;

@@ -9,9 +9,10 @@ export const Container = styled(Card)`
   background: #f6f6f6;
   ${media.webView} {
     width: 700px;
-    height: 717px;
+    height: auto;
     border-radius: 15px;
     background: #fff;
+    min-height: 550px;
   }
   display: flex;
   justify-content: center;
@@ -23,12 +24,13 @@ export const Container = styled(Card)`
         content: attr(data-web);
       }
     }
-    font-size: 28px;
-    font-family: Gilroy;
+    font-size: 24px;
+    font-family: Gilroy-Medium;
+    font-weight: normal;
     color: #ff6c58;
     text-align: center;
-    padding-bottom: 50px;
-    padding-top: 34px;
+    padding-bottom: 35px;
+    padding-top: 35px;
     ${media.webView} {
       font-size: 24px;
       padding-top: 0;

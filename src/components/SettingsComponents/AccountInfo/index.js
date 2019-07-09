@@ -139,7 +139,7 @@ const AccountInfo = props => {
               Enter valid full name
             </InputLabel>
           ) : (
-            <InputLabel>{props.labels.nameHead}</InputLabel>
+            <InputLabel className="labelHead">{props.labels.nameHead}</InputLabel>
           )}
           <section className="row-wrap">
             {getTextInput({
