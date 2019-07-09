@@ -51,6 +51,14 @@ class NameAndPhoto extends React.Component {
     });
   };
 
+  onBack = () => {
+    this.setState({
+    cropper: false,
+    takePicture: false,
+    showBrowseCategory: false,
+    });
+  };
+
   getCroppedImage = (file, image) => {
     this.setState({ finalImage: image, finalFile: file });
   };
@@ -138,7 +146,7 @@ class NameAndPhoto extends React.Component {
           />
         </Layout.InputWrap>
         {this.state.cropper && (
-          <UploadContainer.CropperContainer>
+          <UploadContainer.CropperContainer className="crop-photo">
             <BackArrow className="action-buttons" onClick={this.onBack} />
             <CloseButton className="action-buttons" onClick={this.onBack} />
             <ImageUpload.CropWrapper className="cropper-Wrapper">
@@ -155,7 +163,7 @@ class NameAndPhoto extends React.Component {
           </UploadContainer.CropperContainer>
         )}
         {this.state.takePicture && (
-          <UploadContainer.CropperContainer>
+          <UploadContainer.CropperContainer className="take-photo">
             <ImageUpload.CropWrapper>
               <BackArrow className="action-buttons" onClick={this.onBack} />
               <CloseButton className="action-buttons" onClick={this.onBack} />

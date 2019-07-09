@@ -18,7 +18,7 @@ export const Wrap = styled(Wrapper)`
     font-family: Gilroy;
     font-size: 16px;
     color: #797979;
-    padding-bottom: 20px;
+    padding-bottom: 0;
     p {
       p:not(:last-child) {
         margin-bottom: 5px;
@@ -26,6 +26,7 @@ export const Wrap = styled(Wrapper)`
     }
     ${media.webView} {
       width: 398px;
+      padding-bottom: 20px;
     }
   }
   .head-text {
@@ -38,7 +39,7 @@ export const Wrap = styled(Wrapper)`
   }
   .sub-text {
     font-family: Gilroy;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
     color: #555;
   }

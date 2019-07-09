@@ -158,7 +158,7 @@ const ManageStarProfile = props => {
               classes={
                 {
                   root: 'custom-modal',
-                  sub: props.location.pathname === '/manage/profile/welcome-video' ? "welcome-modal" : ""
+                  sub: 'profile-modal'
                 }
               }
             // setScrollRef={this.setScrollRef}
