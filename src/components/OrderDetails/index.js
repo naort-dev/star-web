@@ -256,12 +256,14 @@ const OrderDetails = props => {
             {!props.disableFooter && (
               <React.Fragment>
                 {requestType === 'completed' && !props.isModal && (
-                  <PrimaryButton
-                    className="star-action-btn"
-                    onClick={props.onPrimaryClick}
-                  >
-                    Back to Video
-                  </PrimaryButton>
+                  props.starMode ?
+                    <PrimaryButton
+                      className="star-action-btn"
+                      onClick={props.onPrimaryClick}
+                    >
+                      Back to Video
+                    </PrimaryButton>
+                  :  <OrderStyled.TextButton onClick={props.onPrimaryClick}> Back to Video</OrderStyled.TextButton>
                 )}
                 {/* {
                     requestType === 'open' &&
