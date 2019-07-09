@@ -3,6 +3,8 @@ import validator from "validator";
 import { Redirect } from "react-router-dom";
 import Api from "../../lib/api";
 import resetPassword from "../../utils/resetPassword";
+import PrimaryButton from '../PrimaryButton';
+import { TextInput } from '../TextField'
 import { LoginContainer } from './styled';
 import { ForgotPasswordWrap } from '../../components/ForgotPasswordForm/styled';
 
@@ -107,9 +109,10 @@ export default class ResetPassword extends React.Component {
               <LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
                   <LoginContainer.PasswordWrapper>
-                    <LoginContainer.Input
+                    <TextInput
                       placeholder="Choose new password"
                       type="password"
+                      fullWidth
                       name="newPassword"
                       value={this.state.newPassword.value}
                       onChange={event =>
@@ -126,9 +129,10 @@ export default class ResetPassword extends React.Component {
               <LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
                   <LoginContainer.PasswordWrapper>
-                    <LoginContainer.Input
+                    <TextInput
                       placeholder="Retype password"
                       type="password"
+                      fullWidth
                       name="retypePassword"
                       value={this.state.retypePassword.value}
                       onChange={event =>
@@ -143,13 +147,15 @@ export default class ResetPassword extends React.Component {
                 </LoginContainer.WrapsInput>
               </LoginContainer.InputWrapper>
               <ForgotPasswordWrap>
-                <LoginContainer.ButtonWrapper>
-                  <LoginContainer.SignIn
+                <LoginContainer.ButtonWrapper className="align-center">
+                <PrimaryButton
                     onClick={this.onResetPassword}
                     disabled={this.props.loading}
                     value="Reset Password"
                     type="submit"
-                  />
+                  >
+                  Reset Password
+                </PrimaryButton>
                 </LoginContainer.ButtonWrapper>
                 <LoginContainer.ErrorMsg>
                   {this.state.errorMsg}

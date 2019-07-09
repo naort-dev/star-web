@@ -16,6 +16,9 @@ const FanViewStyled = styled.div`
       min-height: auto;
     }
   }
+  @media(min-width: 832px) {
+    height: 100%;
+  }
 `;
 
 FanViewStyled.VideoWrapper = styled.div`
@@ -47,6 +50,10 @@ FanViewStyled.DetailWrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   margin-bottom: 20px;
+  ${props => props.isPublic && `
+    order: 1;
+    margin-bottom: 0;
+  `}
   .more-action-root {
     display: none;
   }
@@ -77,6 +84,20 @@ FanViewStyled.CommentWrapper = styled.div`
   .comment-box {
     width: 100%;
   }
+  ${props => props.isPublic && `
+    order: 2;
+    margin-bottom: 10px;
+    .comment-box {
+      .input-wrapper {
+        height: 63px;
+        border-radius: 13px;
+        align-items: flex-end;
+        .comment-icon {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  `}
   .quick-comment {
     border: 1px solid ${props => props.theme.brownGrey};
     border-radius: 50%;

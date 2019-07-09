@@ -52,9 +52,13 @@ const AllBookings = props => {
           data={bookItem}
         />
       ))}
-      <BookingsStyled.SectionHeader>
-        <SectionHead className="latest-activity">Latest Activity</SectionHead>
-      </BookingsStyled.SectionHeader>
+      {
+        props.recentActivity.loading || props.recentActivity.activityList.length !== 0 ? (
+          <BookingsStyled.SectionHeader>
+            <SectionHead className="latest-activity">Latest Activity</SectionHead>
+          </BookingsStyled.SectionHeader>
+        ) : null
+      }
       {props.recentActivity.loading && <Loader />}
       {
         props.recentActivity.activityList.map((activity) => (
