@@ -12,7 +12,7 @@ import Purchase from './pages/Purchase/Purchase.Container';
 const Modals = (props) => {
   if (props.supportModal) {
     return <SupportModal />
-  } else if (props.loginModal) {
+  } else if (props.loginModal.active) {
     return <LoginFlow />;
   } else if (props.signUpModal) {
     return <SignupFlow />;
@@ -29,7 +29,7 @@ const Modals = (props) => {
 };
 
 Modals.propTypes = {
-  loginModal: PropTypes.bool.isRequired,
+  loginModal: PropTypes.object.isRequired,
   signUpModal: PropTypes.bool.isRequired,
   requestFlow: PropTypes.bool.isRequired,
   quickViewModal: PropTypes.object.isRequired,

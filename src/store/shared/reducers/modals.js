@@ -1,7 +1,10 @@
 import { TOGGLE_MODALS } from '../actions/toggleModals';
 
 const initialState = {
-  loginModal: false,
+  loginModal: {
+    active: false,
+    options: {},
+  },
   signUpModal: false,
   quickViewModal: {
     active: false,
@@ -30,7 +33,11 @@ export default (state = { ...initialState }, action) => {
     case TOGGLE_MODALS.toggleLogin:
       return {
         ...state,
-        loginModal: action.state,
+        loginModal: {
+          ...state.loginModal,
+          active: action.state,
+          options: action.state ? action.options : {},
+        },
         signUpModal: false,
         signUpDetails: null,
       };

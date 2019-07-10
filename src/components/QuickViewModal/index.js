@@ -20,6 +20,7 @@ import QuickViewStyled from './styled';
 
 const QuickViewModal = (props) => {
   const { paleSkyBlue } = props.theme;
+  const isBookable = props.celebDetails.availability && props.celebDetails.remaining_limit > 0 && !props.isStar;
   const starData = [{
     size: '105px',
     horizontal: '85%',
@@ -54,7 +55,7 @@ const QuickViewModal = (props) => {
   }
 
   const onBookAction = () => {
-    if (props.celebDetails.availability && props.celebDetails.remaining_limit > 0) {
+    if (isBookable) {
       props.toggleQuickView(false)();
       props.toggleRequestFlow(true);
     }
@@ -117,6 +118,25 @@ const QuickViewModal = (props) => {
     }
     return shortName;
   }
+
+  const renderDescription = () => {
+    if (!props.celebDetails.availability || props.celebDetails.remaining_limit <= 0) {
+      return (
+        <React.Fragment>
+          <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
+        </React.Fragment>
+      )
+    } else if (props.isStar) {
+      return 'Book this star by switching to your Fan account';
+    }
+    return (
+      <React.Fragment>
+        Book <span className="long-description">a shoutout from </span>
+        <strong>{getShortName()}</strong> for <strong>${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
+      </React.Fragment>
+    )
+  }
+
   return (
     <RequestFlowPopup
       dotsCount={0}
@@ -173,27 +193,19 @@ const QuickViewModal = (props) => {
             <QuickViewStyled.StarWrapper>
               <StarDrawer starData={starData} />
             </QuickViewStyled.StarWrapper>
-            <QuickViewStyled.ActionBar available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0} onClick={onBookAction}>
-              <QuickViewStyled.ActionContent available={props.celebDetails.availability && props.celebDetails.remaining_limit > 0}>
+            <QuickViewStyled.ActionBar available={isBookable} onClick={onBookAction}>
+              <QuickViewStyled.ActionContent available={isBookable}>
                 <span>
                   <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url} />
                 </span>
                 <QuickViewStyled.Description>
                   {
-                    props.celebDetails.availability && props.celebDetails.remaining_limit > 0 ?
-                      <React.Fragment>
-                        Book a shoutout
-                      from <strong>{getShortName()}</strong> for <strong> ${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
-                      </React.Fragment>
-                      :
-                      <React.Fragment>
-                        <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
-                    </React.Fragment>
+                    renderDescription()
                   }
                 </QuickViewStyled.Description>
               </QuickViewStyled.ActionContent>
               {
-                props.celebDetails.availability && props.celebDetails.remaining_limit > 0 &&
+                isBookable &&
                 <QuickViewStyled.ActionSection>
                   <QuickViewStyled.ArrowWrapper>
                     <FontAwesomeIcon icon={faChevronRight} />
@@ -222,6 +234,7 @@ QuickViewModal.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  isStar: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -230,6 +243,7 @@ const mapStateToProps = state => ({
   detailsLoading: state.starDetails.celebDetails.loading,
   celebDetails: state.starDetails.celebDetails.celebrityDetails,
   userDetails: state.starDetails.celebDetails.userDetails,
+  isStar: state.userDetails.isStar,
 });
 
 const mapDispatchToProps = dispatch => ({

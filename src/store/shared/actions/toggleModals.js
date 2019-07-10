@@ -10,9 +10,10 @@ export const TOGGLE_MODALS = {
   toggleContactSupport: 'toggleContactSupport/TOGGLE_MODAL',
 };
 
-export const toggleLogin = state => ({
+export const toggleLogin = (state, options) => ({
   type: TOGGLE_MODALS.toggleLogin,
   state,
+  options,
 });
 
 export const toggleSignup = (state, signUpType, step, enableClose) => ({

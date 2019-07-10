@@ -1,16 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import validator from "validator";
-import ActionLoader from '../ActionLoader';
 import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import ActionLoader from '../ActionLoader';
 import { TextInput } from '../TextField';
 import PrimaryButton from '../PrimaryButton';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 import { LoginContainer } from './styled';
-import { SignUpMethod } from '../SignupMethod/styled';
+
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -144,7 +143,7 @@ export default class LoginForm extends React.Component {
       }
     } else if (this.checkEmail()) {
       if (this.isFormValid()) {
-        this.props.loginUser(this.state.email.value, this.state.password.value);
+        this.props.loginUser(this.state.email.value, this.state.password.value, this.props.loginOptions);
       } else {
         this.checkEmail();
         this.checkPassword();
@@ -289,24 +288,6 @@ export default class LoginForm extends React.Component {
     );
   };
 
-  listenToStorage = () => {
-    if (localStorage.getItem("InstaAccessToken")) {
-      const instaUrl =
-        env("instaUrl") + localStorage.getItem("InstaAccessToken");
-      const that = this;
-      axios
-        .get(instaUrl)
-        .then(function (response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-          localStorage.removeItem("InstaAccessToken");
-        })
-        .catch(function (error) { });
-    } else if(localStorage.getItem("twitterData")) {
-      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
-      localStorage.removeItem("twitterData");
-    }
-  };
-
   onTwitterLogin = () => {
     this.setState({ loading: true });
     twitterLogin()
@@ -322,9 +303,23 @@ export default class LoginForm extends React.Component {
       })
   }
 
-  acceptEmailHandler = (e) => {
-    this.setState({ email: { ...this.state.email, value: e.target.value } });
-    this.props.saveData({ username: e.target.value });
+  setRoleDetails = role => {
+    const roleType = role === "FAN" ? ROLES.fan : ROLES.star;
+    this.setState({
+      socialMedia: { ...this.props.socialMediaStore, role: roleType }
+    });
+    this.props.socialMediaLogin(
+      this.props.socialMediaStore.username,
+      this.props.socialMediaStore.first_name,
+      this.props.socialMediaStore.last_name,
+      this.props.socialMediaStore.sign_up_source,
+      this.props.socialMediaStore.profile_photo,
+      roleType,
+      this.props.socialMediaStore.fb_id,
+      this.props.socialMediaStore.gp_id,
+      this.props.socialMediaStore.in_id
+    );
+    this.props.saveData({ role: roleType });
   };
   acceptPasswordHandler = e => {
     this.setState({
@@ -369,27 +364,34 @@ export default class LoginForm extends React.Component {
     }
     return false;
   };
-  setRoleDetails = role => {
-    const roleType = role === "FAN" ? ROLES.fan : ROLES.star;
-    this.setState({
-      socialMedia: { ...this.props.socialMediaStore, role: roleType }
-    });
-    this.props.socialMediaLogin(
-      this.props.socialMediaStore.username,
-      this.props.socialMediaStore.first_name,
-      this.props.socialMediaStore.last_name,
-      this.props.socialMediaStore.sign_up_source,
-      this.props.socialMediaStore.profile_photo,
-      roleType,
-      this.props.socialMediaStore.fb_id,
-      this.props.socialMediaStore.gp_id,
-      this.props.socialMediaStore.in_id
-    );
-    this.props.saveData({ role: roleType });
+  acceptEmailHandler = (e) => {
+    this.setState({ email: { ...this.state.email, value: e.target.value } });
+    this.props.saveData({ username: e.target.value });
+  };
+  listenToStorage = () => {
+    if (localStorage.getItem("InstaAccessToken")) {
+      const instaUrl =
+        env("instaUrl") + localStorage.getItem("InstaAccessToken");
+      const that = this;
+      axios
+        .get(instaUrl)
+        .then(function (response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+          localStorage.removeItem("InstaAccessToken");
+        })
+        .catch(function (error) { });
+    } else if(localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
+    }
   };
   ShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
   };
+
+  loadSignup = () => {
+    this.props.loadSignup();
+  }
 
   render() {
     const { email, password } = this.state;
@@ -514,7 +516,7 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.actionText>
                       &nbsp; | &nbsp;
                       <LoginContainer.actionText
-                        onClick={() => this.props.loadSignup()}
+                        onClick={this.loadSignup}
                       >
                         <LoginContainer.ForgotButtonSpan>
                           {" "}
