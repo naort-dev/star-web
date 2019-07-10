@@ -237,7 +237,10 @@ const Settings = props => {
 
   if (redirect) return <Redirect to="/manage/settings/account-info" />;
   return (
-    <Layout showMenu={props.history.location.pathname === '/manage/settings'}>
+    <Layout
+      showMenu={props.history.location.pathname === '/manage/settings'}
+      hideArrow={phoneData.trigger}
+    >
       <SubHeader
         heading={webView ? 'My Account Settings' : 'Account Settings'}
         onClick={goBack}

@@ -80,7 +80,11 @@ export const audioVideoSupport = type => {
 };
 
 export const isWebSafari = () => {
-  if (navigator.userAgent.indexOf('Safari') !== -1 && !isIOSDevice()) {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.indexOf('safari') !== -1 && !isIOSDevice()) {
+    if (ua.indexOf('chrome') > -1) {
+      return false;
+    }
     return true;
   }
   return false;
