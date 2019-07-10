@@ -245,7 +245,7 @@ const Question = props => {
           type="file"
           id="fileUpload"
           className="hidden"
-          accept="video/*"
+          accept="video/mp4,video/x-m4v,video/*"
           onChange={uploadHandler()}
         />
         {props.buttonLabel.upload.label}
@@ -504,13 +504,15 @@ const Question = props => {
                     )}
                   </VideoContainer>
                 </section>
-                {(!isWebSafari() || isQuestion) && (
+                {(!isWebSafari() ||
+                  (isQuestion && props.bookedItem.request_type === 3)) && (
                   <QuestionContainer
                     isShow={stateObject.showHideFlg || stateObject.error}
                     continueFlg={stateObject.continueFlg}
                     isQA={props.bookedItem.request_type === 3}
                   >
-                    {!stateObject.error && (
+                    {(!stateObject.error ||
+                      (isQuestion && props.bookedItem.request_type === 3)) && (
                       <React.Fragment>
                         <div className="question-wrapper">
                           <h1 className="quesHead">What you should say...</h1>
@@ -596,7 +598,12 @@ const Question = props => {
             {!isIOSDevice() &&
               (!isQuestion || props.bookedItem.request_type !== 3) &&
               (!checkMediaRecorderSupport() || stateObject.error) && (
-                <QuestionContainer isShow error className="error-msg">
+                <QuestionContainer
+                  isShow
+                  error
+                  className="error-msg"
+                  isQA={props.bookedItem.request_type === 3}
+                >
                   {isWebSafari() ? (
                     <React.Fragment>
                       <p className="note">
@@ -637,7 +644,7 @@ const Question = props => {
             <input
               ref={videoRecordInput}
               type="file"
-              accept="video/*;capture=camcorder"
+              accept="video/mp4,video/x-m4v,video/*;capture=camcorder"
               className="videoInputCapture"
               onChange={uploadHandler(true)}
             />

@@ -171,7 +171,7 @@ const Video = props => {
           key={Math.random()}
           id="fileUpload"
           className="hidden"
-          accept="video/*"
+          accept="video/mp4,video/x-m4v,video/*"
           onChange={uploadHandler()}
         />
         Upload video
