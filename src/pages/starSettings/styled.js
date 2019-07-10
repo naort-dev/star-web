@@ -7,6 +7,10 @@ export const Layout = styled.section`
   height: 100%;
   padding-left: 40px;
   padding-right: 40px;
+  ${media.mobileScreen} {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .arrow-head {
     background-size: 14px 28px;
     top: 91px;
@@ -29,7 +33,7 @@ export const Layout = styled.section`
     ${media.mobileScreen} {
       font-size: 28px;
       line-height: 27px;
-      padding-top: 20px;
+      padding-top: 23px;
       margin-bottom: 0;
       padding-bottom: 20px;
     }
@@ -52,8 +56,8 @@ export const ContentWrapper = styled.section`
   display: flex;
   height: 100%;
   .sub-menu-wrap {
-    width: 90%;
-    padding-left: 30px;
+    width: 100%;
+    padding: 0 15px;
     ${media.webView} {
       padding-left: 0;
       width: 268px;

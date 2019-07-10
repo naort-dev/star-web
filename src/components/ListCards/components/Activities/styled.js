@@ -15,6 +15,19 @@ export const Layout = styled.section`
     }
     .activityCard-inner {
       width: 100%;
+      ${media.mobileScreen} {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .button-booking, .button-activity {
+          align-self: center;
+          margin-top: 10px;
+        }
+        .button-activity {
+          min-width: 150px;
+          min-height: 40px; 
+        }
+      }
     }
     .custom-flex {
       flex-direction: column;
@@ -41,6 +54,11 @@ export const Layout = styled.section`
       ${media.webView} {
         padding-left: 55px;
       }
+      span:first-child {
+        ${media.mobileScreen} {
+          padding-bottom: 5px;
+        }
+      }
     }
     .todo-padding {
       padding-right: 20px;
@@ -51,8 +69,10 @@ export const Layout = styled.section`
     }
     .sub-content {
       display: block;
+      margin-top: 5px;
       ${media.webView} {
         display: inline-block;
+        margin-top: 0;
       }
       .bar-separator {
         display: none;

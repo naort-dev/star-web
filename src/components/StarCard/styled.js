@@ -38,6 +38,7 @@ export const Layout = styled.section`
   }
   .cardLayout {
     padding: 22px;
+    box-shadow: none !important;
     ${media.smallScreen} {
       padding: 10px;
     }

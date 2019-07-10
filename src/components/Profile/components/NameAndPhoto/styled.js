@@ -9,6 +9,10 @@ export const Layout = styled.section`
   padding-right: 40px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 831px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
   .name-photo-wrap{
     display: flex;
     flex-direction: column;

@@ -27,6 +27,10 @@ export const Layout = styled.section`
   }
   .bio-wrapper {
     height: auto !important;
+    @media(max-width: 831px) {
+      width: 100%;
+      padding: 0 15px;
+    }
   }
   .MuiFormControl {
     width: 100%;
@@ -58,10 +62,10 @@ export const Layout = styled.section`
         margin-top: 35px;
       }
       @media(max-width: 831px) {
-        width: calc(100% - 70px);
+        width: 100%;
         height: 256px;
-        margin-left: 35px;
-        margin-right: 35px;
+        padding: 20px;
+        margin: 0;
       }
     }
   }

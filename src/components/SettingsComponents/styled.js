@@ -15,6 +15,9 @@ export const Container = styled(Card)`
     background: #fff;
     min-height: 550px;
   }
+  ${media.mobileScreen} {
+    height: 100%;
+  }
   display: flex;
   justify-content: center;
 
@@ -61,6 +64,12 @@ export const Form = styled.form`
     text-align: center;
     font-size: 24px;
     font-family: Gilroy-Medium;
+
+    ${media.mobileScreen} {
+      font-size: 22px;
+      line-height: 25px;
+      height: auto;
+    }
   }
   .MuiFormControl {
     width: 100%;
