@@ -1,8 +1,12 @@
 import Api from '../../lib/api';
 import { fetch } from '../../services/fetch';
 
-export const getRequestDetails = (bookingId) => {
-  return fetch(`${Api.getRequestDetails}${bookingId}/`)
+export const getRequestDetails = (bookingId, isLoggedIn) => {
+  let apiUrl = `${Api.getRequestDetails}${bookingId}/`;
+  if (!isLoggedIn) {
+    apiUrl = `${apiUrl}get/`;
+  }
+  return fetch(apiUrl)
     .then(resp => resp.data);
 };
 
