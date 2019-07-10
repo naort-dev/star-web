@@ -152,7 +152,7 @@ class Bookings extends React.Component {
     return (
       <BookingsStyled className="booking-wrapper">
         <BackArrow className="arrow" onClick={this.onBackClick} />
-        <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
+        <BookingsStyled.Header className="top-heading">My Videos</BookingsStyled.Header>
         {
           orderDetails &&
             <OrderDetails

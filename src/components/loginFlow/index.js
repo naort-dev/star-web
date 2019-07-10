@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { LoginContainer, HeaderSection } from './styled';
+import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { loginUser, resetSessionError, updateLoginStatus } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -34,6 +35,10 @@ class LoginFlow extends React.Component {
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   loadSignup = () => {
+    this.props.setSignupFlow({
+      role: 'fan',
+      disableRoleChange: true,
+    })
     this.props.toggleSignup(true);
   }
 
@@ -92,6 +97,7 @@ class LoginFlow extends React.Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
+  loginOptions: state.modals.loginModal.options,
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
@@ -101,9 +107,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (email, password) => dispatch(loginUser(email, password)),
+  loginUser: (email, password, loginOptions) => dispatch(loginUser(email, password, loginOptions)),
   socialMediaLogin: socialObject =>
     dispatch(socialMediaLogin(socialObject)),
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),

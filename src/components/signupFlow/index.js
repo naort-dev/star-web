@@ -65,7 +65,7 @@ class SignupFlow extends React.Component {
     const { cookies } = props;
     this.state = {
       selectedType:
-        props.signupDetails.role && props.signupDetails.currentStep > 0
+        props.signupDetails.role && (props.signupDetails.currentStep > 0 || props.signupDetails.disableRoleChange)
           ? props.signupDetails.role
           : null,
       stepCount: 0,
@@ -102,6 +102,9 @@ class SignupFlow extends React.Component {
 
   componentWillUnmount() {
     this.props.clearRegisterErrors();
+    const signupDetails = {...this.props.signupDetails};
+    signupDetails.disableRoleChange = false;
+    this.props.setSignupFlow(signupDetails);
   }
 
   onBack = flag => {
@@ -289,7 +292,6 @@ class SignupFlow extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
         this.props.loaderAction(false);
       });
   }
