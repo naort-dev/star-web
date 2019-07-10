@@ -279,7 +279,8 @@ const Question = props => {
               <section className="right-sec-wrap">
                 {!isIOSDevice() &&
                   checkMediaRecorderSupport() &&
-                  !stateObject.error && (
+                  !stateObject.error &&
+                  !isWebSafari() && (
                     <TimeSpan>
                       <span className="text">{renderTimeHeader()}</span>
                       <span className="time">{renderTime()}</span>
@@ -360,29 +361,38 @@ const Question = props => {
         <React.Fragment>
           <QuestionContainer isShow error className="no-support">
             {isWebSafari() ? (
-              <p className="note">
-                Safari does not currently support browser video recording.
-                <br />
-                <br />
-                Please use Chrome, Firefox, any browser using your phone or you
-                can also upload your video.
-              </p>
+              <React.Fragment>
+                <p className="note">
+                  Safari does not currently support browser video recording.
+                  <br />
+                  <br />
+                  Please use Chrome, Firefox, any browser using your phone or
+                  you can also upload your video.
+                </p>
+                {props.videoSrc
+                  ? getButton(
+                      false,
+                      'safari-upload',
+                      uploadContinue,
+                      'Continue',
+                    )
+                  : getFileUpload(['uploadBtn noSupportBtn'])}
+              </React.Fragment>
             ) : (
-              <p className="note">
-                Your system does not have video recording capability, but you
-                will need to record a video to ask a question to the Star.{' '}
-                <br />
-                <br />
-                You can:
-                <br />
-                <br /> Record with our App
-                <br /> Use our iOS or Android app to book the star.
-              </p>
+              <React.Fragment>
+                <p className="note">
+                  Your system does not have video recording capability, but you
+                  will need to record a video to ask a question to the Star.{' '}
+                  <br />
+                  <br />
+                  You can:
+                  <br />
+                  <br /> Record with our App
+                  <br /> Use our iOS or Android app to book the star.
+                </p>
+                {getFileUpload(['uploadBtn noSupportBtn'])}
+              </React.Fragment>
             )}
-            {props.videoSrc && isWebSafari()
-              ? getButton(false, 'safari-upload', uploadContinue, 'Continue')
-              : getFileUpload(['uploadBtn noSupportBtn'])}
-            {!isWebSafari() && getFileUpload(['uploadBtn noSupportBtn'])}
           </QuestionContainer>
         </React.Fragment>
       )}
