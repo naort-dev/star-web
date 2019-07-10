@@ -10,7 +10,11 @@ import MoreActions from 'components/MoreActions';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
 import ToolTip from 'components/ToolTip';
-import { checkMediaRecorderSupport, audioVideoSupport } from 'utils/checkOS';
+import {
+  checkMediaRecorderSupport,
+  audioVideoSupport,
+  isWebSafari,
+} from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
 import { BackArrow, CloseButton } from 'styles/CommonStyled';
@@ -572,7 +576,9 @@ const Question = props => {
                   </MobButtons>
                 )}
 
-                {(stateObject.buttonLabel === props.buttonLabel.primary.record || props.shouldRecord) &&
+                {(stateObject.buttonLabel ===
+                  props.buttonLabel.primary.record ||
+                  props.shouldRecord) &&
                   !stateObject.error && (
                     <ShowHide
                       onClick={() =>
@@ -594,16 +600,26 @@ const Question = props => {
             {!isIOSDevice() &&
               (!checkMediaRecorderSupport() || stateObject.error) && (
                 <QuestionContainer isShow error className="error-msg">
-                  <p className="note">
-                    Your system does not have video recording capability, but
-                    you will need to record a video to ask a question to the
-                    Star. <br />
-                    <br />
-                    You can:
-                    <br />
-                    <br /> Record with our App
-                    <br /> Use our iOS or Android app to book the star.
-                  </p>
+                  {isWebSafari() ? (
+                    <p className="note">
+                      Safari does not currently support browser video recording.
+                      <br />
+                      <br />
+                      Please use Chrome, Firefox, any browser using your phone
+                      or you can also upload your video.
+                    </p>
+                  ) : (
+                    <p className="note">
+                      Your system does not have video recording capability, but
+                      you will need to record a video to ask a question to the
+                      Star. <br />
+                      <br />
+                      You can:
+                      <br />
+                      <br /> Record with our App
+                      <br /> Use our iOS or Android app to book the star.
+                    </p>
+                  )}
                   {getFileUpload(['uploadBtn noSupportBtn'])}
                 </QuestionContainer>
               )}

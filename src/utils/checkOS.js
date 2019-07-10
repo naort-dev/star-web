@@ -79,8 +79,8 @@ export const audioVideoSupport = type => {
   });
 };
 
-const isWebSafari = () => {
-  if (navigator.userAgent.indexOf('Safari') !== -1 && isIOSDevice()) {
+export const isWebSafari = () => {
+  if (navigator.userAgent.indexOf('Safari') !== -1 && !isIOSDevice()) {
     return true;
   }
   return false;
