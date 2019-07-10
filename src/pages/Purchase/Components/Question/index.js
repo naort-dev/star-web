@@ -101,6 +101,15 @@ const Question = props => {
       }
     }
   };
+
+  const uploadContinue = () => {
+    if (props.videoUploaded) {
+      props.continueCallback();
+    } else {
+      uploadVideoRecorded();
+    }
+  };
+
   const stopRecordHandler = () => {
     mediaHandler('Continue', true, true);
     props.headerUpdate('Check to make sure I’ve got everything right.');
@@ -244,7 +253,7 @@ const Question = props => {
 
   return (
     <Layout>
-      {(isIOSDevice() || checkMediaRecorderSupport()) && (
+      {(isIOSDevice() || checkMediaRecorderSupport() || isWebSafari()) && (
         <React.Fragment>
           <VideoContainer>
             <VideoRecorder
@@ -265,81 +274,85 @@ const Question = props => {
               uploader
             />
           </VideoContainer>
-          <section className="right-sec-wrap">
-            {!isIOSDevice() &&
-              checkMediaRecorderSupport() &&
-              !stateObject.error && (
-                <TimeSpan>
-                  <span className="text">{renderTimeHeader()}</span>
-                  <span className="time">{renderTime()}</span>
-                </TimeSpan>
-              )}
-
-            <QuestionContainer
-              isShow={stateObject.showHideFlg || stateObject.error}
-              continueFlg={stateObject.continueFlg}
-            >
-              {!stateObject.error && (
-                <React.Fragment>
-                  {(!stateObject.continueFlg || props.shouldRecord) && (
-                    <div>
-                      <h1 className="quesHead">What you should say?</h1>
-                      <h1 className="instruction-head-mob">
-                        Ask the question to {props.starNM}
-                      </h1>
-
-                      <QuestionBuilder questionsList={questions} />
-                    </div>
+          {!isWebSafari() && (
+            <React.Fragment>
+              <section className="right-sec-wrap">
+                {!isIOSDevice() &&
+                  checkMediaRecorderSupport() &&
+                  !stateObject.error && (
+                    <TimeSpan>
+                      <span className="text">{renderTimeHeader()}</span>
+                      <span className="time">{renderTime()}</span>
+                    </TimeSpan>
                   )}
-                  <WebButtons className="web-btns">
-                    {getButton(
-                      false,
-                      '',
-                      buttonClickHandler,
-                      stateObject.buttonLabel,
-                    )}
-                    {!stateObject.continueFlg &&
-                      getFileUpload(['uploadBtn mobDisplay'])}
-                    {stateObject.continueFlg &&
-                      (props.recorded || isIOSDevice()
-                        ? getFileUpload(['uploadLink'])
-                        : recordLinkHandler())}
-                  </WebButtons>
-                </React.Fragment>
-              )}
-            </QuestionContainer>
-          </section>
 
-          {!stateObject.error && (
-            <MobButtons className="mob-btns">
-              {getButton(
-                false,
-                '',
-                buttonClickHandler,
-                stateObject.buttonLabel,
+                <QuestionContainer
+                  isShow={stateObject.showHideFlg || stateObject.error}
+                  continueFlg={stateObject.continueFlg}
+                >
+                  {!stateObject.error && (
+                    <React.Fragment>
+                      {(!stateObject.continueFlg || props.shouldRecord) && (
+                        <div>
+                          <h1 className="quesHead">What you should say?</h1>
+                          <h1 className="instruction-head-mob">
+                            Ask the question to {props.starNM}
+                          </h1>
+
+                          <QuestionBuilder questionsList={questions} />
+                        </div>
+                      )}
+                      <WebButtons className="web-btns">
+                        {getButton(
+                          false,
+                          '',
+                          buttonClickHandler,
+                          stateObject.buttonLabel,
+                        )}
+                        {!stateObject.continueFlg &&
+                          getFileUpload(['uploadBtn mobDisplay'])}
+                        {stateObject.continueFlg &&
+                          (props.recorded || isIOSDevice()
+                            ? getFileUpload(['uploadLink'])
+                            : recordLinkHandler())}
+                      </WebButtons>
+                    </React.Fragment>
+                  )}
+                </QuestionContainer>
+              </section>
+
+              {!stateObject.error && (
+                <MobButtons className="mob-btns">
+                  {getButton(
+                    false,
+                    '',
+                    buttonClickHandler,
+                    stateObject.buttonLabel,
+                  )}
+                  {props.recorded ||
+                  isIOSDevice() ||
+                  stateObject.buttonLabel === 'Record'
+                    ? getFileUpload(['uploadLink'])
+                    : recordLinkHandler()}
+                </MobButtons>
               )}
-              {props.recorded ||
-              isIOSDevice() ||
-              stateObject.buttonLabel === 'Record'
-                ? getFileUpload(['uploadLink'])
-                : recordLinkHandler()}
-            </MobButtons>
+
+              {(stateObject.buttonLabel === 'Record' || props.shouldRecord) &&
+                !stateObject.error && (
+                  <ShowHide
+                    onClick={() =>
+                      updatedStateHandler({
+                        ...stateObject,
+                        showHideFlg: !stateObject.showHideFlg,
+                      })
+                    }
+                    isShow={stateObject.showHideFlg}
+                  >
+                    Instructions
+                  </ShowHide>
+                )}
+            </React.Fragment>
           )}
-
-          {(stateObject.buttonLabel === 'Record' || props.shouldRecord) &&
-            !stateObject.error && (
-              <ShowHide
-                onClick={() =>
-                  updatedStateHandler({
-                    ...stateObject,
-                    showHideFlg: !stateObject.showHideFlg,
-                  })
-                }
-                isShow={stateObject.showHideFlg}
-              >
-                Instructions
-              </ShowHide>
-            )}
         </React.Fragment>
       )}
 
@@ -366,7 +379,10 @@ const Question = props => {
                 <br /> Use our iOS or Android app to book the star.
               </p>
             )}
-            {getFileUpload(['uploadBtn noSupportBtn'])}
+            {props.videoSrc && isWebSafari()
+              ? getButton(false, 'safari-upload', uploadContinue, 'Continue')
+              : getFileUpload(['uploadBtn noSupportBtn'])}
+            {!isWebSafari() && getFileUpload(['uploadBtn noSupportBtn'])}
           </QuestionContainer>
         </React.Fragment>
       )}

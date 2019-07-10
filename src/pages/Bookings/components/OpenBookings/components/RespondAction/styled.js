@@ -84,6 +84,10 @@ export const Layout = styled.section`
     font-size: 14px;
     cursor: pointer;
   }
+
+  .safari-upload {
+    margin-top: 40px;
+  }
   .videoInputCapture {
     display: none;
   }
