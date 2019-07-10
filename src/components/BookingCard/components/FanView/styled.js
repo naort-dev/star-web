@@ -9,6 +9,12 @@ const FanViewStyled = styled.div`
       overflow: auto !important;
       height: auto !important;
     }
+    /* .comment-section {
+      @media(min-width: 832px) {
+          flex: 1 1 auto;
+          max-width: 235px;
+      }
+    } */
   }
   #comments-scroll-target > section {
     min-height: 265px;
@@ -19,6 +25,8 @@ const FanViewStyled = styled.div`
   @media(min-width: 832px) {
     height: 100%;
   }
+
+  
 `;
 
 FanViewStyled.VideoWrapper = styled.div`
@@ -54,6 +62,11 @@ FanViewStyled.DetailWrapper = styled.div`
     order: 1;
     margin-bottom: 0;
   `}
+  @media(min-width: 832px) {
+    ${props => props.isPublic && `
+      margin-left: 5px;
+    `}
+  }
   .more-action-root {
     display: none;
   }
@@ -84,6 +97,11 @@ FanViewStyled.CommentWrapper = styled.div`
   .comment-box {
     width: 100%;
   }
+  @media(min-width: 832px) {
+    ${props => props.isPublic && `
+      margin-left: 5px;
+    `}
+  }
   ${props => props.isPublic && `
     order: 2;
     margin-bottom: 10px;
@@ -91,9 +109,21 @@ FanViewStyled.CommentWrapper = styled.div`
       .input-wrapper {
         height: 63px;
         border-radius: 13px;
-        align-items: flex-end;
+        align-items: flex-start;
+        input {
+          height: auto;
+          padding: 5px 0;
+          margin: 0 10px;
+          color:#555;
+          font-size:14px;
+          line-height: 18px;
+        }
         .comment-icon {
           margin-bottom: 10px;
+        }
+        svg {
+          align-self: flex-end;
+          margin-right: 10px;
         }
       }
     }

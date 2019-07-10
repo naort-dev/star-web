@@ -201,11 +201,11 @@ BookingStyled.CommentList = styled.div`
     order: 3;
   `}
   @media screen and (min-width: 832px) {
-    height: ${props => (props.starMode ? '342px' : '335px')};
+    height: ${props => (props.starMode ? '342px' : '300px')};
     flex: 1;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
-    height: ${props => (props.starMode ? '342px' : '275px')};
+    height: ${props => (props.starMode ? '342px' : '252px')};
   }
 `;
 
