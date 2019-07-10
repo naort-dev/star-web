@@ -27,13 +27,6 @@ export const starInnerLinks = [
   },
   { linkName: 'Bookings', selectedName: 'requests', url: '/manage/bookings' },
   {
-    linkName: 'Favorite Stars',
-    selectedName: 'favorites',
-    tooltip:
-      'Save your favorites and make it easy when booking a personalized shout-out.',
-    url: '/manage/favorites',
-  },
-  {
     linkName: 'Promotional Tools',
     selectedName: 'promotional',
     url: '/manage/promotional-tools',
