@@ -148,7 +148,7 @@ Layout.Image = styled.div`
   margin-bottom: 0;
 `;
 Layout.ButtonWrapper = styled.div`
-  @media(min-width: 832px){
+  @media (min-width: 832px) {
     // position: absolute;
     bottom: 73px;
     margin: auto;
@@ -157,7 +157,7 @@ Layout.ButtonWrapper = styled.div`
     padding-bottom: 0;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
-    bottom: 24px
+    bottom: 24px;
   }
 `;
 Content.OtpSubTitle = styled.div`
@@ -335,5 +335,3 @@ export const FloatLabel = styled.section`
     font-size: 0;
   }
 `;
-
-

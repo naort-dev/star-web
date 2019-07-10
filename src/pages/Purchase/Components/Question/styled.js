@@ -74,6 +74,9 @@ export const Layout = styled.section`
     font-family: Gilroy-SemiBold;
     cursor: pointer;
   }
+  .safari-upload {
+    margin-top: 40px;
+  }
   .videoInputCapture {
     display: none;
   }

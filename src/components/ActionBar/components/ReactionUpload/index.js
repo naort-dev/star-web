@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { getExifData, imageRotation } from '../../../../utils/imageProcessing';
 import PrimaryButton from '../../../PrimaryButton';
 import { ReactionInput } from './styled';
@@ -42,7 +43,11 @@ const ReactionUpload = (props) => {
   }
 
   const onReactionClick = () => {
-    inputRef.current.click();
+    if (!props.isLoggedIn) {
+      props.toggleLogin(true);
+    } else {
+      inputRef.current.click();
+    }
   }
 
   return (
@@ -56,6 +61,12 @@ const ReactionUpload = (props) => {
       <PrimaryButton className='action-btn' onClick={onReactionClick}>Upload Reaction</PrimaryButton>
     </React.Fragment>
   )
+}
+
+ReactionUpload.propTypes = {
+  getReactionFile: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 }
 
 export default ReactionUpload;

@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   videosList: state.starDetails.celebVideos,
   reactionsList: state.starDetails.celebReactions,
   requestFlowDetails: state.modals.requestFlowDetails,
+  isStar: state.userDetails.isStar,
   isLoggedIn: state.session.isLoggedIn,
   professionsList: state.professionsList,
 });

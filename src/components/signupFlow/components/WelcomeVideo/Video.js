@@ -234,7 +234,7 @@ const Video = props => {
       <input
         ref={videoRecordInput}
         type="file"
-        accept="video/*;capture=camcorder"
+        accept="video/mp4,video/x-m4v,video/*;capture=camcorder"
         className="videoInputCapture"
         onChange={event => uploadHandler(event, true)}
       />

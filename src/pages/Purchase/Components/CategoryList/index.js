@@ -29,7 +29,7 @@ const CategoryList = ({
       headerUpdate('Announcement');
     } else if (type === 3) {
       if (!isLoggedIn) {
-        toggleLogin(true);
+        toggleLogin(true, { preventStarLogin: true, });
       }
       headerUpdate(`Ask ${starNM} something! `);
     }

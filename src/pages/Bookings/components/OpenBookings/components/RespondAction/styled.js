@@ -37,6 +37,7 @@ export const Layout = styled.section`
     color: #999;
     font-family: Gilroy-Light;
     font-size: 16px;
+    ${props => props.isQA && `padding-top: 32px;`}
     ${media.mobileScreen} {
       color: #fff;
       font-size: 14px;
@@ -83,6 +84,10 @@ export const Layout = styled.section`
     font-family: Gilroy-Medium;
     font-size: 14px;
     cursor: pointer;
+  }
+
+  .safari-upload {
+    margin-top: 40px;
   }
   .videoInputCapture {
     display: none;
@@ -192,6 +197,7 @@ export const VideoContainer = styled.section`
   }
   .uploadCustom {
     bottom: 0;
+    padding: 10px 0;
   }
 `;
 

@@ -14,6 +14,7 @@ export const Layout = styled.section`
   .arrow-head {
     background-size: 14px 28px;
     top: 91px;
+    display: ${props => (props.hideArrow ? 'none' : 'block')};
   }
   .head1 {
     display: ${props => (props.showMenu ? 'block' : 'none')};
@@ -22,7 +23,7 @@ export const Layout = styled.section`
     color: #888888;
     margin-bottom: 15px;
     font-weight: normal;
-    @media(min-width: 832px) and (max-width: 1280px) {
+    @media (min-width: 832px) and (max-width: 1280px) {
       padding: 0;
     }
     ${media.webView} {

@@ -40,7 +40,7 @@ const BookingCard = (props) => {
 
   useEffect(() => {
     if (props.bookingModal.requestId) {
-      getRequestDetails(props.bookingModal.requestId)
+      getRequestDetails(props.bookingModal.requestId, props.isLoggedIn)
         .then((requestDetails) => {
           const newRequestDetails = requestDetails.success && requestDetails.data && requestDetails.data.stargramz_response
           const validRequestDetails = newRequestDetails && celebCompletedStatusList.indexOf(newRequestDetails.request_status) >= 0 ? true : false;
