@@ -1,42 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { faFacebookF, faInstagram, faYoutube, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { Layout, Heading, Content } from  './styled';
 import { BackArrow } from '../../../../styles/CommonStyled';
 import PrimaryButton from '../../../../components/PrimaryButton';
 import { TextInput } from '../../../TextField';
+import { socialData } from './constants';
 import { updateUserDetails } from '../../../../store/shared/actions/saveSettings'; 
 
 const SocialHandles = props => {
 
-  const [socialLinks, setsocialLinks] = useState(props.userDetails.settings_userDetails.social_links ? props.userDetails.settings_userDetails.social_links : []);
+  const [socialLinks, setsocialLinks] = useState({});
 
-  const onLinkChange = (event, socialLinkKey) => {
-    const updatedSocialLinks = socialLinks.map(link => {
-      if(link.social_link_key === socialLinkKey) {
-        const linkValue = link.social_link_value.split('.com/');
-        link.social_link_value = `${linkValue[0]}.com/${event.target.value}`
+  useEffect(() => {
+    let newSocialLinks = {...socialLinks};
+    if (!props.userDetails.settings_userDetails.social_links.length) {
+      newSocialLinks = {
+        'facebook_url': '',
+        'twitter_url': '',
+        'youtube_url': '',
+        'instagram_url': '',
       }
-      return link;        
-    });
+    } else {
+      props.userDetails.settings_userDetails.social_links.forEach((link) => {
+        newSocialLinks[link.social_link_key] = link.social_link_value === '' ? '' : link.social_link_value.split(socialData[link.social_link_key].url)[1];
+      })
+    }
+    setsocialLinks(newSocialLinks)
+  }, [props.userDetails.settings_userDetails.social_links])
+
+  const onLinkChange = (event, socialKey) => {
+    const updatedSocialLinks = {...socialLinks, [socialKey]: event.target.value.trim('')};
     setsocialLinks(updatedSocialLinks);
   }
-  const getInputValue = (socialLinkKey, substring) => {
-      let value;
-      socialLinks.filter(link => {
-      if(link.social_link_key === socialLinkKey) {
-        value = link.social_link_value.replace(substring,'');
-      }
-    });
-    return value;
-  }
+
   const saveSocialHandles = () => {
+    const newSocialLinks = [];
+    Object.keys(socialLinks).forEach((socialKey) =>{
+      const newSocialItem = {
+        social_link_key: socialKey,
+        social_link_value: socialLinks[socialKey] === '' ? '' : `${socialData[socialKey].url}${socialLinks[socialKey]}`
+      }
+      newSocialLinks.push(newSocialItem);
+    })
     const finalUserDetails = {
       celebrity_details: {},
       user_details: {
-        social_links: socialLinks,
+        social_links: newSocialLinks,
       },
     };
     props.updateUserDetails(props.userDetails.settings_userDetails.id, finalUserDetails);
@@ -60,13 +71,13 @@ const SocialHandles = props => {
                   root: 'input-root',
                 },              
               }}
-              value={getInputValue('facebook_url', 'https://www.facebook.com/')}
+              value={socialLinks.facebook_url}
               onChange={(event) =>onLinkChange(event, 'facebook_url')}
             />
           </Content.InputWraper>
           <Content.InputWraper>
             <FontAwesomeIcon className="socialmedia-icon" icon={faTwitter}/>
-            <Content.InputLabel>www.twiter.com/</Content.InputLabel>
+            <Content.InputLabel>www.twitter.com/</Content.InputLabel>
             <TextInput
                 InputProps={{
                   disableUnderline: true,
@@ -74,7 +85,7 @@ const SocialHandles = props => {
                     root: 'input-root',
                   }
                 }}
-                value={getInputValue('twitter_url', 'https://www.twitter.com/')}
+                value={socialLinks.twitter_url}
                 onChange={(event) =>onLinkChange(event, 'twitter_url')}
             />
           </Content.InputWraper>
@@ -88,7 +99,7 @@ const SocialHandles = props => {
                     root: 'input-root',
                   }
                 }}
-                value={getInputValue('instagram_url', 'https://www.instagram.com/')}
+                value={socialLinks.instagram_url}
                 onChange={(event) =>onLinkChange(event, 'instagram_url')}
             />
         </Content.InputWraper>
@@ -102,7 +113,7 @@ const SocialHandles = props => {
                   root: 'input-root',
                 }
               }}
-              value={getInputValue('youtube_url', 'https://www.youtube.com/')}
+              value={socialLinks.youtube_url}
               onChange={(event) =>onLinkChange(event, 'youtube_url')}
           />
         </Content.InputWraper>
