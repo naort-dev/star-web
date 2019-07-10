@@ -120,19 +120,19 @@ const QuickViewModal = (props) => {
   }
 
   const renderDescription = () => {
-    if (props.isStar) {
-      return 'Book this star by switching to your Fan account';
-    } else if (props.celebDetails.availability && props.celebDetails.remaining_limit > 0) {
+    if (!props.celebDetails.availability || props.celebDetails.remaining_limit <= 0) {
       return (
         <React.Fragment>
-          Book <span className="long-description">a shoutout from </span>
-          <strong>{getShortName()}</strong> for <strong>${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
+          <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
         </React.Fragment>
       )
+    } else if (props.isStar) {
+      return 'Book this star by switching to your Fan account';
     }
     return (
       <React.Fragment>
-        <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
+        Book <span className="long-description">a shoutout from </span>
+        <strong>{getShortName()}</strong> for <strong>${props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong>
       </React.Fragment>
     )
   }
