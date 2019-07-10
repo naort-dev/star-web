@@ -504,7 +504,7 @@ const Question = props => {
                     )}
                   </VideoContainer>
                 </section>
-                {!isWebSafari() && (
+                {(!isWebSafari() || isQuestion) && (
                   <QuestionContainer
                     isShow={stateObject.showHideFlg || stateObject.error}
                     continueFlg={stateObject.continueFlg}
@@ -594,6 +594,7 @@ const Question = props => {
             )}
 
             {!isIOSDevice() &&
+              (!isQuestion || props.bookedItem.request_type !== 3) &&
               (!checkMediaRecorderSupport() || stateObject.error) && (
                 <QuestionContainer isShow error className="error-msg">
                   {isWebSafari() ? (
