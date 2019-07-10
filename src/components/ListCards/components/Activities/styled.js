@@ -54,6 +54,11 @@ export const Layout = styled.section`
       ${media.webView} {
         padding-left: 55px;
       }
+      span:first-child {
+        ${media.mobileScreen} {
+          padding-bottom: 5px;
+        }
+      }
     }
     .todo-padding {
       padding-right: 20px;
@@ -64,8 +69,10 @@ export const Layout = styled.section`
     }
     .sub-content {
       display: block;
+      margin-top: 5px;
       ${media.webView} {
         display: inline-block;
+        margin-top: 0;
       }
       .bar-separator {
         display: none;

@@ -142,6 +142,7 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     overflow: hidden;
     @media(max-width: 831px) {
       min-height: auto;
+      width: 100%;
     }
   }
   .divider {

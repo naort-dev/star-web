@@ -118,6 +118,9 @@ Layout.Phonenumber = styled.div`
   .react-phone-number-input {
     border-bottom: 1px solid #c5d2e0;
     margin-bottom: 10px;
+    input {
+      height: auto !important;
+    }
   }
   .react-phone-number-input__icon {
     width: 32px;

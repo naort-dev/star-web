@@ -18,6 +18,7 @@ const GeneralStyled = styled.div`
     justify-content: space-between;
     .left-content {
       display: inherit;
+      margin-right: 20px;
     }
   }
   @media(max-width: 1280px) and (min-width: 832px) {
@@ -105,7 +106,7 @@ GeneralStyled.Description = styled.span`
   }
   @media(min-width: 832px) {
     ${props => props.imageUrl && `
-      padding-left: 19.3px;    
+      //padding-left: 19.3px;    
     `}
   }
 `;

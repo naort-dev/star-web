@@ -80,7 +80,7 @@ export const Layout = styled.section`
     border-radius: 30px;
     margin-bottom: 10px;
     margin-top: 25px;
-    font-family: Gilroy-SemiBold;
+    font-family: Gilroy-Medium;
     font-size: 14px;
     cursor: pointer;
   }

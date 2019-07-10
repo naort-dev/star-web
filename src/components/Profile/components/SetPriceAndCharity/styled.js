@@ -30,8 +30,8 @@ export const Layout = styled.section`
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
     position: relative;
     height: 100%;
     padding-top: 75px;
