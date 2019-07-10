@@ -113,15 +113,15 @@ export const fetchBookingsList = (offset, refresh, requestStatus, filterParam = 
     )
     .then(resp => {
       if (resp.data && resp.data.success) {
-        if (isEqual(videoStatus, celebOpenStatusList) && unseenBookings) {
-          const { settings_userDetails, settings_celebrityDetails } = getState().userDetails;
-          const userData = {
-            userDetails: {...settings_userDetails, unseen_bookings: 0},
-            celbDetails: settings_celebrityDetails,
-          }
-          updateUnseenCount();
-          dispatch(updateUserDetails(userData));
-        }
+        // if (isEqual(videoStatus, celebOpenStatusList) && unseenBookings) {
+        //   const { settings_userDetails, settings_celebrityDetails } = getState().userDetails;
+        //   const userData = {
+        //     userDetails: {...settings_userDetails, unseen_bookings: 0},
+        //     celbDetails: settings_celebrityDetails,
+        //   }
+        //   updateUnseenCount();
+        //   dispatch(updateUserDetails(userData));
+        // }
         dispatch(bookingsListFetchEnd());
         const { count } = resp.data.data;
         const miscData = {
