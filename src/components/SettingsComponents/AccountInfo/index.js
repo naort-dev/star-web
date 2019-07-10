@@ -23,7 +23,9 @@ const AccountInfo = props => {
     firstName: props.userDetails.first_name,
     lastName: props.userDetails.last_name,
     email: props.userDetails.email,
-    phoneNumber: `+${mobile_country_code}${mobile_number}`,
+    phoneNumber: !isEmpty(mobile_number)
+      ? `+${mobile_country_code}${mobile_number}`
+      : '',
   });
   const [errorObject, updateErrorObj] = useState({
     firstNameErr: false,
@@ -162,7 +164,9 @@ const AccountInfo = props => {
     } = props.userDetails.notification_settings;
     updateFormData({
       ...formData,
-      phoneNumber: `+${mobile_country_code}${mobile_number}`,
+      phoneNumber: !isEmpty(mobile_number)
+        ? `+${mobile_country_code}${mobile_number}`
+        : '',
     });
   }, [
     props.userDetails.notification_settings.mobile_country_code,
@@ -176,9 +180,10 @@ const AccountInfo = props => {
     error,
     errorState,
     nativeProps,
+    wrapperClass,
   }) => {
     return (
-      <section className="inputWrapper">
+      <section className={`inputWrapper ${wrapperClass}`}>
         <TextInput
           error={error}
           placeholder={placeholder}
@@ -236,6 +241,7 @@ const AccountInfo = props => {
               error: errorObject.firstNameErr,
               errorState: 'firstNameErr',
               nativeProps: {},
+              wrapperClass: 'custom-wrap',
             })}
             {getTextInput({
               placeholder: props.labels.lastNameLbl,
@@ -244,6 +250,7 @@ const AccountInfo = props => {
               error: errorObject.lastNameErr,
               errorState: 'lastNameErr',
               nativeProps: {},
+              wrapperClass: '',
             })}
           </section>
           <InputLabel error={errorObject.emailErr}>

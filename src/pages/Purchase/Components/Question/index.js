@@ -266,12 +266,14 @@ const Question = props => {
             />
           </VideoContainer>
           <section className="right-sec-wrap">
-            {!isIOSDevice() && (
-              <TimeSpan>
-                <span className="text">{renderTimeHeader()}</span>
-                <span className="time">{renderTime()}</span>
-              </TimeSpan>
-            )}
+            {!isIOSDevice() &&
+              checkMediaRecorderSupport() &&
+              !stateObject.error && (
+                <TimeSpan>
+                  <span className="text">{renderTimeHeader()}</span>
+                  <span className="time">{renderTime()}</span>
+                </TimeSpan>
+              )}
 
             <QuestionContainer
               isShow={stateObject.showHideFlg || stateObject.error}
