@@ -72,8 +72,8 @@ export const Content = styled.section`
   }
   @media (max-width: 831px) {
     height: max-content;
-    padding-left:35px;
-    padding-right:35px;
+    padding-left:15px;
+    padding-right:15px;
   } 
 `;
 

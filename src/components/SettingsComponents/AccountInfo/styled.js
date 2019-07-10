@@ -48,6 +48,12 @@ export const InputLabel = styled.span`
   font-family: Gilroy;
   text-align: center;
   padding-bottom: 10px;
+
+  &.email + .inputWrapper {
+    input:focus {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const PhoneWrap = styled.section`

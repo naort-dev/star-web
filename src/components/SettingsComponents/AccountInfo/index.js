@@ -253,7 +253,7 @@ const AccountInfo = props => {
               wrapperClass: '',
             })}
           </section>
-          <InputLabel error={errorObject.emailErr}>
+          <InputLabel error={errorObject.emailErr} className="email">
             {props.labels.emailHead}
           </InputLabel>
           {tooltipWrapper(

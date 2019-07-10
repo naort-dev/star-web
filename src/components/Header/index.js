@@ -93,6 +93,7 @@ class Header extends React.Component {
         innerRef={props.forwardRef}
         notFixed={props.notFixed}
         desktopSearch={this.props.desktopSearch}
+        className="manage-user-header"
       >
         <HeaderSection.HeaderDiv
           notFixed={props.notFixed}
@@ -191,7 +192,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDHeaderropdownItem>
                       </HeaderSection.ProfileDropdown>
                   } */}
               </React.Fragment>
