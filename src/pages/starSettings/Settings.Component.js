@@ -11,15 +11,22 @@ import Notification from 'components/SettingsComponents/Notification';
 import Modal from 'components/Modal/Modal';
 import { useMedia } from 'utils/domUtils';
 import { CloseButton } from 'styles/CommonStyled';
-import { Layout, ContentWrapper } from './styled';
+import { generateOtp, validateOtp } from 'services/otpGenerate';
+import GetPhoneNumber from 'components/GetPhoneNumber';
+import { Layout, ContentWrapper, OtpWrap } from './styled';
 import { Links } from './Constants';
 
 const Settings = props => {
   const isModalView = useMedia('(min-width:832px) and (max-width: 1279px)');
   const webView = useMedia('(min-width: 1280px)');
-
   const [redirect, setRedirect] = useState(false);
-
+  const [phoneData, setPhoneData] = useState({
+    number: '',
+    countryCode: '',
+    trigger: false,
+    country: '',
+    error: false,
+  });
   const goBack = () => {
     props.history.goBack();
   };
@@ -117,10 +124,109 @@ const Settings = props => {
     return link;
   };
 
+  const generateOTP = (number, countryCode, country) => {
+    props.loaderAction(true);
+    generateOtp(number, countryCode)
+      .then(resp => {
+        if (resp.success) {
+          setPhoneData({
+            ...phoneData,
+            number,
+            countryCode,
+            trigger: true,
+            country,
+            error: '',
+          });
+        }
+        props.loaderAction(false);
+      })
+      .catch(error => {
+        props.loaderAction(false);
+      });
+  };
+
+  const validateOTP = (number, countryCode, country) => otp => {
+    props.loaderAction(true);
+    validateOtp(number, countryCode, otp, country)
+      .then(resp => {
+        if (resp.success) {
+          setPhoneData({ ...phoneData, trigger: false, error: '' });
+          props.userDetailsUpdateHandler({
+            mobile_country_code: countryCode,
+            mobile_number: number,
+          });
+          props.updateToast({
+            value: true,
+            message: 'Successfully updated',
+            variant: 'success',
+          });
+        }
+        props.loaderAction(false);
+      })
+      .catch(err => {
+        setPhoneData({ ...phoneData, error: err.response.data.error.message });
+        props.loaderAction(false);
+      });
+  };
+
   const getLinks = () => {
     return Links.map(link => {
       return linkStatus(link);
     });
+  };
+
+  const resendOtp = () => {
+    generateOTP(phoneData.number, phoneData.countryCode);
+  };
+
+  const triggerOtp = () => {
+    setPhoneData({ ...phoneData, trigger: false, error: '' });
+  };
+
+  const getAccountScreen = childProps => {
+    if (phoneData.trigger) {
+      return (
+        <OtpWrap>
+          <GetPhoneNumber
+            onBack={triggerOtp}
+            onClose={triggerOtp}
+            resendOtp={resendOtp}
+            verifyOtp={validateOTP(
+              phoneData.number,
+              phoneData.countryCode,
+              phoneData.country,
+            )}
+            last4={phoneData.number.replace(/\d(?=\d{4})/g, '*')}
+            switched
+            otptitle="Enter the verification code"
+            otp_sub_title="Let's make sure it's really you. A 4-digit code has been sent to the phone ending in ******"
+            otp_receive_code="Didn't Receive a code?"
+            error={phoneData.error}
+          />
+        </OtpWrap>
+      );
+    }
+    return getComponent(
+      <AccountInfo
+        {...childProps}
+        {...props}
+        generateOTP={generateOTP}
+        validateOTP={validateOTP}
+        handleAccountSave={handleAccountSave}
+        mobHead="Account Info"
+        webHead="Account Information"
+        allowPhone
+        labels={{
+          firstNameLbl: 'First Name',
+          lastNameLbl: 'Last Name',
+          emailLbl: 'Email',
+          emailHead: 'Email address',
+          nameHead: 'Use your real name so we can pay you',
+          phoneLabel: 'Phone Number',
+          buttonLbl: 'Save',
+        }}
+      />,
+    );
   };
 
   useEffect(() => {
@@ -141,25 +247,7 @@ const Settings = props => {
         <Switch>
           <Route
             path="/manage/settings/account-info"
-            render={childProps =>
-              getComponent(
-                <AccountInfo
-                  {...childProps}
-                  {...props}
-                  handleAccountSave={handleAccountSave}
-                  mobHead="Account Info"
-                  webHead="Account Information"
-                  labels={{
-                    firstNameLbl: 'First Name',
-                    lastNameLbl: 'Last Name',
-                    emailLbl: 'Email',
-                    emailHead: 'Email address',
-                    nameHead: 'Use your real name so we can pay you',
-                    buttonLbl: 'Save',
-                  }}
-                />,
-              )
-            }
+            render={childProps => getComponent(getAccountScreen(childProps))}
           />
           <Route
             path="/manage/settings/password"
@@ -241,6 +329,9 @@ Settings.propTypes = {
   dashboardURL: PropTypes.string,
   celbDetails: PropTypes.object.isRequired,
   updateNotificationViewed: PropTypes.func.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  userDetailsUpdateHandler: PropTypes.func.isRequired,
 };
 Settings.defaultProps = {
   stripeCard: '',

@@ -6,7 +6,11 @@ import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
 import VideoRecorder from 'components/VideoRecorder';
-import { checkMediaRecorderSupport, isIOSDevice } from 'utils/checkOS';
+import {
+  checkMediaRecorderSupport,
+  isIOSDevice,
+  isWebSafari,
+} from 'utils/checkOS';
 import {
   Layout,
   VideoContainer,
@@ -180,16 +184,26 @@ const Video = props => {
 
           {!isIOSDevice() && (!checkMediaRecorderSupport() || error) && (
             <QuestionContainer isShow error>
-              <p className="note">
-                Your system does not have video recording capability, but you
-                will need to record a video to ask a question to the Star.{' '}
-                <br />
-                <br />
-                You can:
-                <br />
-                <br /> Record with our App
-                <br /> Use our iOS or Android app to book the star.
-              </p>
+              {isWebSafari() ? (
+                <p className="note">
+                  Safari does not currently support browser video recording.
+                  <br />
+                  <br />
+                  Please use Chrome, Firefox, any browser using your phone or
+                  you can also upload your video.
+                </p>
+              ) : (
+                <p className="note">
+                  Your system does not have video recording capability, but you
+                  will need to record a video to ask a question to the Star.{' '}
+                  <br />
+                  <br />
+                  You can:
+                  <br />
+                  <br /> Record with our App
+                  <br /> Use our iOS or Android app to book the star.
+                </p>
+              )}
             </QuestionContainer>
           )}
           {!error && (

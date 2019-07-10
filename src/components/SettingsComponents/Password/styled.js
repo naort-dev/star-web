@@ -19,6 +19,8 @@ export const FormContainer = styled(Form)`
       font-family: Gilroy;
       top: 0;
     }
+  }
+  .custom-wrap {
     .input-field {
       margin-right: 72px;
       padding-left: 70px;

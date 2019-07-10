@@ -237,7 +237,6 @@ export const FloatLabel = styled.section`
     margin: 0px auto;
     height: 32px;
     outline: none !important;
-    color: rgba(0, 0, 0, 0.8);
   }
   ::-webkit-input-placeholder {
     text-align: right;

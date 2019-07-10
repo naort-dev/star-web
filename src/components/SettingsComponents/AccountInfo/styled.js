@@ -49,3 +49,33 @@ export const InputLabel = styled.span`
   text-align: center;
   padding-bottom: 10px;
 `;
+
+export const PhoneWrap = styled.section`
+  padding-top: 32px;
+  .react-phone-number-input {
+    ${props =>
+      props.error
+        ? `border-bottom: 2px solid #980100`
+        : `border-bottom: 1px solid rgba(0, 0, 0, 0.42)`};
+    margin-bottom: 0;
+    input {
+      color: #615195 !important;
+    }
+  }
+  .ph-label {
+    padding-bottom: 0;
+  }
+  .react-phone-number-input--focus + label {
+    color: #555555;
+    font-family: Gilroy;
+    font-size: 12px;
+  }
+
+  ${props =>
+    props.valid &&
+    `label {
+      color: #555555;
+      font-family: Gilroy;
+      font-size: 12px;
+  }`}
+`;
