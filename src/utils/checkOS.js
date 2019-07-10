@@ -56,13 +56,14 @@ export const audioVideoSupport = type => {
         let haveSupport = false;
         if (devices) {
           if (type === 'audioinput') {
-
-            if (devices.find(device => device.kind === "audioinput")) {
+            if (devices.find(device => device.kind === 'audioinput')) {
               haveSupport = true;
             }
           } else if (type === 'videoinput') {
-
-            if (devices.find(device => device.kind === "audioinput") && devices.find(device => device.kind === "videoinput")) {
+            if (
+              devices.find(device => device.kind === 'audioinput') &&
+              devices.find(device => device.kind === 'videoinput')
+            ) {
               haveSupport = true;
             }
           }
@@ -70,10 +71,22 @@ export const audioVideoSupport = type => {
         return haveSupport;
       })
       .catch(() => {
-        return false
+        return false;
       });
   }
   return new Promise((resolve, reject) => {
     reject(Error(false));
   });
+};
+
+export const isWebSafari = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  const isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+  if ((ua.indexOf('safari') !== -1 && !isIOSDevice()) || isSafari) {
+    if (ua.indexOf('chrome') > -1 && !isSafari) {
+      return false;
+    }
+    return true;
+  }
+  return false;
 };

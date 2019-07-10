@@ -152,7 +152,7 @@ class Bookings extends React.Component {
     return (
       <BookingsStyled className="booking-wrapper">
         <BackArrow className="arrow" onClick={this.onBackClick} />
-        <BookingsStyled.Header className="top-heading">My Bookings</BookingsStyled.Header>
+        <BookingsStyled.Header className="top-heading">My Videos</BookingsStyled.Header>
         {
           orderDetails &&
             <OrderDetails
@@ -216,7 +216,7 @@ class Bookings extends React.Component {
               </React.Fragment>
               :
                 <EmptyText className="empty-text">You currently do not have any bookings.
-                  Visit&nbsp;<Link to="/manage/promotional-tools">Promote Yourself</Link>&nbsp;to spread the word you are available.
+                  Visit <Link to="/manage/promotional-tools">Promote Yourself</Link> to spread the word you are available.
                 </EmptyText>
           }
         </BookingsStyled.Container>

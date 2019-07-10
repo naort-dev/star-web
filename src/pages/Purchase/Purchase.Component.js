@@ -360,8 +360,9 @@ class Purchase extends Component {
     this.loginHandler();
   };
 
+ /* login handler */
   loginHandler = () => {
-    this.props.toggleLogin(true);
+    this.props.toggleLogin(true, { preventStarLogin: true, });
     this.props.updateFormBuilderProps({
       stepCount: this.state.stepCount,
       category: this.state.category,

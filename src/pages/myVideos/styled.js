@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 const BookingsStyled = styled.div`
-  padding: 20.7px 17.7px;
+  padding: 20px;
   position: relative;
+
   .arrow {
     width: 14px;
     height: 28px;
@@ -21,6 +22,14 @@ const BookingsStyled = styled.div`
   }
   @media(min-width: 832px) {
     padding: 0;
+  }
+  .comment-container {
+    @media(max-width: 831px) {
+      width: 100%;
+      .comment-section {
+        max-width: 100%;
+      }
+    }
   }
 `;
 

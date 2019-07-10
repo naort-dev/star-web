@@ -75,7 +75,7 @@ export const fetchActivitiesList = (bookingId, offset, refresh, isPublic, isAll)
   } else if (isAll) {
     apiUrl = `${Api.getRecentActivity}${bookingId}/`;
   } else {
-    apiUrl = `${Api.getRecentActivity}${bookingId}/?&offset=${offset}&limit=${limit}`;
+    apiUrl = `${Api.getRecentActivity}${bookingId}/?offset=${offset}&limit=${limit}`;
   }
   dispatch(activitiesListFetchStart(refresh, source));
   return fetch.get(apiUrl, {

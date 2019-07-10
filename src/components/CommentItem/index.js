@@ -34,14 +34,14 @@ const CommentItem = (props) => {
     } else if (type === 'tip') {
       return (
         <span className='comment tip'>
-          <span className='title'>{props.user} tipped you</span>
+          <span className='title'><span className="text-bold user-name">{props.user}</span>tipped you</span>
           <span className="text-bold">${numberToCommaFormatter(props.commentDetails.amount)}</span>
         </span>
       )
     } else if (type === 'rating') {
       return (
         <span className='comment tip'>
-          <span className='title'>{props.user} rated you</span>
+          <span className='title'><span className="text-bold user-name">{props.user}</span> rated you</span>
           <span className='rating'>
             <StarRating rating={props.commentDetails.fan_rate} readOnly />
           </span>

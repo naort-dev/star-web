@@ -149,7 +149,7 @@ const ActionBar = (props) => {
               actionStates.reaction &&
                 <ToolTip title=' Upload your reaction video or photo, the Stars really love them. Videos formats must be mp4. Photos can be .png or .jpg.'>
                   <div>
-                    <ReactionUpload getReactionFile={getReactionFile} />
+                    <ReactionUpload isLoggedIn={props.isLoggedIn} toggleLogin={props.toggleLogin} getReactionFile={getReactionFile} />
                   </div>
                 </ToolTip>
             }
