@@ -25,6 +25,27 @@ const FavouriteStyled = styled.div`
       font-size: 24px;
     }
   }
+  .favorite-listing li {
+    margin-bottom: 70px;
+    padding-bottom: 0;
+    @media (min-width: 1280px) {
+      flex: 0 0 calc(24.8% - 55px);
+    }
+    .profession {
+      font-size: 13px;
+      font-family: Gilroy-Medium;
+    }
+    .profession + div {
+      display: flex;
+    }
+    .name {
+      margin-right: 5px;
+    }
+    .name span {
+      font-size: 17px;
+      font-family: Gilroy-Medium;
+    }
+  }
 `;
 
 export default FavouriteStyled;

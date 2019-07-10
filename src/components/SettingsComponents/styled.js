@@ -14,6 +14,9 @@ export const Container = styled(Card)`
     background: #fff;
     min-height: 550px;
   }
+  ${media.mobileScreen} {
+    height: 100%;
+  }
   display: flex;
   justify-content: center;
 

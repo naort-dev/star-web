@@ -24,12 +24,6 @@ const GeneralStyled = styled.div`
     &.video-card {
       flex-direction: column;
       align-items: flex-start;
-
-      & > div {
-        span {
-          padding-left: 0;
-        }
-      }
     }
   }
 `;

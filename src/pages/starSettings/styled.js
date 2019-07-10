@@ -6,6 +6,10 @@ export const Layout = styled.section`
   height: 100%;
   padding-left: 40px;
   padding-right: 40px;
+  ${media.mobileScreen} {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .arrow-head {
     background-size: 14px 28px;
     top: 91px;

@@ -134,8 +134,11 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
     }
   }
   .comment-section {
-    min-height: 73px;
-    width: 209px;
+    width: 224px;
+    ${props => props.starMode && `
+      min-height: 73px;
+      width: 209px;    
+    `}
     overflow: hidden;
     @media(max-width: 831px) {
       min-height: auto;
@@ -180,12 +183,21 @@ StarStyled.CommentContainer = FlexBoxSB.extend`
   }
   @media(min-width: 1280px) {
     .comment-section {
-      width: 267px;
+      width: 224px;
       max-width: 100%;
+      height: 73px;
+      ${props => props.starMode && `
+        width: 267px;  
+      `}
     }
     .action-text {
       position: static;
       margin-left: 24px;
+      white-space: nowrap;
+      cursor: pointer;
+      ${props => props.starMode && `
+        white-space: normal;
+      `}
     }
   }
 `;

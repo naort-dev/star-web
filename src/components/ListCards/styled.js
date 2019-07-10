@@ -35,12 +35,12 @@ export const FlexColumn = styled.span`
 `;
 
 export const LeftContent = styled.span`
-  width: 90.7px;
+  width: 80px;
   height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 90.7px;
+  flex: 0 0 80px;
 `;
 
 export const CardContainer = FlexBox.extend`

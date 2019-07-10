@@ -15,6 +15,19 @@ export const Layout = styled.section`
     }
     .activityCard-inner {
       width: 100%;
+      ${media.mobileScreen} {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .button-booking, .button-activity {
+          align-self: center;
+          margin-top: 10px;
+        }
+        .button-activity {
+          min-width: 150px;
+          min-height: 40px; 
+        }
+      }
     }
     .custom-flex {
       flex-direction: column;
