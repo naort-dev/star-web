@@ -9,32 +9,54 @@ const getFormattedDate = date => {
     .milliseconds(0);
 };
 
-const dateFormatter = (date, occasion) => {
+const getFromWhere = (fromWhere, day) => {
+  if (!isEmpty(fromWhere) && !isEmpty(day)) {
+    return ` from <span class="boldTxt">${fromWhere} ${day}</span>`;
+  } else if (!isEmpty(fromWhere)) {
+    return ` from <span class="boldTxt">${fromWhere}</span>`;
+  } else if (!isEmpty(day)) {
+    return ` <span class="boldTxt">${day}</span>`;
+  }
+  return '';
+};
+
+const dateFormatter = (date, occasion, fromWhere) => {
   if (date) {
     const curDate = getFormattedDate(moment().format('MM/DD/YYYY'));
     const dateChk = getFormattedDate(date);
     const daysDiff = dateChk.diff(curDate, 'days');
     if (daysDiff === 0) {
-      return `<span class="boldTxt">${occasion} today</span>`;
+      return `<span class="boldTxt">${occasion}</span>
+      ${getFromWhere(fromWhere, 'today')}`;
     } else if (daysDiff === -1) {
-      return `<span class="boldTxt">${occasion} yesterday</span>`;
+      return `<span class="boldTxt">${occasion}</span>
+      ${getFromWhere(fromWhere, 'yesterday')}`;
     } else if (daysDiff === 1) {
-      return `<span class="boldTxt">${occasion} tomorrow</span>`;
+      return `<span class="boldTxt">${occasion}</span>
+      ${getFromWhere(fromWhere, 'tomorrow')}`;
     } else if (daysDiff <= -2) {
-      return `<span class="boldTxt">belated ${occasion}</span>`;
+      return `<span class="boldTxt">belated ${occasion}</span>
+      ${getFromWhere(fromWhere, '')}`;
     } else if (daysDiff >= 2 && daysDiff <= 6) {
-      return `<span class="boldTxt">${occasion}</span> this <span class="boldTxt">
+      return `<span class="boldTxt">${occasion}</span> 
+      ${getFromWhere(fromWhere, '')} this <span class="boldTxt">
       ${dateChk.format('dddd')}</span>`;
     } else if (daysDiff === 7) {
-      return `<span class="boldTxt">${occasion} coming up</span>`;
+      return `<span class="boldTxt">${occasion} ${getFromWhere(fromWhere, '')}
+      coming up</span>`;
     } else if (daysDiff > 7) {
-      return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
+      return `<span class="boldTxt">${occasion}</span> 
+      ${getFromWhere(fromWhere, '')}
+      on <span class="boldTxt">
       ${moment(date).format('MMMM Do')}</span>`;
     }
-    return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
+    return `<span class="boldTxt">${occasion}</span> 
+    ${getFromWhere(fromWhere, '')}
+    on <span class="boldTxt">
     ${dateChk.format('MMMM Do')}</span>`;
   }
-  return `<span class="boldTxt">${occasion}</span>`;
+  return `<span class="boldTxt">${occasion}</span> 
+  ${getFromWhere(fromWhere, '')}`;
 };
 
 const occasionChange = (templateType, occasion, occasionKey) => {
@@ -233,32 +255,33 @@ const getStep5Script = (
 ) => {
   if (isEmpty(fromName) && isEmpty(relationship) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span>${content3} 
-    ${dateFormatter(date, occasion)}. ${content5}`;
+    ${dateFormatter(date, occasion, specification)}. ${content5}`;
   } else if (isEmpty(fromName) && isEmpty(relationship)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
-    ${dateFormatter(date, occasion)}. ${content5}`;
+    ${dateFormatter(date, occasion, specification)}. ${content5}`;
   } else if (isEmpty(fromName) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
-    <span class="boldTxt">${occasion}</span>. 
+    <span class="boldTxt">${occasion}</span>
+    ${getFromWhere(specification, '')}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   } else if (isEmpty(relationship) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-    ${dateFormatter(date, occasion)}. ${content5}`;
+    ${dateFormatter(date, occasion, specification)}. ${content5}`;
   } else if (isEmpty(fromName)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3} 
-    ${dateFormatter(date, occasion)}. 
+    ${dateFormatter(date, occasion, specification)}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   } else if (isEmpty(relationship)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-    ${dateFormatter(date, occasion)}. ${content5}`;
+    ${dateFormatter(date, occasion, specification)}. ${content5}`;
   } else if (isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-    <span class="boldTxt">${occasion}</span>. 
+    <span class="boldTxt">${occasion}</span> 
+    ${getFromWhere(specification, '')}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   }
-
   return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-  ${dateFormatter(date, occasion)}. 
+  ${dateFormatter(date, occasion, specification)}.
   Your <span class="boldTxt">${relationship}</span> ${content5}`;
 };
 
@@ -392,14 +415,16 @@ export const ScriptGenerator = ({
       }
     } else if (templateType === 3) {
       let text1 = ' wanted me to send you ';
-      let text2 = ' I wanted me to send you ';
+      let text2 = ' I wanted to send you ';
       let occasionText = occasion;
       if (occasionKey === 37) {
         text1 = ' wanted me to propose ';
-        text2 = ' I wanted me to propose ';
+        text2 = ' I wanted to propose ';
         occasionText = '';
       }
-      if (isEmpty(fromName) && !isEmpty(relationship)) {
+      if (occasionKey === 16) {
+        text2 = ' a little birdy wanted me to tell you ';
+      } else if (isEmpty(fromName) && !isEmpty(relationship)) {
         text2 = ' wanted me to send you ';
       }
       htmlElm += getScript(
