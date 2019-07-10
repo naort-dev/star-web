@@ -158,6 +158,10 @@ const Question = props => {
     }
   };
 
+  const uploadContinue = () => {
+    uploadVideoRecorded();
+  };
+
   const stopRecordHandler = () => {
     mediaHandler(props.buttonLabel.primary.continue, true, true);
   };
@@ -446,7 +450,9 @@ const Question = props => {
           <CloseButton className="close-btn" onClick={props.closeHandler} />
           <Header>{getHeader()}</Header>
           <Layout>
-            {(isIOSDevice() || checkMediaRecorderSupport()) && (
+            {(isIOSDevice() ||
+              checkMediaRecorderSupport() ||
+              isWebSafari()) && (
               <React.Fragment>
                 <section className="video-wrapper">
                   {props.bookedItem.request_type === 3 && (
@@ -498,62 +504,58 @@ const Question = props => {
                     )}
                   </VideoContainer>
                 </section>
-                <QuestionContainer
-                  isShow={stateObject.showHideFlg || stateObject.error}
-                  continueFlg={stateObject.continueFlg}
-                  isQA={props.bookedItem.request_type === 3}
-                >
-                  {!stateObject.error && (
-                    <React.Fragment>
-                      <div className="question-wrapper">
-                        <h1 className="quesHead">What you should say...</h1>
-                        <MoreActions
-                          classes={{
-                            root: 'more-action-root',
-                            icon: 'more-action-icon',
-                          }}
-                          options={[
-                            {
-                              label: 'Contact support',
-                              value: 'contact',
-                            },
-                            {
-                              label: 'Decline booking',
-                              value: 'decline',
-                            },
-                          ]}
-                          onSelectOption={onSelectAction}
-                        />
-                        <QuestionBuilder questionsList={getQuestionList()} />
-                        {props.bookedItem.request_type === 3 && (
-                          <p className="agreement-note">
-                            Please note, the fan has signed an additional
-                            agreement that you are not liable for any answer you
-                            may give.
-                          </p>
-                        )}
-                      </div>
-                      <WebButtons>
-                        {getButton(
-                          false,
-                          '',
-                          buttonClickHandler,
-                          stateObject.buttonLabel,
-                        )}
-                        {!stateObject.continueFlg
-                          ? getFileUpload(['uploadBtn mobDisplay web-link'])
-                          : getLinkButtons('web-link uploadBtn')}
-                        {/* {getButton(
-                          true,
-                          'next-btn',
-                          nextClick,
-                          props.buttonLabel.next.label,
-                        )} */}
-                        {stateObject.continueFlg && getLinkButtons('')}
-                      </WebButtons>
-                    </React.Fragment>
-                  )}
-                </QuestionContainer>
+                {!isWebSafari() && (
+                  <QuestionContainer
+                    isShow={stateObject.showHideFlg || stateObject.error}
+                    continueFlg={stateObject.continueFlg}
+                    isQA={props.bookedItem.request_type === 3}
+                  >
+                    {!stateObject.error && (
+                      <React.Fragment>
+                        <div className="question-wrapper">
+                          <h1 className="quesHead">What you should say...</h1>
+                          <MoreActions
+                            classes={{
+                              root: 'more-action-root',
+                              icon: 'more-action-icon',
+                            }}
+                            options={[
+                              {
+                                label: 'Contact support',
+                                value: 'contact',
+                              },
+                              {
+                                label: 'Decline booking',
+                                value: 'decline',
+                              },
+                            ]}
+                            onSelectOption={onSelectAction}
+                          />
+                          <QuestionBuilder questionsList={getQuestionList()} />
+                          {props.bookedItem.request_type === 3 && (
+                            <p className="agreement-note">
+                              Please note, the fan has signed an additional
+                              agreement that you are not liable for any answer
+                              you may give.
+                            </p>
+                          )}
+                        </div>
+                        <WebButtons>
+                          {getButton(
+                            false,
+                            '',
+                            buttonClickHandler,
+                            stateObject.buttonLabel,
+                          )}
+                          {!stateObject.continueFlg
+                            ? getFileUpload(['uploadBtn mobDisplay web-link'])
+                            : getLinkButtons('web-link uploadBtn')}
+                          {stateObject.continueFlg && getLinkButtons('')}
+                        </WebButtons>
+                      </React.Fragment>
+                    )}
+                  </QuestionContainer>
+                )}
 
                 {!stateObject.error && (
                   <MobButtons isQA={props.bookedItem.request_type === 3}>
@@ -566,12 +568,6 @@ const Question = props => {
                     {!stateObject.continueFlg
                       ? getFileUpload(['uploadBtn web-link'])
                       : getLinkButtons('web-link .uploadBtn')}
-                    {/* {getButton(
-                      true,
-                      'next-btn',
-                      nextClick,
-                      props.buttonLabel.next.label,
-                    )} */}
                     {stateObject.continueFlg && getLinkButtons()}
                   </MobButtons>
                 )}
@@ -601,26 +597,39 @@ const Question = props => {
               (!checkMediaRecorderSupport() || stateObject.error) && (
                 <QuestionContainer isShow error className="error-msg">
                   {isWebSafari() ? (
-                    <p className="note">
-                      Safari does not currently support browser video recording.
-                      <br />
-                      <br />
-                      Please use Chrome, Firefox, any browser using your phone
-                      or you can also upload your video.
-                    </p>
+                    <React.Fragment>
+                      <p className="note">
+                        Safari does not currently support browser video
+                        recording.
+                        <br />
+                        <br />
+                        Please use Chrome, Firefox, any browser using your phone
+                        or you can also upload your video.
+                      </p>
+                      {props.videoSrc
+                        ? getButton(
+                            false,
+                            'safari-upload',
+                            uploadContinue,
+                            'Continue',
+                          )
+                        : getFileUpload(['uploadBtn noSupportBtn'])}
+                    </React.Fragment>
                   ) : (
-                    <p className="note">
-                      Your system does not have video recording capability, but
-                      you will need to record a video to ask a question to the
-                      Star. <br />
-                      <br />
-                      You can:
-                      <br />
-                      <br /> Record with our App
-                      <br /> Use our iOS or Android app to book the star.
-                    </p>
+                    <React.Fragment>
+                      <p className="note">
+                        Your system does not have video recording capability,
+                        but you will need to record a video to ask a question to
+                        the Star. <br />
+                        <br />
+                        You can:
+                        <br />
+                        <br /> Record with our App
+                        <br /> Use our iOS or Android app to book the star.
+                      </p>
+                      {getFileUpload(['uploadBtn noSupportBtn'])}
+                    </React.Fragment>
                   )}
-                  {getFileUpload(['uploadBtn noSupportBtn'])}
                 </QuestionContainer>
               )}
 
