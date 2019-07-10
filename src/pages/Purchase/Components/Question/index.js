@@ -184,7 +184,7 @@ const Question = props => {
           type="file"
           id="fileUpload"
           className="hidden"
-          accept="video/*"
+          accept="video/mp4,video/x-m4v,video/*"
           onChange={uploadHandler()}
         />
         Upload video
@@ -400,7 +400,7 @@ const Question = props => {
       <input
         ref={videoRecordInput}
         type="file"
-        accept="video/*;capture=camcorder"
+        accept="video/mp4,video/x-m4v,video/*;capture=camcorder"
         className="videoInputCapture"
         onChange={uploadHandler(true)}
       />
