@@ -7,6 +7,7 @@ export const Container = styled(Card)`
   width: 100%;
   border-radius: 0;
   background: #f6f6f6;
+  box-shadow: none !important;
   ${media.webView} {
     width: 700px;
     height: auto;

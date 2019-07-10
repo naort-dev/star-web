@@ -93,3 +93,7 @@ export const updateNotification = obj => (dispatch, getState) => {
       return exception.response.data;
     });
 };
+
+export const userDetailsUpdateHandler = obj => (dispatch, getState) => {
+  dispatch(updateUserDetails(getUpdatedUserDetails(getState, obj)));
+};

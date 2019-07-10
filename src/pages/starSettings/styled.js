@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
+import { Card } from 'styles/CommonStyled';
 
 export const Layout = styled.section`
   width: 100%;
@@ -59,5 +60,22 @@ export const ContentWrapper = styled.section`
     .menu-ul {
       padding: 0;
     }
+  }
+`;
+
+export const OtpWrap = styled(Card)`
+  height: 100vh;
+  width: 100%;
+  border-radius: 0;
+  background: #f6f6f6;
+  position: relative;
+  ${media.webView} {
+    width: 700px;
+    height: 717px;
+    border-radius: 15px;
+    background: #fff;
+  }
+  .otpTitle {
+    padding-top: 65px;
   }
 `;
