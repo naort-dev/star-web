@@ -76,7 +76,7 @@ function mapDispatchToProps(dispatch) {
     updateBookingData: data => {
       dispatch(updateBookingData(data));
     },
-    toggleLogin: state => dispatch(toggleLogin(state)),
+    toggleLogin: (state, options) => dispatch(toggleLogin(state, options)),
     updateToast: toastObj => dispatch(updateToast(toastObj)),
     clearAll: () => {
       dispatch(clearAll());

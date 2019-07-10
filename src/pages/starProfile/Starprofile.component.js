@@ -73,6 +73,7 @@ const StarProfile = (props) => {
                     toggleRequestFlow={props.toggleRequestFlow}
                     userDetails={props.userDetails}
                     celebDetails={props.celebDetails}
+                    isStar={props.isStar}
                   />
                   <DetailSection
                     showProfileVideo={profVideo}
@@ -147,6 +148,7 @@ StarProfile.propTypes = {
   videosList: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
   reactionsList: PropTypes.object.isRequired,
+  isStar: PropTypes.bool.isRequired,
 }
 
 StarProfile.defaultProps = {

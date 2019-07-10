@@ -401,7 +401,10 @@ class SignupMethod extends React.Component {
         this.state.loading &&
           <ActionLoader />
       }
-        <BackArrow className="leftArrow" onClick={this.props.onBack} />
+        {
+          !this.props.signupDetails.disableRoleChange &&
+            <BackArrow className="leftArrow" onClick={this.props.onBack} />
+        }
         <SignUpMethod.Container>
           <SignUpMethod.Heading>How do you want to create your account?</SignUpMethod.Heading>
           <SignUpMethod.ButtonDiv>
