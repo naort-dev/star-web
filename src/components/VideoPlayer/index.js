@@ -196,7 +196,7 @@ export default class VideoPlayer extends React.Component {
             !isPlaying &&
               <VideoRenderDiv.ControlIconWrapper className="player-icon-wrap">
                 <VideoRenderDiv.ControlIcon className="play-button">
-                  <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                  <FontAwesomeIcon icon={faPlay} />
                 </VideoRenderDiv.ControlIcon>
                 {this.props.renderCustomText()}
               </VideoRenderDiv.ControlIconWrapper>
