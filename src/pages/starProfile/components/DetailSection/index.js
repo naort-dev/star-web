@@ -20,34 +20,6 @@ import StarRating from '../../../../components/StarRating';
 import StarProfileStyled from '../../styled';
 import DetailStyled from './styled';
 
-const tags = [
-  {
-    id: 7,
-    name: 'Actor',
-  },
-  {
-    id: 8,
-    name: 'Avenger',
-  },
-
-  {
-    id: 9,
-    name: 'Actor',
-  },
-  {
-    id: 10,
-    name: 'Avenger',
-  },
-  {
-    id: 11,
-    name: 'Actor',
-  },
-  {
-    id: 12,
-    name: 'Avenger',
-  },
-];
-
 const DetailSection = props => {
   const [followStatus, toggleFollowStatus] = useState(
     props.userDetails.is_follow ? props.userDetails.is_follow : false,
@@ -178,9 +150,9 @@ const DetailSection = props => {
             )}
           </DetailStyled.StarName>
 
-          {tags.length > 0 && (
+          {props.celebDetails.tags && props.celebDetails.tags.length > 0 && (
             <section className="tag-wrap">
-              {tags.map(tag => {
+              {props.celebDetails.tags.map(tag => {
                 return (
                   <Pill tag={tag} key={tag.id} className="tag-item">
                     {' '}

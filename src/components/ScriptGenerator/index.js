@@ -42,8 +42,11 @@ const dateFormatter = (date, occasion, fromWhere) => {
       ${getFromWhere(fromWhere, '')} this <span class="boldTxt">
       ${dateChk.format('dddd')}</span>`;
     } else if (daysDiff === 7) {
-      return `<span class="boldTxt">${occasion} ${getFromWhere(fromWhere, '')}
-      coming up</span>`;
+      return `<span class="boldTxt">${occasion}</span> ${getFromWhere(
+        fromWhere,
+        '',
+      )}
+      <span class="boldTxt">coming up</span>`;
     } else if (daysDiff > 7) {
       return `<span class="boldTxt">${occasion}</span> 
       ${getFromWhere(fromWhere, '')}
@@ -426,7 +429,10 @@ export const ScriptGenerator = ({
         text2 = ' I wanted to propose ';
         occasionText = '';
       }
-      if (occasionKey === 16) {
+      if (occasionKey === 8) {
+        text1 = ' wanted me to send you an ';
+        text2 = ' I wanted to send you an ';
+      } else if (occasionKey === 16) {
         text2 = ' a little birdy wanted me to tell you ';
       } else if (isEmpty(fromName) && !isEmpty(relationship)) {
         text2 = ' wanted me to send you ';
