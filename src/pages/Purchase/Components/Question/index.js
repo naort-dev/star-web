@@ -283,8 +283,7 @@ const Question = props => {
               {!isIOSDevice() &&
                 checkMediaRecorderSupport() &&
                 !stateObject.error &&
-                !stateObject.isUpload &&
-                !isWebSafari() && (
+                !stateObject.isUpload && (
                   <TimeSpan>
                     <span className="text">{renderTimeHeader()}</span>
                     <span className="time">{renderTime()}</span>
