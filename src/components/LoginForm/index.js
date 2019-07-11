@@ -69,7 +69,7 @@ export default class LoginForm extends React.Component {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
     window.addEventListener("storage", this.listenToStorage);
-    if (!this.props.isLoggedIn && this.gSignIn) {
+    if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
         width: 200,
@@ -226,7 +226,6 @@ export default class LoginForm extends React.Component {
         });
       } else {
         skipSocialLogin = true;
-        console.log(val)
         this.props.updateLoginStatus(val);
         this.props.fetchUserDetails(val.id);
       }
@@ -264,6 +263,7 @@ export default class LoginForm extends React.Component {
   };
   onGmail = () => {
     const check = document.getElementsByClassName("abcRioButtonIcon");
+    console.log(check)
     check[0].click();
     this.setState({ gmailClick: true });
   };
