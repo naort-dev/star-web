@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Select from 'react-select';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
@@ -45,18 +45,6 @@ const Control = prop => {
   );
 };
 
-const MenuList = prop => {
-  return (
-    <Scrollbars
-      renderView={props => <div {...props} className="select__menu-list"/>}
-      autoHeight
-      autoHeightMax={prop.maxHeight}
-    >
-      {prop.children}
-    </Scrollbars>
-  )
-}
-
 const Option = prop => {
   return (
     <MenuItem
@@ -85,10 +73,31 @@ const Option = prop => {
 const MultiSelect = props => {
   const [inputValue, updateInput] = useState('');
 
+  const MenuList = useCallback(prop => {
+    return (
+      <React.Fragment>
+      <Scrollbars
+        renderView={scrollProps => <div {...scrollProps} className="select__menu-list"/>}
+        autoHeight
+        autoHeightMax={prop.maxHeight}
+      >
+        {prop.children}
+      </Scrollbars>
+      {props.MenuListAdornment}
+      </React.Fragment>
+    )
+  }, [props.MenuListAdornment])
+
   const updateInputValue = event => {
     if (event) {
+      if (props.onInputChange) {
+        props.onInputChange(event.target.value)
+      }
       updateInput(event.target.value);
     } else {
+      if (props.onInputChange) {
+        props.onInputChange('')
+      }
       updateInput('');
     }
   };
