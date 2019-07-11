@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const ManageStyled = styled.div`
-  margin-top: 74px;
-  min-height: calc(100vh - 74px);
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
   background: ${props => props.theme.white};
   @media(min-width: 832px) {
     margin-top: 244px;
@@ -30,9 +30,10 @@ const ManageStyled = styled.div`
 
     .popstyle-inner {
       padding-top: 35px;
+      padding-bottom: 0;
 
       @media (max-width: 831px) {
-        padding-top: 10px;
+        padding: 15px 30px 20px;
       }
 
       .sub-head {
@@ -44,6 +45,7 @@ const ManageStyled = styled.div`
         @media (max-width: 831px) {
           padding-top: 0;
           padding-bottom: 25px;
+          font-size: 28px;
         }
       }
       .row-wrap {
@@ -112,12 +114,19 @@ const ManageStyled = styled.div`
           @media (max-width: 831px) {
             padding-top: 0;
             padding-bottom: 25px;
+            font-size: 28px;
+            font-weight: normal;
           }
         }
         .head-text {
           margin-bottom: 16px;
         }
       }
+    }
+  }
+  .manage-user-header{
+    @media(max-width: 831px) {
+      box-shadow: 0 0 20px 0 #00000029;
     }
   }
 `;

@@ -47,7 +47,7 @@ const Header = props => {
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />
       </FlexCenter>
-      <HeaderText>{props.customHeading || props.header}</HeaderText>
+      <HeaderText className='modal-title'>{props.customHeading || props.header}</HeaderText>
     </HeaderDiv>
   );
 };

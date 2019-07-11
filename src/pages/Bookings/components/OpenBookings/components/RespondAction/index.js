@@ -428,6 +428,8 @@ const Question = props => {
         continueFlg: false,
       });
     }
+    updateIsQuestion(true);
+    setPlaying(false);
   }, [props.bookedItem, props.buttonLabel]);
 
   const checkDeviceSupport = async () => {

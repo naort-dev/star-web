@@ -113,7 +113,7 @@ const StarAvatar = ({ star, type, ...props }) => {
         <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)} className="profession">
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
-        <AvatarContainer.StarDescription>
+        <AvatarContainer.StarDescription className="wrap-profession">
           <AvatarContainer.Name title={getStarName(star.nick_name, star.first_name, star.last_name)} className="name">
             <span id={`${star.user_id}-${type}-name`}>
               {

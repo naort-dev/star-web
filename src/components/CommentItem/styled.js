@@ -78,7 +78,7 @@ CommentStyled.Comment = styled.span`
     }
     &.tip {
       .text-bold {
-        font-size: 16px;
+        font-size: 12px;
       }
     }
     .rating {
