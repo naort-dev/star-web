@@ -21,6 +21,7 @@ class Api {
   static getOccasionList = 'v2/request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static setVideoView = 'v1/request/readvideo/';
+  static setTags = 'v2/user/tags/'
   static otherRelation = 'v1/request/other_relation/';
   static getEphemeralKey = 'v1/payments/generatekey/';
   static tipPayment = 'v1/payments/paytip/';
