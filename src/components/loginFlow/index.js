@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { LoginContainer, HeaderSection } from './styled';
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
-import { loginUser, resetSessionError, updateLoginStatus } from '../../store/shared/actions/login';
+import { loginUser, resetSessionError, updateLoginStatus, loginFetchIncorrect } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
@@ -121,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
   updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loginFetchIncorrect: (error, status) => dispatch(loginFetchIncorrect(error, status)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginFlow));

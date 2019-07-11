@@ -226,8 +226,12 @@ export default class LoginForm extends React.Component {
         });
       } else {
         skipSocialLogin = true;
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
+        if (this.props.loginOptions && this.props.loginOptions.preventStarLogin && val.role_details.role_code === ROLES.star) {
+          this.props.loginFetchIncorrect('Booking a video is only available for Starsona fan accounts.', '400');
+        } else {
+          this.props.updateLoginStatus(val);
+          this.props.fetchUserDetails(val.id);
+        }
       }
     }
     if (!skipSocialLogin) {
