@@ -161,10 +161,8 @@ function FormContainer(props) {
       validateStepOne(![hostName !== ''].every(condition => condition));
       validateStepTwo(false);
     } else if (templateType === 2) {
-      validateStepOne(
-        ![hostName !== '', specification !== ''].every(condition => condition),
-      );
-      validateStepTwo(false);
+      validateStepOne(![hostName !== ''].every(condition => condition));
+      validateStepTwo(![specification !== ''].every(condition => condition));
     } else if (templateType === 6) {
       validateStepOne(
         ![hostName !== '', specification !== ''].every(condition => condition),
