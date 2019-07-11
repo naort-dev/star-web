@@ -22,6 +22,9 @@ export const Layout = styled.section`
     @media (min-width: 832px) and (max-width: 1280px) {
       top: -21px;
     }
+    @media (max-width: 831px){
+      top: 95px;
+    }
   }
 
   .title {
