@@ -29,6 +29,11 @@ QuickViewStyled.Content = styled.div`
   padding: 30px 25px 0;
   padding-right: 0;
   width: calc(100% - 300.5px);
+
+  .tag-wrap {
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;
 
 QuickViewStyled.Categories = styled.span`
@@ -63,7 +68,11 @@ QuickViewStyled.Avatar = styled.span`
   width: ${props => (props.size ? `${props.size}px` : '80px')};
   height: ${props => (props.size ? `${props.size}px` : '80px')};
   box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
+  background: ${props =>
+      props.imageUrl
+        ? `url(${props.imageUrl})`
+        : 'url(assets/images/default-cover.jpg)'}
+    no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -132,8 +141,11 @@ QuickViewStyled.ActionBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
-  ${props => props.available && `
+  background-color: ${props =>
+    props.available ? props.theme.orangePink : props.theme.brownGrey};
+  ${props =>
+    props.available &&
+    `
     cursor: pointer;
   `}
 `;

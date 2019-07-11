@@ -9,7 +9,7 @@ import SearchSection from './styled';
 import Loader from '../Loader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
-import { updateSearchParam, updateSelectedSubCategory, updateCategory } from '../../pages/landing/actions/updateFilters';
+import { updateSearchParam, updateSelectedSubCategory, updateCategory, updateSelectedTag } from '../../pages/landing/actions/updateFilters';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
@@ -164,7 +164,9 @@ class Search extends React.Component {
 
   categoryClick = profession => () => {
     const { professions } = this.props.professionsList;
-    if (profession.parent_id) {
+    if (profession.search_type === 'tag') {
+      this.props.updateSelectedTag(profession.tag_name, profession.tag_id);
+    } else if (profession.parent_id) {
       const parentProfession = professions.find(item => item.id === profession.parent_id);
       this.props.updateCategory(parentProfession.title, profession.parent_id, parentProfession.child);
       this.props.updateSelectedSubCategory([profession]);
@@ -174,7 +176,7 @@ class Search extends React.Component {
     }
     this.deactivateSearch();
     if (this.props.location.pathName !== '/browse-stars') {
-      this.props.history.push('./browse-stars');
+      this.props.history.push('/browse-stars');
     }
   }
 
@@ -190,8 +192,8 @@ class Search extends React.Component {
                 <SearchSection.CategoryList>
                   {
                     suggestions.professions.map(profession => (
-                      <SearchSection.CategoryItem onClick={this.categoryClick(profession)} key={profession.id}>
-                        <span>{profession.title}</span>
+                      <SearchSection.CategoryItem onClick={this.categoryClick(profession)} key={profession.id || profession.tag_id}>
+                        <span>{profession.title || profession.tag_name}</span>
                       </SearchSection.CategoryItem>
                     ))
                   }
@@ -312,6 +314,7 @@ const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
+  updateSelectedTag: (tagName, tagId) => dispatch(updateSelectedTag(tagName, tagId)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
 });

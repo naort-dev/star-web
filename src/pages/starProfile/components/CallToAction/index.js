@@ -15,9 +15,9 @@ const CallToAction = (props) => {
     const { userDetails } = props;
     let shortName = '';
     if (userDetails.nick_name) {
-      [shortName] = userDetails.nick_name.split(' ');
+      shortName = userDetails.nick_name;
     } else if (userDetails.first_name) {
-      [shortName] = userDetails.first_name.split(' ');
+      shortName = userDetails.first_name.split(' ');
     }
     return shortName;
   }

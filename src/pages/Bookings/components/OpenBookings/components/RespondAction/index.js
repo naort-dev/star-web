@@ -428,6 +428,7 @@ const Question = props => {
         continueFlg: false,
       });
     }
+    setPlaying(false);
   }, [props.bookedItem, props.buttonLabel]);
 
   const checkDeviceSupport = async () => {
@@ -577,7 +578,7 @@ const Question = props => {
                 {(stateObject.buttonLabel ===
                   props.buttonLabel.primary.record ||
                   props.shouldRecord) &&
-                  !stateObject.error && (
+                  (!stateObject.error || isQuestion) && (
                     <ShowHide
                       onClick={() =>
                         updatedStateHandler({
@@ -614,14 +615,6 @@ const Question = props => {
                         Please use Chrome, Firefox, any browser using your phone
                         or you can also upload your video.
                       </p>
-                      {props.videoSrc
-                        ? getButton(
-                            false,
-                            'safari-upload',
-                            uploadContinue,
-                            'Continue',
-                          )
-                        : getFileUpload(['uploadBtn noSupportBtn'])}
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
@@ -635,9 +628,19 @@ const Question = props => {
                         <br /> Record with our App
                         <br /> Use our iOS or Android app to book the star.
                       </p>
-                      {getFileUpload(['uploadBtn noSupportBtn'])}
                     </React.Fragment>
                   )}
+
+                  {props.videoSrc && isWebSafari()
+                    ? getButton(
+                        false,
+                        'safari-upload',
+                        uploadContinue,
+                        'Continue',
+                      )
+                    : getFileUpload(['uploadBtn noSupportBtn'])}
+
+                  {!isWebSafari() && getFileUpload(['uploadBtn noSupportBtn'])}
                 </QuestionContainer>
               )}
 
