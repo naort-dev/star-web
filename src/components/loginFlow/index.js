@@ -101,6 +101,7 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  commonError: state.session.error.message,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,

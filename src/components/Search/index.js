@@ -176,7 +176,7 @@ class Search extends React.Component {
     }
     this.deactivateSearch();
     if (this.props.location.pathName !== '/browse-stars') {
-      this.props.history.push('./browse-stars');
+      this.props.history.push('/browse-stars');
     }
   }
 
