@@ -218,7 +218,19 @@ const QuickViewModal = props => {
                   )}
                 </QuickViewStyled.StarName>
               </div>
-              {/* <Pill text="sdfsdfsd"> </Pill> */}
+
+              {props.celebDetails.tags && props.celebDetails.tags.length > 0 && (
+                <section className="tag-wrap">
+                  {props.celebDetails.tags.map(tag => {
+                    return (
+                      <Pill tag={tag} key={tag.id} className="tag-item">
+                        {' '}
+                      </Pill>
+                    );
+                  })}
+                </section>
+              )}
+
               {props.celebDetails.average_response_time !== '' && (
                 <React.Fragment>
                   <QuickViewStyled.SubHeader>
