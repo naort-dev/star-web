@@ -176,7 +176,7 @@ BookingStyled.RightSection = styled.div`
     display: ${props => (props.starMode ? 'none' : 'block')};
   }
   @media(min-width: 832px) {
-    flex: 1;
+    flex: 1 1 auto;
     padding-top: 0;
     ${BookingStyled.OrderText} {
       display: none;
@@ -202,7 +202,7 @@ BookingStyled.CommentList = styled.div`
   `}
   @media screen and (min-width: 832px) {
     height: ${props => (props.starMode ? '342px' : '300px')};
-    flex: 1;
+    flex: 1 1 auto;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
     height: ${props => (props.starMode ? '342px' : '252px')};

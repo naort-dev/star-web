@@ -13,6 +13,6 @@ export const SubHeaderWrap = styled.div`
   .arrow-head {
     width: 14px;
     height: 28px;
-    top: 100px;
+    top: 91px;
   }
 `;

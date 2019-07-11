@@ -75,7 +75,7 @@ export const ImageWrapper = styled.span`
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
-  flex: 1;
+  flex: 1 1 auto;
   font-size: 80px;
   color: #2f839d;
   padding-top: 20px;

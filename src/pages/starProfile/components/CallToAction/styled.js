@@ -62,7 +62,7 @@ ActionStyled.Description = styled.span`
   &#action-description {
     white-space: normal !important;
     @media (max-width: 832px) {
-      font-size: 24px !important;
+      font-size: 20px !important;
     }
   }
   strong {

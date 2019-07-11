@@ -5,7 +5,7 @@ export const Layout = styled.section`
   .colDir {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1 auto;
   }
   .selectCard {
     font-size: 18px;
