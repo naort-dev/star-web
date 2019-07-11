@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LoginContainer, HeaderSection } from './styled';
-import HeaderLogin from '../../components/HeaderSection';
 import MainLoader from '../../components/MainLoader';
 import LoginForm from '../../components/LoginForm';
 import ForgotPassword from '../../components/ForgotPasswordForm';

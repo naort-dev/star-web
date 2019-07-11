@@ -2,106 +2,66 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
-  @media(min-width: 768px) and (max-width: 1024px) {
+  background: #fff;
+  display: none;
+  @media(min-width: 832px) {
     display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    border-top: 1px solid #CCCCCC;
+    padding: 0 30px;
+    height: 90px;
   }
-  @media(min-width: 1025px) {
-    display: flex;
-    flex-direction: column;
-
+  @media(min-width: 1280px) {
+    padding: 0 51px;
+    height: 114px;
   }
 `;
 
-const Separator = styled.span`
-  border-top: 1px solid #CCCCCC;
-  display: block;
-  margin: 0 40px;
-  @media(min-width: 768px) {
-    display: none;
-  }
+const Column = styled.div`
+  width: 80%;
+  display: flex;
 `;
 
 const List = styled.ul`
   padding: 20px 0;
   line-height: 30px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    padding: 10px 0;
-    line-height: 42px;
-    display: flex;
-    flex-wrap: wrap;
-    width: 40%;
-  }
-  @media(min-width: 1025px) {
+  @media(min-width: 832px) {
     margin-left: 20px;
+    display: flex;
+    align-items: center;
   }
 `;
 
 const ListItem = styled.li`
-  padding: 0 40px;
-  font-family: 'Avenir-Regular';
-  font-size: 14px;
+  padding: 0 15px;
+  font-family: 'Avenir-Heavy';
   cursor: pointer;
-  &:hover {
-    color: #FF6C58;
-    opacity: 1;
-  }
-  @media(minw-width: 768px) {
-    opacity: 0.5;
-  }
-  @media(min-width: 768px) and (max-width: 1024px) {
-    padding: 0 10px;
-  }
-  @media(min-width: 1025px) {
-    font-size: 12px;
-  }
-`;
-
-const DownloadLabel = styled.div`
-  display: none;
-  @media(min-width: 1025px) {
+  text-align: left;
+  a, a:visited {
+    color: rgb(47, 131, 157);
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.07;
     display: block;
-    font-family: 'Avenir-Bold';
-    color: #333333;
+  }
+  @media(min-width: 832px) {
+    padding-right: 30px;
     font-size: 12px;
-    margin: 0;
-    margin: 0 20px;
-    order: 1;
-    span {
-      display: inline-block;
-    }
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      background-color: #ccc;
-      vertical-align: middle;
-      width: 50px;
-      width: calc(50% - 69px);
-    }
-    &::before {
-      margin-right: 10px;
-    }
-    &::after {
-      margin-left: 10px;
-    }
   }
 `;
 
 const shareIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    display: inline-block;
+  @media(min-width: 832px) {
     margin: 0;
-    margin-top: 10px;
-  }
-  @media(min-width: 1025px) {
-    margin: 0;
-    order:3;
     text-align: center;
-    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    a {
+      font-size: 32px;
+      display: block;
+      margin-right: 20px;
+      color: ${props => props.theme.brownGrey};
+    }
   }
 `;
 
@@ -116,15 +76,15 @@ const shareIcon = styled.img`
 
 const StoreIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    display: inline-block;
+  @media(min-width: 832px) {
     margin: 0;
-  }
-  @media(min-width: 1025px) {
-    margin: 0;
-    order: 2;
     text-align: center;
+    display: flex;
+    align-items: center;
     margin: 0 20px;
+    margin-right: 0;
+    width: 20%;
+    justify-content: flex-end;
   }
 `;
 
@@ -133,20 +93,18 @@ const StoreIcon = styled.img`
   width: 117px;
   height: 40px;
   margin: 10px;
-  margin-left: 0;
   display: inline-block;
 `;
 FooterStyled.Anchor = styled.a`
+  font-family: Gilroy-Light;
   &:visited{
     color:#333333;
   }
   color: #333333;
 `;
-
+FooterStyled.Column = Column;
 FooterStyled.list = List;
 FooterStyled.listItem = ListItem;
-FooterStyled.Separator = Separator;
-FooterStyled.DownloadLabel = DownloadLabel;
 FooterStyled.StoreIconWrapper = StoreIconWrapper;
 FooterStyled.StoreIcon = StoreIcon;
 FooterStyled.shareIconWrapper = shareIconWrapper;

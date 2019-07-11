@@ -247,5 +247,35 @@ injectGlobal`
   padding: 6px !important;
 }
 
+.common-button-nobr {
+  border: 0;
+}
+.no-focus {
+  &:focus {
+    outline: none;
+  }
+}
+.align-center {
+  .common-btn {
+    margin: 0 auto;
+  }
+}
+.alternate-modal-root {
+  background: #f6f6f6;
+}
+.custom-modal{
+  padding: 75px 0;
+  &.profile-modal {
+    @media(max-width: 831px) {
+      padding: 0;
+
+      & > div {
+        margin: auto;
+        min-height: 100%;
+        background: #f6f6f6;
+      }
+    }
+  }
+}
 `
 ;

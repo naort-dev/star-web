@@ -1,7 +1,9 @@
 const colorThemes = {
   greyishBrown: '#555555',
+  brown: '#6a6a6a',
   brownGrey: '#999999',
   brownGreyTwo: '#aaaaaa',
+  borderGrey: '#d0d0d0',
   veryLightPink: '#cccccc',
   veryLightPinkTwo: '#eaeaea',
   white: '#f6f6f6',

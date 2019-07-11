@@ -18,7 +18,6 @@ import getAWSCredentials from '../../utils/AWSUpload';
 import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
-import { saveImage } from '../../store/shared/actions/imageViewer';
 import { celebrityFollowStatus } from '../../store/shared/actions/followGroupCelebrity';
 import { fetchAllProfessions } from '../../store/shared/actions/getProfessions';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
@@ -354,7 +353,6 @@ const mapDispatchToProps = dispatch => ({
   onClearStreams: () => dispatch(clearStreams()),
   onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),
   uploadVideo: () => dispatch(uploadVideo()),
-  onSaveImage: imageData => dispatch(saveImage(imageData)),
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
   updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),

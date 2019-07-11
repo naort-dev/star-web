@@ -1,1 +1,1 @@
-export { Starprofile } from './Starprofile.lodable';
+export { StarProfile } from './Starprofile.lodable';

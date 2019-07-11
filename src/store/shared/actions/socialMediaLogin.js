@@ -38,22 +38,26 @@ export const socialMediaLoginFetchFailed = error => ({
   error,
 });
 
-export const socialMediaLogin = ({userName, firstName, lastName, nickName, source, profilePhoto, role, fbId, gpId ,instId, referral, twId}) => (dispatch, getState) => {
-  dispatch(socialMediaLoginFetchStart());
-  return fetch.post(Api.socialMediaLogin, {
+export const socialMediaLogin = ({userName, firstName, lastName, nickName, source, profilePhoto, role, fbId, gpId ,instId, referral, twId}, loginOptions) => (dispatch, getState) => {
+  let options = {
     username: userName,
     first_name: firstName,
     last_name: lastName,
     nick_name: nickName,
     sign_up_source: source,
     profile_photo: profilePhoto,
-    role: role,
+    role,
     fb_id: fbId,
     gp_id: gpId,
     in_id: instId,
     tw_id: twId,
     referral_code: referral,
-  }).then((resp) => {
+  }
+  if (loginOptions && loginOptions.preventStarLogin) {
+    options = {...options, booking: true};
+  }
+  dispatch(socialMediaLoginFetchStart());
+  return fetch.post(Api.socialMediaLogin, options).then((resp) => {
    
     if (resp.data && resp.data.success) {
       localStorage.setItem('data', JSON.stringify(resp.data.data));
@@ -73,6 +77,6 @@ export const socialMediaLogin = ({userName, firstName, lastName, nickName, sourc
     return resp;
   }).catch((exception) => {
     dispatch(socialMediaLoginFetchEnd());
-    dispatch(socialMediaLoginFetchFailed(exception));
+    dispatch(socialMediaLoginFetchFailed(exception.response.data.error.message));
   });
 };

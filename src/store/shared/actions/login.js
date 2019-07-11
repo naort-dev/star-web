@@ -63,12 +63,16 @@ export const updateLoginStatus = sessionDetails => (dispatch) => {
   }
 };
 
-export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {
+export const loginUser = (loginEmail, loginPassword, loginOptions) => (dispatch, getState) => {
   dispatch(loginFetchStart());
-  return fetch.post(Api.login, {
+  const options = {
     username: loginEmail,
     password: loginPassword,
-  }).then((resp) => {
+  }
+  if (loginOptions && loginOptions.preventStarLogin) {
+    options.booking = true;
+  }
+  return fetch.post(Api.login, options).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(loginFetchEnd());
       localStorage.setItem('data', JSON.stringify(resp.data.data));

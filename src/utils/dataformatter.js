@@ -8,6 +8,12 @@ export function numberToDollarFormatter(input) {
 }
 
 export function numberToCommaFormatter(input) {
+  if (!input) {
+    return 0;
+  }
+  if (typeof(input) === 'string') {
+    return input.replace(/\B(?=(\d{3})+(?!\d))/g, ','); 
+  }
   return (parseFloat(input, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 }
 
@@ -28,4 +34,25 @@ export function iosPriceFinder(actualPrice, priceList) {
     }
   }
   return iosPrice;
+}
+
+export function findCompletedVideo(bookingData) {
+  if (bookingData && bookingData.request_video) {
+    const finalVideo = bookingData.request_video.find(videoItem => videoItem.video_status === 1);
+    return finalVideo || {};
+  }
+  return {}
+}
+
+export function parseQueryString(queryString) {
+  const  queryList = {}
+  if (queryString) {
+    const query = queryString.split('?')[1];
+    const queryItem = query.split('&');
+    queryItem.forEach((item) => {
+      const queryArray = item.split('=')
+      queryList[queryArray[0]] = queryArray[1];
+    })
+  }
+  return queryList;
 }

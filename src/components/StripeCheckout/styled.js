@@ -224,6 +224,7 @@ PaymentStyled.CardTypeIcon = styled.span`
   background: ${props => (props.cardImage ? `url(${props.cardImage})` : 'url(assets/images/card-icons/default-icon.svg)')} no-repeat;
   background-size: 100% 100%;
   display: inline-block;
+
 `;
 
 PaymentStyled.ErrorElement = styled.span`

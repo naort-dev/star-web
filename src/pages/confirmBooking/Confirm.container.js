@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
-import { updateVideosList, fetchMyVideosList } from '../requests/actions/getMyVideosList';
+import { updateVideosList, fetchMyVideosList } from '../myVideos/actions/getMyVideosList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { starsonaRequest, resetPaymentDetails, resetPaymentsError } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
@@ -35,7 +34,6 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   starsonaRequest: (bookingData, publicStatus, callback) => dispatch(starsonaRequest(bookingData, publicStatus, callback)),
   resetPaymentDetails: () => dispatch(resetPaymentDetails()),
-  setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   resetRequestFlow: () => dispatch(resetRequestFlow()),
   clearAudio: () => dispatch(clearAll()),
   onClearStreams: () => dispatch(clearStreams()),

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
+import { fetchFeaturedStars } from './actions/getFeaturedStars';
 import { toggleSignup } from '../../store/shared/actions/toggleModals';
 import { fetchVideosList } from './actions//getVideosList';
+import { setDemoUser } from '../../store/shared/actions/setSignupFlow';
 
 import {
   updateCategory,
-  switchTab,
   updateSearchParam,
   updatePriceRange,
   updateSort,
@@ -19,6 +20,7 @@ import Landing from './Landing.component';
 const mapStateToProps = state => ({
   celebList: state.celebList,
   videosList: state.videosList,
+  featuredStars: state.featuredStars,
   professionsList: state.professionsList,
   filters: state.filters,
   configData: state.config.data,
@@ -29,7 +31,6 @@ const mapDispatchToProps = dispatch => ({
   fetchCelebrityList: (offset, refresh, category) => dispatch(fetchCelebrityList(offset, refresh, category)),
   fetchVideosList: (offset, refresh) => dispatch(fetchVideosList(offset, refresh)),
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
-  switchTab: label => dispatch(switchTab(label)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
   updatePriceRange: (lowPrice, highPrice) => dispatch(updatePriceRange(lowPrice, highPrice)),
   updateSort: value => dispatch(updateSort(value)),
@@ -37,6 +38,8 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
+  setDemoUser: (value) => dispatch(setDemoUser(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

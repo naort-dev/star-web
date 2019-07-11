@@ -18,7 +18,6 @@ export default class StarSupporters extends React.Component {
     super(props);
     this.state = {
       selectedTab: 'All',
-      searchText: '',
       scrollTarget: '',
       inviteView: false,
       alertText: '',
@@ -48,8 +47,8 @@ export default class StarSupporters extends React.Component {
     }
   }
 
-  fetchNonMemberList = (offset, refresh, searchText) => {
-    this.props.fetchNonMemberList(offset, refresh, this.props.isStar, searchText);
+  fetchNonMemberList = (offset, refresh) => {
+    this.props.fetchNonMemberList(offset, refresh, this.props.isStar);
   }
 
   toggleLoader = () => {
@@ -127,26 +126,12 @@ export default class StarSupporters extends React.Component {
   }
 
   showInviteView = () => {
-    this.setState({ inviteView: true, searchText: '' });
+    this.setState({ inviteView: true });
     this.fetchNonMemberList(0, true);
   }
 
   closeAlertView = () => {
     this.setState({ alertText: '' });
-  }
-
-  handleSearchChange = (e) => {
-    this.setState({ searchText: e.target.value });
-    if (e.target.value.trim('').length === 0) {
-      this.fetchNonMemberList(0, true);
-    } else {
-      this.fetchNonMemberList(0, true, e.target.value);
-    }
-  }
-
-  clearSearch = () => {
-    this.setState({ searchText: '' });
-    this.fetchNonMemberList(0, true);
   }
 
   renderMembers = member => (
@@ -275,24 +260,9 @@ export default class StarSupporters extends React.Component {
                 >
                   <SupportStyled.SubHeading>
                     {
-                      !isStar && 'Add Stars'
+                      !isStar && 'Invite stars'
                     }
                   </SupportStyled.SubHeading>
-                  {
-                    !isStar &&
-                    <SupportStyled.InputWrapper>
-                      <SupportStyled.Input
-                        placeholder="Search Stars"
-                        value={this.state.searchText}
-                        onChange={this.handleSearchChange}
-                      />
-                      {
-                        this.state.searchText.length >= 3 ?
-                          <SupportStyled.ClearButton onClick={this.clearSearch} />
-                        : null
-                      }
-                    </SupportStyled.InputWrapper>
-                  }
                   { this.renderInviteView() }
                 </RequestFlowPopup>
             }
@@ -312,7 +282,7 @@ export default class StarSupporters extends React.Component {
                       <SupportStyled.ControlWrapper>
                         <SupportStyled.ControlButton onClick={this.showInviteView}>
                           {
-                            isStar ? 'Support group' : 'Add Stars'
+                            isStar ? 'Support group' : 'Invite stars'
                           }
                         </SupportStyled.ControlButton>
                       </SupportStyled.ControlWrapper>
@@ -324,7 +294,7 @@ export default class StarSupporters extends React.Component {
             <SupportStyled.RightSection>
               <SupportStyled.ControlButton alternate onClick={this.showInviteView}>
                 {
-                  isStar ? 'Support group' : 'Add Stars'
+                  isStar ? 'Support group' : 'Invite stars'
                 }               
               </SupportStyled.ControlButton>
             </SupportStyled.RightSection>

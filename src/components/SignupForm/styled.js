@@ -13,21 +13,6 @@ const LoginContainer = styled.div`
   }
 `;
 
-LoginContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -98,26 +83,19 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 `;
 LoginContainer.Container = styled.div`
-  @media(min-width: 768px) {
-    padding: 0 0;
-  }
-  @media(min-width: 1025px) {
-    padding: 0 20px;
-  }
+  display: block;
 `;
 LoginContainer.Heading = styled.div`
-  text-align: center;
-  color: #676767;
-  font-size: 20px;
-  font-family: 'Avenir-Bold';
-  @media(min-width:768px){
-    font-size:25px;
+  font-family: Gilroy;
+  color: #ff6c58;
+  font-size: 24px;
+  @media(min-width:832px){
+    padding-top: 19px;
   }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
+  @media(max-width:831px){
+    font-size: 24px;
+    margin: 31px auto 11px;
+    line-height: 28px
   }
   
 `;
@@ -134,14 +112,8 @@ LoginContainer.SocialMediaMessage = styled.div`
   font-size: 14px;
   text-align: center;
   color: #7B797A;
-  @media(min-width:768px){
+  @media(min-width:832px){
     font-size: 18px;
-  }
-  @media(min-width:1025px){
-    font-size:14px;
-  }
-  @media(min-width:1920px){
-    font-size:18px;
   }
 `;
 LoginContainer.Button = styled.button`
@@ -183,8 +155,8 @@ LoginContainer.Line = styled.hr`
   }
 `;
 LoginContainer.InputFieldsWrapper = styled.form`
-  padding: 0px 25px;
-  @media(min-width:768px){
+  
+  @media(min-width:832px){
     padding: 0px 0px;
   }
 `;
@@ -198,28 +170,40 @@ LoginContainer.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
-  @media(min-width:768px){
+  @media(min-width:832px){
     
 
   }
 `;
 LoginContainer.Label = styled.div`
-  color:#333333;
-  font-family: 'Avenir-Bold';
-  font-size:16px;
-  text-align:left;
-  @media(min-width:768px){
-    width:55%;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
+  line-height: 2.08;
+  text-align: center;
+  color: ${props => (props.error ? '#990000' : '#555555')}; 
+  padding-top: 25px;
+  width:100%;
+  @media(min-width:832px){
+    font-size:12px;
+    padding-top: 47px;
+    line-height: 30px;
     align-items:center;
     padding-bottom:0px;
+    padding-top: 44px;
+    &.optional-text {
+      padding-top: 43px;
+    }
   }
-  @media(min-width:1025px){
-    font-size:13px;
-    width:69%;
-    line-height: 30px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
+  @media(max-width:831px){
+    margin-bottom: 0;
+    padding-top: 5px;
+    margin-top: 10px;
+    line-height: 24px;
+    padding-bottom: 10px;
+    &.optional-text {
+      margin-top: 18px;
+      margin-bottom: -2px;
+    }
   }
 
 `;
@@ -229,18 +213,11 @@ LoginContainer.SectionHeading = styled.div`
   text-align: center;
   color: #737373;
   margin-top:2%;
-  @media(min-width:768px){
+  @media(min-width:832px){
     font-size: 18px;
-  }
-  @media(min-width:1025px){
-    font-size:14px;
-  }
-  @media(min-width:1920px){
-    font-size:28px;
   }
 `;
 LoginContainer.Input = styled.input`
-  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
@@ -255,49 +232,50 @@ LoginContainer.Input = styled.input`
   &:focus {
     border-color: #FF6C58;
   }
-  @media(min-width:768px){
+  @media(min-width:832px){
     margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
     height:40px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  @media(min-width:768px){
+  margin-top:4px;
+  @media(min-width:832px){
     flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 23px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
+    margin-top:4px;
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
-  text-align:left;
-  font-family: 'Avenir-Regular';
-  font-size:12px;
-  padding: 17px 23px;
-  line-height: 18px;
-  color: #707070;
-  ${LoginContainer.Anchor} {
-    color: #707070;
-    margin: 0 5px;
-    text-decoration: underline;
+  font-family: Gilroy;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+  color: #555555;
+  display: flex;
+  text-align: left;
+  max-width: 300px;
+  position: relative;
+  margin: 10px auto;
+  @media(min-width: 832px) {
+    margin: 33px auto 0;
+    max-width: 341px;
   }
-  @media(min-width:768px){
-    text-align:center;
+
+  ${LoginContainer.Anchor} {
+    color: #2f839d;
+    cursor: pointer;
+    text-decoration: none;
+    padding-left: 5px;
+  }
+  .check-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
+  }
+  .checkmark {
+    top: 4px;
   }
 `;
 
@@ -339,8 +317,6 @@ HeaderSection.MiddleDiv = styled.div`
   @media(min-width:1920px){
     font-size:16px;
   }
-  
-
 `;
 HeaderSection.RightDiv = styled.button`
   background-color: #fff; 
@@ -355,11 +331,8 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
-  @media(min-width:1025px){
+  @media(min-width:832px){
     font-size:20px
-  }
-  @media(min-width:1920px){
-    font-size:22px;
   }
 `;
 
@@ -425,11 +398,116 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  > div {
+    width: 100%;
+    @media(max-width: 832px) {
+      &:first-child {
+        margin-bottom: 15px;
+        &.no-space {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  input {
+    font-family: Gilroy-Medium;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: center;
+    color: #615195;
+    text-align: center;
+    padding: 6px 0 5px;
+
+    &::-webkit-input-placeholder { font-size: 18px;}
+    &:-moz-placeholder { font-size: 18px;}
+    &::-moz-placeholder {  font-size: 18px;}
+    &:-ms-input-placeholder { font-size: 18px;}
+
+    &.input-label-email {
+      &::-webkit-input-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &:-moz-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &::-moz-placeholder {
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+      &:-ms-input-placeholder { 
+        @media (max-width: 831px) {
+          font-size: 16px;
+        }
+        @media (max-width: 370px) {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+    // &.input-label-first-name {
+    //   &::-webkit-input-placeholder { font-size: 18px;}
+    //   &:-moz-placeholder { font-size: 18px;}
+    //   &::-moz-placeholder {  font-size: 18px;}
+    //   &:-ms-input-placeholder { font-size: 18px;}
+    // }
+    // &.input-label-last-name {
+    //   &::-webkit-input-placeholder { font-size: 18px;}
+    //   &:-moz-placeholder { font-size: 18px;}
+    //   &::-moz-placeholder {  font-size: 18px;}
+    //   &:-ms-input-placeholder { font-size: 18px;}
+    // }
+    // &.input-label-stage-name {
+    //   &::-webkit-input-placeholder { font-size: 17px;}
+    //   &:-moz-placeholder { font-size: 17px;}
+    //   &::-moz-placeholder {  font-size: 17px;}
+    //   &:-ms-input-placeholder { font-size: 17px;}
+    // }
+  input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }
+  input:-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 18- */
+  input::-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 19+ */
+  input:-ms-input-placeholder { color:#aaaaaa; opacity: 1; } /* oldIE ;) */
+  
+  input:focus::-webkit-input-placeholder { color:transparent; }
+  input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+  input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+  input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
+
+    &:first-child {
+      padding-right: 10px;
+    }
+    &:last-child {
+      padding-left: 10px;
+    }
+    &:only-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   @media(min-width:1025){
     width:352px;
+    font-size: 22px;
+    padding-bottom: 3px;
+  }
+  .error-field {
+    &:after {
+      border-bottom-color: #980100 !important;
+    }
   }
 
 `;
@@ -473,49 +551,59 @@ LoginContainer.ShowPassword = styled.span`
 `;
 LoginContainer.PasswordWrapper = styled.div`
   position:relative;
- 
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
 `;
 LoginContainer.InputContainer = styled.div`
   display: inline-block;
   vertical-align: middle;
   height: 100%;
   
-  @media(min-width:768px){
+  @media(min-width:832px){
     width:90%;
     margin: 0 20px;
+    max-width: 400px;
   }
 `;
 LoginContainer.ButtonWrapper = styled.div`
-  margin-top:5%;
+  margin-top: 17px;
+  margin-bottom: 20px;
+  @media(min-width:832px){
+    margin-top: 22px;
+  }
+
+  .fan-form &.align-center {
+    margin-top: 40px;
+  }
 `;
 LoginContainer.SignupLine = styled.div`
-    display: block;
-    font-family: 'Avenir-Light';
-    color:#b3acac;
-    font-size: 12px;
-    margin: 0;
-    margin: 20px 20px;
-    margin-top: 0;
-    order: 1;
-    span {
-      display: inline-block;
-    }
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      background-color: #e8e7e7;
-      vertical-align: middle;
-      width: 50px;
-      width: calc(50% - 69px);
-    }
-    &::before {
-      margin-right: 10px;
-    }
-    &::after {
-      margin-left: 10px;
-    }
-  
+  display: block;
+  font-family: 'Gilroy-Light';
+  color:#b3acac;
+  font-size: 12px;
+  margin: 0;
+  margin: 20px 20px;
+  margin-top: 0;
+  order: 1;
+  span {
+    display: inline-block;
+  }
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background-color: #e8e7e7;
+    vertical-align: middle;
+    width: 50px;
+    width: calc(50% - 69px);
+  }
+  &::before {
+    margin-right: 10px;
+  }
+  &::after {
+    margin-left: 10px;
+  }  
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };

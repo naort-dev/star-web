@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EmptyText } from 'styles/CommonStyled'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styled from 'styled-components';
 import Loader from '../../components/Loader';
@@ -8,10 +9,12 @@ export const withScroll = (WrappedComponent) => {
 
   const ListStyled = styled.section`
     width: 100%;
-    height: 100%;
+    ${props => (!props.scrollTarget || props.loading) && `
+      height: 100%;    
+    `}
     min-height: 300px;
     position: relative;
-    ${props => props.loading && !props.customLoader && (`
+    ${props => props.loading && !props.notCenter && !props.customLoader && (`
       display: flex;
       align-items: center;
       justify-content: center;
@@ -24,7 +27,7 @@ export const withScroll = (WrappedComponent) => {
     }
   `;
 
-  const NoDataText = styled.span`
+  const NoDataText = styled(EmptyText)`
     position: absolute;
     left: 0;
     right: 0;
@@ -91,7 +94,7 @@ export const withScroll = (WrappedComponent) => {
     }
 
     renderLoader = () => {
-      if (!this.props.customLoader) {
+      if (!this.props.customLoader && this.props.loading) {
         return <Loader class="loader" />
       }
       return null
@@ -117,7 +120,12 @@ export const withScroll = (WrappedComponent) => {
 
     render() {
       return (
-        <ListStyled loading={this.props.loading} customLoader={this.props.customLoader}>
+        <ListStyled
+          scrollTarget={this.props.scrollTarget}
+          loading={this.props.loading}
+          notCenter={this.props.notCenter}
+          customLoader={this.props.customLoader}
+        >
           {
             !this.props.dataList.length && this.props.loading && !this.props.customLoader ?
               this.renderLoader()

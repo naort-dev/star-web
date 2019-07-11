@@ -162,12 +162,12 @@ export default class RowItem extends React.Component {
             }
             {
               !member.celebrity_account[0] && !this.state.invite ?
-                <RowStyled.ControlButton onClick={this.inviteStar}>{isStar ? 'Support' : 'Add' }</RowStyled.ControlButton>
+                <RowStyled.ControlButton onClick={this.inviteStar}>{isStar ? 'Support' : 'Invite' }</RowStyled.ControlButton>
               : null
             }
             {
               !member.celebrity_account[0] && this.state.invite ?
-                <RowStyled.ControlButton disabled>{isStar ? 'Requested' : 'Added' }</RowStyled.ControlButton>
+                <RowStyled.ControlButton disabled>{isStar ? 'Requested' : 'Invite sent' }</RowStyled.ControlButton>
               : null
             }
           </RowStyled.ControlWrapper>

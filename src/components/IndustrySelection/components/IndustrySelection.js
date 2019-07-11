@@ -13,14 +13,11 @@ class IndustrySelectionComponent extends React.Component {
     selectedProfessions: this.props.selectedProfessions,
   }
 
-  componentDidMount() {
-    if (!this.props.professions.length) {
-      this.props.fetchAllProfessions();
-    }
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     let { filterProfessions, searchProfessions } = prevState;
+    if (!nextProps.professions.length) {
+      nextProps.fetchAllProfessions();
+    }
     if (prevState.searchValue !== '') {
       let newProfessions = [];
       nextProps.professions.forEach((profession) => {

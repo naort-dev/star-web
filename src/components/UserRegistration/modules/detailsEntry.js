@@ -99,9 +99,9 @@ export default class DetailsEntry extends React.Component {
       addressField = false;
     }
     if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true })) {
-      name = 'Please enter a first name';
+      name = 'Please Enter a first name';
     } else if (validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
-      name = 'Please enter a last name';
+      name = 'Please Enter a last name';
     } else {
       name = false;
     }
@@ -133,9 +133,9 @@ export default class DetailsEntry extends React.Component {
       }
     } else if (key === 'name') {
       if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true })) {
-        errors.name = 'Please enter a first name';
+        errors.name = 'Please Enter a first name';
       } else if (validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
-        errors.name = 'Please enter a last name';
+        errors.name = 'Please Enter a last name';
       } else {
         errors.name = false;
       }

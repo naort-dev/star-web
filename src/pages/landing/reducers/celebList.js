@@ -12,7 +12,6 @@ const initalState = {
 };
 
 export default (state = { ...initalState }, action) => {
-  let cachedData;
   switch (action.type) {
     case CELEB_LIST.start:
       return {
@@ -39,16 +38,7 @@ export default (state = { ...initalState }, action) => {
         currentSearchParam: action.searchParam,
         cachedData: {
           ...state.cachedData,
-          [action.category]: {
-            offset: action.offset,
-            data: action.list,
-            count: action.count,
-            currentSearchParam: action.searchParam,
-            lowPrice: action.lowPrice,
-            highPrice: action.highPrice,
-            sortValue: action.sortValue,
-            isLoggedIn: action.isLoggedIn,
-          },
+          ...action.newCachedData,
         },
         currentCategory: action.category,
         isLoggedIn: action.isLoggedIn,

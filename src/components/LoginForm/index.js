@@ -1,13 +1,14 @@
 import React from "react";
-import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
-import { Scrollbars } from "react-custom-scrollbars";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import validator from "validator";
+import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import ActionLoader from '../ActionLoader';
-import { LoginContainer } from "./styled";
-import { LoginTypeSelector } from "../LoginTypeSelector";
+import { TextInput } from '../TextField';
+import PrimaryButton from '../PrimaryButton';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
+import { LoginContainer } from './styled';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ export default class LoginForm extends React.Component {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
     window.addEventListener("storage", this.listenToStorage);
-    if (!this.props.isLoggedIn && this.gSignIn) {
+    if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
         width: 200,
@@ -81,16 +82,14 @@ export default class LoginForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      this.props.onLoginComplete();
       const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
           this.props.followCelebData.celebId,
-          this.props.followCelebData.celebProfessions,
           this.props.followCelebData.follow,
-          true
-        );
+        )
       }
+      this.props.onLoginComplete();
     }
     if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
       this.setState({
@@ -102,9 +101,6 @@ export default class LoginForm extends React.Component {
     }
   }
   componentWillUnmount() {
-    if (this.props.isLoggedIn) {
-      this.props.resetRedirectUrls();
-    }
     window.removeEventListener("storage", this.listenToStorage);
   }
 
@@ -119,7 +115,7 @@ export default class LoginForm extends React.Component {
     /* Status code 410 means Socialmedia account doesn't have email id */
     e.preventDefault();
     if (this.props.statusCode === "410") {
-      if (this.checkEmail) {
+      if (this.checkEmail()) {
         this.setState(
           {
             socialMedia: {
@@ -147,7 +143,7 @@ export default class LoginForm extends React.Component {
       }
     } else if (this.checkEmail()) {
       if (this.isFormValid()) {
-        this.props.loginUser(this.state.email.value, this.state.password.value);
+        this.props.loginUser(this.state.email.value, this.state.password.value, this.props.loginOptions);
       } else {
         this.checkEmail();
         this.checkPassword();
@@ -230,8 +226,12 @@ export default class LoginForm extends React.Component {
         });
       } else {
         skipSocialLogin = true;
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
+        if (this.props.loginOptions && this.props.loginOptions.preventStarLogin && val.role_details.role_code === ROLES.star) {
+          this.props.loginFetchIncorrect('Booking a video is only available for Starsona fan accounts.', '400');
+        } else {
+          this.props.updateLoginStatus(val);
+          this.props.fetchUserDetails(val.id);
+        }
       }
     }
     if (!skipSocialLogin) {
@@ -249,7 +249,7 @@ export default class LoginForm extends React.Component {
         twId: this.state.socialMedia.tw_id,
       }
       this.props.setSocialMediaData(this.state.socialMedia);
-      this.props.socialMediaLogin(socialObject);
+      this.props.socialMediaLogin(socialObject, this.props.loginOptions);
     }
   };
 
@@ -267,6 +267,7 @@ export default class LoginForm extends React.Component {
   };
   onGmail = () => {
     const check = document.getElementsByClassName("abcRioButtonIcon");
+    console.log(check)
     check[0].click();
     this.setState({ gmailClick: true });
   };
@@ -292,24 +293,6 @@ export default class LoginForm extends React.Component {
     );
   };
 
-  listenToStorage = () => {
-    if (localStorage.getItem("InstaAccessToken")) {
-      const instaUrl =
-        env("instaUrl") + localStorage.getItem("InstaAccessToken");
-      const that = this;
-      axios
-        .get(instaUrl)
-        .then(function (response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-          localStorage.removeItem("InstaAccessToken");
-        })
-        .catch(function (error) { });
-    } else if(localStorage.getItem("twitterData")) {
-      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
-      localStorage.removeItem("twitterData");
-    }
-  };
-
   onTwitterLogin = () => {
     this.setState({ loading: true });
     twitterLogin()
@@ -325,9 +308,23 @@ export default class LoginForm extends React.Component {
       })
   }
 
-  acceptEmailHandler = e => {
-    this.setState({ email: { ...this.state.email, value: e.target.value } });
-    this.props.saveData({ username: e.target.value });
+  setRoleDetails = role => {
+    const roleType = role === "FAN" ? ROLES.fan : ROLES.star;
+    this.setState({
+      socialMedia: { ...this.props.socialMediaStore, role: roleType }
+    });
+    this.props.socialMediaLogin(
+      this.props.socialMediaStore.username,
+      this.props.socialMediaStore.first_name,
+      this.props.socialMediaStore.last_name,
+      this.props.socialMediaStore.sign_up_source,
+      this.props.socialMediaStore.profile_photo,
+      roleType,
+      this.props.socialMediaStore.fb_id,
+      this.props.socialMediaStore.gp_id,
+      this.props.socialMediaStore.in_id
+    );
+    this.props.saveData({ role: roleType });
   };
   acceptPasswordHandler = e => {
     this.setState({
@@ -372,27 +369,35 @@ export default class LoginForm extends React.Component {
     }
     return false;
   };
-  setRoleDetails = role => {
-    const roleType = role === "FAN" ? ROLES.fan : ROLES.star;
-    this.setState({
-      socialMedia: { ...this.props.socialMediaStore, role: roleType }
-    });
-    this.props.socialMediaLogin(
-      this.props.socialMediaStore.username,
-      this.props.socialMediaStore.first_name,
-      this.props.socialMediaStore.last_name,
-      this.props.socialMediaStore.sign_up_source,
-      this.props.socialMediaStore.profile_photo,
-      roleType,
-      this.props.socialMediaStore.fb_id,
-      this.props.socialMediaStore.gp_id,
-      this.props.socialMediaStore.in_id
-    );
-    this.props.saveData({ role: roleType });
+  acceptEmailHandler = (e) => {
+    this.setState({ email: { ...this.state.email, value: e.target.value } });
+    this.props.saveData({ username: e.target.value });
+  };
+  listenToStorage = () => {
+    if (localStorage.getItem("InstaAccessToken")) {
+      const instaUrl =
+        env("instaUrl") + localStorage.getItem("InstaAccessToken");
+      const that = this;
+      axios
+        .get(instaUrl)
+        .then(function (response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+          localStorage.removeItem("InstaAccessToken");
+        })
+        .catch(function (error) { });
+    } else if(localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
+    }
   };
   ShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
   };
+
+  loadSignup = () => {
+    this.props.loadSignup();
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -402,58 +407,55 @@ export default class LoginForm extends React.Component {
             <ActionLoader />
         }
         <LoginContainer.SocialMediaSignup>
+
           <LoginContainer.Container>
+
             <LoginContainer.Heading>
-              Welcome back to Starsona!
+            How do you want to log in?
             </LoginContainer.Heading>
-            <LoginContainer.SocialMediaMessage>
-              Don't have an account?
-              <span onClick={() => this.props.toggleSignup(true)}>
-                <LoginContainer.LoginDiv>Sign up</LoginContainer.LoginDiv>
-              </span>
-            </LoginContainer.SocialMediaMessage>
             <LoginContainer.ButtonDiv>
-              <LoginContainer.Button >
-                <LoginContainer.FacebookContent onClick={this.onFBlogin} />
+            <LoginContainer.Button onClick={this.onFBlogin}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faFacebookF} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Facebook</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
               </LoginContainer.Button>
-
-              <LoginContainer.Button onClick={this.onGmail}>
-                <LoginContainer.GoogleWrapper
-                  id="g-sign-in"
-                  ref={gSignIn => (this.gSignIn = gSignIn)}
-                />
-                <LoginContainer.GoogleContent />
-                  
-                
-              </LoginContainer.Button>
-
-              <LoginContainer.Button onClick={this.onInstagramLogin}>
-                <LoginContainer.InstagramContent />
-              </LoginContainer.Button>
-
               <LoginContainer.Button onClick={this.onTwitterLogin}>
-                <LoginContainer.TwitterContent />
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faTwitter} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Twitter</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+              <LoginContainer.Button onClick={this.onInstagramLogin}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faInstagram} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Instagram</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+              <LoginContainer.Button onClick={this.onGmail}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.GoogleWrapper id="g-sign-in" />
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faGoogle} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Google</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
               </LoginContainer.Button>
             </LoginContainer.ButtonDiv>
+            <LoginContainer.Heading className="email-heading">Login with email</LoginContainer.Heading>
 
-            <LoginContainer.SignupLine>
-              <span>or log in with email</span>
-            </LoginContainer.SignupLine>
             <LoginContainer.InputFieldsWrapper>
               <LoginContainer.InputContainer>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
+                    <TextInput
+                      error ={!!email.message}
+                      fullWidth={true}
                       type="email"
                       name="email"
                       value={email.value}
-                      placeholder={
-                        this.props.statusCode === "410"
-                          ? "Please enter an email"
-                          : "Email"
-                      }
+                      placeholder={'What is your email address?'}
                       onChange={this.acceptEmailHandler}
                       onBlur={this.checkEmail}
+                      className="login-text"
                     />
                     <LoginContainer.ErrorMsg>
                       {email.message}
@@ -463,16 +465,19 @@ export default class LoginForm extends React.Component {
                 {this.props.statusCode === "410" ? (
                   <LoginContainer.EmptyDiv />
                 ) : (
-                    <LoginContainer.InputWrapper>
+                    <LoginContainer.InputWrapper className="password-wrap">
                       <LoginContainer.WrapsInput>
                         <LoginContainer.PasswordWrapper>
-                          <LoginContainer.Input
+                          <TextInput
+                          error = {!!password.message}
+                            fullWidth={true}
                             type={this.state.showPassword ? "text" : "password"}
                             name="password"
                             value={password.value}
-                            placeholder="Password"
+                            placeholder="What is your password?"
                             onChange={this.acceptPasswordHandler}
                             onBlur={this.checkPassword}
+                            className="login-text"
                           />
                         </LoginContainer.PasswordWrapper>
 
@@ -482,6 +487,26 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                   )}
+                  <LoginContainer.ButtonWrapper className="align-center">
+                    { this.props.statusCode !== '410' &&
+                    this.props.statusCode !== '310' &&
+                    (this.props.error || this.props.commonError) &&
+                    <LoginContainer.WrapsInput className="error-msg">
+                      <LoginContainer.ErrorMsg>
+                        {this.props.error || this.props.commonError}
+                      </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
+                    }
+                    <PrimaryButton
+                      type="submit"
+                      value="Log in"
+                      secondary
+                      onClick={this.onLogin}
+                      disabled={this.props.loading}
+                    >
+                      Log in
+                    </PrimaryButton>
+                  </LoginContainer.ButtonWrapper>
                 {this.props.statusCode === '410' ? (
                   <React.Fragment />
                 ) : (
@@ -494,24 +519,17 @@ export default class LoginForm extends React.Component {
                           Forgot your password?
                         </LoginContainer.ForgotButtonSpan>
                       </LoginContainer.actionText>
+                      &nbsp; | &nbsp;
+                      <LoginContainer.actionText
+                        onClick={this.loadSignup}
+                      >
+                        <LoginContainer.ForgotButtonSpan>
+                          {" "}
+                          Register
+                        </LoginContainer.ForgotButtonSpan>
+                      </LoginContainer.actionText>
                     </LoginContainer.ForgotButtonWrapper>
                   )}
-                {
-                  this.props.statusCode !== '410' && this.props.statusCode !== '310' && this.props.error &&
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.ErrorMsg>
-                        {this.props.error}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                }
-                <LoginContainer.ButtonWrapper>
-                  <LoginContainer.SignIn
-                    type="submit"
-                    value="Log in"
-                    onClick={this.onLogin}
-                    disabled={this.props.loading}
-                  />
-                </LoginContainer.ButtonWrapper>
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
           </LoginContainer.Container>

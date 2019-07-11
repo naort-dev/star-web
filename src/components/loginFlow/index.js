@@ -3,11 +3,12 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { LoginContainer, HeaderSection } from './styled';
-import { loginUser, resetSessionError, updateLoginStatus } from '../../store/shared/actions/login';
+import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
+import { loginUser, resetSessionError, updateLoginStatus, loginFetchIncorrect } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
-import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
+import { updateToast } from '../../store/shared/actions/commonActions';
 import Loader from '../../components/Loader';
 import LoginForm from '../../components/LoginForm';
 import ForgotPassword from '../../components/ForgotPasswordForm';
@@ -33,6 +34,14 @@ class LoginFlow extends React.Component {
 
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
+  loadSignup = () => {
+    this.props.setSignupFlow({
+      role: 'fan',
+      disableRoleChange: true,
+    })
+    this.props.toggleSignup(true);
+  }
+
   render() {
     const path = this.props.location.pathname;
     return (
@@ -53,21 +62,27 @@ class LoginFlow extends React.Component {
 
                 <LoginContainer>
                   <LoginContainer.LeftSection>
-                    <HeaderSection>
+                    {/* <HeaderSection>
                       <Link to="/" onClick={() => this.props.toggleLogin(false)}>
                         <HeaderSection.LogoImage
                           src="assets/images/logo_starsona.png"
                           alt=""
                         />
                       </Link>
-                    </HeaderSection>
+                    </HeaderSection> */}
                     {this.state.selectedView === 'forgotpassword' ?
                       <ForgotPassword {...this.props} />
                       :
                       null
                     }
                     {this.state.selectedView === 'login' ?
-                      <LoginForm {...this.props} onLoginComplete={() => this.props.toggleLogin(false)} changeView={this.changeView} data={this.state.socialData} saveData={this.saveData} />
+                      <LoginForm {...this.props}
+                      onLoginComplete={() => this.props.toggleLogin(false)}
+                      changeView={this.changeView}
+                      data={this.state.socialData}
+                      saveData={this.saveData}
+                      loadSignup={this.loadSignup}
+                      closeLogin={() => this.props.toggleLogin(false)}/>
                       :
                       null
                     }
@@ -82,27 +97,31 @@ class LoginFlow extends React.Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
+  loginOptions: state.modals.loginModal.options,
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  commonError: state.session.error.message,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (email, password) => dispatch(loginUser(email, password)),
-  socialMediaLogin: (socialObject) =>
-    dispatch(socialMediaLogin(socialObject)),
+  loginUser: (email, password, loginOptions) => dispatch(loginUser(email, password, loginOptions)),
+  socialMediaLogin: (socialObject, options) =>
+    dispatch(socialMediaLogin(socialObject, options)),
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
-  resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
-  followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
+  followCelebrity: (celebId, follow) => dispatch(followCelebrity(celebId, follow)),
   resetSessionError: () => dispatch(resetSessionError()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  updateToast: errorObject => dispatch(updateToast(errorObject)),
+  loginFetchIncorrect: (error, status) => dispatch(loginFetchIncorrect(error, status)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginFlow));

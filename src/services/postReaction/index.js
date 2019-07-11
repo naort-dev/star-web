@@ -1,12 +1,11 @@
-import axios from 'axios';
 import Api from '../../lib/api';
 import { fetch } from '../fetch';
 
-export default function postReactionMedia(key, file, extension, fileType) {
+export function postReactionMedia(key, file, extension, fileType) {
   return fetch(Api.getawsCredentials(key, extension, fileType))
     .then((response) => {
-      let filename = response.data.data.fields.key.split('/');
-      filename = filename[filename.length - 1];
+      let fileName = response.data.data.fields.key.split('/');
+      fileName = fileName[fileName.length - 1];
       const formData = new FormData();
       formData.append('success_action_status', response.data.data.fields.success_action_status);
       formData.append('signature', response.data.data.fields.signature);
@@ -17,10 +16,15 @@ export default function postReactionMedia(key, file, extension, fileType) {
       formData.append('key', response.data.data.fields.key);
       formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
       formData.append('file', file);
-      return { formData, url: response.data.data.url, filename };
+      return { formData, url: response.data.data.url, fileName };
     })
     // .then((response) => {
     //   axios.post(response.url, response.formData, {onUploadProgress: (progressEvent) => console.log(progressEvent)});
     //   return response.filename;
     // })
+}
+
+export const onReactionComplete = () => {
+  return fetch.post(Api.reactionComplete)
+  .then(resp => resp.data.success)
 }

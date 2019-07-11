@@ -1,4 +1,4 @@
-import { UPDATE_PROFILE_PHOTO } from '../actions/updateProfilePhoto';
+import { UPDATE_PROFILE_PHOTO, SET_PROFILE_PIC_TO_STATE} from '../actions/updateProfilePhoto';
 
 const initalState = {
   loading: false,
@@ -34,7 +34,11 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         error: action.error,
       };
-
+    case SET_PROFILE_PIC_TO_STATE:
+      return {
+        ...state,
+        profilePic: action.payload,
+      }
     default:
       return state;
   }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
 import Loader from '../Loader';
+import PrimaryButton from '../PrimaryButton';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
-
+import { TextInput } from '../TextField';
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +25,18 @@ export default class ForgotPassword extends React.Component {
     if (this.checkEmail){
     forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then((response) => {
       this.setState({ message: response.data.data, successCondition: true, errorCondition: false, loader: false });
+      this.props.updateToast({
+        value: true,
+        message: response.data.data,
+        variant: 'success',
+      })
     }).catch((exception) => {
       this.setState({ message: exception.response.data.error.message, successCondition: false, errorCondition: true, loader: false });
+      this.props.updateToast({
+        value: true,
+        message: exception.response.data.error.message,
+        variant: 'error',
+      })
     });
   }
   }
@@ -49,11 +59,7 @@ export default class ForgotPassword extends React.Component {
   }
   render() {
     const { email } = this.state;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
+
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
@@ -69,11 +75,12 @@ export default class ForgotPassword extends React.Component {
               <ForgotPasswordWrap>
                 <ForgotPasswordWrap.Message>
                   <ForgotPasswordWrap.Logo
-                    src="assets/images/mailSent.png"
+                    imageUrl="assets/images/emailsent.svg"
                     alt=""
                   />
+                  <ForgotPasswordWrap.Heading>Password reset has been sent</ForgotPasswordWrap.Heading>
                   <ForgotPasswordWrap.MailContent>
-                    A password reset link has been sent to your email address.Please tap the link
+                    A password reset link has been sent to your email address. Please tap the link
                       in that message to reset your password.
                   </ForgotPasswordWrap.MailContent>
                 </ForgotPasswordWrap.Message>
@@ -85,7 +92,8 @@ export default class ForgotPassword extends React.Component {
                   <LoginContainer.InputContainer>
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
+                        <TextInput
+                          fullWidth={true}
                           type="text"
                           name="email"
                           value={email.value}
@@ -96,21 +104,27 @@ export default class ForgotPassword extends React.Component {
                         <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
+                    </LoginContainer.InputContainer>
+                </LoginContainer.InputFieldsWrapper>
+                </React.Fragment>
+            }
                     <ForgotPasswordWrap>
-                      <LoginContainer.ButtonWrapper >
-                        <LoginContainer.SignIn
+                      <LoginContainer.ButtonWrapper className="align-center">
+                        <PrimaryButton
+                          secondary={this.state.successCondition ? '' : 'secondary' }
                           onClick={this.onForgotPassword}
                           disabled={this.props.loading}
                           value="Continue"
                           type="submit"
-                        />
+                        >
+                          {this.state.successCondition ? 'Retry' : 'Continue'}
+                        </PrimaryButton>
                       </LoginContainer.ButtonWrapper>
                       <LoginContainer.ErrorMsg>{this.state.errorCondition ? this.state.message : null}</LoginContainer.ErrorMsg>
                     </ForgotPasswordWrap>
-                  </LoginContainer.InputContainer>
-                </LoginContainer.InputFieldsWrapper>
-              </React.Fragment>
-            }
+                  
+              {/* </React.Fragment>
+            } */}
 
 
           </React.Fragment>

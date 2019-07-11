@@ -21,4 +21,6 @@ export const celebOpenStatusList = [2, 3];
 
 export const celebCompletedStatusList = [4, 6];
 
+export const celebCancelledStatusList = [5];
+
 export const completedStatusList = [6];

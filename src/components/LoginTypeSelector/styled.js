@@ -164,7 +164,7 @@ TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
-  @media(min-width: 768px) {
+  @media(min-width: 832px) {
     padding: 13px;
   }
   @media(min-width:1025px){
@@ -172,25 +172,26 @@ TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
     box-shadow: none;
   }
 `;
-TypeSelectorWrapper.OptionWrapper = styled.footer`
-  padding-bottom: 28px;
-  @media(min-width:768px){
+TypeSelectorWrapper.OptionWrapper = styled.div`
+  padding-bottom: 15px;
+  @media(min-width:832px){
     padding: 10px 29px;
   }
 `;
 TypeSelectorWrapper.HeaderText = styled.div`
-  text-align:center;
-  color:#676767;
-  font-size:20px;
-  font-family: 'Avenir-Bold';
-  @media(min-width:768px){
-    font-size:25px;
+  font-family: Gilroy-Light;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ff6c58;
+  padding: 25px 0 12px;
+  @media(min-width:832px){
+    font-size: 24px;
+    padding: 45px 0 37px;
   }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
+  @media(max-width:831px){
+    margin: 0 auto;
   }
 `;
 TypeSelectorWrapper.ButtonWrapper = styled.div`
@@ -227,6 +228,54 @@ TypeSelectorWrapper.Button = styled.button`
   }
   @media(min-width:1920px){
     max-width: 475px;
+  }
+`;
+TypeSelectorWrapper.Type = styled.div`
+  padding-bottom: 25px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  &:hover { transform: scale(1.1);}
+  @media(max-width: 832px){
+    padding-bottom: 12px;
+  }
+`;
+TypeSelectorWrapper.Image = styled.span`
+  display: block;
+  background-color: #d3e7ef;
+  background: ${props => props.imageUrl && `url(${props.imageUrl})`};
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 107px;
+`;
+TypeSelectorWrapper.Label = styled.span`
+  display: block;
+  font-family: Gilroy-Extrabold;
+  font-size: 50px;
+  line-height: .89;
+  padding-top: 10px;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2f839d;
+  @media(min-width: 832px){
+    font-size: 50px;
+    line-height: 45px;
+    padding-top: 9px;
+  }
+`;
+TypeSelectorWrapper.Description = styled.span`
+  display: block;
+  font-family: Gilroy-Light;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #999999;
+  max-width: 225px;
+  margin: 0 auto;
+  @media(min-width: 768px){
+    margin: 0 auto;
+    width: 200px;
   }
 `;
 TypeSelectorWrapper.UL = styled.ul`
