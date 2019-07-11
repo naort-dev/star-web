@@ -3,6 +3,7 @@ import { SET_SIGNUP } from '../actions/setSignupFlow';
 const initialState = {
   role: '',
   currentStep: 0,
+  disableRoleChange: false,
   acceptTerms: false,
   isSocial: false,
   source: '',

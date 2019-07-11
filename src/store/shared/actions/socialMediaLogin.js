@@ -47,7 +47,7 @@ export const socialMediaLogin = ({userName, firstName, lastName, nickName, sourc
     nick_name: nickName,
     sign_up_source: source,
     profile_photo: profilePhoto,
-    role: role,
+    role,
     fb_id: fbId,
     gp_id: gpId,
     in_id: instId,

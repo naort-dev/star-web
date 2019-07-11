@@ -38,9 +38,9 @@ const AllBookings = props => {
       </BookingsStyled.SectionHeader>
       {props.bookingsList.loading && <Loader />}
       {!props.bookingsList.loading && props.bookingsList.data.length === 0 && (
-        <EmptyText>
-          You currently do not have any recent activity. Visit &nbsp;{' '}
-          <Link to="/manage/promotional-tools">Promote Yourself</Link> &nbsp; to
+        <EmptyText className='empty-text'>
+          You currently do not have any recent activity. Visit {' '}
+          <Link to="/manage/promotional-tools">Promote Yourself</Link> to
           get those fans booking.
         </EmptyText>
       )}
@@ -52,9 +52,13 @@ const AllBookings = props => {
           data={bookItem}
         />
       ))}
-      <BookingsStyled.SectionHeader>
-        <SectionHead className="latest-activity">Latest Activity</SectionHead>
-      </BookingsStyled.SectionHeader>
+      {
+        props.recentActivity.loading || props.recentActivity.activityList.length !== 0 ? (
+          <BookingsStyled.SectionHeader>
+            <SectionHead className="latest-activity">Latest Activity</SectionHead>
+          </BookingsStyled.SectionHeader>
+        ) : null
+      }
       {props.recentActivity.loading && <Loader />}
       {
         props.recentActivity.activityList.map((activity) => (

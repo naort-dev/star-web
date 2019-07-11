@@ -7,11 +7,16 @@ export const Container = styled(Card)`
   width: 100%;
   border-radius: 0;
   background: #f6f6f6;
+  box-shadow: none !important;
   ${media.webView} {
     width: 700px;
-    height: 717px;
+    height: auto;
     border-radius: 15px;
     background: #fff;
+    min-height: 550px;
+  }
+  ${media.mobileScreen} {
+    height: 100%;
   }
   display: flex;
   justify-content: center;
@@ -23,12 +28,13 @@ export const Container = styled(Card)`
         content: attr(data-web);
       }
     }
-    font-size: 28px;
-    font-family: Gilroy;
+    font-size: 24px;
+    font-family: Gilroy-Medium;
+    font-weight: normal;
     color: #ff6c58;
     text-align: center;
-    padding-bottom: 50px;
-    padding-top: 34px;
+    padding-bottom: 35px;
+    padding-top: 35px;
     ${media.webView} {
       font-size: 24px;
       padding-top: 0;
@@ -58,6 +64,12 @@ export const Form = styled.form`
     text-align: center;
     font-size: 24px;
     font-family: Gilroy-Medium;
+
+    ${media.mobileScreen} {
+      font-size: 22px;
+      line-height: 25px;
+      height: auto;
+    }
   }
   .MuiFormControl {
     width: 100%;

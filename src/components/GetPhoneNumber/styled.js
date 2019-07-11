@@ -118,6 +118,9 @@ Layout.Phonenumber = styled.div`
   .react-phone-number-input {
     border-bottom: 1px solid #c5d2e0;
     margin-bottom: 10px;
+    input {
+      height: auto !important;
+    }
   }
   .react-phone-number-input__icon {
     width: 32px;
@@ -145,7 +148,7 @@ Layout.Image = styled.div`
   margin-bottom: 0;
 `;
 Layout.ButtonWrapper = styled.div`
-  @media(min-width: 832px){
+  @media (min-width: 832px) {
     // position: absolute;
     bottom: 73px;
     margin: auto;
@@ -154,7 +157,7 @@ Layout.ButtonWrapper = styled.div`
     padding-bottom: 0;
   }
   @media screen and (min-width: 832px) and (max-height: 720px) {
-    bottom: 24px
+    bottom: 24px;
   }
 `;
 Content.OtpSubTitle = styled.div`
@@ -237,7 +240,6 @@ export const FloatLabel = styled.section`
     margin: 0px auto;
     height: 32px;
     outline: none !important;
-    color: rgba(0, 0, 0, 0.8);
   }
   ::-webkit-input-placeholder {
     text-align: right;
@@ -333,5 +335,3 @@ export const FloatLabel = styled.section`
     font-size: 0;
   }
 `;
-
-

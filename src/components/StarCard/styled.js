@@ -38,6 +38,7 @@ export const Layout = styled.section`
   }
   .cardLayout {
     padding: 22px;
+    box-shadow: none !important;
     ${media.smallScreen} {
       padding: 10px;
     }
@@ -53,10 +54,13 @@ export const Layout = styled.section`
     font-size: 14px;
     color: #9b9b9b;
     display: inline-block;
-    padding-top: 5px;
+    padding-top: 10px;
     padding-bottom: 22px;
     ${media.webView} {
       padding-bottom: 0;
+    }
+    span:first-child {
+      margin-right: 15px;
     }
     @media (max-width: 831px) {
       padding-top: 7px;

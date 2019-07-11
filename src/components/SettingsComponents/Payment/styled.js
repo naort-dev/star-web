@@ -24,6 +24,10 @@ export const Wrap = styled(Wrapper)`
       width: 100%;
       text-align: left;
     }
+    ${media.mobileScreen} {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
   .button {
     margin-top: 22px;

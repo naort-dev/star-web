@@ -38,7 +38,7 @@ const CommentBox = (props) => {
             }
           </BoxStyled.Reminder>
       }
-      <BoxStyled>
+      <BoxStyled className={props.classes.inputWrapper}>
         <BoxStyled.Input
           value={inputVal}
           className={props.classes.input}
@@ -46,7 +46,7 @@ const CommentBox = (props) => {
           onKeyUp={onKeyChange}
           placeholder={props.placeholder}
         />
-        <FontAwesomeIcon className="message-icon" icon={faTelegramPlane} onClick={onSubmit} />
+        <FontAwesomeIcon className={`message-icon ${props.classes.icon}`} icon={faTelegramPlane} onClick={onSubmit} />
       </BoxStyled>
     </BoxStyled.Wrapper>
   )

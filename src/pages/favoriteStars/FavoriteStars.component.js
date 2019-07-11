@@ -32,18 +32,20 @@ const FavoriteStars = (props) => {
         className="top-heading"
         onClick={goBack}
       />
-      <FavoritesListing
-        customLoader
-        dataList={props.favouritesList.data}
-        noDataText='No favorited stars'
-        loading={props.favouritesList.loading}
-        offset={props.favouritesList.offset}
-        fetchData={(offset, refresh) => props.fetchFavouritesList(offset, refresh)}
-        totalCount={props.favouritesList.count}
-        limit={props.favouritesList.limit}
-        onCloseClick={onUnFavoriteStar}
-        onStarPurchase={onStarPurchase}
-      />
+      <section className = "favorite-listing">
+        <FavoritesListing
+          customLoader
+          dataList={props.favouritesList.data}
+          noDataText='No favorited stars'
+          loading={props.favouritesList.loading}
+          offset={props.favouritesList.offset}
+          fetchData={(offset, refresh) => props.fetchFavouritesList(offset, refresh)}
+          totalCount={props.favouritesList.count}
+          limit={props.favouritesList.limit}
+          onCloseClick={onUnFavoriteStar}
+          onStarPurchase={onStarPurchase}
+        />
+      </section>
     </FavouriteStyled>
   )
 }

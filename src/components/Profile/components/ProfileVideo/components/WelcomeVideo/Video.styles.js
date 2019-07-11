@@ -4,7 +4,7 @@ import { media } from '../../../../../../styles/mediaQueries';
 export const Layout = styled.section`
   height: 100%;
   max-width: 318px;
-  padding-top: 49px;
+  padding-top: 35px;
   ${media.webView} {
     max-width: 570px;
   }
@@ -18,6 +18,11 @@ export const Layout = styled.section`
     }
     ${media.mobileScreen} {
       height: 192px;
+    }
+  }
+  .video-react-video {
+    ${media.mobileScreen} {
+      min-height: 305px;
     }
   }
   .uploadBtn {
@@ -159,7 +164,7 @@ export const VideoContainer = styled.section`
   @media (max-width: 831px) {
     width: 317px;
     height: calc(100% - 80px);
-    margin: 0 auto 15px;
+    margin: 0 auto;
   }
   .playButton {
     position: absolute;
@@ -317,7 +322,7 @@ export const ShowHide = styled.span`
 export const ShowButtons = styled.span`
 display: none;
 position: relative;
-margin-top: -166px;
+margin-top: -151px;
 margin-bottom: 15px;
 width: 322px;
 background-color: #ffffff;
@@ -331,6 +336,7 @@ cursor: pointer;
 display: block;
 border-radius: 20px;
 order: 2;
+padding: 0 15px;
 ${media.webView} {
   display: none;
 }

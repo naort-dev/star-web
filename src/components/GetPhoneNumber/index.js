@@ -34,7 +34,9 @@ const GetPhoneNumber = props => {
   const phNum3 = useRef(null);
   const phNum4 = useRef(null);
   const backArrowClick = () => {
-    if (phoneNoState.otpEnterPopup) {
+    if (props.onBack) {
+      props.onBack();
+    } else if (phoneNoState.otpEnterPopup) {
       setPhoneNoState({
         ...phoneNoState,
         otpEnterPopup: false,
@@ -45,7 +47,9 @@ const GetPhoneNumber = props => {
     }
   };
   const closePhoneNum = () => {
-    if (phoneNoState.otpEnterPopup) {
+    if (props.onClose) {
+      props.onClose();
+    } else if (phoneNoState.otpEnterPopup) {
       setPhoneNoState({
         ...phoneNoState,
         otpEnterPopup: false,
@@ -67,42 +71,46 @@ const GetPhoneNumber = props => {
   const countryChange = value1 => setCountry(value1);
 
   const submitNotification = type => {
-    const codeNumber = phoneNoState.countryCode
-      ? phoneNoState.countryCode
-      : phoneRef.current.props.metadata.countries[country][0];
-    const originalNumber = phoneNoState.value.substring(
-      codeNumber.length + 1,
-      phoneNoState.value.length,
-    );
-    if (type === 'reSent') {
-      generateOtp(originalNumber, phoneNoState.countryCode).then(resp => {
-        if (resp.success) {
-          setPhoneNoState({
-            ...phoneNoState,
-            resentConfirmation: true,
-          });
-        }
-      });
-    } else if (
-      checkAllValidity() &&
-      phoneNoState.phoneNumberVerify === 'Verify'
-    ) {
-      generateOtp(originalNumber, codeNumber)
-        .then(resp => {
+    if (props.resendOtp) {
+      props.resendOtp();
+    } else {
+      const codeNumber = phoneNoState.countryCode
+        ? phoneNoState.countryCode
+        : phoneRef.current.props.metadata.countries[country][0];
+      const originalNumber = phoneNoState.value.substring(
+        codeNumber.length + 1,
+        phoneNoState.value.length,
+      );
+      if (type === 'reSent') {
+        generateOtp(originalNumber, phoneNoState.countryCode).then(resp => {
           if (resp.success) {
             setPhoneNoState({
               ...phoneNoState,
-              otpEnterPopup: true,
-              resentConfirmation: false,
-              phoneNumberOriginal: originalNumber,
-              countryCode: codeNumber,
+              resentConfirmation: true,
             });
-            props.disableClose(true);
           }
-        })
-        .catch(error => {});
-    } else if (phoneNoState.phoneNumberVerify === 'Verified') {
-      props.onComplete();
+        });
+      } else if (
+        checkAllValidity() &&
+        phoneNoState.phoneNumberVerify === 'Verify'
+      ) {
+        generateOtp(originalNumber, codeNumber)
+          .then(resp => {
+            if (resp.success) {
+              setPhoneNoState({
+                ...phoneNoState,
+                otpEnterPopup: true,
+                resentConfirmation: false,
+                phoneNumberOriginal: originalNumber,
+                countryCode: codeNumber,
+              });
+              props.disableClose(true);
+            }
+          })
+          .catch(error => {});
+      } else if (phoneNoState.phoneNumberVerify === 'Verified') {
+        props.onComplete();
+      }
     }
   };
 
@@ -168,44 +176,48 @@ const GetPhoneNumber = props => {
       const accountDetails = {
         phone: `${phoneNoState.phNo1}${phoneNoState.phNo2}${phoneNoState.phNo3}${phoneNoState.phNo4}`,
       };
-      validateOtp(
-        phoneNoState.phoneNumberOriginal,
-        phoneNoState.countryCode,
-        accountDetails.phone,
-      ).then(resp => {
-        if (resp.success) {
-          setPhoneNoState({
-            ...phoneNoState,
-            loading: false,
-            phoneNumberVerify: 'Verified',
-            otpEnterPopup: false,
-            otpErrorMessage: '',
-            phNo1: '',
-            phNo2: '',
-            phNo3: '',
-            phNo4: '',
-          });
-          props.onComplete();
-          props.disableClose(false);
-        } else if (
-          resp.status == '400' &&
-          resp.response.data.error.code === 1006
-        ) {
-          setPhoneNoState({
-            ...phoneNoState,
-            otpErrorMessage: resp.response.data.error.message,
-          });
-        } else if (
-          resp.status == '400' &&
-          resp.response.data.error.code === 1009
-        ) {
-          setPhoneNoState({
-            ...phoneNoState,
-            otpErrorMessage:
-              resp.response.data.error.message.verification_code[0],
-          });
-        }
-      });
+      if (props.verifyOtp) {
+        props.verifyOtp(accountDetails.phone);
+      } else {
+        validateOtp(
+          phoneNoState.phoneNumberOriginal,
+          phoneNoState.countryCode,
+          accountDetails.phone,
+        ).then(resp => {
+          if (resp.success) {
+            setPhoneNoState({
+              ...phoneNoState,
+              loading: false,
+              phoneNumberVerify: 'Verified',
+              otpEnterPopup: false,
+              otpErrorMessage: '',
+              phNo1: '',
+              phNo2: '',
+              phNo3: '',
+              phNo4: '',
+            });
+            props.onComplete();
+            props.disableClose(false);
+          } else if (
+            resp.status == '400' &&
+            resp.response.data.error.code === 1006
+          ) {
+            setPhoneNoState({
+              ...phoneNoState,
+              otpErrorMessage: resp.response.data.error.message,
+            });
+          } else if (
+            resp.status == '400' &&
+            resp.response.data.error.code === 1009
+          ) {
+            setPhoneNoState({
+              ...phoneNoState,
+              otpErrorMessage:
+                resp.response.data.error.message.verification_code[0],
+            });
+          }
+        });
+      }
     } else {
       setPhoneNoState({
         ...phoneNoState,
@@ -233,7 +245,7 @@ const GetPhoneNumber = props => {
           <h1 className="otpTitle">{props.otptitle}</h1>
           <Content.OtpSubTitle>
             {props.otp_sub_title}
-            {phoneLast4digits}.
+            {!isEmpty(props.last4) ? props.last4 : phoneLast4digits}.
           </Content.OtpSubTitle>
           <Content.OTPWrapper>
             <Content.WrapsInput>
@@ -289,7 +301,9 @@ const GetPhoneNumber = props => {
               />
             </Content.WrapsInput>
           </Content.OTPWrapper>
-          <Content.Error>{phoneNoState.otpErrorMessage}</Content.Error>
+          <Content.Error>
+            {!isEmpty(props.error) ? props.error : phoneNoState.otpErrorMessage}
+          </Content.Error>
           <Content.OtpSubTitleWrapper>
             <Content.OtpSubTitle>{props.otp_receive_code}</Content.OtpSubTitle>
             <Content.Resend onClick={() => submitNotification('reSent')}>

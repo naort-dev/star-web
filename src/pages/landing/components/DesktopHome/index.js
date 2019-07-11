@@ -107,7 +107,9 @@ class DesktopHome extends React.Component {
   }
 
   onStarClick = (celebId) => {
-    this.props.history.push(`/${celebId}`);
+    if (celebId) {
+      this.props.history.push(`/${celebId}`);
+    }
   }
 
   getAvatarContent = (index) => {

@@ -21,9 +21,16 @@ export const Layout = styled.section`
     @media (min-width: 832px) and (max-width: 1280px) {
       top: -21px;
     }
+    @media (max-width: 831px){
+      top: 95px;
+    }
   }
   .bio-wrapper {
     height: auto !important;
+    @media(max-width: 831px) {
+      width: 100%;
+      padding: 0 15px;
+    }
   }
   .MuiFormControl {
     width: 100%;
@@ -36,7 +43,7 @@ export const Layout = styled.section`
       margin-right: 60.4px;
       width: 573px;
       align-items: flex-start;
-      margin-top: 10px ;
+      margin-top: 0 ;
       padding: 32px;
       overflow-y: auto;
       &.input-textarea {
@@ -55,16 +62,19 @@ export const Layout = styled.section`
         margin-top: 35px;
       }
       @media(max-width: 831px) {
-        width: calc(100% - 70px);
+        width: 100%;
         height: 256px;
-        margin-left: 35px;
-        margin-right: 35px;
+        padding: 20px;
+        margin: 0;
       }
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-    height: calc(100% + 75px);
+    //height: calc(100% + 75px);
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -80,13 +90,17 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
+  font-weight: normal;
   padding-top: 0;
   @media (max-width: 831px) {
     padding-top: 23px;
     max-width: 230px;
-    margin: 0 auto 10.2px;
+    margin: 0 auto 20px;
     line-height: 28px;
+  }
+  @media (min-width: 832px) and (max-width: 1280px) {
+    margin-bottom: 35px;
   }
 `;
 

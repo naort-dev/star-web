@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const ManageStyled = styled.div`
-  margin-top: 74px;
-  min-height: calc(100vh - 74px);
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
   background: ${props => props.theme.white};
   @media(min-width: 832px) {
     margin-top: 244px;
@@ -29,10 +29,24 @@ const ManageStyled = styled.div`
     margin-top: 8px;
 
     .popstyle-inner {
-      padding-top: 55px;
+      padding-top: 35px;
+      padding-bottom: 0;
+
+      @media (max-width: 831px) {
+        padding: 15px 30px 20px;
+      }
 
       .sub-head {
-        padding-bottom: 37px;
+        padding-bottom: 35px;
+        font-size: 24px;
+        font-family: Gilroy-Medium;
+        font-weight: normal;
+
+        @media (max-width: 831px) {
+          padding-top: 0;
+          padding-bottom: 25px;
+          font-size: 28px;
+        }
       }
       .row-wrap {
         padding-bottom: 14px;
@@ -42,10 +56,22 @@ const ManageStyled = styled.div`
       }
 
       &.password-update {
-        padding-top: 51px;
+        padding-top: 35px;
+
+        @media (max-width: 831px) {
+          padding-top: 10px;
+        }
   
         .sub-head {
-          padding-bottom: 52px;
+          padding-bottom: 35px;
+          font-size: 24px;
+          font-family: Gilroy-Medium;
+          font-weight: normal;
+
+          @media (max-width: 831px) {
+            padding-top: 0;
+            padding-bottom: 25px;
+          }
         }
         .inputWrapper {
           margin-bottom: 40px;
@@ -63,7 +89,15 @@ const ManageStyled = styled.div`
 
       &.payment {
         .sub-head {
-          padding-bottom: 23px;
+          padding-bottom: 35px;
+          font-size: 24px;
+          font-family: Gilroy-Medium;
+          font-weight: normal;
+
+          @media (max-width: 831px) {
+            padding-top: 0;
+            padding-bottom: 25px;
+          }
         }
         .note {
           line-height: 22px;
@@ -73,11 +107,26 @@ const ManageStyled = styled.div`
       &.notification {
         .sub-head {
           padding-bottom: 35px;
+          font-size: 24px;
+          font-family: Gilroy-Medium;
+          font-weight: normal;
+
+          @media (max-width: 831px) {
+            padding-top: 0;
+            padding-bottom: 25px;
+            font-size: 28px;
+            font-weight: normal;
+          }
         }
         .head-text {
           margin-bottom: 16px;
         }
       }
+    }
+  }
+  .manage-user-header{
+    @media(max-width: 831px) {
+      box-shadow: 0 0 20px 0 #00000029;
     }
   }
 `;

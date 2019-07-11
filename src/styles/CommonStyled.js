@@ -52,7 +52,7 @@ export const BackArrow = styled.span`
       ? `url('../assets/images/previcon-white.svg') no-repeat`
       : `url('../assets/images/previcon.svg') no-repeat`};
   content: '';
-  background-size: 10px 20px;
+  background-size: 14px 28px;
   position: absolute;
   left: 20px;
   top: 38px;
@@ -74,7 +74,7 @@ export const CloseButton = styled.span`
       ? `url('../assets/images/closeicon-white.svg') no-repeat`
       : `url('../assets/images/closeicon.svg') no-repeat`};
   content: '';
-  background-size: 20px 20px;
+  background-size: 23px 33px;
   position: absolute;
   right: 20px;
   top: 37px;

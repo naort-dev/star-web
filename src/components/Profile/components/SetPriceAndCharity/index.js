@@ -144,16 +144,18 @@ const SetPriceAndCharity = props => {
         <React.Fragment>
           <Heading>Charity/Non-Profit Organizations</Heading>
           <Content>
-          <SetPriceWrapper.Description>
-            Charity Name
-          </SetPriceWrapper.Description>
-          <TextInput 
-            value={priceCharityData.charityName}
-            placeholder="Who are you supporting?"
-            fullWidth
-            // inputRef={charityname}
-            onChange={(event)=>saveFormEntries(event,'charityName')}
-          />
+          <section className= "price-wrapper">
+            <SetPriceWrapper.Description>
+              Charity Name
+            </SetPriceWrapper.Description>
+            <TextInput 
+              value={priceCharityData.charityName}
+              placeholder="Who are you supporting?"
+              fullWidth
+              // inputRef={charityname}
+              onChange={(event)=>saveFormEntries(event,'charityName')}
+            />
+          </section>
           <SetPriceWrapper.Description>
             Charity Website (optional)
           </SetPriceWrapper.Description>

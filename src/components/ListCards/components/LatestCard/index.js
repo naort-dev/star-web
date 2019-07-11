@@ -120,7 +120,7 @@ const LatestCard = (props) => {
             }
           </FlexColumn>
         </StarStyled.LeftWrapper>
-        <StarStyled.CommentContainer>
+        <StarStyled.CommentContainer className="comment-container" starMode={props.starMode}>
           <CommentItem
             type={props.type}
             user={activity.activity_from_user}

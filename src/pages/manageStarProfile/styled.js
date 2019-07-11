@@ -6,11 +6,16 @@ export const Layout = styled.section`
   padding-left: 40px;
   padding-right: 40px;
   position: relative;
+  @media (max-width: 832px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
   display: flex;
   .top-heading {
     padding-top: 0;
     @media (max-width: 832px) {
-      font-size: 24px;
+      font-size: 28px;
+      line-height: 27px;
       padding-top: 20px;
       margin-bottom: 15px;
     }
@@ -70,7 +75,7 @@ Content.LeftSection  = styled.section`
     @media(max-width: 832px) {
       padding-top: 60px;
     }
-    @media(min-width: 347px) {
+    @media(min-width: 470px) {
       padding-top: 45px;
     }
     @media(min-width: 832px) {
@@ -117,14 +122,11 @@ Content.RightSection = styled.div`
     margin-left: auto;
     margin-right: auto;
   }
-  @media(min-width: 550px) and (max-width: 832px) {
+  @media(min-width: 4710px) and (max-width: 832px) {
     top: 103px;
   }
-  @media(min-width: 347px) and (max-width: 550px)  {
+  @media (max-width: 470px)  {
     top: 118px;
-  }
-  @media(max-width: 347px) {
-    top: 150px;
   }
 `;
 Content.InnerWrapper = styled.div`

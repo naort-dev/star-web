@@ -92,12 +92,20 @@ const ListingSection = (props) => {
     }
   }, [props.userDetails.id])
 
-  const onVideoClick = (index, type) => () => {
+  const onVideoClick = (index, video, type) => (event) => {
+    event.preventDefault();
     if (type === 'videos') {
+      props.toggleBookingModal(true, {id: video.booking_id, isPublic: true}, false);
       const selectPosition = Math.floor(index/videoCount);
       const newVideoSelection = [...selectedVideo];
       newVideoSelection[selectPosition] = index;
       updateSelectedVideo(newVideoSelection);
+    } else {
+      const reactionUrl = video.reaction_file_url;
+      const reactionThumbnail = video.reaction_thumbnail_url;
+      const reactionType = video.file_type;
+      console.log('hi')
+      props.toggleBookingModal(true, {id:video.booking_id, reactionUrl, reactionThumbnail, reactionType, isPublic: true}, false);
     }
   }
 
@@ -117,27 +125,17 @@ const ListingSection = (props) => {
     return (
       <ListingStyled.ContentItem key={video.booking_id}>
         <ListingStyled.VideoItemWrapper>
-          <ListingStyled.VideoItem onClick={onVideoClick(index, 'videos')}>
+          <ListingStyled.VideoItem onClick={onVideoClick(index, video, 'videos')}>
             <VideoRender
               variableWidth
               variableHeight
               noBorder
+              noPlay
               videoSrc={video.s3_video_url}
               cover={video.s3_thumbnail_url}
             />
           </ListingStyled.VideoItem>
         </ListingStyled.VideoItemWrapper>
-        {/* <ListingStyled.CommentsWrapper visible={selectedVideo.indexOf(index) >= 0}>
-          <span className='comments-inner'>
-            {
-              video.comments.length ?
-                video.comments.map((commentItem, key) => {
-                  return <span key={key}className="comment-item">"{commentItem.comments}"</span>
-                })
-              : <span className="comment-item empty-comment">No comments yet</span>
-            }
-          </span>
-        </ListingStyled.CommentsWrapper> */}
       </ListingStyled.ContentItem>
     )
   }
@@ -175,15 +173,16 @@ const ListingSection = (props) => {
             </ListingStyled.ContentHeader>
             <ListingStyled.Content className="video-wrap latest-response">
               {
-                props.reactionsList.data.map((reaction) => {
+                props.reactionsList.data.map((reaction, index) => {
                   return (
                     <ListingStyled.ContentItem key={reaction.reaction_id}>
                       <ListingStyled.VideoItemWrapper>
-                        <ListingStyled.VideoItem>
+                        <ListingStyled.VideoItem onClick={onVideoClick(index, reaction, 'reactions')}>
                           <VideoRender
                             variableWidth
                             variableHeight
                             noBorder
+                            noPlay
                             type={reaction.file_type === 1 && 'image'} // for image reactions
                             videoSrc={reaction.reaction_file_url}
                             cover={reaction.reaction_thumbnail_url}
@@ -216,6 +215,7 @@ ListingSection.propTypes = {
   fetchCelebVideosList: PropTypes.func.isRequired,
   fetchCelebReactionsList: PropTypes.func.isRequired,
   userDetails: PropTypes.object.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
 export default ListingSection;

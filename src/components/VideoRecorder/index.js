@@ -96,7 +96,7 @@ class VideoRecorder extends Component {
             type="file"
             id="fileUpload"
             className="hidden"
-            accept="video/*"
+            accept="video/mp4,video/x-m4v,video/*"
             onChange={this.props.uploadHandler(this.state.isIOSDevice)}
           />
           Upload different video
