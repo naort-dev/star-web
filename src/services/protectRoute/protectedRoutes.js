@@ -24,6 +24,7 @@ export const starRoutes = [
   '/manage/profile/welcome-video',
   '/manage/profile/bio',
   '/manage/profile/industry',
+  '/manage/profile/tags',
   '/manage/profile/social-handles',
   '/manage/profile/price-limits',
   '/manage/settings/account-info',

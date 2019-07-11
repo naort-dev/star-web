@@ -8,7 +8,7 @@ import { Layout, Content, ProgressBarWrapper } from './styled';
 import { STAR_PROFILE } from './constants';
 import ProgressBar from '../../components/ProgressBar';
 import InnerSidebar from '../../components/InnerSidebar';
-import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot, SocialHandlesRoot, SetPriceAndCharityRoot } from '../../components/Profile';
+import { NameAndPhotoRoot, ProfileVideoRoot, BioRoot, IndustryRoot, TagsRoot, SocialHandlesRoot, SetPriceAndCharityRoot } from '../../components/Profile';
 import { getMobileOperatingSystem } from '../../utils/checkOS';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { useMedia } from 'utils/domUtils';
@@ -107,6 +107,7 @@ const ManageStarProfile = props => {
       <Route path="/manage/profile/welcome-video" render={() =><ProfileVideoRoot goBack={closeProfileModal}/>} />
       <Route path="/manage/profile/bio" render={() =><BioRoot goBack={closeProfileModal}/>} />
       <Route path="/manage/profile/industry" render={() =><IndustryRoot goBack={closeProfileModal} />} />
+      <Route path="/manage/profile/tags" render={() =><TagsRoot goBack={closeProfileModal} subTitle={STAR_PROFILE.TAGS.subtitle}/>} />
       <Route path="/manage/profile/social-handles" render={() =><SocialHandlesRoot subTitle={STAR_PROFILE.SOCIAL_HANDLE.subtitle} heading={STAR_PROFILE.SOCIAL_HANDLE.heading } goBack={closeProfileModal}/>} />
       <Route path="/manage/profile/price-limits" render={() =><SetPriceAndCharityRoot goBack={closeProfileModal} 
         confirmDescription={STAR_PROFILE.PRICE_AND_LIMITS.confirmDescription}

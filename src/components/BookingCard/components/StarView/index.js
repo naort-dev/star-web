@@ -83,7 +83,6 @@ const StarView = (props) => {
               }}
               variableWidth
               variableHeight
-              autoPlay
               type={video.type}
               noBorder
               videoSrc={video.s3_video_url}
