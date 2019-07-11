@@ -12,16 +12,18 @@ export const Layout = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100%;
-    min-height: 454px;
-    max-height: 575px;
     width: 319px;
     margin: 0 auto;
+    flex: 1 1 auto;
+    display: flex;
+    height: 100%;
+    max-height: 426px;
+    min-height: 400px;
   }
   .video-wrapper {
     ${media.mobileScreen} {
       order: 1;
-      height: 426px;
+      height: 100%;
     }
   }
   .button {
@@ -163,9 +165,18 @@ export const Layout = styled.section`
       position: static;
       margin-top: 40px;
     }
+    ${media.mobileScreen} {
+     top: inherit;
+     margin-top: 40px;
+     margin-bottom: 20px;
+     left: 85px;
+    }
   }
   .error-msg {
     max-width: 225px;
+    ${media.mobileScreen} {
+      max-width: inherit;
+    }
   }
 `;
 
@@ -212,18 +223,27 @@ export const QuestionContainer = styled.section`
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 15px;
     padding-top: 15px;
-    padding-bottom: ${props => (props.isQA ? '60px' : '50px')};
-    bottom: ${props => (props.isQA ? '148px' : '123px')};
+    /* padding-bottom: ${props => (props.isQA ? '60px' : '25px')}; */
+    padding-bottom: 25px;
+    bottom: 0;
+    /* bottom: ${props => (props.isQA ? '148px' : '123px')}; */
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
     width: 319px;
     transform: translateX(-50%);
     order: 2;
+    &:empty {
+      display: none;
+    }
   }
   .question-wrapper {
     position: relative;
     width: 100%;
+    ${media.mobileScreen} {
+      height: 280px;
+      overflow: auto;
+    }
     .more-action-root {
       position: absolute;
       top: -10px;

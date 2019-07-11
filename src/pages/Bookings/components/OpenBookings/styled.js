@@ -75,6 +75,8 @@ OpenStyled.RightSection = Card.extend`
     display: none;
     ${props => props.clicked && `display: block;`}
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
   }
   @media (min-width: 832px) and (max-width: 1279px) {
     width: 700px;
