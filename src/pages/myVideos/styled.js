@@ -8,7 +8,7 @@ const BookingsStyled = styled.div`
   .arrow {
     width: 14px;
     height: 28px;
-    top: 24px;
+    top: 21px;
     ${media.webView} {
       display: none;
     }

@@ -42,6 +42,7 @@ export const Layout = styled.section`
     @media (max-width: 831px) {
       padding-bottom: 17px;
       font-size: 24px;
+      line-height: 28px;
     }
   }
   .middle-section {

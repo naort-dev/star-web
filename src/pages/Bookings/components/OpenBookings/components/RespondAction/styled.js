@@ -12,16 +12,23 @@ export const Layout = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100%;
-    min-height: 454px;
-    max-height: 575px;
     width: 319px;
     margin: 0 auto;
+    flex: 1 1 auto;
+    display: flex;
+    height: 100%;
+    max-height: 350px;
+    min-height: 400px;
   }
   .video-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     ${media.mobileScreen} {
       order: 1;
-      height: 426px;
+      .player-container {
+        max-height: inherit;
+      }
     }
   }
   .button {
@@ -163,22 +170,32 @@ export const Layout = styled.section`
       position: static;
       margin-top: 40px;
     }
+    ${media.mobileScreen} {
+     top: inherit;
+     margin-top: 40px;
+     margin-bottom: 20px;
+     left: 0;
+     right: 0;
+    }
   }
   .error-msg {
     max-width: 225px;
+    ${media.mobileScreen} {
+      max-width: inherit;
+    }
   }
 `;
 
 export const VideoContainer = styled.section`
   width: 319px;
-  height: 493px;
+  flex: 1;
   border-radius: 23px;
   background-color: #e3e3e3;
-  margin-bottom: 60px;
+  margin-bottom: 0;
   position: relative;
   ${media.mobileScreen} {
     margin-bottom: 0;
-    height: ${props => (props.isQA ? 'calc(100% - 30px)' : '100%')};
+    /* height: ${props => (props.isQA ? 'calc(100% - 30px)' : '100%')}; */
   }
   .playButton {
     position: absolute;
@@ -212,26 +229,39 @@ export const QuestionContainer = styled.section`
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 15px;
     padding-top: 15px;
-    padding-bottom: ${props => (props.isQA ? '60px' : '50px')};
-    bottom: ${props => (props.isQA ? '148px' : '123px')};
+    /* padding-bottom: ${props => (props.isQA ? '60px' : '25px')}; */
+    padding-bottom: 25px;
+    bottom: 0;
+    /* bottom: ${props => (props.isQA ? '148px' : '123px')}; */
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
     width: 319px;
     transform: translateX(-50%);
     order: 2;
+    &:empty {
+      display: none;
+    }
   }
   .question-wrapper {
     position: relative;
     width: 100%;
+    flex: 1 1 auto;
+    ${media.mobileScreen} {
+      position: initial;
+      max-height: 280px;
+      min-height: 150px;
+    }
     .more-action-root {
       position: absolute;
       top: -10px;
       right: -11px;
       ${media.mobileScreen} {
         top: inherit;
-        bottom: ${props => (props.isQA ? '-41px' : '-33px')};
+        /* bottom: ${props => (props.isQA ? '-41px' : '-33px')}; */
+        bottom: 18px;
         right: 10px;
+        z-index: 999;
         .more-action-icon {
           background: #fff;
         }
@@ -239,6 +269,13 @@ export const QuestionContainer = styled.section`
       .more-action-icon {
         width: 30px;
         height: 30px;
+      }
+    }
+    .qa-scroll {
+      .scroll-render {
+        position: relative !important;
+        padding-bottom: 53px;
+        overflow: auto !important;
       }
     }
   }
@@ -395,9 +432,9 @@ export const WebButtons = styled.section`
   }
 `;
 export const MobButtons = styled.section`
-  position: relative;
+  position: absolute;
   //bottom: ${props => (props.isQA ? ' -220px' : '-180px')};
-  bottom: 0;
+  bottom: -145px;
   order: 3;
   display: flex;
   flex-direction: column;
@@ -416,7 +453,7 @@ export const Header = styled.h4`
   margin-bottom: 44.7px;
   ${media.mobileScreen} {
     margin-bottom: 15px;
-    padding: 0 40px;
+    padding: 0 55px 0 41px;
   }
   .bold-head-name {
     font-family: Gilroy-SemiBold;

@@ -41,11 +41,11 @@ const ManageStyled = styled.div`
         font-size: 24px;
         font-family: Gilroy-Medium;
         font-weight: normal;
+        line-height: 28px;
 
         @media (max-width: 831px) {
           padding-top: 0;
           padding-bottom: 25px;
-          font-size: 28px;
         }
       }
       .row-wrap {
@@ -59,7 +59,7 @@ const ManageStyled = styled.div`
         padding-top: 35px;
 
         @media (max-width: 831px) {
-          padding-top: 10px;
+          padding-top: 15px;
         }
   
         .sub-head {
@@ -67,6 +67,7 @@ const ManageStyled = styled.div`
           font-size: 24px;
           font-family: Gilroy-Medium;
           font-weight: normal;
+          line-height: 28px;
 
           @media (max-width: 831px) {
             padding-top: 0;
@@ -110,11 +111,11 @@ const ManageStyled = styled.div`
           font-size: 24px;
           font-family: Gilroy-Medium;
           font-weight: normal;
+          line-height: 28px;
 
           @media (max-width: 831px) {
             padding-top: 0;
             padding-bottom: 25px;
-            font-size: 28px;
             font-weight: normal;
           }
         }
