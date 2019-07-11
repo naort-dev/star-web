@@ -8,7 +8,7 @@ export const Layout = styled.section`
   .closeBtn {
     position: absolute;
     right: 40px;
-    top: 34px;
+    top: -20px;
     font-size: 50px;
     z-index: 1;
     display: block;
@@ -31,7 +31,7 @@ export const Layout = styled.section`
     }
   }
   .successScroll {
-    margin-top: 87px;
+    margin-top: 0;
     height: calc(100% - 87px) !important;
     display: inline-block;
     ${media.webView} {
@@ -68,10 +68,13 @@ export const Content = styled.section`
     font-size: 14px;
     line-height: 24px;
     padding-bottom: 45px;
+    ${media.mobileScreen} {
+      padding-bottom: 15px;
+    }
   }
   .button-next {
     width: 200px;
-    height: 40px;
+    height: 60px;
     min-width: 200px;
     min-height: 40px;
   }

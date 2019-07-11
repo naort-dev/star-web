@@ -354,7 +354,6 @@ const Question = props => {
           Record a{' '}
           <span className="bold-head-name">{props.bookedItem.occasion}</span>{' '}
           {occasion}
-          <br />
           {getFor(stargramto, to_audio_file)}
           {getFrom(stargramfrom, from_audio_file)}
         </React.Fragment>
@@ -525,6 +524,7 @@ const Question = props => {
                             options={[
                               {
                                 label: 'Contact support',
+
                                 value: 'contact',
                               },
                               {
@@ -534,14 +534,24 @@ const Question = props => {
                             ]}
                             onSelectOption={onSelectAction}
                           />
-                          <QuestionBuilder questionsList={getQuestionList()} />
-                          {props.bookedItem.request_type === 3 && (
-                            <p className="agreement-note">
-                              Please note, the fan has signed an additional
-                              agreement that you are not liable for any answer
-                              you may give.
-                            </p>
-                          )}
+                          <Scrollbars
+                            className="qa-scroll"
+                            autoHide
+                            renderView={prop => (
+                              <div {...prop} className="scroll-render" />
+                            )}
+                          >
+                            <QuestionBuilder
+                              questionsList={getQuestionList()}
+                            />
+                            {props.bookedItem.request_type === 3 && (
+                              <p className="agreement-note">
+                                Please note, the fan has signed an additional
+                                agreement that you are not liable for any answer
+                                you may give.
+                              </p>
+                            )}
+                          </Scrollbars>
                         </div>
                         <WebButtons>
                           {getButton(
@@ -578,7 +588,7 @@ const Question = props => {
                 {(stateObject.buttonLabel ===
                   props.buttonLabel.primary.record ||
                   props.shouldRecord) &&
-                  (!stateObject.error || isQuestion) && (
+                  !stateObject.error && (
                     <ShowHide
                       onClick={() =>
                         updatedStateHandler({
@@ -640,7 +650,9 @@ const Question = props => {
                       )
                     : getFileUpload(['uploadBtn noSupportBtn'])}
 
-                  {!isWebSafari() && getFileUpload(['uploadBtn noSupportBtn'])}
+                  {!isWebSafari() &&
+                    !stateObject.error &&
+                    getFileUpload(['uploadBtn noSupportBtn'])}
                 </QuestionContainer>
               )}
 

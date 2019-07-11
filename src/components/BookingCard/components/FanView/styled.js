@@ -9,17 +9,29 @@ const FanViewStyled = styled.div`
       overflow: auto !important;
       height: auto !important;
     }
-    /* .comment-section {
-      @media(min-width: 832px) {
+    .comment-section {
+      flex: 1 1 auto;
+      max-width: inherit;
+      margin-right: 6px;
+      margin-left: 7px;
+      ${props => props.isPublic && `
           flex: 1 1 auto;
-          max-width: 235px;
+          max-width: inherit;
+          margin-right: 6px;
+          margin-left: 7px;
+      `}
+      @media(min-width: 832px) {
+        ${props => props.isPublic && `
+            flex: 1 1 auto;
+            max-width: 235px;
+        `}
       }
-    } */
+    }
   }
   #comments-scroll-target > section {
     min-height: 265px;
     @media(max-width: 831px) {
-      min-height: auto;
+        min-height: auto;
     }
   }
   @media(min-width: 832px) {

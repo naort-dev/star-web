@@ -31,8 +31,8 @@ export const Layout = styled.section`
       display: block;
     }
     ${media.mobileScreen} {
-      font-size: 28px;
-      line-height: 27px;
+      font-size: 24px;
+      line-height: 28px;
       padding-top: 23px;
       margin-bottom: 0;
       padding-bottom: 20px;

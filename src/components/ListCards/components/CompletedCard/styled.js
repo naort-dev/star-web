@@ -110,7 +110,7 @@ CompletedStyled.IconWrapper = styled.span`
 
 CompletedStyled.DetailsWrapper = styled.div`
   padding-left: 16.7px;
-  flex: 1;
+  flex: 1 1 auto;
   margin-bottom: 84.9px;
   .details-header {
     display: flex;
