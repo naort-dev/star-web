@@ -288,7 +288,7 @@ function RequestTemplates(
                   {getVideoFrom('userName')}
                   {getRelationship()}
                   {getSpecification(
-                    "Who's the guest of honor?",
+                    "Honoring",
                     'specification',
                     false,
                     true,
@@ -299,7 +299,7 @@ function RequestTemplates(
                 <React.Fragment>
                   {getVideoFor('hostName', true)}
                   {getSpecification(
-                    "Who's the guest of honor?",
+                    "Honoring",
                     'specification',
                     true,
                     true,
@@ -320,7 +320,7 @@ function RequestTemplates(
             <FlexBox>
               {getRelationship()}
               {getSpecification(
-                "Who's the guest of honor?",
+                "Honoring",
                 'specification',
                 false,
                 true,
@@ -335,7 +335,7 @@ function RequestTemplates(
             <FlexBox>
               {getVideoFor('hostName')}
               {getSpecification(
-                "Who's the guest of honor?",
+                "Honoring",
                 'specification',
                 false,
                 true,
@@ -673,7 +673,7 @@ function RequestTemplates(
             <FlexBox>
               {getTextInput(
                 getFiledProps(
-                  "Who's the guest of honor?",
+                  "Honoring",
                   true,
                   false,
                   'specification',
@@ -711,7 +711,7 @@ function RequestTemplates(
             <FlexBox>
               {getTextInput(
                 getFiledProps(
-                  "Who's the guest of honor?",
+                  "Honoring",
                   true,
                   false,
                   'specification',
