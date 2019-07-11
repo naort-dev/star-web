@@ -6,8 +6,7 @@ export const UPDATEFILTER = {
   updatePriceRange: 'update/price_range',
   updateSort: 'update/update_sort',
   updateSelectedSubCategory: 'update/update_sub_category',
-  updateSelectedVideoType: 'update/update_video_type',
-  updateSelectedVideoDate: 'update/update_video_date',
+  updateSelectedTag: 'update/update_tag',
 };
 
 export const updateCategory = (label, value, subCategories) => ({
@@ -38,12 +37,8 @@ export const updateSelectedSubCategory = selectedList => ({
   selectedList,
 });
 
-export const updateSelectedVideoType = value => ({
-  type: UPDATEFILTER.updateSelectedVideoType,
-  value,
-});
-
-export const updateSelectedVideoDate = timeSpan => ({
-  type: UPDATEFILTER.updateSelectedVideoDate,
-  timeSpan,
+export const updateSelectedTag = (tagName, tagId) => ({
+  type: UPDATEFILTER.updateSelectedTag,
+  tagName,
+  tagId
 });

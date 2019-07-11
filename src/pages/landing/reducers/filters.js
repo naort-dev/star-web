@@ -11,8 +11,7 @@ const initalState = {
   lowPrice: 0,
   highPrice: 500,
   sortValue: 'popularity',
-  selectedVideoType: '',
-  selectedVideoDate: '',
+  tag: {},
 };
 
 export default (state = { ...initalState }, action) => {
@@ -26,6 +25,7 @@ export default (state = { ...initalState }, action) => {
           subCategories: action.subCategories,
           selected: [],
         },
+        tag: {},
       };
 
     case UPDATEFILTER.updateSearchParam:
@@ -54,18 +54,22 @@ export default (state = { ...initalState }, action) => {
           ...state.category,
           selected: action.selectedList,
         },
+        tag: {},
       };
 
-    case UPDATEFILTER.updateSelectedVideoType:
+    case UPDATEFILTER.updateSelectedTag:
       return {
         ...state,
-        selectedVideoType: action.value,
-      };
-
-    case UPDATEFILTER.updateSelectedVideoDate:
-      return {
-        ...state,
-        selectedVideoDate: action.timeSpan,
+        category: {
+          label: '',
+          value: 0,
+          subCategories: [],
+          selected: [],
+        },
+        tag: {
+          label: action.tagName,
+          id: action.tagId,
+        },
       };
 
     default:

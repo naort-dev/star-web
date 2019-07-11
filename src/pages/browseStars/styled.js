@@ -23,7 +23,26 @@ CategoryPageStyled.CategoryName = styled.span`
   line-height: 21px;
   width: calc(100% - 42px);
   color: ${props => props.theme.flatBlue};
-  text-transform: uppercase;
+  text-transform: ${props => props.isTag ? 'none' : 'uppercase'};
+  display: ${props => (props.isTag ? 'none' : 'block')}
+  @media(min-width: 832px) {
+    ${props => props.isTag && `
+    color: ${props.theme.twilight};
+      font-family: Gilroy-Regular;
+      display: block;
+      font-size: 40px;
+      width: 100%;
+      line-height: 1;  
+      margin-top: 22px;
+    `}
+  }
+  @media(min-width: 1280px) {
+    ${props => props.isTag && `
+      max-width: 1246px;
+      margin: 0 auto;
+      margin-top: 67px;
+    `}
+  }
 `;
 
 CategoryPageStyled.FilterList = styled.span`

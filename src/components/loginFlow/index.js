@@ -108,8 +108,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loginUser: (email, password, loginOptions) => dispatch(loginUser(email, password, loginOptions)),
-  socialMediaLogin: socialObject =>
-    dispatch(socialMediaLogin(socialObject)),
+  socialMediaLogin: (socialObject, options) =>
+    dispatch(socialMediaLogin(socialObject, options)),
   setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -62,7 +63,9 @@ const FilterSection = (props) => {
   };
 
   const applyFilters = () => {
-    props.updateSelectedSubCategory(selectedSubCat);
+    if (isEmpty(props.tag)) {
+      props.updateSelectedSubCategory(selectedSubCat);
+    }
     props.updateSort(selectedSort.value);
     props.updatePriceRange(priceRange.low, priceRange.high);
     props.onClose();
@@ -100,25 +103,28 @@ const FilterSection = (props) => {
       </FilterStyled.Heading>
       
       <FilterStyled.Content>
-        <FilterStyled.SubCategoryList className="subcategory-list">
-          <FilterStyled.SubCategoryItem
-            selected={selectedSubCat.length === 0}
-            onClick={toggleSelectAll}
-          >
-            ALL
-          </FilterStyled.SubCategoryItem>
-          {
-            props.category.subCategories.map(subCategory => (
+        {
+          isEmpty(props.tag) &&
+            <FilterStyled.SubCategoryList className="subcategory-list">
               <FilterStyled.SubCategoryItem
-                key={subCategory.id}
-                selected={selectedSubCat.find(cat => cat.id === subCategory.id)}
-                onClick={updateSubCategory(subCategory)}
+                selected={selectedSubCat.length === 0}
+                onClick={toggleSelectAll}
               >
-                {subCategory.title}
+                ALL
               </FilterStyled.SubCategoryItem>
-            ))
-          }
-        </FilterStyled.SubCategoryList>
+              {
+                props.category.subCategories.map(subCategory => (
+                  <FilterStyled.SubCategoryItem
+                    key={subCategory.id}
+                    selected={selectedSubCat.find(cat => cat.id === subCategory.id)}
+                    onClick={updateSubCategory(subCategory)}
+                  >
+                    {subCategory.title}
+                  </FilterStyled.SubCategoryItem>
+                ))
+              }
+            </FilterStyled.SubCategoryList>
+        }
         <FilterStyled.SecondaryFilterWrapper>
           <FilterStyled.SecondaryFilter>
             <FilterStyled.SortHeading>Sort by</FilterStyled.SortHeading>
@@ -152,6 +158,7 @@ FilterSection.propTypes = {
   updatePriceRange: PropTypes.func.isRequired,
   fetchCelebrityList: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
+  tag: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
 };
 
@@ -160,6 +167,7 @@ const mapStateToProps = state => ({
   lowPrice: state.filters.lowPrice,
   highPrice: state.filters.highPrice,
   sortValue: state.filters.sortValue,
+  tag: state.filters.tag,
   config: state.config.data,
 });
 

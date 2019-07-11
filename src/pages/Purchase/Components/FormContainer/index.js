@@ -142,8 +142,10 @@ function FormContainer(props) {
     const { hostName, specification, templateType } = {
       ...bookingData,
     };
-    if (templateType === 1 || templateType === 2) {
+    if (templateType === 1) {
       validateFields([hostName !== '']);
+    } else if (templateType === 2) {
+      validateFields([hostName !== '', specification !== '']);
     } else if ([3, 4, 5, 6].includes(templateType)) {
       validateFields([hostName !== '', specification !== '']);
     } else if ([7].includes(templateType)) {
@@ -155,9 +157,12 @@ function FormContainer(props) {
     const { hostName, specification, templateType } = {
       ...bookingData,
     };
-    if (templateType === 1 || templateType === 2) {
+    if (templateType === 1) {
       validateStepOne(![hostName !== ''].every(condition => condition));
       validateStepTwo(false);
+    } else if (templateType === 2) {
+      validateStepOne(![hostName !== ''].every(condition => condition));
+      validateStepTwo(![specification !== ''].every(condition => condition));
     } else if (templateType === 6) {
       validateStepOne(
         ![hostName !== '', specification !== ''].every(condition => condition),

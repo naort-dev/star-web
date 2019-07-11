@@ -1,7 +1,9 @@
-
-import Api from '../../../lib/api';
-import { fetch, CancelToken } from '../../../services/fetch';
 import axios from 'axios';
+import isEmpty from 'lodash/isEmpty';
+import cloneDeep from 'lodash/cloneDeep'
+import Api from '../../../lib/api';
+import { updateSelectedSubCategory } from './updateFilters';
+import { fetch, CancelToken } from '../../../services/fetch';
 
 export const CELEB_LIST = {
   start: 'fetch_start/celeb_list',
@@ -24,7 +26,7 @@ export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (list, offset, count, category, searchParam, lowPrice, highPrice, sortValue, isLoggedIn) => {
+export const celebListFetchSuccess = (list, offset, count, category, searchParam, isLoggedIn, newCachedData) => {
   return (
     {
       type: CELEB_LIST.success,
@@ -33,10 +35,8 @@ export const celebListFetchSuccess = (list, offset, count, category, searchParam
       count,
       category,
       searchParam,
-      lowPrice,
-      highPrice,
-      sortValue,
       isLoggedIn,
+      newCachedData,
     });
 };
 
@@ -87,8 +87,10 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     lowPrice,
     highPrice,
     sortValue,
+    tag,
   } = getState().filters;
   const { filters } = getState();
+  const { cachedData: storeCache } = getState().celebList;
   const { isLoggedIn, auth_token } = getState().session;
   const loginChange = isLoggedIn === (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].isLoggedIn);
   const cachedData = getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].data;
@@ -99,7 +101,7 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
   const searchParamChange = searchParam !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].currentSearchParam);
   const sortValueChange = sortValue !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].sortValue);
   const { limit } = getState().celebList;
-  if (categoryChange && loginChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'featured') && cachedData) {
+  if (categoryChange && loginChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'Featured') && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {
       getState().celebList.token.cancel('Operation canceled due to new request.');
     }
@@ -107,6 +109,7 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     return new Promise((resolve) => {
       setTimeout(resolve, 0);
     }).then(() => {
+      dispatch(updateSelectedSubCategory(storeCache[category.label].selectedList))
       dispatch(celebListSwapCacheEnd(category.label));
     });
   }
@@ -132,7 +135,9 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     };
   }
   let API_URL;
-  if (category.label === 'featured')  {
+  if (!isEmpty(tag)) {
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}&tag=${tag.id}`;
+  } else if (category.label === 'Featured')  {
     API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=popularity`;
   } else {
     const subCategoryList = filters.category.selected;
@@ -153,7 +158,24 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
       } else {
         list = [...list, ...resp.data.data.celebrity_list];
       }
-      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam, lowPrice, highPrice, sortValue, isLoggedIn));
+      let newCachedData = cloneDeep(storeCache);
+      if (isEmpty(tag)) {
+        newCachedData = {
+          ...newCachedData,
+          [category.label]: {
+            offset,
+            data: list,
+            count,
+            currentSearchParam: searchParam,
+            lowPrice,
+            highPrice,
+            sortValue,
+            selectedList: category.selected,
+            isLoggedIn,
+          }
+        }
+      }
+      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam, isLoggedIn, newCachedData));
     } else {
       dispatch(celebListFetchEnd());
     }

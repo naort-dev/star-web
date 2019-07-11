@@ -7,12 +7,12 @@ const DetailStyled = styled.div`
   position: relative;
   max-width: 362px;
   margin: 0 auto;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     max-width: 100%;
     padding: 0 17px;
     padding-top: 21.5px;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     justify-content: space-between;
     padding-top: 30.5px;
   }
@@ -24,7 +24,7 @@ DetailStyled.StarName = styled.span`
   padding-top: 20px;
   display: block;
   color: ${props => props.theme.twilight};
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     order: 2;
     padding-top: 0;
     font-family: Gilroy-Regular;
@@ -32,7 +32,7 @@ DetailStyled.StarName = styled.span`
     //line-height: 54px;
     text-indent: -5px;
   }
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     padding-bottom: 10px;
     margin-bottom: -3px !important;
     text-align: center;
@@ -50,19 +50,19 @@ DetailStyled.Categories = styled.span`
   font-size: 14px;
   color: ${props => props.theme.twilight};
   text-align: center;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     order: 1;
     font-size: 24px;
     text-align: left;
     margin-bottom: 2px;
   }
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     padding-bottom: 10px;
   }
 `;
 
 DetailStyled.DescriptionWrapper = styled.span`
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     order: 3;
   }
 `;
@@ -83,9 +83,9 @@ DetailStyled.Description = styled.span`
     height: auto;
     cursor: pointer;
     font-family: Gilroy-Medium;
-    color: ${props => props.theme.flatBlue}
+    color: ${props => props.theme.flatBlue};
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     padding-top: 15px;
     font-size: 16px;
     line-height: 26px;
@@ -99,7 +99,7 @@ DetailStyled.Description = styled.span`
 DetailStyled.ProfileVideo = styled.div`
   width: 100%;
   height: 500px;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     width: 274px;
     height: 417px;
     margin: 0 auto;
@@ -108,7 +108,7 @@ DetailStyled.ProfileVideo = styled.div`
 
 DetailStyled.BackButton = styled.div`
   display: none;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: block;
     width: 100%;
     padding-top: 4px;
@@ -150,12 +150,12 @@ DetailStyled.ProfileContent = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     width: calc(100% - 430px);
   }
 `;
@@ -174,7 +174,7 @@ DetailStyled.StarAvatarWrapper = styled.div`
     color: ${props => props.theme.flatBlue};
     font-size: 34px;
     padding-top: 16px;
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       display: none;
     }
   }
@@ -185,11 +185,17 @@ DetailStyled.StarDetailsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   z-index: 2;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     align-items: flex-start;
     padding-left: 40px;
     width: calc(100% - 303px);
     padding-top: 15px;
+  }
+
+  .tag-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    order: 3;
   }
 `;
 
@@ -200,14 +206,14 @@ DetailStyled.ProfileVideoSection = styled.div`
   ${DetailStyled.StarName} {
     margin-bottom: 27px;
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: block;
     padding-top: 31.9px;
     ${DetailStyled.StarName} {
       display: none;
     }
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     display: inline-block;
     width: auto;
     padding-top: 0;
@@ -225,7 +231,7 @@ DetailStyled.StarDetails = styled.div`
     display: none;
   }
 
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     padding-top: 0;
     padding-bottom: 20px;
   }
@@ -240,11 +246,11 @@ DetailStyled.StarDetails = styled.div`
       padding: 0;
       font-size: 32px;
       margin-right: 3px;
-      @media(max-width: 831px) {
+      @media (max-width: 831px) {
         font-size: 16px;
       }
     }
-    @media(max-width: 831px) {
+    @media (max-width: 831px) {
       .details-header {
         & + div {
           padding-top: 3px;
@@ -261,7 +267,7 @@ DetailStyled.StarDetails = styled.div`
       color: ${props => props.theme.orangePink};
     }
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     order: 4;
     width: 100%;
     justify-content: space-between;
