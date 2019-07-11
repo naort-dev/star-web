@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,7 +81,7 @@ const BrowseStars = (props) => {
 
   useEffect(() => {
     props.fetchCelebrityList(0, true);
-  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
+  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice, props.tag.id]);
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize);
@@ -123,7 +124,7 @@ const BrowseStars = (props) => {
       />
       <CategoryPageStyled.Toolbar headerRef={headerRef}>
         <CategoryPageStyled.CategoryName>
-          {props.category.label}
+          {props.category.label || props.tag.label}
           <CategoryPageStyled.FilterList>
             {
               pipeSeparator(props.category.selected, 'title')
@@ -141,26 +142,30 @@ const BrowseStars = (props) => {
         }
       </CategoryPageStyled.Toolbar>
       <CategoryPageStyled.Content innerRef={contentRef}>
-        <CategoryPageStyled.FeaturedWrapper>
-          <CategoryPageStyled.Heading>{title}</CategoryPageStyled.Heading>
-          <CategoryPageStyled.FeaturedSection heading={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
-            <CategoryPageStyled.StarWrapper>
-              <StarDrawer starData={starData} />
-            </CategoryPageStyled.StarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="featured" >
-              <StarAvatar star={getAvatarData(1)} type="featured" />
-            </CategoryPageStyled.AvatarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad >
-              <StarAvatar star={getAvatarData(2)} type="secondary" />
-            </CategoryPageStyled.AvatarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="secondary top-two" >
-              <StarAvatar star={getAvatarData(3)} type="secondary" />
-            </CategoryPageStyled.AvatarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad disableMobile>
-              <StarAvatar star={getAvatarData(4)} type="secondary" />
-            </CategoryPageStyled.AvatarWrapper>
-          </CategoryPageStyled.FeaturedSection>
-        </CategoryPageStyled.FeaturedWrapper>
+        {
+          isEmpty(props.tag) ?
+            <CategoryPageStyled.FeaturedWrapper>
+              <CategoryPageStyled.Heading>{title || props.tag.label}</CategoryPageStyled.Heading>
+                <CategoryPageStyled.FeaturedSection heading={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
+                  <CategoryPageStyled.StarWrapper>
+                    <StarDrawer starData={starData} />
+                  </CategoryPageStyled.StarWrapper>
+                  <CategoryPageStyled.AvatarWrapper className="featured" >
+                    <StarAvatar star={getAvatarData(1)} type="featured" />
+                  </CategoryPageStyled.AvatarWrapper>
+                  <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad >
+                    <StarAvatar star={getAvatarData(2)} type="secondary" />
+                  </CategoryPageStyled.AvatarWrapper>
+                  <CategoryPageStyled.AvatarWrapper className="secondary top-two" >
+                    <StarAvatar star={getAvatarData(3)} type="secondary" />
+                  </CategoryPageStyled.AvatarWrapper>
+                  <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad disableMobile>
+                    <StarAvatar star={getAvatarData(4)} type="secondary" />
+                  </CategoryPageStyled.AvatarWrapper>
+                </CategoryPageStyled.FeaturedSection>
+            </CategoryPageStyled.FeaturedWrapper>
+          : <CategoryPageStyled.CategoryName isTag>{props.tag.label}</CategoryPageStyled.CategoryName>
+        }
         <CategoryPageStyled.MainContent className={fixedContent && 'fixed-filter'} fixedContent={fixedContent} padding={listHeight} innerRef={mainRef}>
           {
             props.category.label !== 'Featured' && showFilter &&
@@ -198,6 +203,7 @@ BrowseStars.propTypes = {
   highPrice: PropTypes.number.isRequired,
   fetchCelebrityList: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
+  tag: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
