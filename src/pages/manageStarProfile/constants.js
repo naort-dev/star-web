@@ -13,7 +13,7 @@ export const STAR_PROFILE = {
       url: '/manage/profile/bio',
     },
     { linkName: 'Industry', selectedName: 'industry', url: '/manage/profile/industry' },
-    // { linkName: 'Tags', selectedName: 'tags', url: '/manage/earnings' },
+    { linkName: 'Tags', selectedName: 'tags', url: '/manage/profile/tags' },
     {
       linkName: 'Social handles',
       selectedName: 'social',
@@ -35,5 +35,9 @@ export const STAR_PROFILE = {
     title: 'Set your price and limits',
     confirmationTitle: 'Are you sure?',
     titleMobile: 'Price & Limits',
+  },
+  TAGS: {
+    subtitle: 'Add tags that will help fans find you when they search, including teams, groups, movies, affiliations, etc. (unlimited)',
   }
+
 };
