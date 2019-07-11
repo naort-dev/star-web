@@ -59,52 +59,7 @@ const Tags = props => {
   }
 
   const onBack = () => {
-    setshowBrowseCategory(false);
-  };
-  const browserCategoryList = () => {
-    const professionsList = props.professionsList.allProfessions;
-    return (
-      <UploadContainer.ItemWrapper>
-        {professionsList.map(profession => {
-          return (
-            <UploadContainer.Item
-              key={profession.id}
-              onClick={() => getSubCategoryList(profession.id)}
-              selected={categories.selectedCategory.find(
-                cat => cat.id === profession.id,
-              )}
-              className="categoryItem"
-            >
-              {profession.title}
-            </UploadContainer.Item>
-          );
-        })}
-      </UploadContainer.ItemWrapper>
-    );
-  };
-  const getSubCategoryList = id => {
-    let { professions } = props.professionsList;
-    professions = professions.filter(profession => profession.id === id);
-    professions[0].child.map(function(obj) {
-      obj.label = obj.title;
-      obj.value = obj.id;
-    });
-    setcategories({
-      subCategoriesArray: professions[0].child,
-      selectedCategory: professions,
-    });
-  };
-  const getSelectedCategoryList = profession => {
-    let selctedProfessions;
-    if (selectedTags.find(cat => cat.id === profession.id)) {
-      selctedProfessions = selectedTags.filter(
-        cat => cat.id !== profession.id,
-      );
-      setselectedTags(selctedProfessions);
-    } else if (selectedTags.length < 3) {
-      selctedProfessions = [...selectedTags, profession];
-      setselectedTags(selctedProfessions);
-    }
+    
   };
   const handleOptionPillClick = (chosenTag) => {
     setselectedTags(
