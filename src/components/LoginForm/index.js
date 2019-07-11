@@ -69,7 +69,7 @@ export default class LoginForm extends React.Component {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
     window.addEventListener("storage", this.listenToStorage);
-    if (!this.props.isLoggedIn && this.gSignIn) {
+    if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
         width: 200,
@@ -226,9 +226,12 @@ export default class LoginForm extends React.Component {
         });
       } else {
         skipSocialLogin = true;
-        console.log(val)
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
+        if (this.props.loginOptions && this.props.loginOptions.preventStarLogin && val.role_details.role_code === ROLES.star) {
+          this.props.loginFetchIncorrect('Booking a video is only available for Starsona fan accounts.', '400');
+        } else {
+          this.props.updateLoginStatus(val);
+          this.props.fetchUserDetails(val.id);
+        }
       }
     }
     if (!skipSocialLogin) {
@@ -264,6 +267,7 @@ export default class LoginForm extends React.Component {
   };
   onGmail = () => {
     const check = document.getElementsByClassName("abcRioButtonIcon");
+    console.log(check)
     check[0].click();
     this.setState({ gmailClick: true });
   };
@@ -486,10 +490,10 @@ export default class LoginForm extends React.Component {
                   <LoginContainer.ButtonWrapper className="align-center">
                     { this.props.statusCode !== '410' &&
                     this.props.statusCode !== '310' &&
-                    this.props.error &&
+                    (this.props.error || this.props.commonError) &&
                     <LoginContainer.WrapsInput className="error-msg">
                       <LoginContainer.ErrorMsg>
-                        {this.props.error}
+                        {this.props.error || this.props.commonError}
                       </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>
                     }
