@@ -159,7 +159,6 @@ export const QuestionContainer = styled.section`
     position: absolute;
     bottom: 150px;
     height: 259px;
-    overflow: auto;
   }
   &:empty {
     display: none;
@@ -199,7 +198,7 @@ export const QuestionContainer = styled.section`
   .noSupportBtn {
     position: absolute;
     left: 0;
-    top: 225px;
+    top: 260px;
     ${media.webView} {
       position: static;
       margin-top: 40px;

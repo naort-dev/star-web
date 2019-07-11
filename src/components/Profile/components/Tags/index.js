@@ -103,10 +103,6 @@ const Tags = props => {
             onFocus={handleFocusSelect}
             noOptionsMessage='No Tags were found.'
           />
-          <UploadContainer.BrowseCategories>
-            Not finding one?{' '}
-            
-          </UploadContainer.BrowseCategories>
         </UploadContainer.CategoriesWrapper>
         <UploadContainer.ButtonWrapper className="align-center">
           <PrimaryButton type="submit" onClick={saveTags}>
