@@ -17,13 +17,18 @@ export const Layout = styled.section`
     flex: 1 1 auto;
     display: flex;
     height: 100%;
-    max-height: 426px;
+    max-height: 350px;
     min-height: 400px;
   }
   .video-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     ${media.mobileScreen} {
       order: 1;
-      height: 100%;
+      .player-container {
+        max-height: inherit;
+      }
     }
   }
   .button {
@@ -169,7 +174,8 @@ export const Layout = styled.section`
      top: inherit;
      margin-top: 40px;
      margin-bottom: 20px;
-     left: 85px;
+     left: 0;
+     right: 0;
     }
   }
   .error-msg {
@@ -182,14 +188,14 @@ export const Layout = styled.section`
 
 export const VideoContainer = styled.section`
   width: 319px;
-  height: 493px;
+  flex: 1 1 auto;
   border-radius: 23px;
   background-color: #e3e3e3;
-  margin-bottom: 60px;
+  margin-bottom: 0;
   position: relative;
   ${media.mobileScreen} {
     margin-bottom: 0;
-    height: ${props => (props.isQA ? 'calc(100% - 30px)' : '100%')};
+    /* height: ${props => (props.isQA ? 'calc(100% - 30px)' : '100%')}; */
   }
   .playButton {
     position: absolute;
@@ -240,9 +246,11 @@ export const QuestionContainer = styled.section`
   .question-wrapper {
     position: relative;
     width: 100%;
+    flex: 1 1 auto;
     ${media.mobileScreen} {
-      height: 280px;
-      overflow: auto;
+      position: initial;
+      max-height: 280px;
+      min-height: 150px;
     }
     .more-action-root {
       position: absolute;
@@ -250,8 +258,10 @@ export const QuestionContainer = styled.section`
       right: -11px;
       ${media.mobileScreen} {
         top: inherit;
-        bottom: ${props => (props.isQA ? '-41px' : '-33px')};
+        /* bottom: ${props => (props.isQA ? '-41px' : '-33px')}; */
+        bottom: 18px;
         right: 10px;
+        z-index: 999;
         .more-action-icon {
           background: #fff;
         }
@@ -259,6 +269,13 @@ export const QuestionContainer = styled.section`
       .more-action-icon {
         width: 30px;
         height: 30px;
+      }
+    }
+    .qa-scroll {
+      .scroll-render {
+        position: relative !important;
+        padding-bottom: 53px;
+        overflow: auto !important;
       }
     }
   }
@@ -415,9 +432,9 @@ export const WebButtons = styled.section`
   }
 `;
 export const MobButtons = styled.section`
-  position: relative;
+  position: absolute;
   //bottom: ${props => (props.isQA ? ' -220px' : '-180px')};
-  bottom: 0;
+  bottom: -145px;
   order: 3;
   display: flex;
   flex-direction: column;
@@ -436,7 +453,7 @@ export const Header = styled.h4`
   margin-bottom: 44.7px;
   ${media.mobileScreen} {
     margin-bottom: 15px;
-    padding: 0 40px;
+    padding: 0 55px 0 41px;
   }
   .bold-head-name {
     font-family: Gilroy-SemiBold;

@@ -354,7 +354,6 @@ const Question = props => {
           Record a{' '}
           <span className="bold-head-name">{props.bookedItem.occasion}</span>{' '}
           {occasion}
-          <br />
           {getFor(stargramto, to_audio_file)}
           {getFrom(stargramfrom, from_audio_file)}
         </React.Fragment>
@@ -453,147 +452,151 @@ const Question = props => {
             {(isIOSDevice() ||
               checkMediaRecorderSupport() ||
               isWebSafari()) && (
-              <React.Fragment>
-                <section className="video-wrapper">
-                  {props.bookedItem.request_type === 3 && (
-                    <ul className="video-option">
-                      <li
-                        className={isQuestion ? 'ques-item' : ''}
-                        onClick={() => updateIsQuestion(true)}
-                        role="presentation"
-                      >
-                        QUESTION
+                <React.Fragment>
+                  <section className="video-wrapper">
+                    {props.bookedItem.request_type === 3 && (
+                      <ul className="video-option">
+                        <li
+                          className={isQuestion ? 'ques-item' : ''}
+                          onClick={() => updateIsQuestion(true)}
+                          role="presentation"
+                        >
+                          QUESTION
                       </li>
-                      <li
-                        className={!isQuestion ? 'ans-item' : ''}
-                        onClick={() => updateIsQuestion(false)}
-                        role="presentation"
-                      >
-                        ANSWER
+                        <li
+                          className={!isQuestion ? 'ans-item' : ''}
+                          onClick={() => updateIsQuestion(false)}
+                          role="presentation"
+                        >
+                          ANSWER
                       </li>
-                    </ul>
-                  )}
-                  <VideoContainer isQA={props.bookedItem.request_type === 3}>
-                    {props.bookedItem.request_type === 3 && isQuestion ? (
-                      <VideoRender
-                        variableWidth
-                        variableHeight
-                        videoSrc={
-                          props.bookedItem.request_video[0].s3_video_url
-                        }
-                        coverImage={
-                          props.bookedItem.request_video[0].s3_thumbnail_url
-                        }
-                        classes={{ container: 'player-container' }}
-                      ></VideoRender>
-                    ) : (
-                      <VideoRecorder
-                        updateMediaStore={props.updateMediaStore}
-                        duration={recorder.askTimeOut}
-                        stopRecordHandler={stopRecordHandler}
-                        playPauseMediaAction={props.playPauseMedia}
-                        retryRecordHandler={retryRecordHandler}
-                        recordTrigger={props.recordTrigger}
-                        errorHandler={errorHandlerCallback}
-                        forceStop={stateObject.isStop}
-                        startStreamingCallback={startStreaming}
-                        uploadHandler={uploadHandler}
-                        recorded={props.recorded}
-                        uploader
-                      />
+                      </ul>
                     )}
-                  </VideoContainer>
-                </section>
-                {(!isWebSafari() ||
-                  (isQuestion && props.bookedItem.request_type === 3)) && (
-                  <QuestionContainer
-                    isShow={stateObject.showHideFlg || stateObject.error}
-                    continueFlg={stateObject.continueFlg}
-                    isQA={props.bookedItem.request_type === 3}
-                  >
-                    {(!stateObject.error ||
-                      (isQuestion && props.bookedItem.request_type === 3)) && (
-                      <React.Fragment>
-                        <div className="question-wrapper">
-                          <h1 className="quesHead">What you should say...</h1>
-                          <MoreActions
-                            classes={{
-                              root: 'more-action-root',
-                              icon: 'more-action-icon',
-                            }}
-                            options={[
-                              {
-                                label: 'Contact support',
-                                value: 'contact',
-                              },
-                              {
-                                label: 'Decline booking',
-                                value: 'decline',
-                              },
-                            ]}
-                            onSelectOption={onSelectAction}
+                    <VideoContainer isQA={props.bookedItem.request_type === 3}>
+                      {props.bookedItem.request_type === 3 && isQuestion ? (
+                        <VideoRender
+                          variableWidth
+                          variableHeight
+                          videoSrc={
+                            props.bookedItem.request_video[0].s3_video_url
+                          }
+                          coverImage={
+                            props.bookedItem.request_video[0].s3_thumbnail_url
+                          }
+                          classes={{ container: 'player-container' }}
+                        ></VideoRender>
+                      ) : (
+                          <VideoRecorder
+                            updateMediaStore={props.updateMediaStore}
+                            duration={recorder.askTimeOut}
+                            stopRecordHandler={stopRecordHandler}
+                            playPauseMediaAction={props.playPauseMedia}
+                            retryRecordHandler={retryRecordHandler}
+                            recordTrigger={props.recordTrigger}
+                            errorHandler={errorHandlerCallback}
+                            forceStop={stateObject.isStop}
+                            startStreamingCallback={startStreaming}
+                            uploadHandler={uploadHandler}
+                            recorded={props.recorded}
+                            uploader
                           />
-                          <QuestionBuilder questionsList={getQuestionList()} />
-                          {props.bookedItem.request_type === 3 && (
-                            <p className="agreement-note">
-                              Please note, the fan has signed an additional
-                              agreement that you are not liable for any answer
-                              you may give.
-                            </p>
-                          )}
-                        </div>
-                        <WebButtons>
-                          {getButton(
-                            false,
-                            '',
-                            buttonClickHandler,
-                            stateObject.buttonLabel,
-                          )}
-                          {!stateObject.continueFlg
-                            ? getFileUpload(['uploadBtn mobDisplay web-link'])
-                            : getLinkButtons('web-link uploadBtn')}
-                          {stateObject.continueFlg && getLinkButtons('')}
-                        </WebButtons>
-                      </React.Fragment>
-                    )}
-                  </QuestionContainer>
-                )}
+                        )}
+                    </VideoContainer>
+                  </section>
+                  {(!isWebSafari() ||
+                    (isQuestion && props.bookedItem.request_type === 3)) && (
+                      <QuestionContainer
+                        isShow={stateObject.showHideFlg || stateObject.error}
+                        continueFlg={stateObject.continueFlg}
+                        isQA={props.bookedItem.request_type === 3}
+                      >
+                        {(!stateObject.error ||
+                          (isQuestion && props.bookedItem.request_type === 3)) && (
+                            <React.Fragment>
+                              <div className="question-wrapper">
+                                <h1 className="quesHead">What you should say...</h1>
+                                <MoreActions
+                                  classes={{
+                                    root: 'more-action-root',
+                                    icon: 'more-action-icon',
+                                  }}
+                                  options={[
+                                    {
+                                      label: 'Contact support',
 
-                {!stateObject.error && (
-                  <MobButtons isQA={props.bookedItem.request_type === 3}>
-                    {getButton(
-                      false,
-                      '',
-                      buttonClickHandler,
-                      stateObject.buttonLabel,
+                                      value: 'contact',
+                                    },
+                                    {
+                                      label: 'Decline booking',
+                                      value: 'decline',
+                                    },
+                                  ]}
+                                  onSelectOption={onSelectAction}
+                                />
+                                <Scrollbars className="qa-scroll" autoHide
+                                  renderView={prop => <div {...prop} className="scroll-render" />}>
+                                  <QuestionBuilder questionsList={getQuestionList()} />
+                                  {props.bookedItem.request_type === 3 && (
+                                    <p className="agreement-note">
+                                      Please note, the fan has signed an additional
+                                      agreement that you are not liable for any answer
+                                      you may give.
+                                    </p>
+                                  )}
+                                </Scrollbars>
+                              </div>
+                              <WebButtons>
+                                {getButton(
+                                  false,
+                                  '',
+                                  buttonClickHandler,
+                                  stateObject.buttonLabel,
+                                )}
+                                {!stateObject.continueFlg
+                                  ? getFileUpload(['uploadBtn mobDisplay web-link'])
+                                  : getLinkButtons('web-link uploadBtn')}
+                                {stateObject.continueFlg && getLinkButtons('')}
+                              </WebButtons>
+                            </React.Fragment>
+                          )}
+                      </QuestionContainer>
                     )}
-                    {!stateObject.continueFlg
-                      ? getFileUpload(['uploadBtn web-link'])
-                      : getLinkButtons('web-link .uploadBtn')}
-                    {stateObject.continueFlg && getLinkButtons()}
-                  </MobButtons>
-                )}
 
-                {(stateObject.buttonLabel ===
-                  props.buttonLabel.primary.record ||
-                  props.shouldRecord) &&
-                  !stateObject.error && (
-                    <ShowHide
-                      onClick={() =>
-                        updatedStateHandler({
-                          ...stateObject,
-                          showHideFlg: !stateObject.showHideFlg,
-                        })
-                      }
-                      scriptVisible={stateObject.showHideFlg}
-                      isShow={stateObject.showHideFlg}
-                      isQA={props.bookedItem.request_type === 3}
-                    >
-                      {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
-                    </ShowHide>
+                  {!stateObject.error && (
+                    <MobButtons isQA={props.bookedItem.request_type === 3}>
+                      {getButton(
+                        false,
+                        '',
+                        buttonClickHandler,
+                        stateObject.buttonLabel,
+                      )}
+                      {!stateObject.continueFlg
+                        ? getFileUpload(['uploadBtn web-link'])
+                        : getLinkButtons('web-link .uploadBtn')}
+                      {stateObject.continueFlg && getLinkButtons()}
+                    </MobButtons>
                   )}
-              </React.Fragment>
-            )}
+
+                  {(stateObject.buttonLabel ===
+                    props.buttonLabel.primary.record ||
+                    props.shouldRecord) &&
+                    !stateObject.error && (
+                      <ShowHide
+                        onClick={() =>
+                          updatedStateHandler({
+                            ...stateObject,
+                            showHideFlg: !stateObject.showHideFlg,
+                          })
+                        }
+                        scriptVisible={stateObject.showHideFlg}
+                        isShow={stateObject.showHideFlg}
+                        isQA={props.bookedItem.request_type === 3}
+                      >
+                        {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
+                      </ShowHide>
+                    )}
+                </React.Fragment>
+              )}
 
             {!isIOSDevice() &&
               (!isQuestion || props.bookedItem.request_type !== 3) &&
@@ -616,28 +619,28 @@ const Question = props => {
                       </p>
                       {props.videoSrc
                         ? getButton(
-                            false,
-                            'safari-upload',
-                            uploadContinue,
-                            'Continue',
-                          )
+                          false,
+                          'safari-upload',
+                          uploadContinue,
+                          'Continue',
+                        )
                         : getFileUpload(['uploadBtn noSupportBtn'])}
                     </React.Fragment>
                   ) : (
-                    <React.Fragment>
-                      <p className="note">
-                        Your system does not have video recording capability,
-                        but you will need to record a video to ask a question to
+                      <React.Fragment>
+                        <p className="note">
+                          Your system does not have video recording capability,
+                          but you will need to record a video to ask a question to
                         the Star. <br />
+                          <br />
+                          You can:
                         <br />
-                        You can:
-                        <br />
-                        <br /> Record with our App
+                          <br /> Record with our App
                         <br /> Use our iOS or Android app to book the star.
                       </p>
-                      {getFileUpload(['uploadBtn noSupportBtn'])}
-                    </React.Fragment>
-                  )}
+                        {getFileUpload(['uploadBtn noSupportBtn'])}
+                      </React.Fragment>
+                    )}
                 </QuestionContainer>
               )}
 
@@ -651,12 +654,12 @@ const Question = props => {
           </Layout>
         </React.Fragment>
       ) : (
-        <SuccessScreen
-          closeHandler={closeSuccess}
-          nextRequest={nextRequest}
-          bookItem={props.bookedItem}
-        />
-      )}
+          <SuccessScreen
+            closeHandler={closeSuccess}
+            nextRequest={nextRequest}
+            bookItem={props.bookedItem}
+          />
+        )}
     </React.Fragment>
   );
 };

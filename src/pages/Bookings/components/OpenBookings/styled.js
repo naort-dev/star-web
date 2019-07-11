@@ -60,7 +60,7 @@ OpenStyled.LeftSection = styled.div`
 `;
 
 OpenStyled.RightSection = Card.extend`
-  flex: 1;
+  flex: 1 1 auto;
   padding-top: 40.8px;
   @media (min-width: 831px) {
     padding-top: 34px;
@@ -73,9 +73,8 @@ OpenStyled.RightSection = Card.extend`
     left: 0;
     z-index: 1000;
     display: none;
-    ${props => props.clicked && `display: block;`}
+    ${props => props.clicked && `display: flex;`}
     overflow: scroll;
-    display: flex;
     flex-direction: column;
   }
   @media (min-width: 832px) and (max-width: 1279px) {

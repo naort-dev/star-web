@@ -30,7 +30,7 @@ export const Layout = styled.section`
     }
   }
   .head1 {
-    padding-top: 4px;
+    padding-top: 3px;
     padding-bottom: 32px;
     color: #888888;
     font-family: Gilroy-Light;
@@ -47,6 +47,7 @@ export const Layout = styled.section`
     @media (max-width: 831px) {
       padding-bottom: 17px;
       font-size: 24px;
+      line-height: 28px;
     }
   }
 

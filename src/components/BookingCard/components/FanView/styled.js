@@ -10,6 +10,10 @@ const FanViewStyled = styled.div`
       height: auto !important;
     }
     .comment-section {
+      flex: 1 1 auto;
+      max-width: inherit;
+      margin-right: 6px;
+      margin-left: 7px;
       ${props => props.isPublic && `
           flex: 1 1 auto;
           max-width: inherit;

@@ -22,6 +22,7 @@ CommentStyled.ProfileImage = styled.span`
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
+  flex: 0 0 40px;
 `;
 CommentStyled.Comment = styled.span`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
