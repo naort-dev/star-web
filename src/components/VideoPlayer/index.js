@@ -192,12 +192,15 @@ export default class VideoPlayer extends React.Component {
             <ControlBar autoHide={false} disabled={!props.controls} />
             <BigPlayButton position="center-bottom" disabled />
           </Player>
-          <VideoRenderDiv.ControlIconWrapper className="player-icon-wrap">
-            <VideoRenderDiv.ControlIcon className="play-button">
-              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
-            </VideoRenderDiv.ControlIcon>
-            {this.props.renderCustomText()}
-          </VideoRenderDiv.ControlIconWrapper>
+          {
+            !isPlaying &&
+              <VideoRenderDiv.ControlIconWrapper className="player-icon-wrap">
+                <VideoRenderDiv.ControlIcon className="play-button">
+                  <FontAwesomeIcon icon={faPlay} />
+                </VideoRenderDiv.ControlIcon>
+                {this.props.renderCustomText()}
+              </VideoRenderDiv.ControlIconWrapper>
+          }
         </div>
       </VideoRenderDiv>
     );

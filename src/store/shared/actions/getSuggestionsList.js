@@ -43,7 +43,7 @@ const parseSearchResult = (results) => {
   results.forEach((searchItem) => {
     if (searchItem['_index'] === 'celebrities') {
       stars = [...stars, { ...searchItem['_source'] }];
-    } else if (searchItem['_index'] === 'professions') {
+    } else if (searchItem['_index'] === 'professions' || searchItem['_index'] === 'tags') {
       professions = [...professions, { ...searchItem['_source'] }]
     }
   });
@@ -57,7 +57,7 @@ export const fetchSuggestionList = searchParam => (dispatch, getState) => {
     query: {
       multi_match: {
         query: searchParam,
-        fields: ['title', 'first_name', 'last_name', 'nick_name'],
+        fields: ['title', 'first_name', 'last_name', 'nick_name', 'tag_name'],
         type: 'phrase_prefix',
       },
     },

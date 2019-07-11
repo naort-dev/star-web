@@ -226,6 +226,7 @@ export default class LoginForm extends React.Component {
         });
       } else {
         skipSocialLogin = true;
+        console.log(val)
         this.props.updateLoginStatus(val);
         this.props.fetchUserDetails(val.id);
       }
@@ -245,7 +246,7 @@ export default class LoginForm extends React.Component {
         twId: this.state.socialMedia.tw_id,
       }
       this.props.setSocialMediaData(this.state.socialMedia);
-      this.props.socialMediaLogin(socialObject);
+      this.props.socialMediaLogin(socialObject, this.props.loginOptions);
     }
   };
 
