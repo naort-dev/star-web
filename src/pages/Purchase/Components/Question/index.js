@@ -255,7 +255,6 @@ const Question = props => {
     checkDeviceSupport();
   }, []);
 
-  console.log(isWebSafari())
   return (
     <Layout>
       <React.Fragment>
