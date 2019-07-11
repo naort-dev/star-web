@@ -46,6 +46,7 @@ export default (state = { ...initalState }, action) => {
             lowPrice: action.lowPrice,
             highPrice: action.highPrice,
             sortValue: action.sortValue,
+            tag: action.tag,
             isLoggedIn: action.isLoggedIn,
           },
         },
