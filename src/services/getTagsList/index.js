@@ -7,7 +7,7 @@ const parseResult = (results) => {
   results.forEach((searchItem) => {
     const list ={
       label: searchItem._source.tag_name,
-      value: searchItem._id,
+      value: parseInt(searchItem._id, 0),
     }
     taglist.push(list);
   });
