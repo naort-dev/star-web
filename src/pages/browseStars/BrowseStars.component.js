@@ -81,7 +81,7 @@ const BrowseStars = (props) => {
 
   useEffect(() => {
     props.fetchCelebrityList(0, true);
-  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
+  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice, props.tag.id]);
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize);
