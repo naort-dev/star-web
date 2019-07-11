@@ -26,6 +26,33 @@ import Loader from '../Loader';
 import VideoRender from '../VideoRender';
 import QuickViewStyled from './styled';
 
+const tags = [
+  {
+    id: 7,
+    name: 'Actor',
+  },
+  {
+    id: 8,
+    name: 'Avenger',
+  },
+
+  {
+    id: 9,
+    name: 'Actor',
+  },
+  {
+    id: 10,
+    name: 'Avenger',
+  },
+  {
+    id: 11,
+    name: 'Actor',
+  },
+  {
+    id: 12,
+    name: 'Avenger',
+  },
+];
 const QuickViewModal = props => {
   const { paleSkyBlue } = props.theme;
   const isBookable =
@@ -218,7 +245,19 @@ const QuickViewModal = props => {
                   )}
                 </QuickViewStyled.StarName>
               </div>
-              {/* <Pill text="sdfsdfsd"> </Pill> */}
+
+              {tags.length > 0 && (
+                <section className="tag-wrap">
+                  {tags.map(tag => {
+                    return (
+                      <Pill tag={tag} key={tag.id} className="tag-item">
+                        {' '}
+                      </Pill>
+                    );
+                  })}
+                </section>
+              )}
+
               {props.celebDetails.average_response_time !== '' && (
                 <React.Fragment>
                   <QuickViewStyled.SubHeader>

@@ -253,35 +253,38 @@ const getStep5Script = (
   content4,
   content5,
 ) => {
+  let honor = '';
+  if (!isEmpty(specification))
+    honor = specification.charAt(0).toUpperCase() + specification.slice(1);
   if (isEmpty(fromName) && isEmpty(relationship) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span>${content3} 
-    ${dateFormatter(date, occasion, specification)}. ${content5}`;
+    ${dateFormatter(date, occasion, honor)}. ${content5}`;
   } else if (isEmpty(fromName) && isEmpty(relationship)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
-    ${dateFormatter(date, occasion, specification)}. ${content5}`;
+    ${dateFormatter(date, occasion, honor)}. ${content5}`;
   } else if (isEmpty(fromName) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
     <span class="boldTxt">${occasion}</span>
-    ${getFromWhere(specification, '')}. 
+    ${getFromWhere(honor, '')}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   } else if (isEmpty(relationship) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-    ${dateFormatter(date, occasion, specification)}. ${content5}`;
+    ${dateFormatter(date, occasion, honor)}. ${content5}`;
   } else if (isEmpty(fromName)) {
     return `${content1} <span class="boldTxt">${forName}, </span> ${content3} 
-    ${dateFormatter(date, occasion, specification)}. 
+    ${dateFormatter(date, occasion, honor)}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   } else if (isEmpty(relationship)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-    ${dateFormatter(date, occasion, specification)}. ${content5}`;
+    ${dateFormatter(date, occasion, honor)}. ${content5}`;
   } else if (isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
     <span class="boldTxt">${occasion}</span> 
-    ${getFromWhere(specification, '')}. 
+    ${getFromWhere(honor, '')}. 
     Your <span class="boldTxt">${relationship}</span> ${content5}`;
   }
   return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
-  ${dateFormatter(date, occasion, specification)}.
+  ${dateFormatter(date, occasion, honor)}.
   Your <span class="boldTxt">${relationship}</span> ${content5}`;
 };
 
@@ -366,7 +369,8 @@ export const ScriptGenerator = ({
     } else if (templateType === 2) {
       let spec = specification;
       if (!isEmpty(specification)) {
-        spec = `${specification}'s `;
+        spec = `${specification.charAt(0).toUpperCase() +
+          specification.slice(1)}'s `;
       }
       if (occasionKey === 15) {
         htmlElm += getScript(
