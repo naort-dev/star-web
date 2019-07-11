@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Api from '../../lib/api';
+import { fetch } from '../fetch';
 
 const parseResult = (results) => {
   let taglist = [];
@@ -12,7 +14,7 @@ const parseResult = (results) => {
   return taglist;
 } 
 
-const fetchTagsList = (searchParam, configData)  => {
+export const fetchTagsList = (searchParam, configData)  => {
   const query = {
       "query" : {
           "prefix" : { "tag_name" : searchParam }
@@ -32,4 +34,11 @@ const fetchTagsList = (searchParam, configData)  => {
   })
 };
 
-export default fetchTagsList;
+export const setNewTag = (newTag) => {
+  const obj = {
+    tags: [{name: newTag}]
+  }
+  return fetch.post(Api.setTags, {
+    ...obj,
+  }).then(resp => resp.data);
+}

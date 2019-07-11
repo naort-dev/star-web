@@ -25,14 +25,16 @@ export const Layout = styled.section`
   }
 
   .title {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     @media (max-width: 831px) {
-      margin-bottom: 25px;
+      margin-bottom: 47px;
     }
   }
   @media (max-width: 831px) {
     background: #f6f6f6;
-    height: calc(100% + 75px);
+    height: 100%;
+    padding-top: 75px;
+    padding-bottom: 20px;
   }
   @media(min-width: 832px) {
     height: 100%;
@@ -376,14 +378,29 @@ export const Wrapper = styled.section`
 `;
 
 Wrapper.SubTitle= styled.div`
-width: 398px;
-font-family: Gilroy;
-font-size: 14px;
-text-align: center;
-line-height: 16px;
-color: ${(props)=>props.theme.greyishBrown}
-margin: 0 auto;
-@media (max-width: 831px) {
-  width:100%;
-}
+  width: 398px;
+  font-family: Gilroy;
+  font-size: 14px;
+  text-align: center;
+  line-height: 16px;
+  color: ${(props)=>props.theme.greyishBrown}
+  margin: 0 auto;
+  @media (max-width: 831px) {
+    width: 240px;
+  }
+`;
+
+Wrapper.Adornment = styled.span`
+  font-family: Gilroy-Light;
+  font-size: 18px;
+  margin-left:25px;
+  display: flex;
+  flex-direction: row;
+  .tagName{
+    color: #ff6c58;
+    margin-left: 5px;
+  }
+  @media (max-width: 831px) {
+    margin-left:10px;
+  }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { isEmpty } from 'lodash';
@@ -8,44 +8,57 @@ import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 import PrimaryButton from '../../../../components/PrimaryButton';
 import MultiSelect from '../../../../components/MultiSelect';
 import { updateUserDetails } from '../../../../store/shared/actions/saveSettings';
-import fetchTagsList from '../../../../services/getTagsList';
+import { fetchTagsList, setNewTag } from '../../../../services/getTagsList';
 import NestedSelect from '../../../../components/NestedSelect'; 
 import RequestFlowPopup from '../../../../components/RequestFlowPopup';
 
 const Tags = props => {
 
-  const [selectedTags, setselectedTags] = useState(props.userDetails.settings_celebrityDetails.tags ? props.userDetails.settings_celebrityDetails.tags : []);
+  const [selectedTags, setselectedTags] = useState([]);
   const [tagList, settagList] = useState([]);
   const [createTag, setCreateTag] = useState('');
-  const [showBrowseCategory, setshowBrowseCategory] = useState(false);
-  const [categories, setcategories] = useState({
-    subCategoriesArray: [],
-    selectedCategory: [],
-  });
+  useEffect(()=> {
+    if(props.userDetails.settings_celebrityDetails.tags){
+      const existingTags = props.userDetails.settings_celebrityDetails.tags.map((tag) =>({
+        label: tag.name,
+        value:tag.id,
+      }));
+      setselectedTags(existingTags);
+    }
+    
+  },[props.userDetails.settings_celebrityDetails.tags]);
+
+  const setTag= async (newTag) => {
+    const result = await setNewTag(newTag);
+    setCreateTag('');
+    result.data.tags.forEach((tag) =>{
+      setselectedTags([
+        ...selectedTags,
+        { label: tag.name,
+          value : tag.id,
+        }
+      ]);
+    });
+   
+  };
+
   const ListAdornment = (tagName) => {
     return (
-      <span onClick={setTag(createTag)}>Create {tagName} </span>
+      <Wrapper.Adornment  onClick={() => setTag(createTag)}>Create <div className="tagName">{tagName} </div> </Wrapper.Adornment >
     );
   };
-  const setTag = () => {
-
-  }
-  const saveIndustry = () => {
+  
+  const saveTags = () => {
     const finalUserDetails = {
       celebrity_details: {
-        profession: selectedTags.map(profession => profession.id),
+        tags: selectedTags.map(selectedTag => selectedTag.value),
       },
       user_details: {},
     };
     props.updateUserDetails(props.userDetails.settings_userDetails.id, finalUserDetails);
   }
-  const browserCategory = () => {
-    // this.props.scrollRef.scrollTop = 0;
-    setshowBrowseCategory(true);
-  };
 
   const onBack = () => {
-    // this.props.scrollRef.scrollTop = 0;
     setshowBrowseCategory(false);
   };
   const browserCategoryList = () => {
@@ -93,159 +106,63 @@ const Tags = props => {
       setselectedTags(selctedProfessions);
     }
   };
-  const showSubCategoryList = () => {
-    return (
-      <React.Fragment>
-        <div className="right-section">
-          <div className="subCategoryHeading">
-            Choose the category that describes what you do best:
-            <span>{`(${3 -
-              selectedTags.length} remaining)`}</span>
-          </div>
-          <Scrollbars className="browse-category-list">
-            <UploadContainer.SubItemWrapper>
-              {categories.subCategoriesArray.map(profession => {
-                return (
-                  <UploadContainer.Item
-                    key={profession.id}
-                    onClick={() => getSelectedCategoryList(profession)}
-                    selected={selectedTags.find(
-                      cat => cat.id === profession.id,
-                    )}
-                  >
-                    {profession.title}
-                  </UploadContainer.Item>
-                );
-              })}
-            </UploadContainer.SubItemWrapper>
-          </Scrollbars>
-        </div>
-      </React.Fragment>
+  const handleOptionPillClick = (chosenTag) => {
+    setselectedTags(
+      chosenTag,
     );
-  };
+  }
 
   const handleMultiSelect = async (list) => {
     let isExistingTag = false;
-    setselectedTags(list);
-    if(list.trim('').length > 2){
+    if (list) {
+    if(list.length > 2){
       const tagsList = await fetchTagsList(list, props.configData);
-      settagList(tagsList);
-      tagsList.forEach((tag) => {
-        if(tag.label=== list ) {
+      tagsList.map((tag) => {
+        if(tag.label.toLowerCase()=== list.toLowerCase()) {
           isExistingTag = true;
         }
-      })
-      if(isEmpty(tagsList) || !isExistingTag) {
+      });
+      settagList(tagsList);
+      if(!isExistingTag) {
         setCreateTag(list);
       } else {
         setCreateTag('');
       }
     }
+  }
 
   };
   const handleFocusSelect = () => {};
 
   const renderContent = () => {
-    const { subcategories } = props.professionsList;
-    subcategories.map(function(obj) {
-      obj.label = obj.title;
-      obj.value = obj.id;
-    });
-    selectedTags.map(function(obj) {
-      obj.label = obj.title;
-      obj.value = obj.id;
-    });
-    let nestedProfessions = props.professionsList.allProfessions;
-    nestedProfessions = nestedProfessions.map((item) => {
-      const newOption = {};
-      newOption.label = item.title;
-      newOption.value = item.id;
-      if (item.child) {
-        newOption.options = item.child.map((childItem) => {
-          const childOption = {...childItem};
-          childOption.label = childItem.title;
-          childOption.value = childItem.id;
-          return childOption;
-        })
-      }
-      return newOption;
-    })
     return (
-      <UploadContainer.Wrapper>
-        {showBrowseCategory && (
-          <RequestFlowPopup
-          modalView
-          smallPopup
-          // classes={
-          //   {
-          //     root: 'custom-modal',
-          //   }
-          // }
-        // setScrollRef={this.setScrollRef}
-        // disableClose={this.state.disableClose}
-        > 
-          <UploadContainer.BrowseCategoryWrapper>
-            <BackArrow className = "left-arrow" onClick={onBack} />
-            <UploadContainer.DesktopView>
-              <Heading>Browse Categories</Heading>
-              <UploadContainer.BrowseCategoryContainer>
-                {browserCategoryList()}
-                {showSubCategoryList()}
-              </UploadContainer.BrowseCategoryContainer>
-            </UploadContainer.DesktopView>
-            <UploadContainer.MobileView>
-              <UploadContainer.Heading>
-                Browse categories
-              </UploadContainer.Heading>
-              <UploadContainer.BrowseCategoryContainer className="mobile-select-category">
-                <NestedSelect
-                  value={selectedTags}
-                  options={nestedProfessions}
-                  placeholder=""
-                  noOptionsMessage='No categories were found.'
-                  onChange={handleMultiSelect}
-                  onFocus={handleFocusSelect}
-                  label={<span>Categorize yourself. <br/>
-                    This helps fans find you. (up to 3)</span>}
-                />
-              </UploadContainer.BrowseCategoryContainer>
-            </UploadContainer.MobileView>
-          </UploadContainer.BrowseCategoryWrapper>
-          </RequestFlowPopup>
-        )}
-        {!showBrowseCategory && (
-          <React.Fragment>
-            <UploadContainer.CategoriesWrapper className='fans-want'>
-              <MultiSelect
-                value={selectedTags}
-                options={subcategories}
-                placeholder=""
-                onChange={handleMultiSelect}
-                onFocus={handleFocusSelect}
-                noOptionsMessage='No categories were found. Try browsing.'
-                label={<span>Categorize yourself. <br/>
-                This helps fans find you. (up to 3)</span>}
-              />
-              <UploadContainer.BrowseCategories>
-                Not finding one?{' '}
-                <UploadContainer.BrowseCategoriesLink
-                  onClick={browserCategory}
-                >
-                  Browse categories
-                </UploadContainer.BrowseCategoriesLink>
-              </UploadContainer.BrowseCategories>
-            </UploadContainer.CategoriesWrapper>
-            <UploadContainer.ButtonWrapper className="align-center">
-              <PrimaryButton type="submit" onClick={saveIndustry}>
-              Save
-              </PrimaryButton>
-            </UploadContainer.ButtonWrapper>
-          </React.Fragment>
-        )}
-      </UploadContainer.Wrapper>
-    );
-  };
-  return(
+      <React.Fragment>
+        <UploadContainer.CategoriesWrapper className='fans-want'>
+          <MultiSelect
+            value={selectedTags}
+            options={tagList}
+            placeholder=""
+            MenuListAdornment={ createTag ? ListAdornment(createTag): ''}
+            onChange={handleOptionPillClick}
+            onInputChange={handleMultiSelect}
+            onFocus={handleFocusSelect}
+            noOptionsMessage='No Tags were found.'
+          />
+          <UploadContainer.BrowseCategories>
+            Not finding one?{' '}
+            
+          </UploadContainer.BrowseCategories>
+        </UploadContainer.CategoriesWrapper>
+        <UploadContainer.ButtonWrapper className="align-center">
+          <PrimaryButton type="submit" onClick={saveTags}>
+          Save
+          </PrimaryButton>
+        </UploadContainer.ButtonWrapper>
+      </React.Fragment>
+        );
+      };
+
+    return(
     <Layout>
       <BackArrow className="leftArrow" onClick={props.goBack}/>
       <Heading className="title">Tags</Heading>
@@ -253,23 +170,7 @@ const Tags = props => {
       <Wrapper.SubTitle>
           { props.subTitle }
       </Wrapper.SubTitle>
-      {/* {renderContent()} */}
-      <UploadContainer.CategoriesWrapper className='fans-want'>
-              <MultiSelect
-                value={selectedTags}
-                options={tagList}
-                placeholder=""
-                MenuListAdornment={ListAdornment(createTag)}
-                onChange={handleMultiSelect}
-                onInputChange={handleMultiSelect}
-                onFocus={handleFocusSelect}
-                noOptionsMessage='No Tags were found.'
-              />
-              <UploadContainer.BrowseCategories>
-                Not finding one?{' '}
-                
-              </UploadContainer.BrowseCategories>
-            </UploadContainer.CategoriesWrapper>
+      {renderContent()}
       </Wrapper>   
     </Layout>
   );
