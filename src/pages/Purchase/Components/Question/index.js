@@ -44,6 +44,7 @@ const Question = props => {
     error: false,
     isStop: false,
     continueFlg: !!props.videoSrc,
+    isUpload: false,
   });
   const [recordingTime, setRecordingTime] = useState('02:00');
   const [noSupport, updateSupport] = useState(false);
@@ -58,6 +59,7 @@ const Question = props => {
       error: false,
       isStop,
       continueFlg,
+      isUpload: false,
     });
     props.setVideoUploadedFlag(false);
   };
@@ -119,6 +121,7 @@ const Question = props => {
     updatedStateHandler({
       ...stateObject,
       showHideFlg: false,
+      isUpload: false,
     });
     if (isIOSDevice()) {
       videoRecordInput.current.click();
@@ -162,6 +165,7 @@ const Question = props => {
         error: false,
         isStop: false,
         continueFlg: true,
+        isUpload: true,
       });
     } else {
       props.updateToast({
@@ -253,149 +257,150 @@ const Question = props => {
 
   return (
     <Layout>
-      {(isIOSDevice() || checkMediaRecorderSupport() || isWebSafari()) && (
-        <React.Fragment>
-          <VideoContainer>
-            <VideoRecorder
-              updateMediaStore={props.updateMediaStore}
-              duration={recorder.askTimeOut}
-              stopRecordHandler={stopRecordHandler}
-              playPauseMediaAction={props.playPauseMedia}
-              retryRecordHandler={retryRecordHandler}
-              recordTrigger={props.recordTrigger}
-              errorHandler={errorHandlerCallback}
-              forceStop={stateObject.isStop}
-              startStreamingCallback={startStreaming}
-              headerUpdate={props.headerUpdate}
-              starNM={props.starNM}
-              uploadHandler={uploadHandler}
-              recorded={props.recorded}
-              getRecordTime={getRecordTime}
-              uploader
-            />
-          </VideoContainer>
-          {!isWebSafari() && (
-            <React.Fragment>
-              <section className="right-sec-wrap">
-                {!isIOSDevice() &&
-                  checkMediaRecorderSupport() &&
-                  !stateObject.error &&
-                  !isWebSafari() && (
-                    <TimeSpan>
-                      <span className="text">{renderTimeHeader()}</span>
-                      <span className="time">{renderTime()}</span>
-                    </TimeSpan>
-                  )}
+      <React.Fragment>
+        <VideoContainer>
+          <VideoRecorder
+            updateMediaStore={props.updateMediaStore}
+            duration={recorder.askTimeOut}
+            stopRecordHandler={stopRecordHandler}
+            playPauseMediaAction={props.playPauseMedia}
+            retryRecordHandler={retryRecordHandler}
+            recordTrigger={props.recordTrigger}
+            errorHandler={errorHandlerCallback}
+            forceStop={stateObject.isStop}
+            startStreamingCallback={startStreaming}
+            headerUpdate={props.headerUpdate}
+            starNM={props.starNM}
+            uploadHandler={uploadHandler}
+            recorded={props.recorded}
+            getRecordTime={getRecordTime}
+            uploader
+          />
+        </VideoContainer>
+        {!isWebSafari() && (
+          <React.Fragment>
+            <section className="right-sec-wrap">
+              {!isIOSDevice() &&
+                checkMediaRecorderSupport() &&
+                !stateObject.error &&
+                !stateObject.isUpload && (
+                  <TimeSpan>
+                    <span className="text">{renderTimeHeader()}</span>
+                    <span className="time">{renderTime()}</span>
+                  </TimeSpan>
+                )}
 
-                <QuestionContainer
-                  isShow={stateObject.showHideFlg || stateObject.error}
-                  continueFlg={stateObject.continueFlg}
-                >
-                  {!stateObject.error && (
-                    <React.Fragment>
-                      {(!stateObject.continueFlg || props.shouldRecord) && (
-                        <div>
-                          <h1 className="quesHead">What you should say?</h1>
-                          <h1 className="instruction-head-mob">
-                            Ask the question to {props.starNM}
-                          </h1>
+              <QuestionContainer
+                isShow={stateObject.showHideFlg || stateObject.error}
+                continueFlg={stateObject.continueFlg}
+              >
+                {!stateObject.error && (
+                  <React.Fragment>
+                    {(!stateObject.continueFlg || props.shouldRecord) && (
+                      <div>
+                        <h1 className="quesHead">What you should say?</h1>
+                        <h1 className="instruction-head-mob">
+                          Ask the question to {props.starNM}
+                        </h1>
 
-                          <QuestionBuilder questionsList={questions} />
-                        </div>
+                        <QuestionBuilder questionsList={questions} />
+                      </div>
+                    )}
+                    <WebButtons className="web-btns">
+                      {getButton(
+                        false,
+                        '',
+                        buttonClickHandler,
+                        stateObject.buttonLabel,
                       )}
-                      <WebButtons className="web-btns">
-                        {getButton(
-                          false,
-                          '',
-                          buttonClickHandler,
-                          stateObject.buttonLabel,
-                        )}
-                        {!stateObject.continueFlg &&
-                          getFileUpload(['uploadBtn mobDisplay'])}
-                        {stateObject.continueFlg &&
-                          (props.recorded || isIOSDevice()
-                            ? getFileUpload(['uploadLink'])
-                            : recordLinkHandler())}
-                      </WebButtons>
-                    </React.Fragment>
-                  )}
-                </QuestionContainer>
-              </section>
+                      {!stateObject.continueFlg &&
+                        getFileUpload(['uploadBtn mobDisplay'])}
+                      {stateObject.continueFlg &&
+                        (props.recorded || isIOSDevice()
+                          ? getFileUpload(['uploadLink'])
+                          : recordLinkHandler())}
+                    </WebButtons>
+                  </React.Fragment>
+                )}
+              </QuestionContainer>
+            </section>
 
-              {!stateObject.error && (
-                <MobButtons className="mob-btns">
-                  {getButton(
-                    false,
-                    '',
-                    buttonClickHandler,
-                    stateObject.buttonLabel,
-                  )}
-                  {props.recorded ||
-                  isIOSDevice() ||
-                  stateObject.buttonLabel === 'Record'
-                    ? getFileUpload(['uploadLink'])
-                    : recordLinkHandler()}
-                </MobButtons>
+            {!stateObject.error && (
+              <MobButtons className="mob-btns">
+                {getButton(
+                  false,
+                  '',
+                  buttonClickHandler,
+                  stateObject.buttonLabel,
+                )}
+                {props.recorded ||
+                isIOSDevice() ||
+                stateObject.buttonLabel === 'Record'
+                  ? getFileUpload(['uploadLink'])
+                  : recordLinkHandler()}
+              </MobButtons>
+            )}
+
+            {(stateObject.buttonLabel === 'Record' || props.shouldRecord) &&
+              !stateObject.error &&
+              !stateObject.isUpload &&
+              checkMediaRecorderSupport() && (
+                <ShowHide
+                  onClick={() =>
+                    updatedStateHandler({
+                      ...stateObject,
+                      showHideFlg: !stateObject.showHideFlg,
+                    })
+                  }
+                  isShow={stateObject.showHideFlg}
+                >
+                  Instructions
+                </ShowHide>
+              )}
+          </React.Fragment>
+        )}
+      </React.Fragment>
+
+      {!isIOSDevice() &&
+        (!checkMediaRecorderSupport() || stateObject.error) &&
+        !props.videoSrc && (
+          <React.Fragment>
+            <QuestionContainer isShow error className="no-support">
+              {isWebSafari() ? (
+                <React.Fragment>
+                  <p className="note">
+                    Safari does not currently support browser video recording.
+                    <br />
+                    <br />
+                    Please use Chrome, Firefox, any browser using your phone or
+                    you can also upload your video.
+                  </p>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <p className="note">
+                    Your system does not have video recording capability, but
+                    you will need to record a video to ask a question to the
+                    Star. <br />
+                    <br />
+                    You can:
+                    <br />
+                    <br /> Record with our App
+                    <br /> Use our iOS or Android app to book the star.
+                  </p>
+                </React.Fragment>
               )}
 
-              {(stateObject.buttonLabel === 'Record' || props.shouldRecord) &&
-                !stateObject.error && (
-                  <ShowHide
-                    onClick={() =>
-                      updatedStateHandler({
-                        ...stateObject,
-                        showHideFlg: !stateObject.showHideFlg,
-                      })
-                    }
-                    isShow={stateObject.showHideFlg}
-                  >
-                    Instructions
-                  </ShowHide>
-                )}
-            </React.Fragment>
-          )}
-        </React.Fragment>
-      )}
+              {props.videoSrc && isWebSafari()
+                ? getButton(false, 'safari-upload', uploadContinue, 'Continue')
+                : getFileUpload(['uploadBtn noSupportBtn'])}
 
-      {!isIOSDevice() && (!checkMediaRecorderSupport() || stateObject.error) && (
-        <React.Fragment>
-          <QuestionContainer isShow error className="no-support">
-            {isWebSafari() ? (
-              <React.Fragment>
-                <p className="note">
-                  Safari does not currently support browser video recording.
-                  <br />
-                  <br />
-                  Please use Chrome, Firefox, any browser using your phone or
-                  you can also upload your video.
-                </p>
-                {props.videoSrc
-                  ? getButton(
-                      false,
-                      'safari-upload',
-                      uploadContinue,
-                      'Continue',
-                    )
-                  : getFileUpload(['uploadBtn noSupportBtn'])}
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <p className="note">
-                  Your system does not have video recording capability, but you
-                  will need to record a video to ask a question to the Star.{' '}
-                  <br />
-                  <br />
-                  You can:
-                  <br />
-                  <br /> Record with our App
-                  <br /> Use our iOS or Android app to book the star.
-                </p>
-                {getFileUpload(['uploadBtn noSupportBtn'])}
-              </React.Fragment>
-            )}
-          </QuestionContainer>
-        </React.Fragment>
-      )}
+              {!isWebSafari() &&
+                !stateObject.error &&
+                getFileUpload(['uploadBtn noSupportBtn'])}
+            </QuestionContainer>
+          </React.Fragment>
+        )}
 
       <input
         ref={videoRecordInput}
